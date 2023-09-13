@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DIMSDBConnection-Web.config Connection String" description="DIMSDBConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=192.9.200.11;Connection Timeout=3000000;Initial Catalog=DIMS_UAT;User ID=DIMS_Admin;Password=dims@12345" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\WorkSpace-Devlopment\\Dims\\DimsSBU-8\\DIMSSolution\\DIMS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DIMSDBConnection']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=192.9.200.11;Connection Timeout=3000000;Initial Catalog=DIMS_UAT;User ID=DIMS_Admin;Password=dims@12345" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\WorkSpace-Devlopment\\Dims\\DimsSBU-8\\DIMSSolution\\DIMS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="DIMSConnection-Web.config Connection String" description="DIMSConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=192.9.200.11;Connection Timeout=3000000;Initial Catalog=DIMS_UAT;User ID=DIMS_Admin;Password=dims@12345" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\WorkSpace-Devlopment\\Dims\\DimsSBU-8\\DIMSSolution\\DIMS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DIMSConnection']/@connectionString" />
+  </parameter>
+  <parameter name="My_IP-Web.config Connection String" description="My_IP Connection String used in web.config by the application to access the database." defaultValue="http://localhost:63178" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\WorkSpace-Devlopment\\Dims\\DimsSBU-8\\DIMSSolution\\DIMS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='My_IP']/@connectionString" />
+  </parameter>
+  <parameter name="cmsEntities-Web.config Connection String" description="cmsEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/DB.CMS_Model.csdl|res://*/DB.CMS_Model.ssdl|res://*/DB.CMS_Model.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=192.9.200.11;Connection Timeout=3000000;initial catalog=DIMS_UAT;user id=DIMS_Admin;password=dims@12345;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\WorkSpace-Devlopment\\Dims\\DimsSBU-8\\DIMSSolution\\DIMS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='cmsEntities']/@connectionString" />
+  </parameter>
+</parameters>

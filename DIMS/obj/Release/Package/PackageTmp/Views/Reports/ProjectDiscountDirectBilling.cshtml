@@ -1,0 +1,192 @@
+﻿@{    
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Project Discount Direct Billing</h2>
+    <ol class="breadcrumb">
+        <li><a ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Discounts/Provisions</li>
+        <li class="active"><span id="UpdateNav">Create </span>Project Discount Direct Billing</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('ProjectDiscountDirectBillingList')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SaveProjectDirectBilling()">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<input type="text" id="USERNAME_DirectDiscount" style="display: none;" value="@SessionUserName" />
+<input type="text" id="USERCODE_DirectDiscount" style="display: none;" value="@SessionUserCode" />
+<input type="text" id="USERTYPE_DirectDiscount" style="display: none;" value="@SessionUserType" />
+<input class="form-control gray" id="RequestCreatedBy" type="text" disabled="disabled" data-ng-model="RequestCreatedBy" style="display: none" />
+
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 9px;">
+            <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" style="color: red; font-size: 18px;margin-left:30px">M=Meter</label>
+                <label class="col-sm-2 control-label" style="color: red; font-size: 18px">MT=Metric Tons</label>
+            </div>
+            <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small; margin-top: 36px;" action="">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Request Created By</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CreatedBy" type="text" disabled="disabled" data-ng-model="CreatedBy" />
+                    </div>
+                    <label class="col-sm-3 control-label">Created Date</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CreatedDate" type="text" data-ng-model="CreatedDate" disabled="disabled" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Discount ID</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="DiscountID" type="text" disabled="disabled" data-ng-model="DiscountID" />
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Code</label>
+                    <div class="col-sm-3">
+                        <div class="input-group add-on">
+                            <input class="form-control gray" id="StockistCode" type="text" disabled="disabled" />
+                            <div class="input-group-btn Customer">
+                                <span class="btn btn-default" ng-click="Getdata('GetCustomerCodeName','CustomerMasterList','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <label class="col-sm-3 control-label">Expected Sale (MT) <span style="color: red">*</span></label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="ExpectedSale" type="text" data-ng-model="ExpectedSale" />
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Name</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="StockistName" type="text" disabled="disabled" />
+                    </div>
+
+                    <label class="col-sm-3 control-label">Expected NSR (INR) <span style="color: red">*</span></label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="ExpectedNSR" type="text" data-ng-model="ExpectedNSR" />
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Zone</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="Zone" type="text" data-ng-model="Zone" disabled="disabled" />
+                    </div>
+
+                    <label class="col-sm-3 control-label">PriceCard Rate</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="PriceCardRate" disabled="disabled" type="text" data-ng-model="PriceCardRate" />
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">State</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="State" type="text" data-ng-model="State" disabled="disabled" />
+                    </div>
+                    <label class="col-sm-3 control-label">Request Status</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="RequestStatus" disabled="disabled" type="text" data-ng-model="RequestStatus" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">District</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="District" type="text" data-ng-model="District" disabled="disabled" />
+                    </div>
+                    <label class="col-sm-3 control-label">Description</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" id="Description" data-ng-model="Description" maxlength="300"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Agreed Rate (INR/M)<span style="color: red">*</span></label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="AgreedRate" type="text" data-ng-model="AgreedRate" />
+                    </div>
+
+                </div>
+
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    //$('#ExpectedNSR').keypress(function (e) {
+    //    return onlyNumerics(e);
+    //});
+
+    //$('#ExpectedSale').keypress(function (e) {
+    //    return onlyNumerics(e);
+    //});
+
+    //$('#AgreedRate').keypress(function (e) {
+    //    return onlyNumerics(e);
+    //});
+
+    allowTwoDecimalPoints($("#ExpectedNSR"));
+
+    allowTwoDecimalPoints($("#ExpectedSale"));
+
+    allowTwoDecimalPoints($("#AgreedRate"));
+
+
+</script>
+
+
+
+
+
+
+
+

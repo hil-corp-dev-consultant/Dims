@@ -1,0 +1,1958 @@
+﻿@{
+    ViewBag.Title = "Complaint";
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeID = UP.UserTypeCode;
+    var SBU3_Code = global_asax.SBU3_Code;
+    string SessionBusinessunit = UP.USER_PRODUCT_TYPE_CODE;
+
+}
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Complaint Detailed Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">Complaint Detailed Report</li>
+    </ol>
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-header">
+                    </div>
+                    <div class="box-body pad">
+                        <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <input type="text" style="display:none;" id="SessionUserCode" value="@SessionUserCode" />
+                                    <input type="text" style="display:none;" id="SessionUserName" value="@SessionUserName" />
+                                    <input type="text" id="BusinessUnit" value="@SessionBusinessunit" style="display: none" />
+                                    <input type="text" style="display:none;" id="SessionUserTypeCode" value="@SessionUserTypeID" />
+
+                                    <input type="text" style="display:none;" id="SessionUserType" value="@SessionUserType" />
+                                    <input type="text" style="display:none;" id="SessionUserTypeID" value="@SessionUserTypeID" />
+
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="CompensationReportLink" onclick="GetReport('CompensationReport')">Compensation Report</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="CompensationNoteLink" ng-click="CompensationNote()">Compensation Note</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="CommunicationNoteLink" ng-click="CommunicationNote()">Communication Note</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="ComplaintRegistrationReportLink" onclick="GetReport('ComplaintRegistrationReport')">Complaint Registration Report</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="SiteObservationSheetPartCLink" ng-click="SiteObservationSheetPartC()">Site Observation Sheet Part-C</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="BreakageInspectionSheetPartBLink" ng-click="BreakageInspectionSheetPartB()">Breakage Inspection Sheet Part-B</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="InvestigationReportLink" ng-click="InvestigationReport()">Investigation Report</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="RegisteredComplaintsPlantSheetingLink" ng-click="RegisteredComplaintsPlantSheeting()">Registered Complaints Plant-Sheeting</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="ClosedComplaintsPlantLink" ng-click="ClosedComplaintsPlant()">Closed Complaints-Plant</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="ComplaintDetailsDepoLink" ng-click="ComplaintDetailsDepo()">Complaint Details-Depo</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="ClosedComplaintsAccountLink" ng-click="ClosedComplaintsAccount()">Closed Complaints-Account</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="ClosedComplaintsAccountDefectTypeLink" ng-click="ClosedComplaintsAccountDefectType()">Closed Complaints-Account With Defect Types</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="RegisteredComplaintsPlantOthersLink" ng-click="RegisteredComplaintsPlantOthers()">Registered Complaints Plant (SBU2/SBU3)</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="PendingCreditNoteApprovalReportLink" ng-click="PendingCreditNoteApproval()">Pending Credit-Note Approvals</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="SalesReturnReportLink" onclick="GetReport('SalesReturnReport')">Credit default sales return Report</a>
+                                    <a href="" style="color: blue; font-family: Calibri; font-size: 12px;" id="NonMovingOrWrongOrderPlacedSalesReturnReportLink" onclick="GetReport('NonMovingOrWrongOrderPlacedSalesReturnReport')">Non Moving Or Wrong Order Placed Sales Return Report</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*//Compensation Report*@
+    <div class="modal fade" id="CompensationReport" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Compensation Report</h4>
+                    <h4 class="modal-title" id="MSDModalLabel">Please Enter Complaint Tracking Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Complaint Tracking No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtComplaintTrackingNoCompensationReport" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('CompensationReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Compensation Note*@
+    <div class="modal fade" id="CompensationNote" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Compensation Note</h4>
+                    <h4 class="modal-title" id="CompensationNoteLabel">Please Enter Complaint Tracking Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Complaint Tracking No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtCompensationNoteComplaintTrackingNo" onkeypress="return isInteger(event)" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    @*<button type="button" id="GenerateCompensationNoteReport" class="btn btn-primary" ng-click="GenerateCompensationNoteReport()">Generate Report</button>*@
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('CompensationNoteReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Communication Note*@
+    <div class="modal fade" id="CommunicationNote" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Communication Note</h4>
+                    <h4 class="modal-title" id="CommunicationNoteLabel">Please Enter Complaint Tracking Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Corrective Measure Id:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="CorrectiveMeasureId" data-ng-model="CorrectiveMeasureId" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    @*<button type="button" id="GenerateCommunicationNoteReport" class="btn btn-primary" ng-click="GenerateCommunicationNoteReport()">Generate Report</button>*@
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('CommunicationNoteReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*ComplaintRegistrationReport*@
+    <div class="modal fade" id="ComplaintRegistrationReport" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Complaint Registration Report</h4>
+                    <h4 class="modal-title" id="ComplaintRegistrationReportLabel">Please Enter Complaint Tracking Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Complaint Tracking No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtComplaintRegistrationReportTrackingNo" data-ng-model="txtComplaintRegistrationReportTrackingNo_Model" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('ComplaintRegistrationReport')">Generate Report</button>
+                                    @*<button type="button" id="GenerateComplaintRegistrationReportReport" class="btn btn-primary" onclick="()">Generate Report</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*SiteObservationSheetPartC*@
+    <div class="modal fade" id="SiteObservationSheetPartC" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Site Observation Sheet PartC</h4>
+                    <h4 class="modal-title" id="SiteObservationSheetPartCLabel">Please Enter Complaint Tracking Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Complaint Tracking No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtSiteObservationSheetPartCTrackingNo" data-ng-model="txtSiteObservationSheetPartCTrackingNo_Model" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('SiteObservationSheetPartCReport')">Generate Report</button>
+                                    @*<button type="button" id="GenerateSiteObservationSheetPartCReport" class="btn smallbutton" onclick="SiteObservationSheetPartCReport()">Generate Report</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*BreakageInspectionSheetPartB*@
+    <div class="modal fade" id="BreakageInspectionSheetPartB" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Breakage Inspection Sheet PartB</h4>
+                    <h4 class="modal-title" id="BreakageInspectionSheetPartBLabel">Please Enter Complaint Tracking Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Complaint Tracking No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtBreakageInspectionSheetPartBTrackingNo" data-ng-model="txtBreakageInspectionSheetPartBTrackingNo_Model" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('BreakageInspectionSheetPartBReport')">Generate Report</button>
+                                    @*<button type="button" id="GenerateBreakageInspectionSheetPartBReport" class="btn btn-primary" ng-click="BreakageInspectionSheetPartBReport()">Generate Report</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*InvestigationReport*@
+    <div class="modal fade" id="InvestigationReport" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Investigation Report</h4>
+                    <h4 class="modal-title" id="InvestigationReportLabel">Please Enter Complaint Tracking Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Complaint Tracking No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtInvestigationReportTrackingNo" data-ng-model="txtInvestigationReportTrackingNo_Model" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('InvestigationReport')">Generate Report</button>
+                                    @*<button type="button" id="GenerateInvestigationReportReport" class="btn smallbutton" ng-click="InvestigationReportReport()">Generate Report</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*RegisteredComplaintsPlantSheeting*@
+    <div class="modal fade" id="RegisteredComplaintsPlantSheeting" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Registered Complaints Plant Sheeting Report</h4>
+                    <h4 class="modal-title" id="RegisteredComplaintsPlantSheetingLabel">Enter The Values Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter From Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="RegisteredComplaintsPlantSheetingFromDate" readonly="readonly" onchange="RegisteredComplaintsPlantSheetingFromDateChange()" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter To Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="RegisteredComplaintsPlantSheetingToDate" readonly="readonly" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Plant:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="RegisteredComplaintsPlantSheetingPlant">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('RegisteredComplaintsPlantSheeting')">Generate Report</button>
+                                    @*<button type="button" id="GenerateRegisteredComplaintsPlantSheetingReport" class="btn btn-primary" ng-click="RegisteredComplaintsPlantSheetingReport()">Generate Report</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*ClosedComplaintsPlant*@
+    <div class="modal fade" id="ClosedComplaintsPlant" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Closed Complaints Plant</h4>
+                    <h4 class="modal-title" id="ClosedComplaintsPlantLabel">Enter The Values Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter From Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="ClosedRegisteredComplaintsPlantFromDate" readonly="readonly" onchange="ClosedRegisteredComplaintsPlantFromDateChange()" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter To Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="ClosedComplaintsPlantToDate" readonly="readonly" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Product Type:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="ClosedComplaintsProductType" onchange="GetPlantsUnitChange(this.id)">
+                                            <option value="">Select</option>
+                                            <option value="Sheeting">SBU1</option>
+                                            <option value="Others">SBU2</option>
+                                            <option value="PF">SBU3</option>
+                                            <option value="TILES">SBU8</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Plant:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="ClosedComplaintsPlantD">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('ClosedComplaintsPlantReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*ComplaintDetailsDepo*@
+    <div class="modal fade" id="ComplaintDetailsDepo" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Complaint Details Depo</h4>
+                    <h4 class="modal-title" id="ComplaintDetailsDepoLabel">Enter The Values Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter From Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="DepoFromDate" readonly="readonly" onchange="DepoFromDateChange()" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter To Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="DepoToDate" readonly="readonly" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Depo:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="ComplaintDetailsDepoD">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('ComplaintDetailsDepoReport')">Generate Report</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*ClosedComplaintsAccount*@
+    <div class="modal fade" id="ClosedComplaintsAccount" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Closed Complaints Account</h4>
+                    <h4 class="modal-title" id="ClosedComplaintsAccountLabel">Enter The Values Below</h4>
+
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter From Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="ClosedAccountFromDate" readonly="readonly" onchange="ClosedAccountFromDateChange()" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter To Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="ClosedAccountToDate" readonly="readonly" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Product Type:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="ClosedAccountProductType" onchange="GetPlantsUnitChange(this.id)">
+                                            <option value="">Select</option>
+                                            <option value="Sheeting">SBU1</option>
+                                            <option value="Others">SBU2</option>
+                                            <option value="PF">SBU3</option>
+                                            <option value="TILES">SBU8</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Plant:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="ClosedAccountPlantD">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('ClosedComplaintsAccountReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*ClosedComplaintsAccountDefectTypes*@
+    <div class="modal fade" id="ClosedComplaintsAccountDefectType" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Closed Complaints Account With Defect Types</h4>
+                    <h4 class="modal-title" id="ClosedComplaintsAccountDefectTypeLabel">Enter The Values Below</h4>
+
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter From Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="ClosedAccountDefectTypeFromDate" readonly="readonly" onchange="ClosedAccountDefectTypeFromDateChange()" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter To Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="ClosedAccountDefectTypeToDate" readonly="readonly" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Product Type:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="ClosedAccountDefectTypeProductType" onchange="GetPlantsUnitChange(this.id)">
+                                            <option value="">Select</option>
+                                            @*<option value="Sheeting">SBU1</option>
+        <option value="Others">SBU2</option>*@
+                                            <option value="PF">SBU3</option>
+                                            <option value="TILES">SBU8</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Plant:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="ClosedAccountDefectTypePlantD">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('ClosedComplaintsAccountDefectTypeReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*RegisteredComplaintsPlantOthers*@
+    <div class="modal fade" id="RegisteredComplaintsPlantOthers" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Registered Complaints Plant (SBU2/SBU3)</h4>
+                    <h4 class="modal-title" id="RegisteredComplaintsPlantOthersLabel">Enter The Values Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter From Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="RegisteredComplaintsPlantFromDateOthers" readonly="readonly" onchange="RegisteredComplaintsPlantFromDateOthersChange()" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter To Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="RegisteredComplaintsPlantToDateOthers" readonly="readonly" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Buniness Unit:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="RegCompPlantOtrProductType" onchange="GetPlantsUnitChange(this.id)" style="border-color: rgb(210, 214, 222);">
+                                            <option value="">Select</option>
+                                            <option value="Others">SBU2</option>
+                                            <option value="PF">SBU3</option>
+                                            <option value="TILES">SBU8</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Plant:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="RegisteredComplaintsPlantPlantOthers">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('RegisteredComplaintsPlantOtherstReport')">Generate Report</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Pending Credit-Notes Approvals*@
+    <div class="modal fade" id="PendingCreditNoteApproval" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Pending Credit-Note Approvals</h4>
+                    <h4 class="modal-title" id="PendingCreditNoteApprovalabel">Enter The Values Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter From Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="CreditNoteFromDate" readonly="readonly" onchange="CreditNoteFromDateChange()" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Enter To Date:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="CreditNoteToDate" readonly="readonly" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        State:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="CreditNoteStates">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('PendingCreditNoteApprovalReport')">Generate Report</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*//Vikas G, Sales Return Report*@
+    <div class="modal fade" id="SalesReturnReport" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Credit default sales return Report</h4>
+                    <h4 class="modal-title" id="MSDModalLabel">Please Enter Sales Return Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Sales Return No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtComplaintTrackingNoSalesReturnReport" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" id="SalesReturnReportEmail" class="btn smallbutton" onclick="GenerateReportEmail('SalesReturnReport')">Send Email</button>
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('SalesReturnReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*//Vikas G, Sales Return Report*@
+
+    @*//Vikas G, Non-moving or Wrong order placed sales return*@
+    <div class="modal fade" id="NonMovingOrWrongOrderPlacedSalesReturnReport" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Non Moving Or Wrong Order Placed Sales Return</h4>
+                    <h4 class="modal-title" id="MSDModalLabel">Please Enter Sales Return Number Below</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label" style="text-align: right;">
+                                        Sales Return No:<span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="txtComplaintTrackingNoNonMovingOrWrongOrderPlacedSalesReturnReport" onkeypress="return isInteger(event)" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" id="NonMovingOrWrongOrderPlacedSalesReturnReportEmail" class="btn smallbutton" onclick="GenerateReportEmail('NonMovingOrWrongOrderPlacedSalesReturnReport')">Send Email</button>
+                                    <button type="button" class="btn smallbutton" onclick="GenerateReport('NonMovingOrWrongOrderPlacedSalesReturnReport')">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*//Vikas G, Non-moving or Wrong order placed sales return*@
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        debugger
+        var UserCode = $("#SessionUserCode").val();
+        var UserType = $("#SessionUserTypeID").val(); --SessionUserType
+        var BusinessUnit = $("#BusinessUnit").val();
+
+        //console.log("UserTypeName :" + BusinessUnit);
+
+        if (BusinessUnit == "SBU3") {
+            $("#SalesReturnReportEmail").show();
+            $("#NonMovingOrWrongOrderPlacedSalesReturnReportEmail").show();
+        }
+        else {
+            $("#SalesReturnReportEmail").hide();
+            $("#NonMovingOrWrongOrderPlacedSalesReturnReportEmail").hide();
+        }
+
+        $.ajax({
+            url: '../../Users/GetRightToAccess',
+            type: 'GET',
+            data: { AccessData: JSON.stringify({ UserRole: $("#SessionUserTypeID").val(), FormCode: 'CMS_Reports' }) },
+            success: function (AccessData) {
+                //debugger
+                $("#BreakageInspectionSheetPartBLink").css('display', 'none');
+                $("#ClosedComplaintsAccountLink").css('display', 'none');
+                $("#ClosedComplaintsAccountDefectTypeLink").css('display', 'none');
+                $("#ClosedComplaintsPlantLink").css('display', 'none');
+                $("#ComplaintDetailsDepoLink").css('display', 'none');
+                $("#CommunicationNoteLink").css('display', 'none');
+                $("#CompensationNoteLink").css('display', 'none');
+                $("#CompensationReportLink").css('display', 'none');
+                $("#ComplaintRegistrationReportLink").css('display', 'none');
+                $("#InvestigationReportLink").css('display', 'none');
+                $("#RegisteredComplaintsPlantOthersLink").css('display', 'none');
+                $("#RegisteredComplaintsPlantSheetingLink").css('display', 'none');
+                $("#SiteObservationSheetPartCLink").css('display', 'none');
+                $("#PendingCreditNoteApprovalReportLink").css('display', 'none');
+                $("#SalesReturnReportLink").css('display', 'none');
+                $("#NonMovingOrWrongOrderPlacedSalesReturnReportLink").css('display', 'none');
+
+                if (AccessData == "") {
+                }
+                else {
+
+                    AccessData = JSON.parse(AccessData);
+                    var AccessArray = new Array();
+
+                    for (var i = 0; i < AccessData.length; i++) {
+                        AccessArray.push(AccessData[i]);
+                    }
+
+                    if (AccessArray.indexOf("BISP") > -1) {
+                        $("#BreakageInspectionSheetPartBLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("CCA") > -1) {
+                        $("#ClosedComplaintsAccountLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("CCADT") > -1) {
+                        $("#ClosedComplaintsAccountDefectTypeLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("CCP") > -1) {
+                        $("#ClosedComplaintsPlantLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("CDD") > -1) {
+                        $("#ComplaintDetailsDepoLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("COMN") > -1) {
+                        $("#CommunicationNoteLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("COMPN") > -1) {
+                        $("#CompensationNoteLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("CR") > -1) {
+                        $("#CompensationReportLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("CRR") > -1) {
+                        $("#ComplaintRegistrationReportLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("IR") > -1) {
+                        $("#InvestigationReportLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("RCPO") > -1) {
+                        $("#RegisteredComplaintsPlantOthersLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("RCPS") > -1) {
+                        $("#RegisteredComplaintsPlantSheetingLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("SOSP") > -1) {
+                        $("#SiteObservationSheetPartCLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("PCNA") > -1) {
+                        $("#PendingCreditNoteApprovalReportLink").css('display', 'block');
+                    }
+                    if (AccessArray.indexOf("CDSRR") > -1) {
+                        $("#SalesReturnReportLink").css('display', 'block');
+                    }
+
+                    if (AccessArray.indexOf("NMWPSRR") > -1) {
+                        $("#NonMovingOrWrongOrderPlacedSalesReturnReportLink").css('display', 'block');
+                    }
+
+                    var SpecialUsers = new Array();
+                    SpecialUsers.push("2013");
+                    SpecialUsers.push("2010");
+                    SpecialUsers.push("2022");
+                    SpecialUsers.push("2008");
+                    SpecialUsers.push("2021");
+                    SpecialUsers.push("2006");
+                    SpecialUsers.push("2002");
+                    SpecialUsers.push("2017");
+                    SpecialUsers.push("2019");
+                    SpecialUsers.push("2018");
+
+
+                    if (UserType == "QAM_PL") {
+                        if (SpecialUsers.indexOf(UserCode) > -1) {
+                            $("#RegisteredComplaintsPlantOthersLink").css('display', 'block');
+                            $("#RegisteredComplaintsPlantSheetingLink").css('display', 'none');
+                        }
+                        else {
+                            $("#RegisteredComplaintsPlantOthersLink").css('display', 'none');
+                            $("#RegisteredComplaintsPlantSheetingLink").css('display', 'block');
+                        }
+                    }
+                    else {
+                    }
+                    //Vikas G Hardcoded SBU# code to Dynamic Code 50002736 as SBU3_Code.
+                    if (UserCode == "50001234" || UserCode == SBU3_Code || UserCode == "50004069" || UserCode == "KAM" || UserCode == "50000822" || UserCode == "50002304") {
+                        $("#SiteObservationSheetPartCLink").css('display', 'none');
+                        $("#BreakageInspectionSheetPartBLink").css('display', 'none');
+                        $("#RegisteredComplaintsPlantSheetingLink").css('display', 'none');
+                        $("#CommunicationNoteLink").css('display', 'none');
+                        //Vikas G Hardcoded SBU# code to Dynamic Code 50002736 as SBU3_Code.
+                        if (UserCode == "50001234" || UserCode == "12345679" || UserCode == SBU3_Code || UserCode == "50004069") {
+                            $("#ComplaintDetailsDepoLink").css('display', 'none');
+                        }
+                    }
+                    else if (UserCode == "12345679" || UserType == "CSM_BU8") {
+                        $("#SiteObservationSheetPartCLink").css('display', 'none');
+                        $("#BreakageInspectionSheetPartBLink").css('display', 'none');
+                        $("#RegisteredComplaintsPlantSheetingLink").css('display', 'none');
+                        $("#CommunicationNoteLink").css('display', 'none');
+                        $("#ComplaintDetailsDepoLink").css('display', 'none');
+                    }
+                    //if (UserCode == SBU3_Code) {
+                    //    $("#SalesReturnReportLink").css('display', 'block');                  
+                    //    $("#NonMovingOrWrongOrderPlacedSalesReturnReportLink").css('display', 'block');
+                    //}
+
+
+                }
+            }
+        });
+
+        var Data = JSON.stringify({
+            Report: "FillDropDowns",
+            UserCode: UserCode,
+            UserType: UserType
+        });
+
+
+        $.ajax({
+            method: 'POST',
+            url: '../../ComplaintReports/FillReportDropDowns',
+            data: { Data: Data },
+        }).then(function successCallback(response) {
+
+            $("#RegisteredComplaintsPlantSheetingPlant").children().remove();
+            $("#ClosedComplaintsPlantD").children().remove();
+            $("#ClosedAccountPlantD").children().remove();
+            $("#ClosedAccountDefectTypePlantD").children().remove();
+            $("#RegisteredComplaintsPlantPlantOthers").children().remove();
+            $("#ComplaintDetailsDepoD").children().remove();
+            $("#CreditNoteStates").children().remove();
+
+            if (response == "") { }
+            else {
+                response = JSON.parse(response);
+                var PlantList = response["PlantsList"];
+
+                var OptionCode = "<option value=''>Select</option>";
+
+                if (UserType == "QAM_PL") {
+
+                }
+                else if (UserType == "SH_BU3" || UserType == "RSH_BU3" || UserType == "NSH_BU3") {
+                    $("#ClosedComplaintsProductType").val("PF");
+                    $("#ClosedAccountProductType").val("PF");
+                }
+                else {
+                    OptionCode = OptionCode + "<option value='ALL'>ALL</option>";
+                }
+                var i = 0;
+
+                for (i = 0; i < PlantList.length; i++) {
+                    OptionCode = OptionCode + "<option value='" + PlantList[i]["PLANT_CODE"] + "'>" + PlantList[i]["PLANT_NAME"] + "</option>";
+                }
+
+                $("#RegisteredComplaintsPlantSheetingPlant").append(OptionCode);
+                $("#ClosedComplaintsPlantD").append(OptionCode);
+                $("#ClosedAccountPlantD").append(OptionCode);
+                $("#ClosedAccountDefectTypePlantD").append(OptionCode);
+                $("#RegisteredComplaintsPlantPlantOthers").append(OptionCode);
+
+
+                var DepoList = response["DeposList"];
+                OptionCode = "<option value=''>Select</option><option value='ALL'>ALL</option>";
+                for (i = 0; i < DepoList.length; i++) {
+                    OptionCode = OptionCode + "<option value='" + DepoList[i]["DEPO_CODE"] + "'>" + DepoList[i]["DEPO_NAME"] + "</option>";
+                }
+                $("#ComplaintDetailsDepoD").append(OptionCode);
+
+                if (UserType == "SH_BU3" || UserType == "RSH_BU3" || UserType == "NSH_BU3") {
+                    $("#ClosedComplaintsProductType").val("PF");
+                    $("#ClosedAccountProductType").val("PF");
+                    $("#RegCompPlantOtrProductType").val("PF");
+
+                    $("#ClosedComplaintsProductType").attr("disabled", "disabled");
+                    $("#ClosedAccountProductType").attr("disabled", "disabled");
+                    $("#RegCompPlantOtrProductType").attr("disabled", "disabled");
+                }
+
+                if (UserCode == "KAM" || UserCode == "kam" || UserCode == "50000822" || UserCode == "50002304") {
+                    $("#ClosedComplaintsProductType").val("Others");
+                    $("#ClosedAccountProductType").val("Others");
+                    $("#RegCompPlantOtrProductType").val("Others");
+                    $("#RegisteredComplaintsPlantPlantOthers").val("Others");
+                    _GetPlantsUnitChange("Others");
+                }//Vikas G Hardcoded SBU# code to Dynamic Code 50002736 as SBU3_Code.
+                else if (UserType == "NSH_BU3" || UserType == "RSH_BU3" || UserCode == "50001234"  || UserCode == SBU3_Code || UserCode == "50004069" || UserCode == "2019" || UserCode == "2021") {
+                    $("#ClosedComplaintsProductType").val("PF");
+                    $("#ClosedAccountProductType").val("PF");
+                    $("#RegCompPlantOtrProductType").val("PF");
+                    $("#RegisteredComplaintsPlantPlantOthers").val("PF");
+                    _GetPlantsUnitChange("PF");
+                }
+                else if (UserCode == "12345679" || UserType == "CSM_BU8")
+                {
+                    $("#ClosedComplaintsProductType").val("TILES");
+                    $("#ClosedAccountProductType").val("TILES");
+                    $("#RegCompPlantOtrProductType").val("TILES");
+                    $("#RegisteredComplaintsPlantPlantOthers").val("TILES");
+                    _GetPlantsUnitChange("TILES");
+                }
+                else {
+                    $("#ClosedComplaintsProductType").val("Sheeting");
+                    $("#ClosedAccountProductType").val("Sheeting");
+                    $("#RegCompPlantOtrProductType").val("Sheeting");
+
+                    _GetPlantsUnitChange("Sheeting");
+                }
+                if (response["StatesList"] != undefined) {
+                    var StatesList = response["StatesList"];
+                    var StateCode = "<option value=''>Select</option>";
+
+                    if (UserType == "COM_OF_BU2" || UserType == "ADMIN") {
+                        StateCode = StateCode + "<option value='ALL'>ALL</option>";
+                    }
+                    var j = 0;
+                    for (j = 0; j < StatesList.length; j++) {
+                        StateCode = StateCode + "<option value='" + StatesList[j]["STATE_CODE"] + "'>" + StatesList[j]["STATE_DESC"] + "</option>";
+                    }
+                    $("#CreditNoteStates").append(StateCode);
+                }
+            }
+
+        },
+            function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+    });
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var today = dd + '/' + mm + '/' + yyyy;
+
+    var ForeignDate = TodayDateTime;
+    ForeignDate = ForeignDate.split('/')[1] + "/" + ForeignDate.split('/')[0] + "/" + ForeignDate.split('/')[2];
+
+    $("#RegisteredComplaintsPlantSheetingFromDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#RegisteredComplaintsPlantSheetingToDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#RegisteredComplaintsPlantFromDateOthers").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#RegisteredComplaintsPlantToDateOthers").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#ClosedRegisteredComplaintsPlantFromDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#ClosedComplaintsPlantToDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#DepoFromDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#DepoToDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#ClosedAccountFromDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#ClosedAccountToDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#ClosedAccountDefectTypeFromDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#ClosedAccountDefectTypeToDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#CreditNoteFromDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+    $("#CreditNoteToDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        endDate: new Date(ForeignDate)
+    });
+
+
+    function GetReport(Report) {
+
+        try {
+
+            if (Report == "") {
+                return;
+            }
+            else if (Report == "CompensationReport") {
+                $("#CompensationReport").modal('show');
+            }
+            else if (Report == "ComplaintRegistrationReport") {
+                $("#ComplaintRegistrationReport").modal('show');
+            }
+            else if (Report == "SalesReturnReport") {              
+                $("#SalesReturnReport").modal('show');
+            }
+            else if (Report == "NonMovingOrWrongOrderPlacedSalesReturnReport") {
+                $("#NonMovingOrWrongOrderPlacedSalesReturnReport").modal('show');
+            }
+        }
+        catch (e) {
+            alert("Error : CompensationReport " + e);
+        }
+    }
+
+
+    function GenerateReport(Report) {
+        try {
+            //debugger
+            if (Report == "") {
+                return;
+            }
+
+            else if (Report == "CompensationReport") {
+                var ComplaintTrackingNo = $("#txtComplaintTrackingNoCompensationReport").val();
+                if (ComplaintTrackingNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_Compensation?CTN=' + ComplaintTrackingNo + '');
+                }
+            }
+            else if (Report == "ComplaintRegistrationReport") {
+                var ComplaintTrackingNo = $("#txtComplaintRegistrationReportTrackingNo").val();
+
+                if (ComplaintTrackingNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_ComplaintRegistration?CTN=' + ComplaintTrackingNo + '');
+
+                }
+
+            }
+            else if (Report == "SiteObservationSheetPartCReport") {
+                var ComplaintTrackingNo = $("#txtSiteObservationSheetPartCTrackingNo").val();
+
+                if (ComplaintTrackingNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_SiteObservationSheetPartCReport?CTN=' + ComplaintTrackingNo + '');
+                }
+            }
+            else if (Report == "InvestigationReport") {
+                var ComplaintTrackingNo = $("#txtInvestigationReportTrackingNo").val();
+
+                if (ComplaintTrackingNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_InvestigationReport?CTN=' + ComplaintTrackingNo + '');
+                }
+            }
+            else if (Report == "BreakageInspectionSheetPartBReport") {
+                var ComplaintTrackingNo = $("#txtBreakageInspectionSheetPartBTrackingNo").val();
+
+                if (ComplaintTrackingNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_BreakageInspectionSheetPartBReport?CTN=' + ComplaintTrackingNo + '');
+                }
+            }
+            else if (Report == "CompensationNoteReport") {
+                var ComplaintTrackingNo = $("#txtCompensationNoteComplaintTrackingNo").val();
+
+                if (ComplaintTrackingNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_CompensationNoteReport?CTN=' + ComplaintTrackingNo + '');
+                }
+            }
+            else if (Report == "CommunicationNoteReport") {
+                var CorrectiveMeasureId = $("#CorrectiveMeasureId").val();
+
+                if (CorrectiveMeasureId == "") {
+                    alert("Please Enter CorrectiveMeasure Id");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_CommunicationNoteReport?CTN=' + CorrectiveMeasureId + '');
+                }
+            }
+
+
+            else if (Report == "RegisteredComplaintsPlantSheeting") {
+
+                var FromDate = $("#RegisteredComplaintsPlantSheetingFromDate").val();
+                var ToDate = $("#RegisteredComplaintsPlantSheetingToDate").val();
+                var Plant = $("#RegisteredComplaintsPlantSheetingPlant").val();
+
+
+                var Flag = 0;
+
+                if (FromDate == "") {
+                    Flag = Flag + 1;
+                    $("#RegisteredComplaintsPlantSheetingFromDate").css("border-color", "red");
+                }
+                else {
+                    $("#RegisteredComplaintsPlantSheetingFromDate").css("border-color", "#d2d6de");
+                }
+
+                if (ToDate == "") {
+                    Flag = Flag + 1;
+                    $("#RegisteredComplaintsPlantSheetingToDate").css("border-color", "red");
+                }
+                else {
+                    $("#RegisteredComplaintsPlantSheetingToDate").css("border-color", "#d2d6de");
+                }
+
+                if (Plant == "") {
+                    Flag = Flag + 1;
+                    $("#RegisteredComplaintsPlantSheetingPlant").css("border-color", "red");
+                }
+                else {
+                    $("#RegisteredComplaintsPlantSheetingPlant").css("border-color", "#d2d6de");
+                }
+
+
+                if (Flag > 0) {
+                    return;
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_RegisteredComplaintsPlantSheeting?FD=' + FromDate + '&TD=' + ToDate + '&Plant=' + Plant + '&PN=' + $("#RegisteredComplaintsPlantSheetingPlant option:selected").text() + '');
+
+                    //$("#RegisteredComplaintsPlantSheetingFromDate").val("");
+                    //$("#RegisteredComplaintsPlantSheetingToDate").val("");
+                    //$("#RegisteredComplaintsPlantSheetingPlant").val("");
+                }
+
+            }
+            else if (Report == "RegisteredComplaintsPlantOtherstReport") {
+
+                var FromDate = $("#RegisteredComplaintsPlantFromDateOthers").val();
+                var ToDate = $("#RegisteredComplaintsPlantToDateOthers").val();
+                var Plant = $("#RegisteredComplaintsPlantPlantOthers").val();
+                var BuninessUnit = $("#RegCompPlantOtrProductType").val();
+
+                var Flag = 0;
+
+                if (FromDate == "") {
+                    Flag = Flag + 1;
+                    $("#RegisteredComplaintsPlantFromDateOthers").css("border-color", "red");
+                }
+                else {
+                    $("#RegisteredComplaintsPlantFromDateOthers").css("border-color", "#d2d6de");
+                }
+
+                if (ToDate == "") {
+                    Flag = Flag + 1;
+                    $("#RegisteredComplaintsPlantToDateOthers").css("border-color", "red");
+                }
+                else {
+                    $("#RegisteredComplaintsPlantToDateOthers").css("border-color", "#d2d6de");
+                }
+
+                if (BuninessUnit == "") {
+                    Flag = Flag + 1;
+                    $("#RegCompPlantOtrProductType").css("border-color", "red");
+                }
+                else {
+                    $("#RegCompPlantOtrProductType").css("border-color", "#d2d6de");
+                }
+
+                if (Plant == "") {
+                    Flag = Flag + 1;
+                    $("#RegisteredComplaintsPlantPlantOthers").css("border-color", "red");
+                }
+                else {
+                    $("#RegisteredComplaintsPlantPlantOthers").css("border-color", "#d2d6de");
+                }
+
+                if (Flag > 0) {
+                    return;
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_RegisteredComplaintsPlantOthers?FD=' + FromDate + '&TD=' + ToDate + '&Plant=' + Plant + '&PN=' + $("#RegisteredComplaintsPlantPlantOthers option:selected").text() + '&PT=' + $("#RegCompPlantOtrProductType").val() + '');
+                }
+
+            }
+            else if (Report == "ClosedComplaintsPlantReport") {
+
+                var FromDate = $("#ClosedRegisteredComplaintsPlantFromDate").val();
+                var ToDate = $("#ClosedComplaintsPlantToDate").val();
+                var ProductType = $("#ClosedComplaintsProductType").val();
+                var Plant = $("#ClosedComplaintsPlantD").val();
+
+                var Flag = 0;
+
+                if (FromDate == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedRegisteredComplaintsPlantFromDate").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedRegisteredComplaintsPlantFromDate").css("border-color", "#d2d6de");
+                }
+
+                if (ToDate == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedComplaintsPlantToDate").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedComplaintsPlantToDate").css("border-color", "#d2d6de");
+                }
+
+                if (ProductType == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedComplaintsProductType").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedComplaintsProductType").css("border-color", "#d2d6de");
+                }
+
+                if (Plant == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedComplaintsPlantD").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedComplaintsPlantD").css("border-color", "#d2d6de");
+                }
+
+
+
+                if (Flag > 0) {
+                    return;
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_ClosedComplaintsPlant?FD=' + FromDate + '&TD=' + ToDate + '&Plant=' + Plant + '&PT=' + ProductType + '&PN=' + $("#ClosedComplaintsPlantD option:selected").text() + '');
+
+                    //$("#ClosedRegisteredComplaintsPlantFromDate").val("");
+                    //$("#ClosedComplaintsPlantToDate").val("");
+                    //$("#ClosedComplaintsProductType").val("");
+                    //$("#ClosedComplaintsPlantD").val("");
+
+                }
+
+            }
+            else if (Report == "ClosedComplaintsAccountReport") {
+
+                var FromDate = $("#ClosedAccountFromDate").val();
+                var ToDate = $("#ClosedAccountToDate").val();
+                var ProductType = $("#ClosedAccountProductType").val();
+                var Plant = $("#ClosedAccountPlantD").val();
+
+                var Flag = 0;
+
+                if (FromDate == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountFromDate").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountFromDate").css("border-color", "#d2d6de");
+                }
+
+                if (ToDate == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountToDate").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountToDate").css("border-color", "#d2d6de");
+                }
+
+                if (ProductType == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountProductType").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountProductType").css("border-color", "#d2d6de");
+                }
+
+                if (Plant == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountPlantD").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountPlantD").css("border-color", "#d2d6de");
+                }
+
+
+
+                if (Flag > 0) {
+                    return;
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_ClosedComplaintsAccount?FD=' + FromDate + '&TD=' + ToDate + '&Plant=' + Plant + '&PT=' + ProductType + '&PN=' + $("#ClosedAccountPlantD option:selected").text() + '');
+
+                    //$("#ClosedAccountFromDate").val("");
+                    //$("#ClosedAccountToDate").val("");
+                    //$("#ClosedAccountProductType").val("");
+                    //$("#ClosedAccountPlantD").val("");
+
+                }
+
+            }
+            else if (Report == "ClosedComplaintsAccountDefectTypeReport") {
+                var FromDate = $("#ClosedAccountDefectTypeFromDate").val();
+                var ToDate = $("#ClosedAccountDefectTypeToDate").val();
+                var ProductType = $("#ClosedAccountDefectTypeProductType").val();
+                var Plant = $("#ClosedAccountDefectTypePlantD").val();
+                var Flag = 0;
+                if (FromDate == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountDefectTypeFromDate").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountDefectTypeFromDate").css("border-color", "#d2d6de");
+                }
+                if (ToDate == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountDefectTypeToDate").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountDefectTypeToDate").css("border-color", "#d2d6de");
+                }
+                if (ProductType == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountDefectTypeProductType").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountDefectTypeProductType").css("border-color", "#d2d6de");
+                }
+
+                if (Plant == "") {
+                    Flag = Flag + 1;
+                    $("#ClosedAccountDefectTypePlantD").css("border-color", "red");
+                }
+                else {
+                    $("#ClosedAccountDefectTypePlantD").css("border-color", "#d2d6de");
+                }
+                if (Flag > 0) {
+                    return;
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_ClosedComplaintsAccountDefectType?FD=' + FromDate + '&TD=' + ToDate + '&Plant=' + Plant + '&PT=' + ProductType + '&PN=' + $("#ClosedAccountDefectTypePlantD option:selected").text() + '');
+                }
+            }
+            else if (Report == "ComplaintDetailsDepoReport") {
+
+                var FromDate = $("#DepoFromDate").val();
+                var ToDate = $("#DepoToDate").val();
+                var Depo = $("#ComplaintDetailsDepoD").val();
+
+                var Flag = 0;
+
+                if (FromDate == "") {
+                    Flag = Flag + 1;
+                    $("#DepoFromDate").css("border-color", "red");
+                }
+                else {
+                    $("#DepoFromDate").css("border-color", "#d2d6de");
+                }
+
+                if (ToDate == "") {
+                    Flag = Flag + 1;
+                    $("#DepoToDate").css("border-color", "red");
+                }
+                else {
+                    $("#DepoToDate").css("border-color", "#d2d6de");
+                }
+
+                if (Depo == "") {
+                    Flag = Flag + 1;
+                    $("#ComplaintDetailsDepoD").css("border-color", "red");
+                }
+                else {
+                    $("#ComplaintDetailsDepoD").css("border-color", "#d2d6de");
+                }
+
+                if (Flag > 0) {
+                    return;
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_ComplaintDetailsDepoReport?FD=' + FromDate + '&TD=' + ToDate + '&Depo=' + Depo + '&DepoName=' + $("#ComplaintDetailsDepoD option:selected").text() + '');
+
+                    //$("#DepoFromDate").val("");
+                    //$("#DepoToDate").val("");
+                    //$("#ComplaintDetailsDepoD").val("");
+                }
+            }
+            else if (Report == "PendingCreditNoteApprovalReport") {
+
+                var FromDate = $("#CreditNoteFromDate").val();
+                var ToDate = $("#CreditNoteToDate").val();
+                var State = $("#CreditNoteStates").val();
+
+                var Flag = 0;
+
+                if (FromDate == "") {
+                    Flag = Flag + 1;
+                    $("#CreditNoteFromDate").css("border-color", "red");
+                }
+                else {
+                    $("#CreditNoteFromDate").css("border-color", "#d2d6de");
+                }
+
+                if (ToDate == "") {
+                    Flag = Flag + 1;
+                    $("#CreditNoteToDate").css("border-color", "red");
+                }
+                else {
+                    $("#CreditNoteToDate").css("border-color", "#d2d6de");
+                }
+
+                if (State == "") {
+                    Flag = Flag + 1;
+                    $("#CreditNoteStates").css("border-color", "red");
+                }
+                else {
+                    $("#CreditNoteStates").css("border-color", "#d2d6de");
+                }
+
+                if (Flag > 0) {
+                    return;
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_PendingCreditNoteApprovalReport?FD=' + FromDate + '&TD=' + ToDate + '&StateCode=' + State + '&StateName=' + $("#CreditNoteStates option:selected").text() + '');
+                }
+            }
+                //VIKAS G, 22-6-22 NonMovingOrWrongOrderPlacedSalesReturn
+            else if (Report == "SalesReturnReport") {
+                var SalesReturnNo = $("#txtComplaintTrackingNoSalesReturnReport").val();
+                if (SalesReturnNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_SalesReturn?CTN=' + SalesReturnNo + '');
+                }
+            }
+            //VIKAS G, 22-6-22 NonMovingOrWrongOrderPlacedSalesReturn
+            else if (Report == "NonMovingOrWrongOrderPlacedSalesReturnReport") {
+                var SalesReturnNo = $("#txtComplaintTrackingNoNonMovingOrWrongOrderPlacedSalesReturnReport").val();
+                if (SalesReturnNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_NonMovingOrWrongOrderPlacedSalesReturn?CTN=' + SalesReturnNo + '');
+                }
+            }
+        }
+        catch (e) {
+            alert("Error : GenerateReport " + e);
+        }
+    }
+
+    function GenerateReportEmail(Report) {
+        try {            
+            if (Report == "") {
+                return;
+            }
+            //VIKAS G, 22-6-22 SalesReturnReport
+            else if (Report == "SalesReturnReport") {
+                var SalesReturnNo = $("#txtComplaintTrackingNoSalesReturnReport").val();
+                if (SalesReturnNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_SalesReturnEmail?CTN=' + SalesReturnNo + '');
+                }
+            }
+            //VIKAS G, 22-6-22 NonMovingOrWrongOrderPlacedSalesReturn
+            else if (Report == "NonMovingOrWrongOrderPlacedSalesReturnReport") {
+                var SalesReturnNo = $("#txtComplaintTrackingNoNonMovingOrWrongOrderPlacedSalesReturnReport").val();
+                if (SalesReturnNo == "") {
+                    alert("Please Enter Tracking No");
+                }
+                else {
+                    window.open('../../ComplaintReports/Report_NonMovingOrWrongOrderPlacedSalesReturnEmail?CTN=' + SalesReturnNo + '');
+                }
+            }
+        }
+        catch (e) {
+            alert("Error : GenerateReport " + e);
+        }
+    }
+
+
+    function RegisteredComplaintsPlantSheetingFromDateChange() {
+        var MyDate = $("#RegisteredComplaintsPlantSheetingFromDate").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#RegisteredComplaintsPlantSheetingToDate").datepicker('setStartDate', MyDate);
+            $("#RegisteredComplaintsPlantSheetingToDate").val("");
+        }
+    }
+
+
+    function ClosedRegisteredComplaintsPlantFromDateChange() {
+        var MyDate = $("#ClosedRegisteredComplaintsPlantFromDate").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#ClosedComplaintsPlantToDate").datepicker('setStartDate', MyDate);
+            $("#ClosedComplaintsPlantToDate").val("");
+        }
+    }
+
+
+    function DepoFromDateChange() {
+        var MyDate = $("#DepoFromDate").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#DepoToDate").datepicker('setStartDate', MyDate);
+            $("#DepoToDate").val("");
+        }
+    }
+
+
+    function ClosedAccountFromDateChange() {
+        var MyDate = $("#ClosedAccountFromDate").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#ClosedAccountToDate").datepicker('setStartDate', MyDate);
+            $("#ClosedAccountToDate").val("");
+        }
+    }
+
+    function ClosedAccountDefectTypeFromDateChange() {
+        var MyDate = $("#ClosedAccountDefectTypeFromDate").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#ClosedAccountDefectTypeToDate").datepicker('setStartDate', MyDate);
+            $("#ClosedAccountDefectTypeToDate").val("");
+        }
+    }
+
+
+    function RegisteredComplaintsPlantFromDateOthersChange() {
+        var MyDate = $("#RegisteredComplaintsPlantFromDateOthers").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#RegisteredComplaintsPlantToDateOthers").datepicker('setStartDate', MyDate);
+            $("#RegisteredComplaintsPlantToDateOthers").val("");
+        }
+    }
+
+    function CreditNoteFromDateChange() {
+        var MyDate = $("#CreditNoteFromDate").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#CreditNoteToDate").datepicker('setStartDate', MyDate);
+            $("#CreditNoteToDate").val("");
+        }
+    }
+
+
+    function GetPlantsUnitChange(UnitId) {
+        debugger
+        var BusinessUnit = $("#" + UnitId).val();
+
+        var UserCode = $("#SessionUserCode").val();
+        var UserType = $("#SessionUserTypeID").val();
+
+
+        if (BusinessUnit == "") {
+            return;
+        }
+        else if (BusinessUnit == "Sheeting") {
+            BusinessUnit = "SBU1";
+        }
+        else if (BusinessUnit == "Others") {
+            BusinessUnit = "SBU2";
+        }
+        else if (BusinessUnit == "PF") {
+            BusinessUnit = "SBU3";
+        }
+        else if (BusinessUnit == "TILES") {
+            BusinessUnit = "SBU8";
+        }
+
+
+
+        var Data = JSON.stringify({
+            "MasterType": "GetPlantMaster",
+            "BusinessUnit": BusinessUnit
+        });
+
+        ShowLoader();
+
+        $.ajax({
+            url: '../../Home/getMasterData',
+            type: 'GET',
+            data: { MasterType: Data },
+            success: function (PlantList) {
+                try {
+
+                    $("#ClosedComplaintsPlantD").children().remove();
+                    $("#ClosedAccountPlantD").children().remove();
+                    $("#ClosedAccountDefectTypePlantD").children().remove();
+
+                    PlantList = JSON.parse(PlantList.tabledata);
+                    var OptionCode = "<option value=''>Select</option>";
+
+                    if (UserType == "QAM_PL" || UserType == "SH_BU3" || UserType == "RSH_BU3" || UserType == "NSH_BU3") {
+                    }
+                    else {
+                        OptionCode = OptionCode + "<option value='ALL'>ALL</option>";
+                    }
+
+                    var i = 0;
+
+                    for (i = 0; i < PlantList.length; i++) {
+                        OptionCode = OptionCode + "<option value='" + PlantList[i]["Plant Code"] + "'>" + PlantList[i]["Plant Name"] + "</option>";
+                    }
+
+                    $("#ClosedComplaintsPlantD").children().remove();
+                    $("#ClosedAccountPlantD").children().remove();
+                    $("#ClosedAccountDefectTypePlantD").children().remove();
+                    $("#RegisteredComplaintsPlantPlantOthers").children().remove();
+
+                    $("#ClosedComplaintsPlantD").append(OptionCode);
+                    $("#ClosedAccountPlantD").append(OptionCode);
+                    $("#ClosedAccountDefectTypePlantD").append(OptionCode);
+                    $("#RegisteredComplaintsPlantPlantOthers").append(OptionCode);
+
+                }
+                catch (e) {
+                    alert("Hello : " + e);
+                }
+                HideLoader();
+            },
+            error: function (error) {
+                HideLoader();
+            }
+
+        });
+
+
+
+
+
+    }
+
+
+    function _GetPlantsUnitChange(BusinessUnit) {
+
+        var UserCode = $("#SessionUserCode").val();
+        var UserType = $("#SessionUserTypeID").val();
+
+        if (BusinessUnit == "") {
+            return;
+        }
+        else if (BusinessUnit == "Sheeting") {
+            BusinessUnit = "SBU1";
+        }
+        else if (BusinessUnit == "Others") {
+            BusinessUnit = "SBU2";
+        }
+        else if (BusinessUnit == "PF") {
+            BusinessUnit = "SBU3";
+        }
+
+        else if (BusinessUnit == "TILES") {
+            BusinessUnit = "SBU8";
+        }
+
+        var Data = JSON.stringify({
+            "MasterType": "GetPlantMaster",
+            "BusinessUnit": BusinessUnit
+        });
+
+        ShowLoader();
+
+        $.ajax({
+            url: '../../Home/getMasterData',
+            type: 'GET',
+            data: { MasterType: Data },
+            success: function (PlantList) {
+                try {
+
+                    $("#ClosedComplaintsPlantD").children().remove();
+                    $("#ClosedAccountPlantD").children().remove();
+                    $("#ClosedAccountDefectTypePlantD").children().remove();
+
+                    PlantList = JSON.parse(PlantList.tabledata);
+                    var OptionCode = "<option value=''>Select</option>";
+
+                    if (UserType == "QAM_PL" || UserType == "SH_BU3" || UserType == "RSH_BU3" || UserType == "NSH_BU3") {
+                    }
+                    else {
+                        OptionCode = OptionCode + "<option value='ALL'>ALL</option>";
+                    }
+
+                    var i = 0;
+
+                    for (i = 0; i < PlantList.length; i++) {
+                        OptionCode = OptionCode + "<option value='" + PlantList[i]["Plant Code"] + "'>" + PlantList[i]["Plant Name"] + "</option>";
+                    }
+
+                    $("#ClosedComplaintsPlantD").children().remove();
+                    $("#ClosedAccountPlantD").children().remove();
+                    $("#ClosedAccountDefectTypePlantD").children().remove();
+                    $("#RegisteredComplaintsPlantPlantOthers").children().remove();
+
+                    $("#ClosedComplaintsPlantD").append(OptionCode);
+                    $("#ClosedAccountPlantD").append(OptionCode);
+                    $("#ClosedAccountDefectTypePlantD").append(OptionCode);
+                    $("#RegisteredComplaintsPlantPlantOthers").append(OptionCode);
+
+                }
+                catch (e) {
+                    alert("Hello : " + e);
+                }
+                HideLoader();
+            },
+            error: function (error) {
+                HideLoader();
+            }
+
+        });
+
+    }
+
+
+</script>

@@ -1,0 +1,314 @@
+﻿@*Module            : Sales Process Management.
+    DocumentName        : DailyOrderTracking.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for Daily Order Tracking List.
+    Developer Name      : Harish Kothuri.
+    Change Log          : NA.*@
+
+@using LabelNames = DIMS.Content.Resource_Files.DailyOrderTracking;
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string Role = UP.UserTypeCode;
+}
+
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Daily Order Tracker</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Daily Order Tracker</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @if (Role == "STOCKIST")
+                {
+                    <a href ng-click="go('AddOrderForFSO')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>
+                }
+                @if (Role != "STOCKIST" & Role == "FSO")
+                {
+                    <a href ng-click="go('AddOrder')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>
+                }
+
+                @*<a href>
+                        <i class="fa fa-print fa-4" title="Print"></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-file-excel-o fa-4" title="Excel"></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-file-pdf-o fa-4" title="Pdf"></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-paperclip fa-4" title="Attachements"></i>
+                    </a>
+                    <a href>
+                        <i class=" fa fa-thumbs-o-up" title="Send for Reviews" ></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                    </a> *@
+
+                <input type="text" id="SessionUserCode" style="display:none;" value="@SessionUserCode" />
+                <input type="text" id="SessionUserRole" style="display:none;" value="@Role" />
+            </div>
+        </div>
+    </nav>
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="AddOrdersDiv">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+                <div class="box-header">
+                    <div class="pull-right" style="margin-left: 15px;">
+                        <input type="text" id="UserCode" value="@SessionUserCode" hidden="hidden">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="GetDailyOrders()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+                @*Filters Zone*@
+                <div class="box-body">
+                <form class="form-horizontal" role="form" style="font-size: small" action="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            From Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderFromDate" placeholder="From Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtBatchNo">
+                            To Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderToDate" placeholder="To Date" readonly />
+                        </div>
+                        <label class="col-sm-1 control-label" for="Zone">
+                            Zone
+                        </label>
+                        <div class="col-sm-1">
+                            <select id="Zone" multiple="multiple" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="SalesEmapName">
+                            State
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="TerriotryArea">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-1 control-label" for="ProductCategory">
+                            Product Category
+                        </label>
+                        <div class="col-sm-1">
+                            <select id="ProductCategory" multiple="multiple" class="form-control">
+                                <option value="ACSheet">AC Sheet</option>
+                                <option value="CCSheet">CC Sheet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="StockistID">
+                            Customer Code/Name
+                        </label>
+                        <div class="col-sm-3">
+                            <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                        </div>
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div class="table-responsive" id="DailyOrderTableId">
+                    <table id="DailyOrder" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                @*<table id="DailyOrder" class="table tablecss" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @LabelNames.TblOrderID
+                                </th>
+                                <th>
+                                    @LabelNames.TblOrderDate
+                                </th>
+                                <th>
+                                    @LabelNames.TblStockistID
+                                </th>
+                                <th>
+                                    @LabelNames.TblStockistName
+                                </th>
+                                <th>
+                                    @LabelNames.TblShiptoParty
+                                </th>
+                                <th>
+                                    Ship to Party Name
+                                </th>
+                                <th>
+                                    Product Category
+                                </th>
+                                <th>
+                                    SKU/Size
+                                </th>
+                                <th>
+                                    UOM
+                                </th>
+                                <th>
+                                    @LabelNames.TblOrderQuantity
+                                </th>
+                                <th>
+                                    Quantity in MT (Alternate)
+                                </th>
+                                <th>
+                                    Ordered Quantity (MT)
+                                </th>
+                                <th>
+                                    @LabelNames.TblSalesEmployee
+                                </th>
+                                <th>
+                                    @LabelNames.TblSalesRegion
+                                </th>
+
+                                <th>
+                                    @LabelNames.TblSalesDistrict
+                                </th>
+                                <th>
+                                    @LabelNames.TblSaleOrdernumber
+                                </th>
+                                <th>Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+
+        GetServerDateTime();
+
+
+        $('#OrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+
+    });
+    $("#OrderFromDate").datepicker().on("changeDate", function (e) {
+        $("#OrderToDate").datepicker('setStartDate', $("#OrderFromDate").val());
+        $("#OrderToDate").val("");
+    });
+    $("#OrderToDate").datepicker().on("changeDate", function (e) {
+        if ($("#OrderFromDate").val() == "") {
+            $("#OrderToDate").val("");
+        } else {
+            $("#OrderFromDate").datepicker('setEndDate', $("#OrderToDate").val());
+        }
+    });
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+                    $("#OrderFromDate").datepicker('setEndDate', result);
+                    $("#OrderToDate").datepicker('setEndDate', result);
+                }
+
+            }
+
+        });
+    }
+    var table = $('#DailyOrder').dataTable();
+    function ResetFilters() {
+        $("#OrderFromDate").val("");
+        $("#OrderToDate").val("");
+        $('#CustomerCode').val("");
+
+        var State = $('#State option').length;
+        var Zone = $('#Zone option').length;
+        var TerriotryArea = $('#TerriotryArea option').length;
+
+        for (var i = 0; i < State; i++) {
+            $('#State')[0].sumo.remove(0);
+        }
+        for (var i = 0; i < Zone; i++) {
+            $('#Zone')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < TerriotryArea; i++) {
+            $('#TerriotryArea')[0].sumo.remove(0);
+        }
+
+        table.fnDraw();
+
+    }
+</script>
+

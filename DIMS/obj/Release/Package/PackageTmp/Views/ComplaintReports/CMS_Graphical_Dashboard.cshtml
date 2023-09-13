@@ -1,0 +1,2270 @@
+﻿@{
+    ViewBag.Title = "CMS_Graphical_Dashboard";
+
+    string NowYear = DateTime.Now.Year.ToString();
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string UserCode = UP.UserCode;
+    string UserType = UP.UserType;
+    string RoleCode = UP.UserTypeCode;
+    var SBU3_Code = global_asax.SBU3_Code;
+       
+}
+
+<style>
+    .dataTables_scroll {
+        max-height: initial !important;
+        overflow: auto !important;
+    }
+
+    table tbody tr th {
+        text-align: center !important;
+    }
+
+    table tbody tr td {
+        text-align: right;
+    }
+
+    table tfoot tr th {
+        text-align: right;
+    }
+
+</style>
+<script type="text/javascript" src="~/Scripts/Chart.min.js"></script>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>CMS Graphical Dashboard</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">CMS Graphical Dashboard</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="fromDate" placeholder="From Date" readonly="" onchange="DateValidation('fromDate', 'toDate');">
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="toDate" placeholder="To Date" readonly="">
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="StateFilter" class="form-control"></select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="BusinessUnitFilter" class="form-control"></select>
+                    </div>
+                    @*<div class="col-sm-2">
+                        <select id="PlantFilter" class="form-control"></select>
+                    </div>*@
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-info navbar-btn" onclick="LoadCMSGraphicalDashBoardNewBU3()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                @*<select id="StateFilter" style="float: left; display: block;"></select>*@
+                @*<select id="YearFilter" style="float: left; display: block; margin-left: 10px;" onchange="LoadCMSGraphicalDashBoard()"></select>*@
+                @*<select id="MonthFilter" style="float: left; display: block; margin-left: 10px;" onchange="LoadCMSGraphicalDashBoard()"></select>*@
+                @*svprasadk 30-12-2020 SBU3 Requirement CMS Graphical Dashboard based on state, from date, to date and BU start*@
+                @*<input type="text" id="fromDate" readonly placeholder="From Date" style="float: left; display: block; margin-left: 10px;" />*@
+                @*<input type="text" id="toDate" readonly placeholder="To Date" style="float: left; display: block; margin-left: 10px;" />*@
+                @*svprasadk 30-12-2020 SBU3 Requirement CMS Graphical Dashboard based on state, from date, to date and BU end*@
+                @*<select id="BusinessUnitFilter" style="float: left; display: block; margin-left: 10px;"></select>*@
+                @*<input type="button" onclick="LoadCMSGraphicalDashBoardNewBU3()" value="Submit" style="float: left; display: block; margin-left: 10px; background-color:#d2401a;border:1px solid #d2401a;" class="btn btn-info navbar-btn" />*@
+                <input type="text" id="NowYear" value="@NowYear" style="display:none;" />
+                <input type="text" id="UserCode" value="@UserCode" style="display:none;" />
+                <input type="text" id="UserType" value="@UserType" style="display:none;" />
+                <input type="text" id="RoleCode" value="@RoleCode" style="display:none;" />
+            </div>
+        </div>
+    </nav>
+</section>
+
+@*<section class="content" style="max-height: 478px; overflow-y: scroll;">    
+    <div class="row" id="CMS_Graphical_Dashboard">
+        <div class="col-md-12">
+            <label>Current Month</label>
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <div id="canvas-holder" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <label>Complaints Registered</label>
+                        <canvas id="CM_Registered_Count_Chart" width="200" height="200"></canvas>
+                    </div>
+                    <div id="canvas-holder1" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <label>Complaints Rejected</label>
+                        <canvas id="CM_Rejected_Count_Chart" width="200" height="200"></canvas>
+                    </div>
+                    <div id="canvas-holder2" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <label>Average Time</label>
+                        <canvas id="CM_Average_Time_Chart" width="200" height="200"></canvas>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label>Financial Year</label>
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="table-responsive" id="RoleAccessConfigDiv">                    
+                    <div id="canvas-holder3" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <label>Complaints Registered</label>
+                        <canvas id="FY_Registered_Count_Chart" width="200" height="200"></canvas>
+                    </div>                    
+                    <div id="canvas-holder4" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <label>Complaints Rejected</label>
+                        <canvas id="FY_Rejected_Count_Chart" width="200" height="200"></canvas>
+                    </div>                    
+                    <div id="canvas-holder5" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <label>Average Time</label>
+                        <canvas id="FY_Average_Time_Chart" width="200" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="row" id="CMS_Graphical_Dashboard">
+        <div class="col-md-12">
+            <label>Complaint Category Wise Report</label>
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <div id="canvas-holder" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <canvas id="categoryWiseGraphBar" width="200" height="200"></canvas>
+                    </div>
+                    <div id="canvas-holder1" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <canvas id="categoryWiseGraphPie" width="200" height="200"></canvas>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label>Plant Wise Report</label>
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <div id="canvas-holder2" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <canvas id="plantWiseGraphBar" width="200" height="200"></canvas>
+                    </div>
+                    <div id="canvas-holder3" style="width:30%; height:30%; display:none; text-align:center" class="col-md-4">
+                        <canvas id="plantWiseGraphPie" width="200" height="200"></canvas>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="row" id="CMS_Graphical_Dashboard">
+        <div class="col-md-12">
+            <label>Complaint Category Wise Report</label>
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <div id="categoryWiseGraph" style="height: 300px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label>Plant Wise Report</label>
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <div id="plantWiseGraph" style="height: 300px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        @* svprasadk 04 - 01 - 2021 SBU3 Requirement CMS Graphical Dashboard based on state, from date, to date and BU start *@
+                var ForeignDate = TodayDateTime;
+
+        //alert(ForeignDate);
+
+        ForeignDate = ForeignDate.split('/')[1] + "/" + ForeignDate.split('/')[0] + "/" + ForeignDate.split('/')[2];
+
+        var fromDate = "";
+        var toDate = "";
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (mm < 4) {
+            fromDate = "01/04/" + (yyyy - 1);
+            toDate = "31/03/" + (yyyy);
+        } else {
+            fromDate = "01/04/" + (yyyy);
+            toDate = "31/03/" + (yyyy + 1);
+        }
+        $("#fromDate").val(fromDate)
+        $("#toDate").val(toDate)
+        $("#fromDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+        });
+        $("#toDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+        });
+        @* svprasadk 04 - 01 - 2021 SBU3 Requirement CMS Graphical Dashboard based on state, from date, to date and BU end *@
+        CheckUserSession();
+        ShowLoader();
+        $.ajax({
+            type: 'POST',
+            url: '../../ComplaintRegistration/FillCMSStateFilter',
+            async: true,
+            success: function (response) {
+
+                $("#StateFilter").empty();
+
+                if (response == "") {
+
+                }
+                else {
+                    response = JSON.parse(response);
+
+                    var option = $('<option></option>').attr("value", "ALL").text("ALL");
+
+                    var RoleCode = $("#RoleCode").val();
+                    //alert(RoleCode)
+                    if (RoleCode == "QH" || RoleCode == "COO" || RoleCode == "CFO" || RoleCode == "NSH" || RoleCode == "ADMIN" || RoleCode == "RSH_BU3" || RoleCode == "NSH_BU3") {
+                        $("#StateFilter").append(option);
+                        //$("#BusinessUnitFilter").append(option);
+                    }
+
+                    for (var i = 0; i < response.length; i++) {
+                        option = $('<option></option>').attr("value", response[i]["STATE_CODE"]).text(response[i]["STATE_DESC"]);
+                        $("#StateFilter").append(option);
+                    }
+
+                    //var CMSState = $("#CMSState").val();
+                    //if (CMSState == "") {
+                        $("#StateFilter").val(response[0]["STATE_CODE"]);
+                    //    $("#CMSState").val(response[0]["STATE_CODE"]);
+                    //}
+                    //else {
+                    //    $("#StateFilter").val(CMSState);
+                    //}
+
+                    var UserCode = $("#UserCode").val();
+                    //alert(UserCode)
+                    var option = "";
+                    if (RoleCode == "QH") {
+                        //option = $('<option></option>').attr("value", "SBU1").text("SBU1");
+                        //option += $('<option></option>').attr("value", "SBU2").text("SBU2");
+                        //option += $('<option></option>').attr("value", "SBU3").text("SBU3");
+                        //$("#BusinessUnitFilter").append(option);
+                        //$("#BusinessUnitFilter").val("ALL");
+                        option = $('<option></option>').attr("value", "SBU3").text("SBU3");
+                        $("#BusinessUnitFilter").append(option);
+                        $("#BusinessUnitFilter").val("SBU3");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }
+                    else if (RoleCode == "CSM") {
+                        //if (UserCode == "50001048" || UserCode == "50001049") {
+                        //    option = $('<option></option>').attr("value", "SBU1").text("SBU1");
+                        //    $("#BusinessUnitFilter").append(option);
+                        //    $("#BusinessUnitFilter").val("SBU1");
+                        //    $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                        //}
+                        //else if (UserCode == "50000822") {
+                        //    option = $('<option></option>').attr("value", "SBU2").text("SBU2");
+                        //    $("#BusinessUnitFilter").append(option);
+                        //    $("#BusinessUnitFilter").val("SBU2");
+                        //    $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                        //}
+                        if (UserCode == "50001234") {
+                            option = $('<option></option>').attr("value", "SBU3").text("SBU3");
+                            $("#BusinessUnitFilter").append(option);
+                            $("#BusinessUnitFilter").val("SBU3");
+                            $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                        }
+                    } else if (RoleCode == "CSM_BU3" || RoleCode == "QAM_SBU3" || RoleCode == "Plant_MHD") {
+                        option = $('<option></option>').attr("value", "SBU3").text("SBU3");
+                        $("#BusinessUnitFilter").append(option);
+                        $("#BusinessUnitFilter").val("SBU3");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }
+                    //else if (RoleCode == "CSM_BU2" || RoleCode == "FSO_BU2") {
+                    //    option = $('<option></option>').attr("value", "SBU2").text("SBU2");
+                    //    $("#BusinessUnitFilter").append(option);
+                    //    $("#BusinessUnitFilter").val("SBU2");
+                    //    $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    //}
+                    else if (RoleCode == "SH_BU3" || RoleCode == "RSH_BU3" || RoleCode == "NSH_BU3") {
+                        option = $('<option></option>').attr("value", "SBU3").text("SBU3");
+                        $("#BusinessUnitFilter").append(option);
+                        $("#BusinessUnitFilter").val("SBU3");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }
+                    //else if (UserCode == "50002304" || UserCode == "KAM" || UserCode == "kam") {
+                    //    option = $('<option></option>').attr("value", "SBU2").text("SBU2");
+                    //    $("#BusinessUnitFilter").append(option);
+                    //    $("#BusinessUnitFilter").val("SBU2");
+                    //    $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    //}
+                    else if (UserCode == "2019" || UserCode == "2021") {
+                        option = $('<option></option>').attr("value", "SBU3").text("SBU3");
+                        $("#BusinessUnitFilter").append(option);
+                        $("#BusinessUnitFilter").val("SBU3");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }
+                    //else {
+                    //    option = $('<option></option>').attr("value", "SBU1").text("SBU1");
+                    //    $("#BusinessUnitFilter").append(option);
+                    //    $("#BusinessUnitFilter").val("SBU1");
+                    //    $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    //}
+
+                    //if (UserCode == "50000822" || UserCode == "50002304" || UserCode == "KAM") {
+                    //    option = $('<option></option>').attr("value", "SBU2").text("SBU2");
+                    //    $("#BusinessUnitFilter").append(option);
+                    //    $("#BusinessUnitFilter").val("SBU2");
+                    //    $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    //}//Vikas G Hardcoded SBU# code to Dynamic Code 50002736 as SBU3_Code.
+                    else if (UserCode == "50001234" || UserCode == SBU3_Code || UserCode == "50004069" || RoleCode == "RSH_BU3" || RoleCode == "NSH_BU3") {
+                        option = $('<option></option>').attr("value", "SBU3").text("SBU3");
+                        $("#BusinessUnitFilter").append(option);
+                        $("#BusinessUnitFilter").val("SBU3");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }
+                    //else if (UserCode == "50000985") {
+                    //    option = $('<option></option>').attr("value", "SBU1").text("SBU1");
+                    //    option += $('<option></option>').attr("value", "SBU2").text("SBU2");
+                    //    option += $('<option></option>').attr("value", "SBU3").text("SBU3");
+                    //    $("#BusinessUnitFilter").append(option);
+                    //    $("#BusinessUnitFilter").val("ALL");
+                    //}
+                    //else {
+                    //    option = $('<option></option>').attr("value", "SBU1").text("SBU1");
+                    //    $("#BusinessUnitFilter").append(option);
+                    //    $("#BusinessUnitFilter").val("SBU1");
+                    //    $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    //}
+                }
+
+                //var NowYear = $("#NowYear").val();
+                //$("#YearFilter").empty();
+
+                //for (var Yearing = parseInt(NowYear) - 10; Yearing <= NowYear; Yearing++) {
+                //    var option = $('<option></option>').attr("value", Yearing).text(Yearing);
+                //    $("#YearFilter").append(option);
+                //}
+
+                //$("#YearFilter").val(NowYear);
+
+                HideLoader();
+
+                LoadCMSGraphicalDashBoardNewBU3();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr, ajaxOptions, thrownError);
+                HideLoader();
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '../../ComplaintRegistration/FillCMSPlantFilterBU3',
+            async: true,
+            success: function (response) {
+
+                $("#PlantFilter").empty();
+
+                if (response == "") {
+
+                }
+                else {
+                    response = JSON.parse(response);
+
+                    for (var i = 0; i < response.length; i++) {
+                        option = $('<option></option>').attr("value", response[i]["PLANT_CODE"]).text(response[i]["PLANT_NAME"]);
+                        $("#PlantFilter").append(option);
+                    }
+                }
+
+                HideLoader();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr, ajaxOptions, thrownError);
+                HideLoader();
+            }
+        });
+    });
+
+
+
+    //function LoadCMSGraphicalDashBoard() {
+
+    //    try {
+    //        var STATE_CODE = $("#StateFilter").val();
+    //        //var YearFilter = $("#YearFilter").val();
+    //        var PRODUCT_TYPE_CODE = $("#BusinessUnitFilter").val();
+
+    //        if (STATE_CODE == "" || PRODUCT_TYPE_CODE == "") {
+    //            return;
+    //        }
+    //        else {
+    //            ShowLoader();
+
+    //            $.ajax({
+    //                type: 'POST',
+    //                url: '../../ComplaintReports/LoadCMSGraphicalDashBoard',
+    //                async: true,
+    //                data: { STATE_CODE: STATE_CODE, PRODUCT_TYPE_CODE: PRODUCT_TYPE_CODE },
+    //                success: function (Resp) {
+
+    //                    if (Resp == "") {
+    //                        alert("No Data Found");
+    //                    }
+    //                    else {
+    //                        Resp = JSON.parse(Resp);
+    //                        console.log('Resp', Resp);
+    //                        var Complaint_Category_Name = [];
+    //                        var CM_Registered_Count = [];
+    //                        var CM_Rejected_Count = [];
+    //                        var CM_Average_Time = [];
+    //                        var FY_Registered_Count = [];
+    //                        var FY_Rejected_Count = [];
+    //                        var FY_Average_Time = [];
+    //                        //console.log(Resp["Complaint_Category_Name"]);
+    //                        for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+    //                            Complaint_Category_Name.push(Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"]);
+    //                        }
+    //                        console.log(Complaint_Category_Name);
+
+    //                        for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+    //                            if (Resp["CM_Registered_Count"] == "") {
+    //                                CM_Registered_Count.push(0);
+    //                            }
+    //                        }
+    //                        if (Array.isArray(Resp["CM_Registered_Count"])) {
+    //                            for (var j = 0; j < Resp["CM_Registered_Count"].length; j++) {
+    //                                CM_Registered_Count.push(Resp["CM_Registered_Count"][j]["REGISTERED_COUNT"]);
+    //                            }
+    //                        }
+    //                        console.log(CM_Registered_Count);
+
+    //                        for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+    //                            if (Resp["CM_Rejected_Count"] == "") {
+    //                                CM_Rejected_Count.push(0);
+    //                            }
+    //                        }
+    //                        if (Array.isArray(Resp["CM_Rejected_Count"])) {
+    //                            for (var j = 0; j < Resp["CM_Rejected_Count"].length; j++) {
+    //                                CM_Rejected_Count.push(Resp["CM_Rejected_Count"][j]["REJECTED_COUNT"]);
+    //                            }
+    //                        }
+    //                        console.log(CM_Rejected_Count);
+
+    //                        for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+    //                            if (Resp["CM_Average_Time"] == "") {
+    //                                CM_Average_Time.push(0);
+    //                            }
+    //                        }
+    //                        if (Array.isArray(Resp["CM_Average_Time"])) {
+    //                            for (var j = 0; j < Resp["CM_Average_Time"].length; j++) {
+    //                                CM_Average_Time.push(Resp["CM_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+    //                            }
+    //                        }
+    //                        console.log(CM_Average_Time);
+
+    //                        for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+    //                            if (Resp["FY_Registered_Count"] == "") {
+    //                                FY_Registered_Count.push(0);
+    //                            }
+    //                        }
+    //                        if (Array.isArray(Resp["FY_Registered_Count"])) {
+    //                            for (var j = 0; j < Resp["FY_Registered_Count"].length; j++) {
+    //                                FY_Registered_Count.push(Resp["FY_Registered_Count"][j]["REGISTERED_COUNT"]);
+    //                            }
+    //                        }
+    //                        console.log(FY_Registered_Count);
+
+    //                        for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+    //                            if (Resp["FY_Rejected_Count"] == "") {
+    //                                FY_Rejected_Count.push(0);
+    //                            }
+    //                        }
+    //                        if (Array.isArray(Resp["FY_Rejected_Count"])) {
+    //                            for (var j = 0; j < Resp["FY_Rejected_Count"].length; j++) {
+    //                                FY_Rejected_Count.push(Resp["FY_Rejected_Count"][j]["REJECTED_COUNT"]);
+    //                            }
+    //                        }
+    //                        console.log(FY_Rejected_Count);
+
+    //                        for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+    //                            if (Resp["FY_Average_Time"] == "") {
+    //                                FY_Average_Time.push(0);
+    //                            }
+    //                        }
+    //                        if (Array.isArray(Resp["FY_Average_Time"])) {
+    //                            for (var j = 0; j < Resp["FY_Average_Time"].length; j++) {
+    //                                FY_Average_Time.push(Resp["FY_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+    //                            }
+    //                        }
+    //                        console.log(FY_Average_Time);
+
+    //                        window.chartColors = {
+    //                            red: 'rgb(255, 99, 132)',
+    //                            orange: 'rgb(255, 159, 64)',
+    //                            yellow: 'rgb(255, 205, 86)',
+    //                            green: 'rgb(75, 192, 192)',
+    //                            blue: 'rgb(54, 162, 235)',
+    //                            purple: 'rgb(153, 102, 255)',
+    //                            grey: 'rgb(201, 203, 207)'
+    //                        };
+
+    //                        //Chart.plugins.register({
+    //                        //    beforeInit: function (chart) {
+    //                        //        var data = chart.data.datasets[0].data;
+    //                        //        var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
+    //                        //        if (!isAllZero) return;
+    //                        //        // when all data values are zero...
+    //                        //        chart.data.datasets[0].data = data.map((e, i) => i > 0 ? 0 : 1); //add one segment
+    //                        //        chart.data.datasets[0].backgroundColor = '#d2dee2'; //change bg color
+    //                        //        chart.data.datasets[0].borderWidth = 0; //no border
+    //                        //        chart.options.tooltips = false; //disable tooltips
+    //                        //        chart.options.legend.onClick = null; //disable legend click
+    //                        //    }
+    //                        //});
+
+    //                        Chart.plugins.register({
+    //                            afterDraw: function (chart) {
+    //                                if (chart.data.datasets[0].data.every(item => item === 0)) {
+    //                                    // No data is present
+    //                                    var ctx = chart.chart.ctx;
+    //                                    var width = chart.chart.width;
+    //                                    var height = chart.chart.height
+    //                                    chart.clear();
+
+    //                                    ctx.save();
+    //                                    ctx.textAlign = 'center';
+    //                                    ctx.textBaseline = 'middle';
+    //                                    ctx.font = "16px normal 'Helvetica Nueue'";
+    //                                    ctx.fillText('No data to display', width / 2, height / 2);
+    //                                    ctx.restore();
+    //                                }
+    //                            }
+    //                        });
+
+    //                        var CM_Registered_Count_Chart_ctx = document.getElementById('CM_Registered_Count_Chart').getContext('2d');
+    //                        var CM_Registered_Count_myPieChart = new Chart(CM_Registered_Count_Chart_ctx, {
+    //                            type: 'pie',
+    //                            data: {
+    //                                datasets: [{
+    //                                    data: CM_Registered_Count,
+    //                                    backgroundColor: [
+    //                                        window.chartColors.red,
+    //                                        window.chartColors.yellow,
+    //                                        window.chartColors.blue,
+    //                                        window.chartColors.green
+    //                                    ],
+    //                                    label: CM_Registered_Count
+    //                                }],
+
+    //                                // These labels appear in the legend and in the tooltips when hovering different arcs
+    //                                labels: Complaint_Category_Name
+    //                            },
+    //                            options: {
+    //                                //title: {
+    //                                //    display: true,
+    //                                //    fontsize: 14,
+    //                                //    text: 'Complaints Registered'
+    //                                //},
+    //                                legend: {
+    //                                    display: true,
+    //                                    position: 'bottom',
+    //                                    labels: {
+    //                                        generateLabels: function (chart) {
+    //                                            //debugger;
+    //                                            var data = chart.data;
+    //                                            if (data.labels.length && data.datasets.length) {
+    //                                                return data.labels.map(function (label, i) {
+    //                                                    var meta = chart.getDatasetMeta(0);
+    //                                                    var ds = data.datasets[0];
+    //                                                    var arc = meta.data[i];
+    //                                                    var custom = arc && arc.custom || {};
+    //                                                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+    //                                                    var arcOpts = chart.options.elements.arc;
+    //                                                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+    //                                                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+    //                                                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+    //                                                    // We get the value of the current label
+    //                                                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+    //                                                    if (value < 10 && value > 0) {
+    //                                                        value = '0' + value;
+    //                                                    }
+    //                                                    return {
+    //                                                        // Instead of `text: label,`
+    //                                                        // We add the value to the string
+    //                                                        text: label + " : " + value,
+    //                                                        fillStyle: fill,
+    //                                                        strokeStyle: stroke,
+    //                                                        lineWidth: bw,
+    //                                                        hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+    //                                                        index: i
+    //                                                    };
+    //                                                });
+    //                                            } else {
+    //                                                return [];
+    //                                            }
+    //                                        }
+    //                                    }
+    //                                }
+    //                            }
+    //                        });
+
+    //                        var CM_Rejected_Count_Chart_ctx = document.getElementById('CM_Rejected_Count_Chart').getContext('2d');
+    //                        var CM_Rejected_Count_myPieChart = new Chart(CM_Rejected_Count_Chart_ctx, {
+    //                            type: 'pie',
+    //                            data: {
+    //                                datasets: [{
+    //                                    data: CM_Rejected_Count,
+    //                                    backgroundColor: [
+    //                                        window.chartColors.red,
+    //                                        window.chartColors.yellow,
+    //                                        window.chartColors.blue,
+    //                                        window.chartColors.green
+    //                                    ],
+    //                                }],
+
+    //                                // These labels appear in the legend and in the tooltips when hovering different arcs
+    //                                labels: Complaint_Category_Name
+    //                            },
+    //                            options: {
+    //                                //title: {
+    //                                //    display: true,
+    //                                //    fontsize: 14,
+    //                                //    text: 'Complaints Rejected'
+    //                                //},
+    //                                legend: {
+    //                                    display: true,
+    //                                    position: 'bottom',
+    //                                    labels: {
+    //                                        generateLabels: function (chart) {
+    //                                            var data = chart.data;
+    //                                            if (data.labels.length && data.datasets.length) {
+    //                                                return data.labels.map(function (label, i) {
+    //                                                    var meta = chart.getDatasetMeta(0);
+    //                                                    var ds = data.datasets[0];
+    //                                                    var arc = meta.data[i];
+    //                                                    var custom = arc && arc.custom || {};
+    //                                                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+    //                                                    var arcOpts = chart.options.elements.arc;
+    //                                                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+    //                                                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+    //                                                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+    //                                                    // We get the value of the current label
+    //                                                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+    //                                                    if (value < 10) {
+    //                                                        value = '0' + value;
+    //                                                    }
+    //                                                    return {
+    //                                                        // Instead of `text: label,`
+    //                                                        // We add the value to the string
+    //                                                        text: label + " : " + value,
+    //                                                        fillStyle: fill,
+    //                                                        strokeStyle: stroke,
+    //                                                        lineWidth: bw,
+    //                                                        hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+    //                                                        index: i
+    //                                                    };
+    //                                                });
+    //                                            } else {
+    //                                                return [];
+    //                                            }
+    //                                        }
+    //                                    }
+    //                                }
+    //                            }
+    //                        });
+
+    //                        var CM_Average_Time_Chart_ctx = document.getElementById('CM_Average_Time_Chart').getContext('2d');
+    //                        var CM_Average_Time_myPieChart = new Chart(CM_Average_Time_Chart_ctx, {
+    //                            type: 'pie',
+    //                            data: {
+    //                                datasets: [{
+    //                                    data: CM_Average_Time,
+    //                                    backgroundColor: [
+    //                                        window.chartColors.red,
+    //                                        window.chartColors.yellow,
+    //                                        window.chartColors.blue,
+    //                                        window.chartColors.green
+    //                                    ],
+    //                                }],
+
+    //                                // These labels appear in the legend and in the tooltips when hovering different arcs
+    //                                labels: Complaint_Category_Name
+    //                            },
+    //                            options: {
+    //                                //title: {
+    //                                //    display: true,
+    //                                //    fontsize: 14,
+    //                                //    text: 'Average Time'
+    //                                //},
+    //                                legend: {
+    //                                    display: true,
+    //                                    position: 'bottom',
+    //                                    labels: {
+    //                                        generateLabels: function (chart) {
+    //                                            var data = chart.data;
+    //                                            if (data.labels.length && data.datasets.length) {
+    //                                                return data.labels.map(function (label, i) {
+    //                                                    var meta = chart.getDatasetMeta(0);
+    //                                                    var ds = data.datasets[0];
+    //                                                    var arc = meta.data[i];
+    //                                                    var custom = arc && arc.custom || {};
+    //                                                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+    //                                                    var arcOpts = chart.options.elements.arc;
+    //                                                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+    //                                                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+    //                                                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+    //                                                    // We get the value of the current label
+    //                                                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+    //                                                    if (value < 10) {
+    //                                                        value = '0' + value;
+    //                                                    }
+    //                                                    return {
+    //                                                        // Instead of `text: label,`
+    //                                                        // We add the value to the string
+    //                                                        text: label + " : " + value,
+    //                                                        fillStyle: fill,
+    //                                                        strokeStyle: stroke,
+    //                                                        lineWidth: bw,
+    //                                                        hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+    //                                                        index: i
+    //                                                    };
+    //                                                });
+    //                                            } else {
+    //                                                return [];
+    //                                            }
+    //                                        }
+    //                                    }
+    //                                }
+    //                            }
+    //                        });
+
+    //                        var FY_Registered_Count_Chart_ctx = document.getElementById('FY_Registered_Count_Chart').getContext('2d');
+    //                        var FY_Registered_Count_myPieChart = new Chart(FY_Registered_Count_Chart_ctx, {
+    //                            type: 'pie',
+    //                            data: {
+    //                                datasets: [{
+    //                                    data: FY_Registered_Count,
+    //                                    backgroundColor: [
+    //                                        window.chartColors.red,
+    //                                        window.chartColors.yellow,
+    //                                        window.chartColors.blue,
+    //                                        window.chartColors.green
+    //                                    ],
+    //                                    label: FY_Registered_Count
+    //                                }],
+
+    //                                // These labels appear in the legend and in the tooltips when hovering different arcs
+    //                                labels: Complaint_Category_Name
+    //                            },
+    //                            options: {
+    //                                //title: {
+    //                                //    display: true,
+    //                                //    fontsize: 14,
+    //                                //    text: 'Complaints Registered'
+    //                                //},
+    //                                legend: {
+    //                                    display: true,
+    //                                    position: 'bottom',
+    //                                    align: "left",
+    //                                    labels: {
+    //                                        generateLabels: function (chart) {
+    //                                            var data = chart.data;
+    //                                            if (data.labels.length && data.datasets.length) {
+    //                                                return data.labels.map(function (label, i) {
+    //                                                    var meta = chart.getDatasetMeta(0);
+    //                                                    var ds = data.datasets[0];
+    //                                                    var arc = meta.data[i];
+    //                                                    var custom = arc && arc.custom || {};
+    //                                                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+    //                                                    var arcOpts = chart.options.elements.arc;
+    //                                                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+    //                                                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+    //                                                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+    //                                                    // We get the value of the current label
+    //                                                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+    //                                                    if (value < 10) {
+    //                                                        value = '0' + value;
+    //                                                    }
+    //                                                    return {
+    //                                                        // Instead of `text: label,`
+    //                                                        // We add the value to the string
+    //                                                        text: label + " : " + value,
+    //                                                        fillStyle: fill,
+    //                                                        strokeStyle: stroke,
+    //                                                        lineWidth: bw,
+    //                                                        hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+    //                                                        index: i
+    //                                                    };
+    //                                                });
+    //                                            } else {
+    //                                                return [];
+    //                                            }
+    //                                        }
+    //                                    }
+    //                                }
+    //                            }
+    //                        });
+
+    //                        var FY_Rejected_Count_Chart_ctx = document.getElementById('FY_Rejected_Count_Chart').getContext('2d');
+    //                        var FY_Rejected_Count_myPieChart = new Chart(FY_Rejected_Count_Chart_ctx, {
+    //                            type: 'pie',
+    //                            data: {
+    //                                datasets: [{
+    //                                    data: FY_Rejected_Count,
+    //                                    backgroundColor: [
+    //                                        window.chartColors.red,
+    //                                        window.chartColors.yellow,
+    //                                        window.chartColors.blue,
+    //                                        window.chartColors.green
+    //                                    ],
+    //                                }],
+
+    //                                // These labels appear in the legend and in the tooltips when hovering different arcs
+    //                                labels: Complaint_Category_Name
+    //                            },
+    //                            options: {
+    //                                //title: {
+    //                                //    display: true,
+    //                                //    fontsize: 14,
+    //                                //    text: 'Complaints Rejected'
+    //                                //},
+    //                                legend: {
+    //                                    display: true,
+    //                                    position: 'bottom',
+    //                                    labels: {
+    //                                        generateLabels: function (chart) {
+    //                                            var data = chart.data;
+    //                                            if (data.labels.length && data.datasets.length) {
+    //                                                return data.labels.map(function (label, i) {
+    //                                                    var meta = chart.getDatasetMeta(0);
+    //                                                    var ds = data.datasets[0];
+    //                                                    var arc = meta.data[i];
+    //                                                    var custom = arc && arc.custom || {};
+    //                                                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+    //                                                    var arcOpts = chart.options.elements.arc;
+    //                                                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+    //                                                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+    //                                                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+    //                                                    // We get the value of the current label
+    //                                                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+    //                                                    if (value < 10) {
+    //                                                        value = '0' + value;
+    //                                                    }
+    //                                                    return {
+    //                                                        // Instead of `text: label,`
+    //                                                        // We add the value to the string
+    //                                                        text: label + " : " + value,
+    //                                                        fillStyle: fill,
+    //                                                        strokeStyle: stroke,
+    //                                                        lineWidth: bw,
+    //                                                        hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+    //                                                        index: i
+    //                                                    };
+    //                                                });
+    //                                            } else {
+    //                                                return [];
+    //                                            }
+    //                                        }
+    //                                    }
+    //                                }
+    //                            }
+    //                        });
+
+    //                        var FY_Average_Time_Chart_ctx = document.getElementById('FY_Average_Time_Chart').getContext('2d');
+    //                        var FY_Average_Time_myPieChart = new Chart(FY_Average_Time_Chart_ctx, {
+    //                            type: 'pie',
+    //                            data: {
+    //                                datasets: [{
+    //                                    data: FY_Average_Time,
+    //                                    backgroundColor: [
+    //                                        window.chartColors.red,
+    //                                        window.chartColors.yellow,
+    //                                        window.chartColors.blue,
+    //                                        window.chartColors.green
+    //                                    ],
+    //                                }],
+
+    //                                // These labels appear in the legend and in the tooltips when hovering different arcs
+    //                                labels: Complaint_Category_Name
+    //                            },
+    //                            options: {
+    //                                //title: {
+    //                                //    display: true,
+    //                                //    fontsize: 14,
+    //                                //    text: 'Average Time'
+    //                                //},
+    //                                legend: {
+    //                                    display: true,
+    //                                    position: 'bottom',
+    //                                    labels: {
+    //                                        generateLabels: function (chart) {
+    //                                            var data = chart.data;
+    //                                            if (data.labels.length && data.datasets.length) {
+    //                                                return data.labels.map(function (label, i) {
+    //                                                    var meta = chart.getDatasetMeta(0);
+    //                                                    var ds = data.datasets[0];
+    //                                                    var arc = meta.data[i];
+    //                                                    var custom = arc && arc.custom || {};
+    //                                                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+    //                                                    var arcOpts = chart.options.elements.arc;
+    //                                                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+    //                                                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+    //                                                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+    //                                                    // We get the value of the current label
+    //                                                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+    //                                                    if (value < 10) {
+    //                                                        value = '0' + value;
+    //                                                    }
+    //                                                    return {
+    //                                                        // Instead of `text: label,`
+    //                                                        // We add the value to the string
+    //                                                        text: label + " : " + value,
+    //                                                        fillStyle: fill,
+    //                                                        strokeStyle: stroke,
+    //                                                        lineWidth: bw,
+    //                                                        hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+    //                                                        index: i
+    //                                                    };
+    //                                                });
+    //                                            } else {
+    //                                                return [];
+    //                                            }
+    //                                        }
+    //                                    }
+    //                                }
+    //                            }
+    //                        });
+    //                    }
+    //                    $("#canvas-holder").show();
+    //                    $("#canvas-holder1").show();
+    //                    $("#canvas-holder2").show();
+    //                    $("#canvas-holder3").show();
+    //                    $("#canvas-holder4").show();
+    //                    $("#canvas-holder5").show();
+    //                    HideLoader();
+    //                },
+    //                error: function (xhr, ajaxOptions, thrownError) {
+    //                    alert("Error : LoadCMSGraphicalDashBoard : " + xhr, ajaxOptions, thrownError);
+    //                    HideLoader();
+
+    //                }
+    //            });
+
+    //        }
+
+    //    }
+    //    catch (e) {
+    //        alert("LoadCMSGraphicalDashBoard : Error : " + e);
+    //        HideLoader();
+
+    //    }
+
+    //}
+
+    function LoadCMSGraphicalDashBoard() {
+
+        try {
+            var STATE_CODE = $("#StateFilter").val();
+            //var YearFilter = $("#YearFilter").val();
+            var PRODUCT_TYPE_CODE = $("#BusinessUnitFilter").val();
+
+            if (STATE_CODE == "" || PRODUCT_TYPE_CODE == "") {
+                return;
+            }
+            else {
+                ShowLoader();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '../../ComplaintReports/LoadCMSGraphicalDashBoard',
+                    async: true,
+                    data: { STATE_CODE: STATE_CODE, PRODUCT_TYPE_CODE: PRODUCT_TYPE_CODE },
+                    success: function (Resp) {
+
+                        if (Resp == "") {
+                            alert("No Data Found");
+                        }
+                        else {
+                            Resp = JSON.parse(Resp);
+                            console.log('Resp', Resp);
+                            var Complaint_Category_Name = [];
+                            var Complaint_Category_Name_Temp = [];
+                            var CM_Registered_Count = [];
+                            var CM_Registered_Count_Temp = [];
+                            var CM_Rejected_Count = [];
+                            var CM_Average_Time = [];
+                            var FY_Registered_Count = [];
+                            var FY_Rejected_Count = [];
+                            var FY_Average_Time = [];
+                            //console.log(Resp["Complaint_Category_Name"]);
+                            Complaint_Category_Name_Temp = Resp["Complaint_Category_Name"];
+                            for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                Complaint_Category_Name.push(Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"]);
+                            }
+                            console.log(Complaint_Category_Name);
+
+                            if (Resp["CM_Registered_Count"] == "") {
+                                for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                    CM_Registered_Count.push(0);
+                                }
+                            } else if (Array.isArray(Resp["CM_Registered_Count"])) {
+                                if (Resp["Complaint_Category_Name"].length == Resp["CM_Registered_Count"].length) {
+                                    for (var j = 0; j < Resp["CM_Registered_Count"].length; j++) {
+                                        CM_Registered_Count.push(Resp["CM_Registered_Count"][j]["REGISTERED_COUNT"]);
+                                    }
+                                } else {
+                                    for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                        for (var j = 0; j < Resp["CM_Registered_Count"].length; j++) {
+                                            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["CM_Registered_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                                                //CM_Registered_Count.push(Resp["CM_Registered_Count"][j]["REGISTERED_COUNT"]);
+                                                Complaint_Category_Name_Temp[i]["REGISTERED_COUNT"] = Resp["CM_Registered_Count"][j]["REGISTERED_COUNT"]
+                                                break;
+                                            }
+                                            else {
+                                                //CM_Registered_Count_Temp.push(0);
+                                            }
+                                        }
+                                    }
+                                    console.log(Complaint_Category_Name_Temp);
+                                    for (var i = 0; i < Complaint_Category_Name_Temp.length; i++) {
+                                        if (Complaint_Category_Name_Temp[i].hasOwnProperty('REGISTERED_COUNT')) {
+                                            CM_Registered_Count.push(Complaint_Category_Name_Temp[i]["REGISTERED_COUNT"]);
+                                        } else {
+                                            CM_Registered_Count.push(0);
+                                        }
+                                    }
+                                    Complaint_Category_Name_Temp = Resp["Complaint_Category_Name"];
+                                }
+                            }
+                            //for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                            //    if (Resp["CM_Registered_Count"] == "") {
+                            //        CM_Registered_Count.push(0);
+                            //    } else if (Array.isArray(Resp["CM_Registered_Count"])) {
+                            //        for (var j = 0; j < Resp["CM_Registered_Count"].length; j++) {
+                            //            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["CM_Registered_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                            //                CM_Registered_Count.push(Resp["CM_Registered_Count"][j]["REGISTERED_COUNT"]);
+                            //            } else {
+                            //                CM_Registered_Count.push(0);
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //if (Array.isArray(Resp["CM_Registered_Count"])) {
+                            //    for (var j = 0; j < Resp["CM_Registered_Count"].length; j++) {
+                            //        CM_Registered_Count.push(Resp["CM_Registered_Count"][j]["REGISTERED_COUNT"]);
+                            //    }
+                            //}
+                            console.log(CM_Registered_Count);
+
+                            if (Resp["CM_Rejected_Count"] == "") {
+                                for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                    CM_Rejected_Count.push(0);
+                                }
+                            } else if (Array.isArray(Resp["CM_Rejected_Count"])) {
+                                if (Resp["Complaint_Category_Name"].length == Resp["CM_Rejected_Count"].length) {
+                                    for (var j = 0; j < Resp["CM_Rejected_Count"].length; j++) {
+                                        CM_Rejected_Count.push(Resp["CM_Rejected_Count"][j]["REJECTED_COUNT"]);
+                                    }
+                                } else {
+                                    for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                        for (var j = 0; j < Resp["CM_Rejected_Count"].length; j++) {
+                                            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["CM_Rejected_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                                                //CM_Rejected_Count.push(Resp["CM_Rejected_Count"][j]["REJECTED_COUNT"]);
+                                                Complaint_Category_Name_Temp[i]["REJECTED_COUNT"] = Resp["CM_Rejected_Count"][j]["REJECTED_COUNT"]
+                                                break;
+                                            } else {
+                                                //CM_Rejected_Count.push(0);
+                                            }
+                                        }
+                                    }
+
+                                    for (var i = 0; i < Complaint_Category_Name_Temp.length; i++) {
+                                        if (Complaint_Category_Name_Temp[i].hasOwnProperty('REJECTED_COUNT')) {
+                                            CM_Registered_Count.push(Complaint_Category_Name_Temp[i]["REJECTED_COUNT"]);
+                                        } else {
+                                            CM_Registered_Count.push(0);
+                                        }
+                                    }
+                                    Complaint_Category_Name_Temp = Resp["Complaint_Category_Name"];
+                                }
+                            }
+                            //for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                            //    if (Resp["CM_Rejected_Count"] == "") {
+                            //        CM_Rejected_Count.push(0);
+                            //    } else if (Array.isArray(Resp["CM_Rejected_Count"])) {
+                            //        for (var j = 0; j < Resp["CM_Rejected_Count"].length; j++) {
+                            //            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["CM_Rejected_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                            //                CM_Rejected_Count.push(Resp["CM_Rejected_Count"][j]["REJECTED_COUNT"]);
+                            //            } else {
+                            //                CM_Rejected_Count.push(0);
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //if (Array.isArray(Resp["CM_Rejected_Count"])) {
+                            //    for (var j = 0; j < Resp["CM_Rejected_Count"].length; j++) {
+                            //        CM_Rejected_Count.push(Resp["CM_Rejected_Count"][j]["REJECTED_COUNT"]);
+                            //    }
+                            //}
+                            console.log(CM_Rejected_Count);
+
+                            if (Resp["CM_Average_Time"] == "") {
+                                for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                    CM_Average_Time.push(0);
+                                }
+                            } else if (Array.isArray(Resp["CM_Average_Time"])) {
+                                if (Resp["Complaint_Category_Name"].length == Resp["CM_Average_Time"].length) {
+                                    for (var j = 0; j < Resp["CM_Average_Time"].length; j++) {
+                                        CM_Average_Time.push(Resp["CM_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                                    }
+                                } else {
+                                    for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                        for (var j = 0; j < Resp["CM_Average_Time"].length; j++) {
+                                            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["CM_Average_Time"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                                                //CM_Average_Time.push(Resp["CM_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                                                Complaint_Category_Name_Temp[i]["AVERAGE_TIME_HOURS"] = Resp["CM_Average_Time"][j]["AVERAGE_TIME_HOURS"]
+                                                break;
+                                            } else {
+                                                //CM_Average_Time.push(0);
+                                            }
+                                        }
+                                    }
+
+                                    for (var i = 0; i < Complaint_Category_Name_Temp.length; i++) {
+                                        if (Complaint_Category_Name_Temp[i].hasOwnProperty('AVERAGE_TIME_HOURS')) {
+                                            CM_Average_Time.push(Complaint_Category_Name_Temp[i]["AVERAGE_TIME_HOURS"]);
+                                        } else {
+                                            CM_Average_Time.push(0);
+                                        }
+                                    }
+                                    Complaint_Category_Name_Temp = Resp["Complaint_Category_Name"];
+                                }
+                            }
+                            //for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                            //    if (Resp["CM_Average_Time"] == "") {
+                            //        CM_Average_Time.push(0);
+                            //    } else if (Array.isArray(Resp["CM_Average_Time"])) {
+                            //        for (var j = 0; j < Resp["CM_Average_Time"].length; j++) {
+                            //            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["CM_Average_Time"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                            //                CM_Average_Time.push(Resp["CM_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                            //            } else {
+                            //                CM_Average_Time.push(0);
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //if (Array.isArray(Resp["CM_Average_Time"])) {
+                            //    for (var j = 0; j < Resp["CM_Average_Time"].length; j++) {
+                            //        CM_Average_Time.push(Resp["CM_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                            //    }
+                            //}
+                            console.log(CM_Average_Time);
+
+                            if (Resp["FY_Registered_Count"] == "") {
+                                for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                    FY_Registered_Count.push(0);
+                                }
+                            } else if (Array.isArray(Resp["FY_Registered_Count"])) {
+                                if (Resp["Complaint_Category_Name"].length == Resp["FY_Registered_Count"].length) {
+                                    for (var j = 0; j < Resp["FY_Registered_Count"].length; j++) {
+                                        FY_Registered_Count.push(Resp["FY_Registered_Count"][j]["REGISTERED_COUNT"]);
+                                    }
+                                } else {
+                                    for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                        for (var j = 0; j < Resp["FY_Registered_Count"].length; j++) {
+                                            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["FY_Registered_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                                                //FY_Registered_Count.push(Resp["FY_Registered_Count"][j]["REGISTERED_COUNT"]);
+                                                Complaint_Category_Name_Temp[i]["REGISTERED_COUNT"] = Resp["FY_Registered_Count"][j]["REGISTERED_COUNT"]
+                                                break;
+                                            } else {
+                                                //FY_Registered_Count.push(0);
+                                            }
+                                        }
+                                    }
+
+                                    for (var i = 0; i < Complaint_Category_Name_Temp.length; i++) {
+                                        if (Complaint_Category_Name_Temp[i].hasOwnProperty('REGISTERED_COUNT')) {
+                                            FY_Registered_Count.push(Complaint_Category_Name_Temp[i]["REGISTERED_COUNT"]);
+                                        } else {
+                                            FY_Registered_Count.push(0);
+                                        }
+                                    }
+                                    Complaint_Category_Name_Temp = Resp["Complaint_Category_Name"];
+                                }
+                            }
+                            //for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                            //    if (Resp["FY_Registered_Count"] == "") {
+                            //        FY_Registered_Count.push(0);
+                            //    } else if (Array.isArray(Resp["FY_Registered_Count"])) {
+                            //        for (var j = 0; j < Resp["FY_Registered_Count"].length; j++) {
+                            //            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["FY_Registered_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                            //                FY_Registered_Count.push(Resp["FY_Registered_Count"][j]["REGISTERED_COUNT"]);
+                            //            } else {
+                            //                FY_Registered_Count.push(0);
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //if (Array.isArray(Resp["FY_Registered_Count"])) {
+                            //    for (var j = 0; j < Resp["FY_Registered_Count"].length; j++) {
+                            //        FY_Registered_Count.push(Resp["FY_Registered_Count"][j]["REGISTERED_COUNT"]);
+                            //    }
+                            //}
+                            console.log(FY_Registered_Count);
+
+                            if (Resp["FY_Rejected_Count"] == "") {
+                                for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                    FY_Rejected_Count.push(0);
+                                }
+                            } else if (Array.isArray(Resp["FY_Rejected_Count"])) {
+                                if (Resp["Complaint_Category_Name"].length == Resp["FY_Rejected_Count"].length) {
+                                    for (var j = 0; j < Resp["FY_Rejected_Count"].length; j++) {
+                                        FY_Rejected_Count.push(Resp["FY_Rejected_Count"][j]["REJECTED_COUNT"]);
+                                    }
+                                } else {
+                                    for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                        for (var j = 0; j < Resp["FY_Rejected_Count"].length; j++) {
+                                            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["FY_Rejected_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                                                //FY_Rejected_Count.push(Resp["FY_Rejected_Count"][j]["REJECTED_COUNT"]);
+                                                Complaint_Category_Name_Temp[i]["REJECTED_COUNT"] = Resp["FY_Rejected_Count"][j]["REJECTED_COUNT"]
+                                                break;
+                                            } else {
+                                                //FY_Rejected_Count.push(0);
+                                            }
+                                        }
+                                    }
+
+                                    for (var i = 0; i < Complaint_Category_Name_Temp.length; i++) {
+                                        if (Complaint_Category_Name_Temp[i].hasOwnProperty('REJECTED_COUNT')) {
+                                            FY_Rejected_Count.push(Complaint_Category_Name_Temp[i]["REJECTED_COUNT"]);
+                                        } else {
+                                            FY_Rejected_Count.push(0);
+                                        }
+                                    }
+                                    Complaint_Category_Name_Temp = Resp["Complaint_Category_Name"];
+                                }
+                            }
+                            //for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                            //    if (Resp["FY_Rejected_Count"] == "") {
+                            //        FY_Rejected_Count.push(0);
+                            //    } else if (Array.isArray(Resp["FY_Rejected_Count"])) {
+                            //        for (var j = 0; j < Resp["FY_Rejected_Count"].length; j++) {
+                            //            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["FY_Rejected_Count"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                            //                FY_Rejected_Count.push(Resp["FY_Rejected_Count"][j]["REJECTED_COUNT"]);
+                            //            } else {
+                            //                FY_Rejected_Count.push(0);
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //if (Array.isArray(Resp["FY_Rejected_Count"])) {
+                            //    for (var j = 0; j < Resp["FY_Rejected_Count"].length; j++) {
+                            //        FY_Rejected_Count.push(Resp["FY_Rejected_Count"][j]["REJECTED_COUNT"]);
+                            //    }
+                            //}
+                            console.log(FY_Rejected_Count);
+
+                            if (Resp["FY_Average_Time"] == "") {
+                                for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                    FY_Average_Time.push(0);
+                                }
+                            } else if (Array.isArray(Resp["FY_Average_Time"])) {
+                                if (Resp["Complaint_Category_Name"].length == Resp["FY_Average_Time"].length) {
+                                    for (var j = 0; j < Resp["FY_Average_Time"].length; j++) {
+                                        FY_Average_Time.push(Resp["FY_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                                    }
+                                } else {
+                                    for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                                        for (var j = 0; j < Resp["FY_Average_Time"].length; j++) {
+                                            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["FY_Average_Time"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                                                //FY_Average_Time.push(Resp["FY_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                                                Complaint_Category_Name_Temp[i]["AVERAGE_TIME_HOURS"] = Resp["FY_Average_Time"][j]["AVERAGE_TIME_HOURS"]
+                                                break;
+                                            } else {
+                                                //FY_Average_Time.push(0);
+                                            }
+                                        }
+                                    }
+
+                                    for (var i = 0; i < Complaint_Category_Name_Temp.length; i++) {
+                                        if (Complaint_Category_Name_Temp[i].hasOwnProperty('AVERAGE_TIME_HOURS')) {
+                                            FY_Average_Time.push(Complaint_Category_Name_Temp[i]["AVERAGE_TIME_HOURS"]);
+                                        } else {
+                                            FY_Average_Time.push(0);
+                                        }
+                                    }
+                                    Complaint_Category_Name_Temp = Resp["Complaint_Category_Name"];
+                                }
+                            }
+                            //for (var i = 0; i < Resp["Complaint_Category_Name"].length; i++) {
+                            //    if (Resp["FY_Average_Time"] == "") {
+                            //        FY_Average_Time.push(0);
+                            //    } else if (Array.isArray(Resp["FY_Average_Time"])) {
+                            //        for (var j = 0; j < Resp["FY_Average_Time"].length; j++) {
+                            //            if (Resp["Complaint_Category_Name"][i]["COMPLAINT_CATEGORY_NAME"] == Resp["FY_Average_Time"][j]["COMPLAINT_CATEGORY_NAME"]) {
+                            //                FY_Average_Time.push(Resp["FY_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                            //            } else {
+                            //                FY_Average_Time.push(0);
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //if (Array.isArray(Resp["FY_Average_Time"])) {
+                            //    for (var j = 0; j < Resp["FY_Average_Time"].length; j++) {
+                            //        FY_Average_Time.push(Resp["FY_Average_Time"][j]["AVERAGE_TIME_HOURS"]);
+                            //    }
+                            //}
+                            console.log(FY_Average_Time);
+
+                            window.chartColors = {
+                                red: 'rgb(255, 99, 132)',
+                                orange: 'rgb(255, 159, 64)',
+                                yellow: 'rgb(255, 205, 86)',
+                                green: 'rgb(75, 192, 192)',
+                                blue: 'rgb(54, 162, 235)',
+                                purple: 'rgb(153, 102, 255)',
+                                grey: 'rgb(201, 203, 207)'
+                            };
+
+                            //Chart.plugins.register({
+                            //    beforeInit: function (chart) {
+                            //        var data = chart.data.datasets[0].data;
+                            //        var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
+                            //        if (!isAllZero) return;
+                            //        // when all data values are zero...
+                            //        chart.data.datasets[0].data = data.map((e, i) => i > 0 ? 0 : 1); //add one segment
+                            //        chart.data.datasets[0].backgroundColor = '#d2dee2'; //change bg color
+                            //        chart.data.datasets[0].borderWidth = 0; //no border
+                            //        chart.options.tooltips = false; //disable tooltips
+                            //        chart.options.legend.onClick = null; //disable legend click
+                            //    }
+                            //});
+
+                            Chart.plugins.register({
+                                afterDraw: function (chart) {
+                                    if (chart.data.datasets[0].data.every(item => item === 0)) {
+                                        // No data is present
+                                        var ctx = chart.chart.ctx;
+                                        var width = chart.chart.width;
+                                        var height = chart.chart.height
+                                        chart.clear();
+
+                                        ctx.save();
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'middle';
+                                        ctx.font = "16px normal 'Helvetica Nueue'";
+                                        ctx.fillText('No data to display', width / 2, height / 2);
+                                        ctx.restore();
+                                    }
+                                }
+                            });
+
+                            var CM_Registered_Count_Chart_ctx = document.getElementById('CM_Registered_Count_Chart').getContext('2d');
+                            var CM_Registered_Count_myPieChart = new Chart(CM_Registered_Count_Chart_ctx, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: CM_Registered_Count,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green
+                                        ],
+                                        label: CM_Registered_Count
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: Complaint_Category_Name
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Complaints Registered'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                //debugger;
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var CM_Rejected_Count_Chart_ctx = document.getElementById('CM_Rejected_Count_Chart').getContext('2d');
+                            var CM_Rejected_Count_myPieChart = new Chart(CM_Rejected_Count_Chart_ctx, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: CM_Rejected_Count,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: Complaint_Category_Name
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Complaints Rejected'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var CM_Average_Time_Chart_ctx = document.getElementById('CM_Average_Time_Chart').getContext('2d');
+                            var CM_Average_Time_myPieChart = new Chart(CM_Average_Time_Chart_ctx, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: CM_Average_Time,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: Complaint_Category_Name
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Average Time'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var FY_Registered_Count_Chart_ctx = document.getElementById('FY_Registered_Count_Chart').getContext('2d');
+                            var FY_Registered_Count_myPieChart = new Chart(FY_Registered_Count_Chart_ctx, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: FY_Registered_Count,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green
+                                        ],
+                                        label: FY_Registered_Count
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: Complaint_Category_Name
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Complaints Registered'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        align: "left",
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var FY_Rejected_Count_Chart_ctx = document.getElementById('FY_Rejected_Count_Chart').getContext('2d');
+                            var FY_Rejected_Count_myPieChart = new Chart(FY_Rejected_Count_Chart_ctx, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: FY_Rejected_Count,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: Complaint_Category_Name
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Complaints Rejected'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var FY_Average_Time_Chart_ctx = document.getElementById('FY_Average_Time_Chart').getContext('2d');
+                            var FY_Average_Time_myPieChart = new Chart(FY_Average_Time_Chart_ctx, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: FY_Average_Time,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: Complaint_Category_Name
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Average Time'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        $("#canvas-holder").show();
+                        $("#canvas-holder1").show();
+                        $("#canvas-holder2").show();
+                        $("#canvas-holder3").show();
+                        $("#canvas-holder4").show();
+                        $("#canvas-holder5").show();
+                        HideLoader();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("Error : LoadCMSGraphicalDashBoard : " + xhr, ajaxOptions, thrownError);
+                        HideLoader();
+
+                    }
+                });
+
+            }
+
+        }
+        catch (e) {
+            alert("LoadCMSGraphicalDashBoard : Error : " + e);
+            HideLoader();
+
+        }
+    }
+    @* svprasadk 04-01-2021 SBU3 Requirement CMS Graphical Dashboard based on state, from date, to date and BU start *@
+    function LoadCMSGraphicalDashBoardNewBU3() {
+        try {
+            var STATE_CODE = $("#StateFilter").val();
+            //var YearFilter = $("#YearFilter").val();
+            var PRODUCT_TYPE_CODE = $("#BusinessUnitFilter").val();
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (STATE_CODE == "" || PRODUCT_TYPE_CODE == "") {
+                alert("Please select State and Business Unit")
+                return;
+            } else if (fromDate == "") {
+                alert("Please provide from date");
+                return false;
+            } else if (fromDate != "" && toDate == "") {
+                alert("Please provide to date");
+                return false;
+            } else if (fromDate == "" && toDate != "") {
+                alert("Please provide from date");
+                return false;
+            } else {
+                ShowLoader();
+                fromDate = ConvertDateFormat($("#fromDate").val());
+                toDate = ConvertDateFormat($("#toDate").val());
+                $.ajax({
+                    type: 'POST',
+                    url: '../../ComplaintReports/LoadCMSGraphicalDashBoardNewBU3',
+                    async: true,
+                    data: { STATE_CODE: STATE_CODE, PRODUCT_TYPE_CODE: PRODUCT_TYPE_CODE, fromDate: fromDate, toDate: toDate },
+                    success: function (Resp) {
+
+                        if (Resp == "") {
+                            alert("No Data Found");
+                            HideLoader();
+                        }
+                        else {
+                            Resp = JSON.parse(Resp);
+                            console.log(Resp);
+                            var COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_PIE = [];
+                            var COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_BAR = [];
+                            var COMPLAINT_CATEGORY_NAME_DATA_PIE = [];
+                            var COMPLAINT_CATEGORY_NAME_DATA_BAR = [];
+                            var PLANT_WISE_REGISTERED_COUNT_DATA_PIE = [];
+                            var PLANT_WISE_REGISTERED_COUNT_DATA_BAR = [];
+                            var PLANT_NAME_DATA_PIE = [];
+                            var PLANT_NAME_DATA_BAR = [];
+                            //var PLANT_WISE_REGISTERED_COUNT_DATA = [];
+                            //var PLANT_WISE_NAME_DATA = [];
+                            var inPercent = 0;
+                            var i = 0;
+                            var Temp = Resp["ComplaintCountCategoryWiseBU3"];
+                            if (Temp.length > 0) {
+                                COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_BAR.push(Resp["ComplaintCountCategoryWiseBU3Total"]);
+                                COMPLAINT_CATEGORY_NAME_DATA_BAR.push("YTD");
+                                for (i = 0; i < Temp.length; i++) {
+                                    if ((Temp[i]["COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT"]) == "" || (Temp[i]["COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT"]) == null || (isNaN((Temp[i]["COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT"])))) {
+                                    }
+                                    else {
+                                        inPercent = Math.round((Temp[i]["COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT"] / Resp["ComplaintCountCategoryWiseBU3Total"]) * 100);
+                                        //COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_BAR.push(Temp[i]["COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT"]);
+                                        //COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_PIE.push(Temp[i]["COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT"]);
+                                        COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_BAR.push(Temp[i]["COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT"]);
+                                        COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_PIE.push(inPercent);
+                                        COMPLAINT_CATEGORY_NAME_DATA_BAR.push(Temp[i]["COMPLAINT_CATEGORY_NAME"]);
+                                        COMPLAINT_CATEGORY_NAME_DATA_PIE.push(Temp[i]["COMPLAINT_CATEGORY_NAME"]);
+                                        inPercent = 0;
+                                    }
+                                }
+                            }
+
+                            window.chartColors = {
+                                red: 'rgb(255, 99, 132)',
+                                orange: 'rgb(255, 159, 64)',
+                                yellow: 'rgb(255, 205, 86)',
+                                green: 'rgb(75, 192, 192)',
+                                blue: 'rgb(54, 162, 235)',
+                                purple: 'rgb(153, 102, 255)',
+                                grey: 'rgb(201, 203, 207)'
+                            };
+
+                            //Chart.plugins.register({
+                            //    beforeInit: function (chart) {
+                            //        var data = chart.data.datasets[0].data;
+                            //        var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
+                            //        if (!isAllZero) return;
+                            //        // when all data values are zero...
+                            //        chart.data.datasets[0].data = data.map((e, i) => i > 0 ? 0 : 1); //add one segment
+                            //        chart.data.datasets[0].backgroundColor = '#d2dee2'; //change bg color
+                            //        chart.data.datasets[0].borderWidth = 0; //no border
+                            //        chart.options.tooltips = false; //disable tooltips
+                            //        chart.options.legend.onClick = null; //disable legend click
+                            //    }
+                            //});
+
+                            Chart.plugins.register({
+                                afterDraw: function (chart) {
+                                    if (chart.data.datasets[0].data.every(item => item === 0)) {
+                                        // No data is present
+                                        var ctx = chart.chart.ctx;
+                                        var width = chart.chart.width;
+                                        var height = chart.chart.height
+                                        chart.clear();
+
+                                        ctx.save();
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'middle';
+                                        ctx.font = "16px normal 'Helvetica Nueue'";
+                                        ctx.fillText('No data to display', width / 2, height / 2);
+                                        ctx.restore();
+                                    }
+                                }
+                            });
+
+                            var categoryWiseGraphBar = document.getElementById('canvas-holder');
+                            categoryWiseGraphBar.innerHTML = '&nbsp;';
+                            $('#canvas-holder').append('<canvas id="categoryWiseGraphBar" width="200" height="200"></canvas>');
+
+                            var COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_CTX_BAR = document.getElementById('categoryWiseGraphBar').getContext('2d');
+                            var COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_BAR = new Chart(COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_CTX_BAR, {
+                                type: 'bar',
+                                data: {
+                                    datasets: [{
+                                        data: COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_BAR,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green,
+                                            window.chartColors.purple
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: COMPLAINT_CATEGORY_NAME_DATA_BAR
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Average Time'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var categoryWiseGraphPie = document.getElementById('canvas-holder1');
+                            categoryWiseGraphPie.innerHTML = '&nbsp;';
+                            $('#canvas-holder1').append('<canvas id="categoryWiseGraphPie" width="200" height="200"></canvas>');
+
+                            var COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_CTX_PIE = document.getElementById('categoryWiseGraphPie').getContext('2d');
+                            var COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_PIE = new Chart(COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_CTX_PIE, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: COMPLAINT_CATEGORY_WISE_REGISTERED_COUNT_DATA_PIE,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green,
+                                            window.chartColors.purple
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: COMPLAINT_CATEGORY_NAME_DATA_PIE
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Average Time'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index] + "%";
+                                                        //if (value < 10) {
+                                                        //    value = '0' + value;
+                                                        //}
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var Temp = Resp["ComplaintCountPlantWiseBU3"];
+                            if (Temp.length > 0) {
+                                PLANT_WISE_REGISTERED_COUNT_DATA_BAR.push(Resp["ComplaintCountPlantWiseBU3Total"]);
+                                PLANT_NAME_DATA_BAR.push("YTD");
+                                for (i = 0; i < Temp.length; i++) {
+                                    if ((Temp[i]["PLANT_WISE_REGISTERED_COUNT"]) == "" || (Temp[i]["PLANT_WISE_REGISTERED_COUNT"]) == null || (isNaN((Temp[i]["PLANT_WISE_REGISTERED_COUNT"])))) {
+                                    }
+                                    else {
+                                        inPercent = Math.round((Temp[i]["PLANT_WISE_REGISTERED_COUNT"] / Resp["ComplaintCountPlantWiseBU3Total"]) * 100);
+                                        //PLANT_WISE_REGISTERED_COUNT_DATA_BAR.push(Temp[i]["PLANT_WISE_REGISTERED_COUNT"]);
+                                        //PLANT_WISE_REGISTERED_COUNT_DATA_PIE.push(Temp[i]["PLANT_WISE_REGISTERED_COUNT"]);
+                                        PLANT_WISE_REGISTERED_COUNT_DATA_BAR.push(Temp[i]["PLANT_WISE_REGISTERED_COUNT"]);
+                                        PLANT_WISE_REGISTERED_COUNT_DATA_PIE.push(inPercent);
+                                        PLANT_NAME_DATA_BAR.push(Temp[i]["PLANT_NAME"]);
+                                        PLANT_NAME_DATA_PIE.push(Temp[i]["PLANT_NAME"]);
+                                        inPercent = 0;
+                                    }
+                                }
+                            }
+
+                            var plantWiseGraphBar = document.getElementById('canvas-holder2');
+                            plantWiseGraphBar.innerHTML = '&nbsp;';
+                            $('#canvas-holder2').append('<canvas id="plantWiseGraphBar" width="200" height="200"></canvas>');
+
+                            var PLANT_WISE_REGISTERED_COUNT_CTX_BAR = document.getElementById('plantWiseGraphBar').getContext('2d');
+                            var PLANT_WISE_REGISTERED_COUNT_BAR = new Chart(PLANT_WISE_REGISTERED_COUNT_CTX_BAR, {
+                                type: 'bar',
+                                data: {
+                                    datasets: [{
+                                        data: PLANT_WISE_REGISTERED_COUNT_DATA_BAR,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green,
+                                            window.chartColors.purple
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: PLANT_NAME_DATA_BAR
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Average Time'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                                        if (value < 10) {
+                                                            value = '0' + value;
+                                                        }
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            var plantWiseGraphPie = document.getElementById('canvas-holder3');
+                            plantWiseGraphPie.innerHTML = '&nbsp;';
+                            $('#canvas-holder3').append('<canvas id="plantWiseGraphPie" width="200" height="200"></canvas>');
+
+                            var PLANT_WISE_REGISTERED_COUNT_CTX_PIE = document.getElementById('plantWiseGraphPie').getContext('2d');
+                            var PLANT_WISE_REGISTERED_COUNT_PIE = new Chart(PLANT_WISE_REGISTERED_COUNT_CTX_PIE, {
+                                type: 'pie',
+                                data: {
+                                    datasets: [{
+                                        data: PLANT_WISE_REGISTERED_COUNT_DATA_PIE,
+                                        backgroundColor: [
+                                            window.chartColors.red,
+                                            window.chartColors.yellow,
+                                            window.chartColors.blue,
+                                            window.chartColors.green,
+                                            window.chartColors.purple
+                                        ],
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: PLANT_NAME_DATA_PIE
+                                },
+                                options: {
+                                    //title: {
+                                    //    display: true,
+                                    //    fontsize: 14,
+                                    //    text: 'Average Time'
+                                    //},
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            generateLabels: function (chart) {
+                                                var data = chart.data;
+                                                if (data.labels.length && data.datasets.length) {
+                                                    return data.labels.map(function (label, i) {
+                                                        var meta = chart.getDatasetMeta(0);
+                                                        var ds = data.datasets[0];
+                                                        var arc = meta.data[i];
+                                                        var custom = arc && arc.custom || {};
+                                                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                                        var arcOpts = chart.options.elements.arc;
+                                                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                        // We get the value of the current label
+                                                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index] + "%";
+                                                        //if (value < 10) {
+                                                        //    value = '0' + value;
+                                                        //}
+                                                        return {
+                                                            // Instead of `text: label,`
+                                                            // We add the value to the string
+                                                            text: label + " : " + value,
+                                                            fillStyle: fill,
+                                                            strokeStyle: stroke,
+                                                            lineWidth: bw,
+                                                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                            index: i
+                                                        };
+                                                    });
+                                                } else {
+                                                    return [];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            $("#canvas-holder").show();
+                            $("#canvas-holder1").show();
+                            $("#canvas-holder2").show();
+                            $("#canvas-holder3").show();
+
+                            HideLoader();
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("Error : LoadCMSGraphicalDashBoardNewBU3 : " + xhr, ajaxOptions, thrownError);
+                        HideLoader();
+
+                    }
+                });
+            }
+        } catch (e) {
+            alert("LoadCMSGraphicalDashBoardNewBU3 : Error : " + e);
+            HideLoader();
+
+        }
+    }
+
+    //function fromDateChange() {
+    //    var MyDate = $("#fromDate").val();
+
+    //    if (MyDate == "" || MyDate == undefined) {
+    //    }
+    //    else {
+    //        $("#toDate").datepicker('setStartDate', MyDate);
+    //        $("#toDate").val("");
+    //        LoadCMSGraphicalDashBoardNewBU3();
+    //    }
+    //}
+
+    function ConvertDateFormat(date) {
+        var changeDate = date.split('/');
+        var DATETIME = changeDate[2] + "-" + changeDate[1] + "-" + changeDate[0];
+        return DATETIME;
+    }
+    @* svprasadk 04-01-2021 SBU3 Requirement CMS Graphical Dashboard based on state, from date, to date and BU start *@
+</script>

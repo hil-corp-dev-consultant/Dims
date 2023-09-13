@@ -1,0 +1,430 @@
+﻿@using LabelNames = DIMS.Content.Resource_Files.Compensation;
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+<style>
+    #SBU1EmployeelistTbl td:nth-child(1) {
+        text-align: right !important;
+    }
+
+    #SBU1EmployeelistTbl td:nth-child(3) {
+        text-align: right !important;
+    }
+
+    #SBU2EmployeelistTbl td:nth-child(1) {
+        text-align: right !important;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Create Employee</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Create Employee</li>
+    </ol>
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-body">
+                        <form name="test" class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" data-ng-init="GetEditData(39)">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" id="ApproveSave" hidden="hidden">
+                                    <input type="hidden" id="CompensationId" data-ng-model="CompensationId" />
+                                    <input type="text" id="SITEDETAIL_CODE_Compensation" style="display: none;" value="@SessionSITEDETAIL_CODE" />
+                                    <input type="text" id="COMPANYDETAIL_CODE_Compensation" style="display: none;" value="@SessionCOMPANYDETAIL_CODE" />
+                                    <input type="text" id="USERNAME_Compensation" style="display: none;" value="@SessionUserName" />
+                                    <input type="text" id="USERCODE_Compensation" style="display: none;" value="@SessionUserCode" />
+                                    <input type="text" id="USERTYPE_Compensation" style="display: none;" value="@SessionUserType" />
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Employee Organization<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" id="EmployeeOrg">
+                                                <option value="Select">Employee Organization</option>
+                                                <option value="SBU1">SBU 1</option>
+                                                <option value="SBU2">SBU 2</option>
+                                                <option value="SBU3">SBU 3</option>
+                                                <option value="SBU8">SBU 8</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Employee Code<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="EmpCode" data-ng-model="EmpCode" onkeypress="return isNumberKey(event)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Employee Name<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="EmpName" data-ng-model="EmpName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group sbu2">
+
+                                        <label class="col-sm-2 control-label">Mobile No.<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="MobileNo" data-ng-model="MobileNo" onkeypress="return isNumberKey(event)" maxlength="10" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group sbu2">
+                                        <label class="col-sm-2 control-label">Email Id<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="Email" data-ng-model="Email" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group sbu2" hidden id="Statediv">
+                                        <label class="col-sm-2 control-label">Employee State<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" id="States">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2"></label>
+                                        <div class="col-sm-10">
+                                            <button id="btnSave" type="button" class="btn btn-info" onclick="SaveEmployeeDetails()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                                Save
+                                            </button>
+                                            <button id="btnUpdate" type="button" class="btn btn-info navbar-btn" onclick="UpdateEmployeeDetails()" style="background-color: #d2401a;display:none;border:1px solid #d2401a;">
+                                                Update
+                                            </button>
+                                            <button type="button" class="btn btn-info" onclick="Cancel()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="sbu1" hidden style="overflow:auto;">
+                                        <table id="SBU1EmployeelistTbl" class="table ListTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center">Employee Code</th>
+                                                    <th style="text-align:center">Employee Name</th>
+                                                    <th style="text-align:center">Mobile No.</th>
+                                                    <th style="text-align:center">Email ID</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <div id="sbu2" hidden style="overflow:auto;">
+                                        <table id="SBU2EmployeelistTbl" class="table ListTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center">Employee Code</th>
+                                                    <th style="text-align:center">Employee Name</th>
+                                                    <th style="text-align:center">State</th>
+                                                    <th style="text-align:center">Organization</th>
+                                                    <th>State Code</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+        $("#SBU1EmployeelistTbl").dataTable({
+
+        });
+        $("#SBU2EmployeelistTbl").dataTable({
+
+        });
+
+        GetEmployeeList();
+
+        GetStates();
+
+    });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function GetEmployeeList() {
+        ShowLoader();
+        $.ajax({
+            url: '../../Home/GetEmployeeDetails',
+            type: 'POST',
+            async: false,
+            success: function (Resp) {
+                $('#SBU1EmployeelistTbl').dataTable().fnClearTable();
+                $('#SBU1EmployeelistTbl').dataTable().fnDestroy();
+                $('#SBU1EmployeelistTbl').dataTable().fnDraw();
+
+                $('#SBU2EmployeelistTbl').dataTable().fnClearTable();
+                $('#SBU2EmployeelistTbl').dataTable().fnDestroy();
+                $('#SBU2EmployeelistTbl').dataTable().fnDraw();
+                if (Resp != '') {
+                    Resp = JSON.parse(Resp);
+                    var i = 0;
+                    var dtSBU1 = Resp["dtSBU1"];
+                    var dtSBU2 = Resp["dtSBU2"];
+
+                    for (i = 0; i < dtSBU1.length; i++) {
+                        $("#SBU1EmployeelistTbl").dataTable().fnAddData([dtSBU1[i]["EMPLOYEE_CODE"], dtSBU1[i]["EMPLOYEE_NAME"], dtSBU1[i]["MOBILE_NO"], dtSBU1[i]["EMAIL"]]);
+                    }
+                    for (i = 0; i < dtSBU2.length; i++) {
+                        $("#SBU2EmployeelistTbl").dataTable().fnAddData([dtSBU2[i]["EmployeeCode"], dtSBU2[i]["EmployeeName"], dtSBU2[i]["STATE_DESC"], dtSBU2[i]["Organization"], dtSBU2[i]["STATE_CODE"]]);
+                    }
+                    $("#SBU2EmployeelistTbl").DataTable().column(4).visible(false);
+                    $("#SBU2EmployeelistTbl").DataTable().columns.adjust().draw();
+                }
+                else {
+                    $('#SBU1EmployeelistTbl').dataTable().fnClearTable();
+                    $('#SBU2EmployeelistTbl').dataTable().fnClearTable();
+                }
+                HideLoader();
+            }
+        });
+    }
+
+    function GetStates() {
+
+        $.ajax({
+            url: '../../Home/GetStates',
+            type: 'POST',
+            async: false,
+            success: function (Resp) {
+                var res = JSON.parse(Resp);
+                $('#States').empty();
+                $('#States').append($("<option></option>").attr("value", "Select").text("State"));
+                for (var i = 0; i < res.length; i++) {
+                    $('#States').append($("<option></option>").attr("value", res[i]["STATE_CODE"]).text(res[i]["STATE_DESC"]));
+                }
+            }
+        });
+    }
+
+    $("#EmployeeOrg").change(function () {
+
+        var emporg = $("#EmployeeOrg").val();
+        if (emporg != "SBU1") {
+            $("#EmpCode").attr("disabled", false);
+            $("#EmpCode").val("");
+            $("#EmpName").val("");
+            $("#MobileNo").val("");
+            $("#Email").val("");
+            $(".sbu2").hide();
+            $("#Statediv").show();
+            $("#sbu2").show();
+            $("#sbu1").hide();
+            $("#btnSave").show();
+            $("#btnUpdate").hide();
+            $("#States").val("Select");
+        }
+        if (emporg == "Select") {
+            $("#EmpCode").attr("disabled", false);
+            $("#EmpCode").val("");
+            $("#EmpName").val("");
+            $("#MobileNo").val("");
+            $("#Email").val("");
+            $(".sbu2").show();
+            $("#Statediv").hide();
+            $("#sbu1").hide();
+            $("#sbu2").hide();
+            $("#btnSave").show();
+            $("#btnUpdate").hide();
+        }
+        if (emporg == "SBU1") {
+            $("#EmpCode").attr("disabled", false);
+            $("#EmpCode").val("");
+            $("#EmpName").val("");
+            $("#MobileNo").val("");
+            $("#Email").val("");
+            $(".sbu2").show();
+            $("#Statediv").hide();
+            $("#sbu1").show();
+            $("#sbu2").hide();
+            $("#btnSave").show();
+            $("#btnUpdate").hide();
+            $("#States").val("Select");
+        }
+    });
+
+    function SaveEmployeeDetails() {
+
+        var state = $('#States').val();
+        var emporg = $("#EmployeeOrg").val();
+        var empcode = $("#EmpCode").val();
+        var empname = $("#EmpName").val();
+        var mobileno = $("#MobileNo").val();
+        var email = $("#Email").val();
+        var usercode = $("#USERCODE_Compensation").val();
+        var usertype = $("#USERTYPE_Compensation").val();
+
+        if (emporg == '' || emporg == null || emporg == undefined || emporg == 'NULL' || emporg == "Select") {
+            alert("Please select the Organization");
+            return false;
+        }
+        if (empcode == '' || empcode == null || empcode == undefined || empcode == 'NULL') {
+            alert("Please enter Employee Code");
+            return false;
+        }
+        if (empname == '' || empname == null || empname == undefined || empname == 'NULL') {
+            alert("Please enter Employee Name");
+            return false;
+        }
+
+        if (emporg == "SBU1") {
+
+            if (mobileno == '' || mobileno == null || mobileno == undefined || mobileno == 'NULL') {
+                alert("Please enter Mobile Number");
+                return false;
+            }
+            if (email == '' || email == null || email == undefined || email == 'NULL') {
+                alert("Please enter Email");
+                return false;
+            }
+        }
+        if (emporg != "SBU1") {
+            if (state == '' || state == null || state == undefined || state == 'NULL' || state == "Select") {
+                alert("Please select State");
+                return false;
+            }
+        }
+        ShowLoader();
+        var EmployeeDetails = JSON.stringify({
+            "emporg": emporg,
+            "empcode": empcode,
+            "empname": empname,
+            "mobileno": mobileno,
+            "email": email,
+            "usercode": usercode,
+            "usertype": usertype,
+            "state": state
+        });
+        $.ajax({
+            url: '../../Home/SaveEmployeeDetails',
+            type: 'POST',
+            data: { EmployeeDetails: EmployeeDetails },
+            async: false,
+            success: function (Resp) {
+                alert(Resp);
+                GetEmployeeList();
+                Cancel();
+                HideLoader();
+            }
+        });
+    }
+
+    function Cancel() {
+        $("#EmpCode").attr("disabled", false);
+        $("#EmployeeOrg").val("Select");
+        $("#EmpCode").val("");
+        $("#EmpName").val("");
+        $("#MobileNo").val("");
+        $("#Email").val("");
+        $("#States").val("Select");
+        $("#sbu2").hide();
+        $("#sbu1").hide();
+        $("#btnUpdate").hide();
+        $("#btnSave").show();
+        $(".sbu2").show();
+        $("#Statediv").hide();
+    }
+
+    $("#SBU1EmployeelistTbl tbody").on('click', 'tr', function () {
+        ShowLoader();
+        $("#EmpCode").attr("disabled", true);
+        $("#EmpCode").addClass('gray');
+        $("#EmployeeOrg").val("SBU1");
+        $("#EmpCode").val("");
+        $("#EmpName").val("");
+        $("#MobileNo").val("");
+        $("#Email").val("");
+        $("#btnSave").hide();
+        $("#btnUpdate").show();
+        $("#EmpCode").val($("#SBU1EmployeelistTbl").DataTable().row(this).data()[0]);
+        $("#EmpName").val($("#SBU1EmployeelistTbl").DataTable().row(this).data()[1]);
+        $("#MobileNo").val($("#SBU1EmployeelistTbl").DataTable().row(this).data()[2]);
+        $("#Email").val($("#SBU1EmployeelistTbl").DataTable().row(this).data()[3]);
+        HideLoader();
+    });
+
+    $("#SBU2EmployeelistTbl tbody").on('click', 'tr', function () {
+        ShowLoader();
+        $("#EmpCode").attr("disabled", true);
+        $("#EmpCode").addClass('gray');
+        $("#EmpCode").val("");
+        $("#EmpName").val("");
+        $("#MobileNo").val("");
+        $("#Email").val("");
+        $("#btnSave").hide();
+        $("#btnUpdate").show();
+        $("#EmpCode").val($("#SBU2EmployeelistTbl").DataTable().row(this).data()[0]);
+        $("#EmpName").val($("#SBU2EmployeelistTbl").DataTable().row(this).data()[1]);
+        $("#EmployeeOrg").val($("#SBU2EmployeelistTbl").DataTable().row(this).data()[3]);
+        $("#States").val($("#SBU2EmployeelistTbl").DataTable().row(this).data()[4]);
+        HideLoader();
+    });
+
+    function UpdateEmployeeDetails() {
+        ShowLoader();
+        var state = $('#States').val();
+        var emporg = $("#EmployeeOrg").val();
+        var empcode = $("#EmpCode").val();
+        var empname = $("#EmpName").val();
+        var mobileno = $("#MobileNo").val();
+        var email = $("#Email").val();
+        var usercode = $("#USERCODE_Compensation").val();
+        var usertype = $("#USERTYPE_Compensation").val();
+
+        var EmployeeDetails = JSON.stringify({
+            "emporg": emporg,
+            "empcode": empcode,
+            "empname": empname,
+            "mobileno": mobileno,
+            "email": email,
+            "usercode": usercode,
+            "usertype": usertype,
+            "state": state
+        });
+        $.ajax({
+            url: '../../Home/UpdateEmployeeDetails',
+            type: 'POST',
+            data: { EmployeeDetails: EmployeeDetails },
+            async: false,
+            success: function (Resp) {
+                alert(Resp);
+                GetEmployeeList();
+                Cancel();
+                HideLoader();
+            }
+        });
+    }
+
+</script>

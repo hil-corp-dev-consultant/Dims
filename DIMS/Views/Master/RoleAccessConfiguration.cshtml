@@ -1,0 +1,112 @@
+﻿@* Module              : DIMS Client Application.
+    DocumentName        : AccountStatement.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for get Account Statement details.
+    Developer Name      : Rajanna Bhanothu.
+    Change Log          : NA.*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Role Access Configuration</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Role Access Configuration</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="SaveRoleAccess()" id="btnSaveRoleAccess">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row" id="Acc_Stmt_list">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    @*<h3 class="box-title">Account Statement</h3>*@
+                    <div class="pull-right" style="margin-left: 15px;">
+                        <label id="lbl"></label>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small" action="">
+                    <div class="form-group">
+                        @*@Html.DropDownList("ddlOrderCountry", (IEnumerable<SelectListItem>)ViewBag.Country, new { @class = "form-control", multiple = "multiple" })*@
+                        <label class="col-sm-2 control-label" for="StockistID" style="padding-top:0px;">
+                            Role Name:
+                        </label>
+                        <div class="col-sm-4">
+                            <select ng-model="cmbRole" ng-options="b for b in list" ng-change="GetRoleFormAccess(cmbRole)" style="width:100%;">
+                                <option value="">-- Select a Role --</option>
+                            </select>
+                        </div>                        
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <table id="MasterTable" class="table" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="background-color:#d2401a;color:white;">
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script>
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $("#tbl_RoleAccessConfig").dataTable({
+        "bDestroy": true,
+        scrollY: "200px",
+        scrollX: true,
+        scrollCollapse: true,
+        paging: true,
+        fixedColumns: {
+            leftColumns: 0
+        },
+    });
+</script>

@@ -1,0 +1,144 @@
+﻿@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    // string Role = UP.UserTypeCode;
+    // Role = "FSO";
+    string Role = "";
+    if (UP.SAP_DashboardAccess == "ADMIN")
+    {
+        Role = UP.SAP_DashboardAccess;
+    }
+    else
+    {
+        Role = UP.UserTypeCode;
+    }
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 146px;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 style="font-family:Calibri">
+        Add Notification
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Add Notification</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @*<a href ng-click="go('Notification')">
+                    <i class="fa fa-list fa-4" title="Notification List"></i>
+                </a>*@
+                <a href ng-click="SendNotification()">
+                    <i class="fa fa-paper-plane-o" aria-hidden="true" title="Send Notification"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<section class="content">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 9px;">
+            <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small; margin-top: 36px;" action="">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">To<span class="Mandatory">*</span></label>
+                    <div class="col-sm-3">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="optcheckbox_Sendto" value="Employees">Employees
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="optcheckbox_Sendto" value="Customers">Customers
+                        </label>
+                    </div>
+                    @*<div class="col-sm-3">
+                        <div class="input-group add-on">
+                            <input class="form-control" id="SendTo" type="text" disabled="disabled" data-ng-model="CustomerCode">
+                            <div class="input-group-btn">
+                                <span class="btn btn-default" ng-click="Getdata('GetNotification','UsersListForNotification','Users List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>
+                        </div>
+                    </div>*@
+                    <label class="col-sm-3 control-label" for="Stockist">
+                        Send Date
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control gray" id="SendDate"  disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Send From</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="SendFrom" type="text" disabled="disabled" value="@SessionUserCode">
+                    </div>
+                    <label class="col-sm-3 control-label">Subject<span class="Mandatory">*</span></label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="Subject" type="text" data-ng-model="Subject">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Message<span class="Mandatory">*</span></label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" rows="4" id="Message" data-ng-model="Message" maxlength="200"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {        
+        var width = $(window).width(), height = $(window).height();//---------
+        var totalheight = height - 191;        
+        if (height <= 800) {
+            totalheight = height - 148;
+        }
+        $('.content').css({ "max-height": totalheight, "overflow-y": "auto" });//-----------
+        $('.content-header > h2').css({ "font-size": "18px", "font-weight": "500" });//----------
+        $('.content').css({ "max-height": totalheight, "min-height": totalheight, "overflow-y": "auto" });//-----------      
+        GetServerDateTime();
+    });
+    function GetServerDateTime() {        
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);                
+                if (result == "") {
+                }
+                else {                    
+                    $('#SendDate').val(result);
+                }
+            }
+        });
+    }
+</script>
+

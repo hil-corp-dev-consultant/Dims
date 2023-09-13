@@ -1,0 +1,639 @@
+﻿
+        
+
+
+     @* Module              : DIMS Client Application.
+        DocumentName        : Debit_Notes.cshtml
+        Project Name        : Dealer Information Management System (DIMS).
+        Client Name         : HIL :: CK BIRLA GROUP.
+        Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+        Team                : ASD.
+        Description         : This Doc is used for get Debit Notes details.
+        Developer Name      : Rajanna Bhanothu.
+        Change Log          : NA.*@
+
+
+        
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+    string Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    
+}
+
+<style type="text/css">
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+     /*#StockistID ~ .SlectBox {
+        padding: 5px 8px;
+        width: 250px;
+    }*/
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Debit Notes</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li class="active">Debit Notes</li>
+    </ol>
+     @if ((@Role.Trim() != "STOCKIST") && (@Role.Trim() != "BU3_STK"))
+            {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+    @*<nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                </a>
+            </div>
+        </div>
+    </nav>*@
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="DebitNoteDetailId">
+    <div class="row" id="">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="navbar-header pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="GetDebitNote()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small" action="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            From Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderFromDate" placeholder="From Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtBatchNo">
+                            To Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderToDate" placeholder="To Date" readonly />
+                        </div>
+                        <label class="col-sm-1 control-label" for="SalesEmapName" id="lblZone">
+                            Zone
+                        </label>
+                        <div class="col-sm-1" id="divZone">
+                            <select id="Zone" multiple="multiple" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="SalesEmapName" id="lblState">
+                            State
+                        </label>
+                        <div class="col-sm-2" id="divState">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="TerriotryArea" id="lblTet">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2" id="divTet">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+                        @*<label class="col-sm-2 control-label" for="StockistName">
+            Customer Name
+        </label>
+        <div class="col-sm-2">
+            <select id="StockistName" multiple="multiple" class="form-control"></select>
+        </div>*@
+                        @*VIKAS G, 14-07-2022*@
+                        <label class="col-sm-1 control-label" id="lblSheetsS">
+                            Division
+                        </label>
+                        <div class="col-sm-2" id="divSheetsS">
+                            <select class="form-control" id="DivisionFilter" multiple="multiple"  ></select>
+                        </div>
+                      
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="StockistID">
+                            Customer Code/Name
+                        </label>
+                        <div class="col-sm-3">
+                            <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                        </div>
+                        <div class="col-sm-4">
+                            @*<select id="StockistID" multiple="multiple" class="form-control"></select>*@
+                        </div>
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div class="table-responsive" id="DebitNoteDetailDiv">
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                    <input type="text" id="SessionUserRole" value="@Role" style="display: none;" />
+                    <button type="button" id="DownloadPDF" class="btn btn-info navbar-btn" style="background-color: #d2401a; display:none">Download PDF</button>
+                    <table id="tbl_DebitNotes" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <br />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            TOTAL Debit Amount (INR in Lakhs)
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="TotalDebitAmnt" placeholder="Debit Amount" disabled="disabled" />
+                        </div>
+                    </div>
+                    <br />
+
+                    @*<input type="button" value="Advanced" id="AdvancedColumnEditing" style="background-color: #d2401a;display:none;" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />*@
+                    @*<table id="tbl_DebitNotes" class="table" width="100%" cellspacing="0">
+            <thead>
+                <tr style="background-color:#d2401a;color:white;">
+                    <th>Customer Code</th>
+                    <th>Customer Name</th>
+                    <th>Customer Address</th>
+                    @if ((Session["UserRole"].ToString() == "ADMIN") || (Session["UserRole"].ToString() == "NCC"))
+                    {
+                    <th>Zone</th>
+                    <th>State</th>
+                    <th>Territory/Area</th>
+                    <th>Location</th>
+                    <th>Posting Date</th>
+                    <th>Document Number</th>
+                    <th>Assignment</th>
+                    <th>Text</th>
+                    <th>Debit Amount</th>
+                    }
+                    else if ((Session["UserRole"].ToString() == "ZH") || (Session["UserRole"].ToString() == "RCC"))
+                    {
+                    <th>State</th>
+                    <th>Territory/Area</th>
+                    <th>Location</th>
+                    <th>Posting Date</th>
+                    <th>Document Number</th>
+                    <th>Assignment</th>
+                    <th>Text</th>
+                    <th>Debit Amount</th>
+                    }
+                    else if (Session["UserRole"].ToString() == "SH")
+                    {
+                    <th>Territory/Area</th>
+                    <th>Location</th>
+                    <th>Posting Date</th>
+                    <th>Document Number</th>
+                    <th>Assignment</th>
+                    <th>Text</th>
+                    <th>Debit Amount</th>
+                    }
+                    else if ((Session["UserRole"].ToString() == "FSO") || (Session["UserRole"].ToString() == "Stockist"))
+                    {
+                    <th>Location</th>
+                    <th>Posting Date</th>
+                    <th>Document Number</th>
+                    <th>Assignment</th>
+                    <th>Text</th>
+                    <th>Debit Amount</th>
+                    }
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="11" style="text-align: right">Total:</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+            <tbody></tbody>
+        </table>*@
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</div>
+<script>
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        debugger
+        $('#DivisionFilter').SumoSelect({ selectAll: true });
+        $('#StockistName').SumoSelect({ placeholder: 'Customer Name' });
+        $('#StockistID').SumoSelect({ placeholder: 'Customer Code' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerritoryArea').SumoSelect({ placeholder: 'Territory/Area' });
+        $('#DivisionFilter').SumoSelect({ placeholder: 'Division' });
+        $('#LocationFilter').SumoSelect({ placeholder: 'LocationFilter' });
+        //VIKAS G, 06-07-2022 START FOR SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+        var Role = $("#SessionUserRole").val();
+        //if (Role == "BU3_STK") {
+        //    $("#lblZone").css("display", "none");
+        //    $("#divZone").css("display", "none");
+        //    $("#lblState").css("display", "none");
+        //    $("#divState").css("display", "none");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //    $("#lblTet").css("display", "none");
+        //    $("#divTet").css("display", "none");
+        //    $("#lblStockist").css("display", "none");
+        //    $("#divStockist").css("display", "none");
+        //    $("#lblSheetsS").css("display", "none");
+        //    $("#divSheetsS").css("display", "none");
+        //    $("#lblSheets").css("display", "block");
+        //    $("#divSheets").css("display", "block");
+        //}
+        //else if (Role != "BU3_STK") {
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //    $("#lblSheetsS").css("display", "block");
+        //    $("#divSheetsS").css("display", "block");
+        //}
+        //VIKAS G, 06-07-2022 END FOR SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+        GetServerDateTime();
+        $('#OrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+    });
+
+    $("#OrderFromDate").datepicker().on("changeDate", function (e) {
+        $("#OrderToDate").datepicker('setStartDate', $("#OrderFromDate").val());
+        //$("#OrderToDate").data("datepicker").setStartDate((moment(e.date).add(0, 'days')));
+        $("#OrderToDate").val("");
+    });
+    //$("#OrderToDate").datepicker().on("changeDate", function (e) {
+    //    if ($("#OrderFromDate").val() == "") {
+    //        $("#OrderToDate").val("");
+    //    } else {
+    //        $("#OrderFromDate").datepicker('setEndDate', $("#OrderToDate").val());
+    //    }
+    //});
+
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+                    $("#OrderFromDate").datepicker('setEndDate', result);
+                    $("#OrderToDate").datepicker('setEndDate', result);
+                }
+
+            }
+
+        });
+    }
+
+    var table = $('#tbl_DebitNotes').dataTable();
+    function ResetFilters() {
+        var StockistName = $('#StockistName option').length;
+        var StockistID = $('#StockistID option').length;
+        var SalesEmapName = $('#SalesEmapName option').length;
+        var Plant = $('#PlantSumo option').length;
+
+        var Zone = $('#Zone option').length;
+        var State = $('#State option').length;
+        var Area = $('#TerriotryArea option').length;
+        var DivisionFilter = $('#DivisionFilter option').length;
+        var Location = $('#Location option').length;
+
+        for (var i = 0; i < StockistID; i++) {
+            $('#StockistID')[0].sumo.unSelectItem(i);
+            table.fnDraw();
+        }
+
+        for (var i = 0; i < StockistName; i++) {
+            $('#StockistName')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Zone; i++) {
+            $('#Zone')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < State; i++) {
+            $('#State')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Area; i++) {
+            $('#TerriotryArea')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < DivisionFilter; i++) {
+            $('#DivisionFilter')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < Location; i++) {
+            $('#Location')[0].sumo.unSelectItem(i);
+        }
+
+        $("#OrderFromDate").val("");
+        $("#OrderToDate").val("");
+        GetServerDateTime();
+        //fnResetAllFilters(table);
+
+
+    }
+
+    $('#StockistID').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_DebitNotes").dataTable().fnFilter(choosedFname, 0, true, false);
+        }
+        else {
+            $("#tbl_DebitNotes").dataTable().fnFilter("", 0, true, false);
+        }
+    });
+
+    $('#StockistName').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_DebitNotes").dataTable().fnFilter(choosedFname, 1, true, false);
+        }
+        else {
+            $("#tbl_DebitNotes").dataTable().fnFilter("", 1, true, false);
+        }
+    });
+
+    $('#Zone').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_DebitNotes").dataTable().fnFilter(choosedFname, 3, true, false);
+        }
+        else {
+            $("#tbl_DebitNotes").dataTable().fnFilter("", 3, true, false);
+        }
+    });
+
+    $('#State').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_DebitNotes").dataTable().fnFilter(choosedFname, 4, true, false);
+        }
+        else {
+            $("#tbl_DebitNotes").dataTable().fnFilter("", 4, true, false);
+        }
+    });
+
+    $('#TerritoryArea').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_DebitNotes").dataTable().fnFilter(choosedFname, 5, true, false);
+        }
+        else {
+            $("#tbl_DebitNotes").dataTable().fnFilter("", 5, true, false);
+        }
+    });
+
+    $('#LocationFilter').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_DebitNotes").dataTable().fnFilter(choosedFname, 6, true, false);
+        }
+        else {
+            $("#tbl_DebitNotes").dataTable().fnFilter("", 6, true, false);
+        }
+    });
+
+//    $('#OrderFromDate').datepicker().on('changeDate', function (ev) {
+//        $("#OrderToDate").val("");
+//        table.fnDraw();
+//    });
+//    $('#OrderToDate').datepicker().on('changeDate', function (ev) {
+//        table.fnDraw();
+//    });
+
+//    $.fn.dataTableExt.afnFiltering.push(
+//    function (oSettings, aData, iDataIndex) {
+//        var iFini = document.getElementById('OrderFromDate').value;
+
+//        var iFfin = document.getElementById('OrderToDate').value;
+//        var iStartDateCol = 7;
+//        var iEndDateCol = 7;
+
+//        iFini = iFini.substring(6, 10) + iFini.substring(3, 5) + iFini.substring(0, 2);
+//        iFfin = iFfin.substring(6, 10) + iFfin.substring(3, 5) + iFfin.substring(0, 2);
+
+//        // alert(aData[iEndDateCol].substring(6, 10));
+//        var datofini = aData[iStartDateCol].substring(6, 10) + aData[iStartDateCol].substring(3, 5) + aData[iStartDateCol].substring(0, 2);
+//        var datoffin = aData[iEndDateCol].substring(6, 10) + aData[iEndDateCol].substring(3, 5) + aData[iEndDateCol].substring(0, 2);
+
+//        if (iFini === "" && iFfin === "") {
+//            return true;
+//        }
+//        else if (iFini <= datofini && iFfin === "") {
+//            return true;
+//        }
+//        else if (iFfin >= datoffin && iFini === "") {
+//            return true;
+//        }
+//        else if (iFini <= datofini && iFfin >= datoffin) {
+//            return true;
+//        }
+//        return false;
+//    }
+//);
+    var SelectedArray = new Array();
+    function SelectAllCreditDebitNotes() {
+        var table = $('#tbl_DebitNotes').DataTable();
+        var cells = table.cells().nodes();
+        if ($('#Select_All').is(":checked")) {
+            $(cells).find(':checkbox').prop('checked', true);
+            $('#DownloadPDF').show();
+            var data = table.rows().data();
+            SelectedArray = new Array();
+            data.each(function (value, index) {
+                var string = JSON.stringify(value);
+                var obj = JSON.parse(string);
+                SelectedArray.push(obj['Customer Code'] + ',' + obj['Posting Date'] + ',' + obj['Document Number']);
+            });
+        }
+        else {
+            $(cells).find(':checkbox').prop('checked', false);
+            $('#DownloadPDF').hide();
+            SelectedArray = new Array();
+        }
+    }
+
+    function SelectedCreditDebitNote(selectObject) {
+        var table = $('#tbl_DebitNotes').DataTable();
+        var cells = table.cells().nodes();
+        var $checkbox = $(cells).find(':checkbox');
+        $('#DownloadPDF').hide();
+        if ($checkbox.is(':checked')) {
+            $('#DownloadPDF').show();
+        }
+        if (!$('#DownloadPDF').is(":visible"))
+            $('#Select_All').prop('checked', false);
+        var value = selectObject.value;
+        if (selectObject.checked) {
+            SelectedArray.push(selectObject.value);
+        } else {
+            remove(SelectedArray, selectObject.value);
+        }
+    }
+
+    function DeSelectAllCreditDebitNotes() {
+        var table = $('#tbl_DebitNotes').DataTable();
+        var cells = table.cells().nodes();
+        $('#Select_All').prop('checked', false);
+        $(cells).find(':checkbox').prop('checked', false);
+        $('#DownloadPDF').hide();
+        SelectedArray = new Array();
+    }
+
+    function remove(array, element) {
+        var index = array.indexOf(element);
+        array.splice(index, 1);
+    }
+
+    $('#DownloadPDF').on('click', function () {
+        if (SelectedArray != null && SelectedArray.length > 0) {
+            var Data = new Array();
+            for (var i = 0; i < SelectedArray.length; i++) {
+                var SplitString = SelectedArray[i].split(',');
+                if (SplitString.length > 0) {
+                    var DocDate = SplitString[1];
+                    var DocNum = SplitString[2];
+                    var DOCDATE1 = "";
+                    if (DocDate.indexOf('/') > 0) {
+                        DocDate = DocDate.split('/');
+                        DOCDATE1 = DocDate[2] + "-" + DocDate[1] + "-" + DocDate[0];
+                    }
+                    Data.push(JSON.stringify({
+                        "DocDate": DOCDATE1,
+                        "DataFrom": "S",
+                        "DocNum": DocNum
+                    }));
+                }
+            }
+            if (Data.length > 0) {
+                Data = JSON.stringify({ 'Data': Data });
+                $.ajax({
+                    url: '/Home/GetCreditDebitNoteDetailsPDF',
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST',
+                    beforeSend: function () {
+                        ShowLoader();
+                    },
+                    data: Data,
+                    success: function (result) {
+                        if (result != "") {
+                            GetPDFFile(result);
+                        }
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            }
+        }
+    });
+
+    function GetPDFFile(HTML) {
+        ShowLoader();
+        $.ajax({
+            url: '/Home/Exportdata',
+            type: 'POST',
+            beforeSend: function () {
+                ShowLoader();
+            },
+            data: { QueryVal: HTML },
+            success: function (result) {
+                if (result == "ok") {
+                    if (("@Role.Trim()" == "STOCKIST")||("@Role.Trim()" == "BU3_STK")) {
+                        var guid = CreateGuid();
+                        $.ajax({
+                            type: 'POST',
+                            async: false,
+                            data: { reportname: "DebitNote_" + guid + "" },
+                            beforeSend: function () {
+                                ShowLoader();
+                            },
+                            url: '../../HOME/GetPDF_STOCKIST',
+                            success: function (data) {
+                                HideLoader();
+                                if (data == "MailSentSuccessfully") {
+                                    alert("Mail Sent Successfully");
+                                    DeSelectAllCreditDebitNotes();
+                                } else {
+                                    alert(data);
+                                }
+                            },
+                            error: function (e) {
+                                alert("Technical Error Occured");
+                            },
+                            "complete": function (resp) {
+                                DeSelectAllCreditDebitNotes();
+                                HideLoader();
+                            }
+                        });
+                    } else {
+                        ShowLoader();
+                        var guid = CreateGuid();
+                        window.location.href = "../../Home/GetPDF?reportname=DebitNote_" + guid + "";
+                        DeSelectAllCreditDebitNotes();
+                        HideLoader();
+                    }
+                }
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    }
+    function CreateGuid() {
+        function _p8(s) {
+            var p = (Math.random().toString(16) + "000000000").substr(2, 8);
+            return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+        }
+        return _p8() + _p8(true) + _p8(true) + _p8();
+    }
+</script>

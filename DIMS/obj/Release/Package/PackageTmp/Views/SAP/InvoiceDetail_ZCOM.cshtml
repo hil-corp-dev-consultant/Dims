@@ -1,0 +1,464 @@
+﻿@using LabelName = DIMS.Content.Resource_Files.CustomerMaster;
+@{
+    Layout = null;
+}
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Invoice Details</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li><a href ng-click="go('InvoiceListView')"><i class="fa fa-dashboard"></i>Invoice List</a></li>
+        <li>Invoice Details</li>
+    </ol>
+</section>
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+
+    <div class="row" id="addcustomerview">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img src="~/Images/CKBIRLA.png" class="img-thumbnail" alt="Cinque Terre" width="185" height="202" style="border:none;">
+                        </div>
+                        <div class="col-sm-6 text-center">
+                            <h5>
+                                <b>
+                                    HIL Limited
+                                    <br />
+                                    <label id="lblPlantName"></label>
+                                </b>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                @*<h5 class="text-center" id="TaxHeader"><b>TAX INVOICE - Cum DELIVERY CHALLAN for Removal of Excisable Goods under Rule 11 of Central Excise Rules 2002 </b></h5>*@
+                <h5 class="text-center" id="TaxHeader"><b></b></h5>
+
+                <div class="box-body pad">
+
+                    <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                        <input type="hidden" id="customermaster_id" data-ng-model="customermaster_id_Model" />
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Billing Doc No:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="BillingDoc" ng-model="BillingDoc">
+                                </label>
+                                @*  <input type="text" class="form-control gray" id="BillingDoc" ng-model="BillingDoc" disabled="disabled" />*@
+                            </div>
+                            <label class="col-sm-3 control-label" id="lblExciseInvNo">
+                                Excise Inv No. & Date:
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="control-label" id="ExciseInvNo" ng-model="ExciseInvNo">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Billing Date:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="BillingDate" ng-model="BillingDate">
+                                </label>
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                ECC Number:
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="control-label" id="ECCNumber" ng-model="ECCNumber">
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                OA/SO No & Date:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="SalesOrderNo" ng-model="SalesOrderNo">
+                                </label>
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                CIN No:
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="control-label" id="CINNo" ng-model="CINNo">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Sold To:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="SoldTo" ng-model="SoldTo">
+                                </label>
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                Order Ref and Date:
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="control-label" id="OrderRefDate" ng-model="OrderRefDate">
+                                </label>
+                            </div>
+                        </div>
+                        <table id="tbl_Inv_Details" width="100%" cellspacing="0">
+                            <thead>
+                                <tr style="color: black;">
+                                    <th id="ExciseRange">Excise Range</th>
+                                    <th id="ExciseDivison">Excise Division</th>
+                                    <th id="ExciseCommissionerate">Excise Commissionerate</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <br />
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Date of Prep :
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="DOPrep" ng-model="Delivery">
+                                </label>
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                Date of Removal :
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="control-label" id="DORemoval" ng-model="Discount">
+                                </label>
+                            </div>
+                        </div>
+                        <br />
+                        <table id="tbl_Inv_Details1" width="100%" cellspacing="0">
+                            <thead>
+                                <tr style="color: black;">
+                                    <th>Material Code</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>UOM</th>
+                                    <th>Weight (KG)</th>
+                                    <th>Unit Rate</th>
+                                    <th>Total Basic Amount (INR)</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="6" style="text-align: right">Gross Amount:</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @*<tr>
+                                        <td>90016002</td>
+                                        <td>Newkor 6MM 1.75X1.05M</td>
+                                        <td>180</td>
+                                        <td>EA</td>
+                                        <td>45</td>
+                                        <td>612.00</td>
+                                        <td>110160.00</td>
+                                    </tr>*@
+                            </tbody>
+                        </table>
+                        <br />
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                    Delivery :
+                                </label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="Delivery" ng-model="Delivery">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">
+                                    Discount :
+                                </label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="Discount" ng-model="Discount">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                    Gross weight :
+                                </label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="GrossWeight" ng-model="GrossWeight">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Assessable Value  :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="AssessableValue" ng-model="AssessableValue">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                    Net weight :
+                                </label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="NetWeight" ng-model="NetWeight">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Basic Excise Duty @@12.50% :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="ExiceDuty" ng-model="ExiceDuty" style="text-align:right;">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="idEntryTax">
+                                <label class="col-sm-2 control-label">
+
+                                </label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="qwe" ng-model="NetWeight">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Entry Tax :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="EntryTax" ng-model="EntryTax" style="text-align:right;">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Payment Terms :</label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="PaymentTerms" ng-model="PaymentTerms">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Taxable Turnover  :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="TaxTornover" ng-model="TaxTornover">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">LR / RR No.  :</label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="LRRNo" ng-model="LRRNo">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label" id="lblAgainstCFORM"></label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="AgainstCFORM" ng-model="AgainstCFORM">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="idSteteSess">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" ng-model="asdo">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label" id="lblSteteSec"></label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="SteteSec" ng-model="SteteSec">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="idStateAddTax">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" ng-model="asdo">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label" id="lblStateAddTax"></label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="StateAddTax" ng-model="StateAddTax">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Transporter Name :</label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="TransporterName" ng-model="TransporterName">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Total  :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="Total" ng-model="Total">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Lorry / Wagon No. :</label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="LorryNum" ng-model="LorryNum">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Insurance (TPND) @@ 0.022% :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="InsuranceTPND" ng-model="InsuranceTPND">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Delivery/OBD Number. :</label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="OBDNum" ng-model="OBDNum">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Freight Amount :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="FreightAmt" ng-model="FreightAmt">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Excise Amount in Words :</label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="ExciseAmtInWords" ng-model="ExciseAmtInWords">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label">Total :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="TotalFr" ng-model="TotalFr">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Total Amount in Words :</label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="TotalAmtInWords" ng-model="TotalAmtInWords">
+                                    </label>
+                                </div>
+                                <label class="col-sm-3 control-label col-sm-offset-6">Total Amount(Rounded) :</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label" id="TotalAmountRound" ng-model="TotalAmountRound">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">
+                                        Delivery :
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control gray" id="Delivery" ng-model="Delivery" disabled="disabled" />
+                                    </div>
+                                    <label class="col-sm-3 control-label">
+                                        Gross Amount :
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" id="GrossAmnt" class="form-control gray" ng-model="GrossAmnt" disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">
+                                        Gross weight :
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control gray" disabled="disabled" id="GrossWeight" ng-model="GrossWeight" />
+                                    </div>
+                                    <label class="col-sm-3 control-label">
+                                        Net weight :
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control gray" disabled="disabled" id="NetWeight" ng-model="NetWeight">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Payment Terms :</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control gray" disabled="disabled" id="PaymentTerms" ng-model="PaymentTerms" />
+                                    </div>
+                                    <label class="col-sm-3 control-label">LR / RR No.  :</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control gray" id="LRRNo" ng-model="LRRRNo" disabled="disabled" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Transporter Name :</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control gray" disabled="disabled" id="TransporterName" ng-model="TransporterName" />
+                                    </div>
+                                    <label class="col-sm-3 control-label">Lorry / Wagon No. :</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control gray" disabled="disabled" id="LorryNum" ng-model="LorryNum" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Delivery/OBD Number. :</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control gray" disabled="disabled" id="OBDNum" ng-model="OBDNum" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" id="PricingGroup">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">
+                                        Assessable Value :
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control gray" id="AssessableValue" ng-model="AssessableValue" disabled="disabled"/>
+                                    </div>
+                                </div>
+                            </div>*@
+                    </form>
+                </div>
+                <br />
+                @*<div class="table-responsive">*@
+
+                @*</div>*@
+                <br />
+                @*<div class="table-responsive">*@
+
+                @*</div>*@
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+    var Gross_Weight = "";
+    $(document).ready(function () {
+        $("#tbl_Inv_Details").dataTable({
+            "bDestroy": true,
+            "bSort": false,
+            "bScrollCollapse": true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false
+            //'scrollX': true
+        });
+
+        $("#tbl_Inv_Details1").dataTable({
+            "bDestroy": true,
+            "bSort": false,
+            "bScrollCollapse": true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            "footerCallback": function (tfoot, data, start, end, display) {
+                var api = this.api();
+                $(api.column(6).footer()).html(
+                    api.column(6).data().reduce(function (a, b) {
+                        var res = parseFloat(a) + parseFloat(b);
+                        return parseFloat(res).toFixed(2);
+                    }, 0)
+                );
+                //    Gross_Weight = api
+                //                .column(4, { page: 'current' })
+                //                .data()
+                //                .reduce(function (a, b) {
+                //                    return intVal(a) + intVal(b);
+                //                }, 0);
+            }
+            //'scrollX': true
+        });
+    });
+</script>

@@ -1,0 +1,153 @@
+﻿@{
+    Layout = null;
+}
+
+
+<style type="text/css">
+
+    table tbody tr {
+    
+    cursor:default;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Employee Redemption Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>UNNATI</li>
+        <li class="active">Employee Redemption Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                 
+                <a href>
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+                <a href>
+                    <i class="fa fa-file-text-o fa-4" title="Download Text"></i>
+                </a>
+              
+            </div>
+        </div>
+    </nav>
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-header">
+                <form role="form" class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">From Date:</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="FromDate" />
+                        </div>
+                        <label class="col-sm-2 control-label">To Date:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select Date</option>
+                                <option value=""></option>
+                            </select>
+                            @*<input type="button" value="Submit" id="" data-toggle="modal" style="text-align: left" data-target="#" class="pull-right" />*@
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-sm-3 pull-right">
+                            <input type="button" value="Submit" id="" data-toggle="modal" data-target="#" class="pull-right" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="button" value="Download Excel" id="" data-toggle="modal" data-target="#" class="col-sm-offset-6" />
+                            <input type="button" value="Download Text" id="" class="pull-right" data-toggle="modal" style="text-align: left" data-target="#" />
+                        </div>
+                    </div>
+
+                </form>
+
+                <table id="EnrRedemptionReport" class="table">
+                    <thead>
+                        <tr style="background-color: #3C8DBC; color: white; font-size: 13px;">
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Employee Code</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Member Type</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Order Date</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Status Change Date</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Order No</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Sub Order No</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Status</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Points</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Product Code</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Product</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">NC Product Code</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Mobile</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">State</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">City</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Address</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Member Name</th>
+                            <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Product MRP Value</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>50000891</td>
+                            <td>FSO / TM</td>
+                            <td>11/5/2015</td>
+                            <td>11/5/2015</td>
+                            <td>100010075</td>
+                            <td>_000000361</td>
+                            <td>Ordered</td>
+                            <td>260</td>
+                            <td>APF0003</td>
+                            <td>..Apollo First Aid Kit APF0003</td>
+                            <td>ICL1508045</td>
+                            <td>9432645216</td>
+                            <td>West Bengal</td>
+                            <td>Malda</td>
+                            <td>Santosh Sharma (HIL Limited) C/c S.K Distributor's S.M Pally</td>
+                            <td>Santosh Sharma</td>
+                            <td>260</td>
+                        </tr>
+                        <tr>
+                            <td>50001597</td>
+                            <td>FSO / TM</td>
+                            <td>10/31/2015</td>
+                            <td>11/5/2015</td>
+                            <td>100000076</td>
+                            <td>_000000359</td>
+                            <td>Ordered</td>
+                            <td>1000</td>
+                            <td>Flipkart 1000</td>
+                            <td>..Flipart E-Vouchere 1000</td>
+                            <td>ICL1508104</td>
+                            <td>9713897802</td>
+                            <td>Madhya Pradesh</td>
+                            <td>GWALIOR</td>
+                            <td>CL- 41, DEEN DAYAL NAGAR, GWALIOR CL-42, DEEN DAYAL NAGAR </td>
+                            <td>MAHENDRA KAUSHAL</td>
+                            <td>1000</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#FromDate").datepicker();
+
+        $("#EnrRedemptionReport").dataTable({ "scrollX": true });
+    });
+
+</script>
+

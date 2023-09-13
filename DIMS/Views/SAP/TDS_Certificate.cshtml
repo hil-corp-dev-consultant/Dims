@@ -1,0 +1,162 @@
+﻿@* Module              : DIMS Client Application.
+    DocumentName        : Payment_By_stockist.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for get Payment by Stockist.
+    Developer Name      : Rajanna Bhanothu.
+    Change Log          : NA.*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+     table tbody tr {
+        cursor: default;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>TDS Certificates</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li><a href ng-click="go('TDSCertificateList')"><i class="fa fa-dashboard"></i>TDS Certificates</a></li>
+        <li class="active">TDS Certificates</li>
+    </ol>
+</section>
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+
+                <div class="box-header">
+                    @*<div class="navbar-header pull-right" style="margin-left: 15px;">
+                            <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a">
+                                Reset Filter
+                            </button>
+                        </div>*@
+                    <input type="text" id="SessionUserCode" style="display:none;" value="@SessionUserCode" />
+                    <input type="text" id="SessionUserType" style="display:none;" value="@SessionUserTypeID" />
+                </div>
+
+                @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small" action="">
+                    <div class="form-group">
+                        @*@Html.DropDownList("ddlOrderCountry", (IEnumerable<SelectListItem>)ViewBag.Country, new { @class = "form-control", multiple = "multiple" })*@
+                        <label class="col-sm-2 control-label" for="StockistID">
+                            Customer Code
+                            <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="StockistID" placeholder="Customer Code" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label" for="StockistID">
+                            Customer Name
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="StockistName" placeholder="Customer Name" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="PanNo">
+                            Pan No
+                            <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="PanNo" placeholder="Pan No" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label" for="Year">
+                            Year
+                        </label>
+                        <div class="col-sm-3">
+                            <select id="Year" class="form-control">
+                                <option selected="selected" value="2015-2016">2015-2016</option>
+                            </select>
+                        </div>
+                    </div>                   
+                </form>
+                <br />
+                <br />
+                <div class="table-responsive">
+                    <table id="tbl_TDS" class="table" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="background-color: #d2401a; color: white;">
+                                <th style="text-align:center">Quarter</th>
+                                <th style="text-align:center">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Quarter 1</td>
+                                <td style="text-align:right"><a href ng-click="GetTDSCertificate('Q1')"><i class="fa fa-file-pdf-o"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Quarter 2</td>
+                                <td style="text-align:right"><a href ng-click="GetTDSCertificate('Q2')"><i class="fa fa-file-pdf-o"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Quarter 3</td>
+                                <td style="text-align:right"><a href ng-click="GetTDSCertificate('Q3')"><i class="fa fa-file-pdf-o"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Quarter 4</td>
+                                <td style="text-align:right"><a href ng-click="GetTDSCertificate('Q4')"><i class="fa fa-file-pdf-o"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $("#tbl_TDS").dataTable({
+            "bDestroy": true,
+            "bSort": false,
+            "bScrollCollapse": false,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false
+            //'scrollX': true
+        });
+    });
+    function ResetFilters() {
+        var StockistID = $('#StockistID option').length;
+        var PanNo = $('#Zone option').length;
+
+        for (var i = 0; i < StockistID; i++) {
+            $('#StockistID')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < PanNo; i++) {
+            $('#PanNo')[0].sumo.unSelectItem(i);
+        }
+    }
+</script>

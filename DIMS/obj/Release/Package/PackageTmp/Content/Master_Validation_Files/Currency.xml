@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Master>
+  <TableName>Depo Master</TableName>
+  <Field>
+    <FN>CURRENCY_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>CURRENCY_DESC</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>BASE_CURRENCY</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COUNTRY_CODE</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <!--<Field>
+    <FN>PID</FN>
+    <FT>int</FT>
+    <IN>False</IN>
+    <MTN>State</MTN>
+    <MTLC>State_Name</MTLC>
+    <MTLCV>State_Id</MTLCV>
+  </Field>-->
+</Master>

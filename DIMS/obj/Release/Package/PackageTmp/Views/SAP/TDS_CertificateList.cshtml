@@ -1,0 +1,314 @@
+﻿@* Module              : DIMS Client Application.
+    DocumentName        : TDS_CertificateList.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for get List of Customers with the against Customer in TDS Certificate.
+    Developer Name      : Rajanna Bhanothu.
+    Change Log          : NA.*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    var Role = Session["UserRole"].ToString();
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    /*#StockistID ~ .SlectBox {
+        padding: 5px 8px;
+        width: 250px;
+    }*/
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>TDS Certificates</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li class="active">TDS Certificates</li>
+    </ol>
+
+    @if ((@Role.Trim() != "STOCKIST") && (@Role.Trim() != "BU3_STK"))
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+
+    @* <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>*@
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="TDS_Certificate">
+    <div class="row" id="Acc_Stmt_list">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="navbar-header pull-right" style="margin-left: 15px;">
+                        <button type="button" tabindex="0" class="btn btn-info navbar-btn" ng-click="GetData()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small" action="">
+                    <div class="form-group" id="divZoneStateTet">
+                        <label class="col-sm-1 control-label" for="SalesEmapName" id="zonelbl">
+                            Zone
+                        </label>
+                        <div class="col-sm-1">
+                            <select id="Zone" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="SalesEmapName">
+                            State
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="TerriotryArea">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">                        
+                       
+                        @*VIKAS G, 14-07-2022*@
+                        <label class="col-sm-1 control-label" id="lblSheetsS">
+                            Division
+                        </label>
+                        <div class="col-sm-2" id="divSheetsS">
+                            <select class="form-control" id="DivisionFilter" multiple="multiple"></select>
+                        </div>
+                        @*VIKAS G, 14-07-2022*@
+                      
+
+                        <label class="col-sm-1 control-label" for="StockistID">
+                            Customer Code/Name
+                        </label>
+                        @*<div class="col-sm-4">
+            <select id="StockistID" multiple="multiple" class="form-control"></select>
+        </div>*@
+                        <div class="col-sm-3">
+                            <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                        </div>
+
+                    </div>
+
+                </form>
+                <div style="padding:10px;"></div>
+                <div class="table-responsive" id="TDS_Cust">
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                    <input type="text" id="LoggedUserRole" value="@Role" style="display: none;" />
+                    <table id="tbl_TDS_Customer" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+</div>
+<script>
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        debugger
+        $('#DivisionFilter').SumoSelect({ selectAll: true });
+        //VIKAS G, 06-07-2022 START FOR SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+        var Role = $("#LoggedUserRole").val();
+        //if (Role == "BU3_STK") {
+        //    $("#divZoneStateTet").css("display", "none");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //    $("#lblSheets").css("display", "block");
+        //    $("#divSheets").css("display", "block");
+        //    $("#lblSheetsS").css("display", "none");
+        //    $("#divSheetsS").css("display", "none");
+        //}
+        //else if (Role != "BU3_STK") {
+        //    $("#lblSheetsS").css("display", "block");
+        //    $("#divSheetsS").css("display", "block");
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //}
+         //VIKAS G, 06-07-2022 END for SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+
+        // $('#StockistName').SumoSelect({ placeholder: 'Customer Name' });
+        //  $('#StockistID').SumoSelect({ placeholder: 'Customer Code' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'Territory/Area' });
+        $('#DivisionFilter').SumoSelect({ placeholder: 'Division' });
+        $('#SalesEmapName').SumoSelect({ placeholder: 'Sales Employee' });
+        $('#Location').SumoSelect({ placeholder: 'Location' });
+
+        $('#OrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+    });
+    var table = $('#tbl_TDS_Customer').dataTable();
+    function ResetFilters() {
+        // $('#ddlOrderBattery').SumoSelect.un
+        
+       // var StockistID = $('#StockistID option').length;
+        var Zone = $('#Zone option').length;
+        var State = $('#State option').length;
+
+        var TerriotryArea = $('#TerriotryArea option').length;
+        var DivisionFilter = $('#DivisionFilter option').length;
+
+        var SalesEmapName = $('#SalesEmapName option').length;
+        var Location = $('#Location option').length;
+
+        //for (var i = 0; i < StockistID; i++) {
+        //    $('#StockistID')[0].sumo.unSelectItem(i);
+        //}
+
+        for (var i = 0; i < Zone; i++) {
+            $('#Zone')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < State; i++) {
+            $('#State')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < TerriotryArea; i++) {
+            $('#TerriotryArea')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < DivisionFilter; i++) {
+            $('#DivisionFilter')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < SalesEmapName; i++) {
+            $('#SalesEmapName')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < Location; i++) {
+            $('#Location')[0].sumo.unSelectItem(i);
+        }
+        $("#OrderFromDate").val("");
+        $("#OrderToDate").val("");
+        $('#CustomerCode').val("");
+        fnResetAllFilters(table)
+    }
+
+    $('#StockistID').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_TDS_Customer").dataTable().fnFilter(choosedFname, 1, true, false);
+        }
+        else {
+            $("#tbl_TDS_Customer").dataTable().fnFilter("", 1, true, false);
+        }
+    });
+
+    $('#StockistName').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_TDS_Customer").dataTable().fnFilter(choosedFname, 2, true, false);
+        }
+        else {
+            $("#tbl_TDS_Customer").dataTable().fnFilter("", 2, true, false);
+        }
+    });
+
+    $('#Zone').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_TDS_Customer").dataTable().fnFilter(choosedFname, 4, true, false);
+        }
+        else {
+            $("#tbl_TDS_Customer").dataTable().fnFilter("", 4, true, false);
+        }
+    });
+
+    $('#State').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_TDS_Customer").dataTable().fnFilter(choosedFname, 5, true, false);
+        }
+        else {
+            $("#tbl_TDS_Customer").dataTable().fnFilter("", 5, true, false);
+        }
+    });
+
+    $('#TerriotryArea').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_TDS_Customer").dataTable().fnFilter(choosedFname, 6, true, false);
+        }
+        else {
+            $("#tbl_TDS_Customer").dataTable().fnFilter("", 6, true, false);
+        }
+    });
+
+    $('#Location').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_TDS_Customer").dataTable().fnFilter(choosedFname, 7, true, false);
+        }
+        else {
+            $("#tbl_TDS_Customer").dataTable().fnFilter("", 7, true, false);
+        }
+    });
+</script>

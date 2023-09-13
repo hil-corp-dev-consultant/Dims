@@ -1,0 +1,189 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+}
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 146px;
+    }
+
+    table thead tr th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table tfoot tr th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table tbody tr td {
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 style="font-family:Calibri">
+        Notification
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Notification</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            @*<div class="col-sm-11" id="IconsNavBar">
+                    @if (@SessionUserType == "ADMIN")
+                    {
+                        <a href ng-click="go('AddNotification')">
+                            <i class="fa fa-file-o fa-4" title="Add New"></i>
+                        </a>
+                    }
+                </div>*@
+        </div>
+    </nav>
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;" id="CounterListId">
+    <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+        <div class="box-header">
+            <h3 class="box-title"></h3>
+            <form class="form-horizontal" role="form" style="font-size: small;">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="YearFilter">
+                        Notification Filter
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="NotificationFilter" class="form-control" onchange="NotificationFilterchange()">
+                            <option value="NO">Un Read</option>
+                            <option value="YES">Read</option>
+                            <option value="ALL">All</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <input type="hidden" id="notificationId" />
+            <input type="hidden" id="read_unread_count_textbox" />
+            <table id="NotificationList" class="table tablecss" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Send From</th>
+                        <th>Subject</th>
+                        <th>Customer Name</th>
+                        <th>FSO Concerned</th>
+                        <th>State</th>
+                        <th>Zone</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            @*<table id="Manual_Notification" class="table tablecss" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Send From</th>
+                    <th>Subject</th>
+                    @if (@SessionUserType != "STOCKIST")
+                    {
+                        <th>Employee Name</th>
+                    }
+                    @if (@SessionUserType == "STOCKIST")
+                    {
+                        <th>Customer Name</th>
+                    }
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>*@
+
+
+        </div>
+    </div>
+    <div class="modal fade" id="notificationModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    <h3 class="modal-title">Notification Details</h3>
+
+                </div>
+                <div class="modal-body">                                        
+                    <div style="margin:10px;">Send From : <span id="notiSendFrom" style="font-weight: bold;"></span></div>
+                    <div style=" margin:10px;">Subject : <span id="notiSubject" style="font-weight: bold;"></span></div>
+                    <div style=" margin:10px;">Customer Name : <span id="notiCustomerName" style="font-weight: bold;"></span></div>
+                    <div style=" margin:10px;">FSO Concerned : <span id="notiConcernFSO" style="font-weight: bold;"></span></div>
+                    <div style=" margin:10px;">State : <span id="notiState" style="font-weight: bold;"></span></div>
+                    <div style=" margin:10px;">Zone : <span id="notiZone" style="font-weight: bold;"></span></div>
+                    <div style=" margin:10px;">Date : <span id="notiDate" style="font-weight: bold;"></span></div>
+                </div>
+                @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default " data-dismiss="modal">Apply!</button>
+                    <button type="button" class="btn btn-primary">Close</button>
+                </div>*@
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var SessionValues = '@SessionUserName' + " < " + '@SessionSITEDETAIL_CODE' + " > ";
+        SessionUserCodeName = '@SessionUserName';
+        SessionUserCode = '@SessionUserCode';
+        Noti_SessionUserType = '@SessionUserType';
+
+        $('#NotificationList').on('click', 'tr', function () {
+            if ($('td', this).eq(0).text() != "" && typeof $('td', this).eq(0).text() != "undefined" && $('td', this).eq(0).text() != "No data available in table") {
+                var id = $('td', this).eq(0).text();
+                var notiSendFrom = $('td', this).eq(1).text();
+                var notiSubject = $('td', this).eq(2).text();
+                var notiCustomerName = $('td', this).eq(3).text();
+                var notiConcernFSO = $('td', this).eq(4).text();
+                var notiState = $('td', this).eq(5).text();
+                var notiZone = $('td', this).eq(6).text();
+                var notiDate = $('td', this).eq(7).text();
+                $('#notificationId').val(id);
+                $('#notiSendFrom').text(notiSendFrom);
+                $('#notiSubject').text(notiSubject);
+                $('#notiCustomerName').text(notiCustomerName);
+                $('#notiConcernFSO').text(notiConcernFSO);
+                $('#notiState').text(notiState);
+                $('#notiZone').text(notiZone);
+                $('#notiDate').text(notiDate);
+                $('#notificationModal').modal("show");
+                updateNotificationData($('#notificationId').val());
+            }            
+        });
+    });
+</script>

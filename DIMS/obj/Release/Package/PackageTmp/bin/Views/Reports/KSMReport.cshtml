@@ -1,0 +1,122 @@
+﻿<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>KSM Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Reports</li>
+        <li class="active">KSM Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+            </div>
+        </div>
+    </nav>
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 9px;">
+            <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small; margin-top: 36px;" action="">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Stockist Code</label>
+                    <div class="col-sm-3">
+                        <select id="StockistCode" class="form-control">
+                            <option value="0">--Select--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-3 control-label">Stockist Name</label>
+                    <div class="col-sm-3">
+                        <select id="StockistName" class="form-control">
+                            <option value="0">--Select--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Zone</label>
+                    <div class="col-sm-3">
+                        <select id="Zone" class="form-control">
+                            <option value="0">--Select--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-3 control-label">State</label>
+                    <div class="col-sm-3">
+                        <select id="State" class="form-control">
+                            <option value="0">--Select--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Sales Employee</label>
+                    <div class="col-sm-3">
+                        <select id="SalesEmployee" class="form-control">
+                            <option value="0">--Select--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-3 control-label">Report Month</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="ReportMonth" type="text" data-ng-model="StockistName" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="navbar-header col-md-7">
+                    </div>
+                    <div class="navbar-header col-md-2">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="SubmitData()" style="background-color: #d2401a; color: white;">
+                            Submit</button>
+                    </div>
+                    <div class="navbar-header col-md-2">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="ClearData()" style="background-color: #d2401a; color: white;">
+                            Reset Filter</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                </div>
+            </form>
+            <table id="KSMReport_Table" class="table tablecss" width="100%" cellspacing="0">
+                <thead>
+                    <tr style="background-color: #d2401a; color: white">
+
+                        <th>Stockist Code
+                        </th>
+                        <th>Stockist Name
+                        </th>
+                        <th>Sales Employee
+                        </th>
+                        <th>Zone
+                        </th>
+                        <th>State
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1101793</td>
+                        <td>RAHUL TRADERS</td>
+                        <td>Rahul</td>
+                        <td>East</td>
+                        <td>Odisha</td>
+                    </tr>
+                     <tr>
+                        <td>1101793</td>
+                        <td>RAHUL TRADERS</td>
+                        <td>Rahul</td>
+                        <td>East</td>
+                        <td>Odisha</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

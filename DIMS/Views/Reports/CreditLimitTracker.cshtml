@@ -1,0 +1,488 @@
+﻿@using LabelNames = DIMS.Content.Resource_Files.CreateTargetFC;
+@{
+    Layout = null;
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeCode = UP.UserTypeCode;
+
+    string StateCode = UP.UserStateCode;
+    string StateName = UP.UserStateName;
+
+    string ZoneCode = UP.UserZoneCode;
+    string ZoneName = UP.UserZoneName;
+
+}
+
+<style type="text/css">
+    button {
+        cursor: pointer;
+    }
+
+    .dataTables_scroll {
+        max-height: initial !important;
+        overflow: auto !important;
+    }
+
+    .cl {
+        background: #B4B7C0;
+        cursor: default;
+    }
+
+    tbody td {
+        cursor: default;
+    }
+
+    .grandcolor {
+        background: #003760;
+        cursor: default;
+        color: white;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Credit Limit Tracker</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Reports</li>
+        <li class="active">Credit Limit Tracker</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="cf">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body">
+                <div class="row">
+                    <div class="pull-right" style="margin-right: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" onclick="SubmitGetCreditLimitTracker()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+                <form role="form" class="form-horizontal">
+                    <input type="text" id="FormIdentity" style="display: none;" />
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display:none;" />
+                    <input type="text" id="UserName" value="@SessionUserName" style="display:none;" />
+                    <input type="text" id="CreatedBy" value="@SessionUserCode" style="display:none;" />
+                    <input type="text" id="SessionUserTypeCode" value="@SessionUserTypeCode" style="display:none;" />
+
+
+                    <input type="text" style="display:none;" id="UserStateCode" value="@StateCode" />
+                    <input type="text" style="display:none;" id="UserStateName" value="@StateName" />
+                    <input type="text" style="display:none;" id="UserZoneCode" value="@ZoneCode" />
+                    <input type="text" style="display:none;" id="UserZoneName" value="@ZoneName" />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Month & Year</label>
+                        <div class="col-sm-3">
+                            @*<input type="text" class="form-control" id="Monthy"  readonly="readonly" />*@
+
+                            <input type="text" ng-change="SelectedDate()" class="form-control Date" id="Monthy" data-ng-model="Monthy" readonly="readonly" placeholder="Select Month" />
+                        </div>
+                    </div>
+
+                   <div style="padding:10px;"></div>
+                    <div style="overflow:auto;">
+                    <table id="CreditLimitTracker" class="table tablecss" style="width:80% !important;" cellspacing="0" style="cursor:default;">
+                        <thead>
+                            <tr>
+                                <th>Zone</th>
+                                <th>State</th>
+                                <th>Credit Limit Target(#)</th>
+                                <th>Credit Limit Approved(#)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbd">
+                            <tr></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var SHCREDITTARGET = 0.00;
+    var SHCREDITAPPROVALS = 0.00
+
+
+    $(document).ready(function () {
+        GetCreditLimitTracker();
+        $("#Monthy").datepicker({
+            format: "MM-yyyy",
+            viewMode: "months",
+            autoclose: true,
+            minViewMode: "months"
+        });
+        $("#CreditLimitTracker").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+    });
+
+    function SubmitGetCreditLimitTracker() {
+        GetCreditLimitTracker();
+    }
+
+    function GetCreditLimitTracker() {
+        var data = $("#Monthy").val();
+        if (data == "" || data == undefined) {
+            data = "Nodata";
+        }
+        $.ajax({
+            url: '../../Reports/GetCreditLimitTracker',
+            method: 'POST',
+            data: { Data: data },
+            success: function (response) {
+                response = JSON.parse(response);
+                var html;
+                $("#CreditLimitTracker tbody").empty();
+                for (var i = 0; i < response.length; i++) {
+                    html = '<tr>';
+                    if (i == 0) {
+                        if (response[i]["ZONE_NAME"].includes("SBU1")) {
+                            response[i]["ZONE_NAME"] = "NORTH 1";
+                        }
+                        html += '<td rowspan="' + response.length + '" style="vertical-align:middle; text-align:center">' + response[i]["ZONE_NAME"] + '</td>';
+                    }
+
+                    if (response[i]["STATE_DESC"] == "TOTAL") {
+                        html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+
+                        SHCREDITAPPROVALS += parseFloat(response[i]["SHCREDITAPPROVALS"]);
+                        SHCREDITTARGET += parseFloat(response[i]["SHCREDITTARGET"]);
+                    }
+                    else {
+                        html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+                    }
+
+
+                    html += '</tr>';
+                    $("#CreditLimitTracker tbody").append(html);
+                }
+                GetCreditLimitTrackerEast();
+            }
+        });
+    }
+
+    function GetCreditLimitTrackerEast() {
+        var data = $("#Monthy").val();
+        if (data == "" || data == undefined) {
+            data = "Nodata";
+        }
+        $.ajax({
+            url: '../../Reports/GetCreditLimitTrackerEast',
+            method: 'POST',
+            data: { Data: data },
+            success: function (response) {
+                response = JSON.parse(response);
+                var html;
+                for (var i = 0; i < response.length; i++) {
+                    html = '<tr>';
+                    if (i == 0) {
+                        if (response[i]["ZONE_NAME"].includes("SBU1")) {
+                            response[i]["ZONE_NAME"] = "EAST";
+                        }
+                        html += '<td rowspan="' + response.length + '" style="vertical-align:middle; text-align:center">' + response[i]["ZONE_NAME"] + '</td>';
+                    }
+
+                    if (response[i]["STATE_DESC"] == "TOTAL") {
+                        html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+
+                        SHCREDITAPPROVALS += parseFloat(response[i]["SHCREDITAPPROVALS"]);
+                        SHCREDITTARGET += parseFloat(response[i]["SHCREDITTARGET"]);
+                    }
+                    else {
+                        html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+                    }
+
+
+                    html += '</tr>';
+                    $("#CreditLimitTracker tbody").append(html);
+                }
+                GetCreditLimitTrackerEast1();
+                HideLoader();
+            }
+        });
+    }
+
+    function GetCreditLimitTrackerEast1() {
+        var data = $("#Monthy").val();
+        if (data == "" || data == undefined) {
+            data = "Nodata";
+        }
+        $.ajax({
+            url: '../../Reports/GetCreditLimitTrackerEast1',
+            method: 'POST',
+            data: { Data: data },
+            success: function (response) {
+                response = JSON.parse(response);
+                var html;
+                for (var i = 0; i < response.length; i++) {
+                    html = '<tr>';
+                    if (i == 0) {
+                        if (response[i]["ZONE_NAME"].includes("SBU1")) {
+                            response[i]["ZONE_NAME"] = "EAST1";
+                        }
+                        html += '<td rowspan="' + response.length + '" style="vertical-align:middle; text-align:center">' + response[i]["ZONE_NAME"] + '</td>';
+                    }
+
+                    if (response[i]["STATE_DESC"] == "TOTAL") {
+                        html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+
+                        SHCREDITAPPROVALS += parseFloat(response[i]["SHCREDITAPPROVALS"]);
+                        SHCREDITTARGET += parseFloat(response[i]["SHCREDITTARGET"]);
+                    }
+                    else {
+                        html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+                    }
+
+
+                    html += '</tr>';
+                    $("#CreditLimitTracker tbody").append(html);
+                }
+                GetCreditLimitTrackerNorth();
+                HideLoader();
+            }
+        });
+    }
+
+    function GetCreditLimitTrackerNorth() {
+        var data = $("#Monthy").val();
+        if (data == "" || data == undefined) {
+            data = "Nodata";
+        }
+        $.ajax({
+            url: '../../Reports/GetCreditLimitTrackerNorth',
+            method: 'POST',
+            data: { Data: data },
+            success: function (response) {
+                response = JSON.parse(response);
+                var html;
+                for (var i = 0; i < response.length; i++) {
+                    html = '<tr>';
+                    if (i == 0) {
+                        if (response[i]["ZONE_NAME"].includes("SBU1")) {
+                            response[i]["ZONE_NAME"] = "NORTH";
+                        }
+                        html += '<td rowspan="' + response.length + '" style="vertical-align:middle; text-align:center">' + response[i]["ZONE_NAME"] + '</td>';
+                    }
+
+                    if (response[i]["STATE_DESC"] == "TOTAL") {
+                        html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+
+                        SHCREDITAPPROVALS += parseFloat(response[i]["SHCREDITAPPROVALS"]);
+                        SHCREDITTARGET += parseFloat(response[i]["SHCREDITTARGET"]);
+                    }
+                    else {
+                        html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+                    }
+
+
+                    html += '</tr>';
+                    $("#CreditLimitTracker tbody").append(html);
+                }
+                GetCreditLimitTrackerSouth();
+                //HideLoader();
+            }
+        });
+    }
+
+    function GetCreditLimitTrackerSouth() {
+        var data = $("#Monthy").val();
+        if (data == "" || data == undefined) {
+            data = "Nodata";
+        }
+        $.ajax({
+            url: '../../Reports/GetCreditLimitTrackerSouth',
+            method: 'POST',
+            data: { Data: data },
+            success: function (response) {
+                response = JSON.parse(response);
+                var html;
+                for (var i = 0; i < response.length; i++) {
+                    html = '<tr>';
+                    if (i == 0) {
+                        if (response[i]["ZONE_NAME"].includes("SBU1")) {
+                            response[i]["ZONE_NAME"] = "SOUTH";
+                        }
+                        html += '<td rowspan="' + response.length + '" style="vertical-align:middle; text-align:center">' + response[i]["ZONE_NAME"] + '</td>';
+                    }
+
+                    if (response[i]["STATE_DESC"] == "TOTAL") {
+                        html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+
+                        SHCREDITAPPROVALS += parseFloat(response[i]["SHCREDITAPPROVALS"]);
+                        SHCREDITTARGET += parseFloat(response[i]["SHCREDITTARGET"]);
+
+                    }
+                    else {
+                        html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+                    }
+
+                    html += '</tr>';
+                    $("#CreditLimitTracker tbody").append(html);
+                }
+                GetCreditLimitTrackerSouth1();
+                //HideLoader();
+            }
+        });
+    }
+
+    function GetCreditLimitTrackerSouth1() {
+        var data = $("#Monthy").val();
+        if (data == "" || data == undefined) {
+            data = "Nodata";
+        }
+        $.ajax({
+            url: '../../Reports/GetCreditLimitTrackerSouth1',
+            method: 'POST',
+            data: { Data: data },
+            success: function (response) {
+                response = JSON.parse(response);
+                var html;
+                for (var i = 0; i < response.length; i++) {
+                    html = '<tr>';
+                    if (i == 0) {
+                        if (response[i]["ZONE_NAME"].includes("SBU1")) {
+                            response[i]["ZONE_NAME"] = "SOUTH 1";
+                        }
+                        html += '<td rowspan="' + response.length + '" style="vertical-align:middle; text-align:center">' + response[i]["ZONE_NAME"] + '</td>';
+                    }
+
+                    if (response[i]["STATE_DESC"] == "TOTAL") {
+                        html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+
+                        SHCREDITAPPROVALS += parseFloat(response[i]["SHCREDITAPPROVALS"]);
+                        SHCREDITTARGET += parseFloat(response[i]["SHCREDITTARGET"]);
+                    }
+                    else {
+                        html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+                    }
+
+                    html += '</tr>';
+                    $("#CreditLimitTracker tbody").append(html);
+                }
+                GetCreditLimitTrackerWest();
+                //HideLoader();
+            }
+        });
+    }
+
+    function GetCreditLimitTrackerWest() {
+        var data = $("#Monthy").val();
+        if (data == "" || data == undefined) {
+            data = "Nodata";
+        }
+        $.ajax({
+            url: '../../Reports/GetCreditLimitTrackerWest',
+            method: 'POST',
+            data: { Data: data },
+            success: function (response) {
+                response = JSON.parse(response);
+                var html;
+                for (var i = 0; i < response.length; i++) {
+                    html = '<tr>';
+                    if (i == 0) {
+                        if (response[i]["ZONE_NAME"].includes("SBU1")) {
+                            response[i]["ZONE_NAME"] = "WEST";
+                        }
+                        html += '<td rowspan="' + response.length + '" style="vertical-align:middle; text-align:center">' + response[i]["ZONE_NAME"] + '</td>';
+                    }
+
+                    if (response[i]["STATE_DESC"] == "TOTAL") {
+                        html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td class="cl">' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+
+                        SHCREDITAPPROVALS += parseFloat(response[i]["SHCREDITAPPROVALS"]);
+                        SHCREDITTARGET += parseFloat(response[i]["SHCREDITTARGET"]);
+                    }
+                    else {
+                        html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITTARGET"] + '</td>';
+                        html += '<td>' + response[i]["SHCREDITAPPROVALS"] + '</td>';
+                    }
+
+                    html += '</tr>';
+                    $("#CreditLimitTracker tbody").append(html);
+                }
+
+                html = '<tr>';
+                html += '<td class = "grandcolor">PAN INDIA TOTAL</td>';
+                html += '<td class = "grandcolor"></td>';
+                html += '<td class = "grandcolor">' + parseFloat(SHCREDITTARGET).toFixed(2) + '</td>';
+                html += '<td class = "grandcolor">' + parseFloat(SHCREDITAPPROVALS).toFixed(2) + '</td>';
+                html += '</tr>';
+                $("#CreditLimitTracker tbody").append(html);
+
+                //GetCreditLimitTrackerEast();
+                HideLoader();
+
+                SHCREDITAPPROVALS = 0.00;
+                SHCREDITTARGET = 0.00;
+            }
+        });
+    }
+
+    function ResetFilters() {
+        $("#Monthy").val("");
+        GetCreditLimitTracker();
+    }
+
+</script>

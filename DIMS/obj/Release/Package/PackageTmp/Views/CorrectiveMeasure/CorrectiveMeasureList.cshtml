@@ -1,0 +1,140 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+<section class="content-header" style="padding: 1px 15px 0;" id="CORM_List_Menu">
+    <h2>Corrective Measure</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">Corrective Measure</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="go('CorrectiveMeasure')" id="AddCORM" style="float:left;">
+                    <i class="fa fa-file-o fa-4" title="Create New Corrective Measure"></i>
+                </a>
+                @*<a href onclick="">
+                        <i class="fa fa-search fa-4" title="Search"></i>
+
+
+                    </a>
+                    <a href>
+                        <i class="fa fa-print fa-4" title="Print"></i>
+
+                    </a>
+                    <a href>
+                        <i class="fa fa-file-excel-o fa-4" title="Excel"></i>
+
+                    </a>
+                    <a href>
+                        <i class="fa fa-file-pdf-o fa-4" title="Pdf"></i>
+                    </a>*@
+
+                @*<a href ng-click="go('CorrectiveMeasureList')">
+                        <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                    </a>*@
+                <select id="StateFilter" ng-model="StateFilter" ng-change="StateChange()" style="float:left;"></select>
+                <input type="text" id="SITEDETAIL_CODE_CorrectiveMeasureList" style="display: none;" value="@SessionSITEDETAIL_CODE" />
+                <input type="text" id="COMPANYDETAIL_CODE_CorrectiveMeasureList" style="display: none;" value="@SessionCOMPANYDETAIL_CODE" />
+                <input type="text" id="USERNAME_CorrectiveMeasureList" style="display: none;" value="@SessionUserName" />
+                <input type="text" id="USERCODE_CorrectiveMeasureList" style="display: none;" value="@SessionUserCode" />
+
+                <input type="text" id="USERollCODE_CorrectiveMeasureList" style="display: none;" value="@SessionUserType" />
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="CORM_List">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-body" style="overflow-x: scroll; width: 98%" id="CorrectivelistDiv">
+                    @*<table class="table" id="CorrectiveMeasureList">
+                            <thead>
+                                <tr style="background-color: #3C8DBC; color: white; font-size: 13px;">
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">CM Series Code</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Corrective Measure Id</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Corrective Measure Num</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">CM Doc Status</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Complaint Tracking No</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Investigation Num</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Corrective Measure Status</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Issue Communication Note</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Communication Note ID</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Plant</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Batch No</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Product Type</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Product Category</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Notice Type</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Customer Name</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Created By</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Created Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody style="cursor:pointer;">
+
+                            </tbody>
+                            <tfoot style="display: none;">
+                                <tr>
+                                     <th >CM Series Code</th>
+                                    <th >Corrective Measure Id</th>
+                                    <th >Corrective Measure Num</th>
+                                    <th >CM Doc Status</th>
+                                    <th >Complaint Tracking No</th>
+                                    <th >Investigation Num</th>
+                                    <th >Corrective Meausure Status</th>
+                                    <th >Issue Communication Note</th>
+                                    <th >Communication Note ID</th>
+                                    <th >Plant</th>
+                                    <th >Batch No</th>
+                                    <th >Product Type</th>
+                                    <th >Product Category</th>
+                                    <th >Notice Type</th>
+                                    <th >Customer Name</th>
+                                    <th >Created By</th>
+                                    <th >Created Date</th>
+                                </tr>
+                            </tfoot>
+                        </table>*@
+
+                    <table id="CorrectiveMeasureList" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <input type="button" value="Advanced" id="AdvancedColumnEditing" style="background-color: #d2401a;display:none;" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        CorrectiveMeasureListTable = $("#CorrectiveMeasureList").DataTable({ "scrollX": true });
+    });
+</script>
+

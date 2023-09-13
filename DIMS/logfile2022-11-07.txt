@@ -1,0 +1,47 @@
+2022-11-07 12:40:30 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":""},{"FSOEMail":"Akash.singh@hil.in","FSOName":"Akash Singh"},{"FSOEMail":"Atul.chaturvedi@hil.in","FSOName":"Atul Chaturvedi"},{"FSOEMail":"khem.thapa@hil.in","FSOName":"Khem Singh Thapa"},{"FSOEMail":"nitin.agarwal@hil.in","FSOName":"NITIN AGARWAL"},{"FSOEMail":"prabhakar.d@hil.in","FSOName":"Prabhakar Dixit"}]
+2022-11-07 12:40:30 Error: Error : Get EmployeeList : Prabhakar DixitPrabhakar Dixit
+2022-11-07 12:40:30 Error: Error : Get EmployeeList : Akash Singh
+2022-11-07 12:40:30 Error: Error : GetPDF : Akash.singh@hil.in
+2022-11-07 12:40:30 Error: Error : Get EmployeeList : Atul Chaturvedi
+2022-11-07 12:40:31 Error: Error : GetPDF : Atul.chaturvedi@hil.in
+2022-11-07 12:40:31 Error: Error : Get EmployeeList : Khem Singh Thapa
+2022-11-07 12:40:31 Error: Error : GetPDF : khem.thapa@hil.in
+2022-11-07 12:40:31 Error: Error : Get EmployeeList : NITIN AGARWAL
+2022-11-07 12:40:32 Error: Error : GetPDF : nitin.agarwal@hil.in
+2022-11-07 12:40:32 Error: Error : Get EmployeeList : Prabhakar Dixit
+2022-11-07 12:40:32 Error: Error : GetPDF : prabhakar.d@hil.in
+2022-11-07 12:54:28 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":""},{"FSOEMail":"Akash.singh@hil.in","FSOName":"Akash Singh"},{"FSOEMail":"Atul.chaturvedi@hil.in","FSOName":"Atul Chaturvedi"},{"FSOEMail":"khem.thapa@hil.in","FSOName":"Khem Singh Thapa"},{"FSOEMail":"nitin.agarwal@hil.in","FSOName":"NITIN AGARWAL"},{"FSOEMail":"prabhakar.d@hil.in","FSOName":"Prabhakar Dixit"}]
+2022-11-07 12:54:28 Error: Error : Get EmployeeList : Akash Singh
+2022-11-07 12:54:29 Error: Error : GetPDF : Akash.singh@hil.in
+2022-11-07 12:54:29 Error: Error : Get EmployeeList : Atul Chaturvedi
+2022-11-07 12:54:29 Error: Error : GetPDF : Atul.chaturvedi@hil.in
+2022-11-07 12:54:29 Error: Error : Get EmployeeList : Khem Singh Thapa
+2022-11-07 12:54:29 Error: Error : GetPDF : khem.thapa@hil.in
+2022-11-07 12:54:29 Error: Error : Get EmployeeList : NITIN AGARWAL
+2022-11-07 12:54:30 Error: Error : GetPDF : nitin.agarwal@hil.in
+2022-11-07 12:54:30 Error: Error : Get EmployeeList : Prabhakar Dixit
+2022-11-07 12:54:31 Error: Error : GetPDF : prabhakar.d@hil.in
+2022-11-07 12:54:57 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-07 12:56:29 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":""},{"FSOEMail":"Akash.singh@hil.in","FSOName":"Akash Singh"},{"FSOEMail":"Atul.chaturvedi@hil.in","FSOName":"Atul Chaturvedi"},{"FSOEMail":"khem.thapa@hil.in","FSOName":"Khem Singh Thapa"},{"FSOEMail":"nitin.agarwal@hil.in","FSOName":"NITIN AGARWAL"},{"FSOEMail":"prabhakar.d@hil.in","FSOName":"Prabhakar Dixit"}]
+2022-11-07 12:56:29 Error: Error : Get EmployeeList : Akash Singh
+2022-11-07 12:56:29 Error: Error : GetPDF : Akash.singh@hil.in
+2022-11-07 12:56:29 Error: Error : Get EmployeeList : Atul Chaturvedi
+2022-11-07 12:56:30 Error: Error : GetPDF : Atul.chaturvedi@hil.in
+2022-11-07 12:56:30 Error: Error : Get EmployeeList : Khem Singh Thapa
+2022-11-07 12:56:30 Error: Error : GetPDF : khem.thapa@hil.in
+2022-11-07 12:56:30 Error: Error : Get EmployeeList : NITIN AGARWAL
+2022-11-07 12:56:31 Error: Error : GetPDF : nitin.agarwal@hil.in
+2022-11-07 12:56:31 Error: Error : Get EmployeeList : Prabhakar Dixit
+2022-11-07 12:56:31 Error: Error : GetPDF : prabhakar.d@hil.in
+2022-11-07 14:38:46 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":""},{"FSOEMail":"Akash.singh@hil.in","FSOName":"Akash Singh"},{"FSOEMail":"Atul.chaturvedi@hil.in","FSOName":"Atul Chaturvedi"},{"FSOEMail":"khem.thapa@hil.in","FSOName":"Khem Singh Thapa"},{"FSOEMail":"nitin.agarwal@hil.in","FSOName":"NITIN AGARWAL"},{"FSOEMail":"prabhakar.d@hil.in","FSOName":"Prabhakar Dixit"}]
+2022-11-07 14:38:46 Error: Error : Get EmployeeList : Akash Singh
+2022-11-07 14:38:48 Error: Error : GetPDF : Akash.singh@hil.in
+2022-11-07 14:38:48 Error: Error : Get EmployeeList : Atul Chaturvedi
+2022-11-07 14:38:49 Error: Error : GetPDF : Atul.chaturvedi@hil.in
+2022-11-07 14:38:49 Error: Error : Get EmployeeList : Khem Singh Thapa
+2022-11-07 14:38:50 Error: Error : GetPDF : khem.thapa@hil.in
+2022-11-07 14:38:50 Error: Error : Get EmployeeList : NITIN AGARWAL
+2022-11-07 14:38:50 Error: Error : GetPDF : nitin.agarwal@hil.in
+2022-11-07 14:38:50 Error: Error : Get EmployeeList : Prabhakar Dixit
+2022-11-07 14:38:51 Error: Error : GetPDF : prabhakar.d@hil.in

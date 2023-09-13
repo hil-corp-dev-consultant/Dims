@@ -1,0 +1,578 @@
+﻿@*
+
+    Module              : CMS - DIMS Solution.
+    DocumentName        : RegistrationList_ICC.cs
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Description         : This Doc is for used for Complaint Registration ICC.
+    Developer Name      : SVPRASADK.
+    Change Log          : NA.
+    Date Started        : 17-07-2020
+
+
+*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.ComplaintRegistration;
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE_ICC = UP.SITEDETAIL_CODE;
+    string SessionUserCode_ICC = UP.UserCode;
+    string SessionUserName_ICC = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE_ICC = UP.COMPANYDETAIL_CODE;
+    string SessionUserType_ICC = UP.UserType;
+    string SessionUserTypeID_ICC = UP.UserTypeCode;
+
+    string ThreeMonthsBack_ICC = DateTime.Now.AddDays(-100).ToString("dd/MM/yyyy");
+
+
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    table tr {
+        cursor: pointer;
+    }
+
+    .filestyle {
+        border: 1px solid;
+        border-radius: 6px;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+
+    <h2>Complaint Registration ICC</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management ICC</li>
+        <li class="active">Complaint Registration ICC</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('ComplaintPendingApproval_ICC')" id="PendingApprovalsList_ICC" style="float: left; display: none;">
+                    <i class="fa fa-list fa-4" title="Pending Approvals List"></i>
+                </a>
+                <a href ng-click="go('RegistrationList_ICC')" id="RegList_ICC" style="float: left;">
+                    <i class="fa fa-list fa-4" title="Registration List"></i>
+                </a>
+                <a href onclick="RegisterComplaintWithFiles_ICC()" id="CompRegSave_ICC" style="float: left;">
+                    <i class="fa fa-floppy-o fa-4" title="Save Complaint"></i>
+                </a>
+                <a href ng-click="go('Registration_ICC')" id="NewReg_ICC" style="float: left;">
+                    <i class="fa fa-file-o fa-4" title="Create New Complaint"></i>
+                </a>
+                <a href ng-click="SendRegistrationForApproval_ICC()" id="SendRegistrationApproval_ICC" style="float: left;">
+                    <i class="fa fa-forward" title="Send Complaint for Review"></i>
+                </a>
+                @*<a href ng-click="SendRegistrationForApproval_ICC()" id="SendRegistrationApproval_ICC" style="float: left;">
+                        <i class=" fa fa-thumbs-o-up" title="Send Complaint for Review"></i>
+                    </a>*@
+                <a href ng-click="GetApprovalPopUp_ICC()" id="MakeApproved_ICC" style="float: left; display:none">
+                    <i class="fa fa-check" title="Approve Complaint"></i>
+                </a>
+                <select id="StateFilter_ICC" ng-model="StateFilter_ICC" disabled="disabled" ng-change="StateChange_ICC()" style="float: left;"></select>
+                <a href onclick="RegisterComplaintWithFiles_ICC()" id="SuperSave_ICC" style="float: left; display: none; margin-left: 10px;">
+                    <i class="fa fa-floppy-o fa-4" title="Change Action"></i>
+                </a>
+                <a href ng-click="RegisterComplaint_ICC()" id="hiddenCompRegSave_ICC" style="display:none">
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-header">
+                        <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" enctype="multipart/form-data">
+                            <div class="row">
+                                <input type="text" id="MyTest" style="display: none;" />
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="FormIdentity_ICC" readonly="readonly" style="display: none" />
+                                    <input type="text" class="form-control" id="UserCode_ICC" readonly="readonly" style="display: none;" value="@SessionUserCode_ICC" />
+                                    <input type="text" class="form-control" id="UserName_ICC" readonly="readonly" style="display: none;" value="@SessionUserName_ICC" />
+                                    <input type="text" class="form-control" id="UserType_ICC" readonly="readonly" style="display: none;" value="@SessionUserType_ICC" />
+                                    <input type="text" class="form-control" id="UserType_ID_ICC" readonly="readonly" style="display: none" value="@SessionUserTypeID_ICC" />
+                                    <input type="text" class="form-control" id="SITEDETAIL_CODE_ICC" readonly="readonly" style="display: none;" value="@SessionSITEDETAIL_CODE_ICC" />
+                                    <input type="text" class="form-control" id="COMPANYDETAIL_CODE_ICC" readonly="readonly" style="display: none" value="@SessionCOMPANYDETAIL_CODE_ICC" />
+
+                                    <input type="text" readonly="readonly" style="display:none;" value="@ThreeMonthsBack_ICC" id="ThreeMonthsBack_ICC" />
+
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">COMPLAINT RECEIVED DATE<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="COMPLAINT_RECEIVED_DATE" data-ng-model="COMPLAINT_RECEIVED_DATE" readonly="readonly" />
+                                        </div>
+                                        <label class="col-sm-2 control-label Complaint_NumberDiv" style="display: none;">Complaint Number</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray Complaint_NumberDiv" style="display: none;" id="Complaint_Number" data-ng-model="Complaint_Number" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">COMPLAINT REGISTRATION DATE</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="COMPLAINT_REGISTRATION_DATE" data-ng-model="COMPLAINT_REGISTRATION_DATE" disabled="disabled" />
+                                        </div>
+                                        <label class="col-sm-2 control-label">COMPLAINT TRACKING NO</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="COMPLAINT_TRACKING_NO" data-ng-model="COMPLAINT_TRACKING_NO" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">RegistrantType<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="REGISTRANT_TYPE_NAME" data-ng-model="REGISTRANT_TYPE_NAME" disabled="disabled" />
+                                            <input type="text" class="form-control" id="REGISTRANT_TYPE_CODE" data-ng-model="REGISTRANT_TYPE_CODE" style="display: none;" />
+                                        </div>
+                                        <label class="col-sm-2 control-label">DOC SERIES CODE</label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group add-on">
+                                                <input class="form-control" id="DOC_SERIES_CODE" type="text" disabled="disabled" data-ng-model="DOC_SERIES_CODE">
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" id="CR_Series_CodeSpan" type="submit" ng-click="Getdata('GetCRSeriesCode_ICC','CRSeriesCode','Document Series')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">BUSINESS UNIT<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            @*<div class="input-group add-on">*@
+                                            <input class="form-control" id="PRODUCT_TYPE_NAME" type="text" readonly="readonly" data-ng-model="PRODUCT_TYPE_NAME" disabled="disabled">
+                                            <input type="text" class="form-control" id="PRODUCT_TYPE_CODE" data-ng-model="PRODUCT_TYPE_CODE" readonly="readonly" style="display: none;" />
+                                            @*<div class="input-group-btn">
+                    <span class="btn btn-default" id="Prod_Typ_MastSapn" ng-click="Getdata('GetProductTypeCode_ICC','ProductTypeCode_ICC','Business Unit List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                </div>*@
+                                            @* </div> *@
+                                        </div>
+                                        <label class="col-sm-2 control-label">COMPLAINT STATUS</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="COMPLAINT_STATUS" data-ng-model="COMPLAINT_STATUS" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+
+                                        @*<label class="col-sm-3 control-label">SUPPLY PLANT MHD CODE<span class="Mandatory">*</span></label>
+            <div class="col-sm-3">
+                <div class="input-group add-on">
+                    <input class="form-control" id="PLANT_MHD_CODE" type="text" readonly="readonly" data-ng-model="PLANT_MHD_CODE" disabled="disabled">
+                    <div class="input-group-btn">
+                        <span class="btn btn-default" id="SalesRepMasterSpan" ng-click="Getdata('GetPlantMHD_ICC','PlantMHDMaster_ICC','Plant MHD List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                    </div>
+                </div>
+            </div>*@
+                                        <label class="col-sm-3 control-label">SALES REPRESENTATIVE CODE<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group add-on">
+                                                <input class="form-control" id="SALES_REPRESENTATIVE_CODE" type="text" readonly="readonly" data-ng-model="SALES_REPRESENTATIVE_CODE" disabled="disabled">
+                                                @*<input class="form-control" id="SalesRepresentativeEmployeeID" type="text" readonly="readonly" data-ng-model="SalesRepresentativeEmployeeID" style="display:none;" >*@
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" id="SalesRepMasterSpan" ng-click="Getdata('GetSalesRep_ICC','SalesRepMaster_ICC','Sales Representative List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <label class="col-sm-2 control-label">COMPLAINT CODE</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="COMPLAINT_CODE" data-ng-model="COMPLAINT_CODE" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        @*<label class="col-sm-3 control-label">SUPPLY PLANT MHD NAME<span class="Mandatory">*</span></label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control gray" id="PLANT_MHD_NAME" data-ng-model="PLANT_MHD_NAME" disabled="disabled" />
+            </div>*@
+                                        <label class="col-sm-3 control-label">SALES REPRESENTATIVE NAME<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="SALES_REPRESENTATIVE_NAME" data-ng-model="SALES_REPRESENTATIVE_NAME" disabled="disabled" />
+                                        </div>
+
+                                        <label class="col-sm-2 control-label">APPROVED DATE</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="APPROVED_DATE" data-ng-model="APPROVED_DATE" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">COMPLAINT DESC</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="COMPLAINT_DESC" data-ng-model="COMPLAINT_DESC" maxlength="300" />
+                                        </div>
+
+                                        <label class="col-sm-2 control-label">REMARKS</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="REMARKS" data-ng-model="REMARKS" maxlength="300" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">CUSTOMER CODE</label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="CUSTOMER_CODE" data-ng-model="CUSTOMER_CODE" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" id="StockistMaster_ICCSpan" ng-click="Getdata('GetCustomer_ICC','StockistMaster_ICC','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="CUSTOMER_ID" data-ng-model="CUSTOMER_ID" readonly="readonly" style="display: none;" />
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 control-label">CUSTOMER NAME<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="CUSTOMER_NAME" data-ng-model="CUSTOMER_NAME" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">&nbsp;</label>
+                                        <div class="col-sm-3">
+                                            &nbsp;
+                                        </div>
+                                        <label id="lblAttachments" class="col-sm-2 control-label">FileUpload</label>
+                                        <div class="col-sm-3" id="NewComplaintFileUploadDiv">
+                                            <label class="col-sm-2 control-label" id="SelectedFiles" data-ng-model="FilesPath" style="width: 100%;"></label>
+                                            <input type="file" id="ComplaintFile" name="ComplaintFile" class="filestyle" onchange="FileUploaded()" multiple="" />
+                                            <input type="button" value="Upload" id="btnUpload" class="btn btn-info navbar-btn" onclick="UploadFiles()" />
+                                            <input type="button" value="Clear" id="btnClear" class="btn btn-info navbar-btn" onclick="ClearFiles()" />
+                                            <input type="hidden" id="ClickUploadFile" class="form-control" value="0" style="display: none;" />
+                                            <input type="hidden" id="ClickSaveComplaint" class="form-control" value="0" style="display: none;" />
+                                        </div>
+                                        <div class="col-sm-3" id="LoadComplaintFileUploadDiv">
+                                            <ul id="ComplaintFilesUploaded"></ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 tabdiv" id="ComplaintDetailedDescDiv">
+                                        <div class="col-sm-12 CloseOpen" onclick="FormToggle('ComplaintDetailedDescription')">
+                                            <img src="~/Images/en_next.png" id="ComplaintDetailedDescription_Img" />
+                                            <a class="Expand">Complaint Detailed Description</a>
+                                        </div>
+                                        <div class="row" style="padding-top: 30px; display: none;" id="ComplaintDetailedDescription_Form">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-10">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-5 control-label" style="text-align: right; font-weight: bold;">
+                                                                Input/Suggestion by Customer
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                <textarea class="form-control" id="NATURE_OF_COMPLAINT" data-ng-model="NATURE_OF_COMPLAINT" maxlength="3000"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </section>    
+  
+    <div class="modal fade" id="ApprovalsActionForm" tabindex="-1" role="dialog" aria-labelledby="ApprovalsLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ApprovalsLabel">Approvals Action Form</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            REMARKS
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <textarea class="form-control" id="APPROVALS_REMARKS" data-ng-model="APPROVALS_REMARKS" maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" ng-click="MakeApproved_ICC('Approved')">Approve</button>
+                    <button type="button" class="btn btn-info" ng-click="MakeApproved_ICC('Rejected')">Reject</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    //Date Pickers
+    $(function () {
+
+        var ForeignDate = TodayDateTime;
+
+        var ThreeMonthsBack_ICC = $("#ThreeMonthsBack_ICC").val();
+        //20-05-2016 12:53:20
+        //18/08/2016
+        ThreeMonthsBack_ICC = (ThreeMonthsBack_ICC.split(' ')[0]).split('-');
+
+        ForeignDate = ForeignDate.split('/')[1] + "/" + ForeignDate.split('/')[0] + "/" + ForeignDate.split('/')[2];
+        ThreeMonthsBack_ICC = ThreeMonthsBack_ICC[1] + "/" + ThreeMonthsBack_ICC[0] + "/" + ThreeMonthsBack_ICC[2];
+
+        $('#COMPLAINT_RECEIVED_DATE').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate),
+            startDate: new Date(ThreeMonthsBack_ICC),
+        });
+
+        $('#COMPLAINT_RECEIVED_DATE').on('show', function (e) {
+            console.debug('show', e.date, $(this).data('stickyDate'));
+
+            if (e.date) {
+                $(this).data('stickyDate', e.date);
+            }
+            else {
+                $(this).data('stickyDate', null);
+            }
+        });
+
+        $('#COMPLAINT_RECEIVED_DATE').on('hide', function (e) {
+            console.debug('hide', e.date, $(this).data('stickyDate'));
+            var stickyDate = $(this).data('stickyDate');
+
+            if (!e.date && stickyDate) {
+                console.debug('restore stickyDate', stickyDate);
+                $(this).datepicker('setDate', stickyDate);
+                $(this).data('stickyDate', null);
+            }
+        });
+
+        $("#COMPLAINT_REGISTRATION_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        //$("#APPROVED_DATE").datepicker({
+        //    format: 'dd/mm/yyyy',
+        //    autoclose: true
+        //});
+        $("#Invoice_Date").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#INVOICE_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#FormIdentity_ICC").bind('change', function () {
+            enabledisableFileUpload();
+        });
+        $("#SelectedFiles").on('change', function () {
+            enabledisableFileUpload();
+        });
+        $("#COMPLAINT_STATUS").on('change', function () {
+            enabledisableFileUpload();
+        });
+        $("#INVOICE_NO").focusout(function () {
+            //ValidateInvoice();
+        });
+
+        if ($("#PRODUCT_TYPE_NAME").val() == "SBU3" || $("#PRODUCT_TYPE_CODE").val() == "SBU3") {
+            $("#SupplyDetailsDiv").show();
+            $("#ComplaintDetailedDescDiv").show();
+            $("#MaterialSupplyDetailsTab").css('display', 'block');
+            $("#Priortize_ClassifyTab").css('display', 'block');
+            //$("#SubStockistDirectCustomer_Lbl").text("Distributor/ Wholesaler/ Dealer/ Project");
+            $("#CompCatMandSpan").show();
+            //$(".BreakageQtyLabel").text("Defect Qty (Nos)");
+            $("#COMPLAINT_TYPE_CODE").val("CTC1");
+            $("#COMPLAINT_TYPE_NAME").val("Product Complaints");
+            $(".SBU3Mandatory").show();
+        }
+    });
+
+    function FileUploaded() {
+        var filename = $("#ComplaintFile").val();
+        var file = document.getElementById('ComplaintFile').files[0];
+        var extension = filename.replace(/^.*\./, '');
+        //if (extension.toUpperCase() == "XLSX" || extension.toUpperCase() == "XLS") {
+        //}
+        //else {
+        //    alert("Invalid File");
+        //    $("#ComplaintFile").val("");
+        //}
+        if (file.size > 5242880) {
+            alert("File size must not exceed 5MB.");
+            $("#ComplaintFile").val("");
+        }
+    }
+    var AttachedFiles = new Array();
+    function UploadFiles() {
+        var filename = $("#ComplaintFile").val();
+        var file = document.getElementById('ComplaintFile').files[0];
+        if (filename == "") {
+            return;
+        }
+        if (AttachedFiles != null && AttachedFiles.length > 0) {
+            for (var i = 0; i < AttachedFiles.length; i++) {
+                if (AttachedFiles[i].filename.includes(filename)) {
+                    alert("File already selected");
+                    $("#ComplaintFile").val("");
+                    return;
+                }
+            }
+        }
+        if (AttachedFiles != null && AttachedFiles.length >= 3) {
+            alert("Maximum 3 files can be selected");
+            $("#ComplaintFile").val("");
+            return;
+        }
+        if (filename.includes(",")) {
+            alert("File name must not contain comma(,)");
+            $("#ComplaintFile").val("");
+            return;
+        }
+        AttachedFiles.push({
+            file: file,
+            filename: filename
+        });
+        $("#ComplaintFile").val("");
+        var splitFilename = filename.split("\\");
+        $('#SelectedFiles').append("" + splitFilename[2].trim() + "<br/>");
+        $("#ClickUploadFile").val(1);
+        RegisterComplaintWithFiles_ICC();
+    }
+    function ClearFiles() {
+        AttachedFiles = new Array();
+        $('#SelectedFiles').text('');
+    }
+    function RegisterComplaintWithFiles_ICC() {
+        try {
+            var MyTest = $("#MyTest").val();
+            if (MyTest == "") {
+                if (confirm("Do you want to Save data?")) {
+                    $("#MyTest").val("Save");
+                }
+                else {
+                    return;
+                }
+            }
+            if ($("#SelectedFiles").text() != "") {
+                $("#ClickUploadFile").val(1);
+                $("#ClickSaveComplaint").val(1);
+            }
+            //$("#PRODUCT_TYPE_NAME").val() == "SBU1" &&
+            //var file = document.getElementById('ComplaintFile').files.length;
+            //if ($("#PRODUCT_TYPE_NAME").val() == "SBU3" && file == 0 && ($("#ComplaintFilesUploaded").children().length <= 0 || $("#SelectedFiles").text() == "") && $("#ClickUploadFile").val() == 0) {
+            //    alert("Please Select Attachment and Press Upload and then click on Save button");
+            //    return;
+            //}
+            //if ($("#PRODUCT_TYPE_NAME").val() == "SBU3" && file >= 0 && $("#ClickUploadFile").val() == 0) {
+            //    alert("Please Upload Attachment and then click on Save button");
+            //    return;
+            //}
+            var formData = new FormData();
+            for (var i = 0; i < AttachedFiles.length; i++) {
+                formData.append('RegisterFile_' + i, AttachedFiles[i].file);
+            }
+            if (AttachedFiles.length > 0) {
+                ShowLoader();
+                $.ajax({
+                    url: '../../ComplaintRegistrationICC/UploadFile',
+                    type: 'POST',
+                    data: formData,
+                    async: true,
+                    success: function (Resp) {
+                        if (Resp != "") {
+                            AttachedFiles = new Array();
+                            $('#SelectedFiles').text('');
+                            $("#ComplaintFile").val("");
+                            $('#SelectedFiles').text(Resp);
+                            HideFileUpload();
+                            HideLoader();
+                            if ($("#PRODUCT_TYPE_NAME").val() == "SBU3") {
+                                $("#ClickSaveComplaint").val(1);
+                            }
+                            $('#hiddenCompRegSave_ICC').click();
+                        }
+                        else {
+                            HideLoader();
+                            $("#ComplaintFile").val("");
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+            else {
+                $('#hiddenCompRegSave_ICC').click();
+            }
+        }
+        catch (e) {
+            alert("Error : SaveDataToServer : " + e);
+        }
+    }
+
+    function enabledisableFileUpload() {
+        if ($("#FormIdentity_ICC").val() != "") {
+            if (($("#COMPLAINT_STATUS").val() == "DRAFT") && ($("#SelectedFiles").text() == ""))
+                ShowFileUpload();
+            else
+                HideFileUpload();
+        } else {
+            ShowFileUpload();
+        }
+    }
+    function HideFileUpload() {
+        $("#NewComplaintFileUploadDiv").hide();
+        $("#LoadComplaintFileUploadDiv").show();
+        if ($("#SelectedFiles").text() != "") {
+            $("#lblAttachments").show();
+            var Paths = $("#SelectedFiles").text().split(',');
+            var mydiv = document.getElementById("LoadComplaintFileUploadDiv");
+            $("#ComplaintFilesUploaded").empty();
+            for (var i = 0; i < Paths.length; i++) {
+                var myList = document.getElementById("ComplaintFilesUploaded");
+                var liTag = document.createElement('li');
+                var aTag = document.createElement('a');
+                aTag.setAttribute('href', window.location.origin + '/DIMSFiles/ComplaintFiles/' + Paths[i]);
+                aTag.setAttribute('target', "_blank");
+                aTag.innerHTML = Paths[i].substring(0, 30);
+                liTag.appendChild(aTag);
+                myList.appendChild(liTag);
+                mydiv.appendChild(myList);
+            }
+        }
+        else {
+            $("#lblAttachments").hide();
+        }
+    }
+    function ShowFileUpload() {
+        $("#LoadComplaintFileUploadDiv").hide();
+        $("#NewComplaintFileUploadDiv").show();
+    }    
+
+</script>

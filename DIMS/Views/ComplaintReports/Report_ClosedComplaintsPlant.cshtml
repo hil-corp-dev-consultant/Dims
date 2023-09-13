@@ -1,0 +1,337 @@
+﻿@{
+    Layout = null;
+    string FD = Request.QueryString["FD"].ToString();
+    string TD = Request.QueryString["TD"].ToString();
+    string PC = Request.QueryString["Plant"].ToString();
+    string PT = Request.QueryString["PT"].ToString();
+
+    string PN = Request.QueryString["PN"].ToString();
+
+    if (PN == "ALL")
+    {
+        PN = "";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Closed Complaints Plant</title>
+
+
+    @Styles.Render("~/bundles/Allcss")
+    <link href="~/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/dist/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/bootstrap/ionicons/css/ionicons.min.css" rel="stylesheet" />
+
+
+    @Styles.Render("~/bundles/DataTablecss")
+    <link href="~/bootstrap/css/jquery.sumoselect.min.css" rel="stylesheet" />
+    <script src="~/bootstrap/DataTables-1.10.5/js/jquery.js"></script>
+    <script src="~/plugins/jQueryUI/jquery-ui.min1.js"></script>
+    <script src="~/bootstrap/DataTables-1.10.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/bootstrap/js/fileinput.js"></script>
+    <script src="~/bootstrap/DataTables-1.10.5/js/dataTables.responsive.js"></script>
+    <script src="~/bootstrap/js/dataTables.cellEdit.js"></script>
+
+
+
+
+
+    @Scripts.Render("~/bundles/AllJs")
+    @Scripts.Render("~/bundles/Angularjs")
+
+    <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/bootstrap/js/jquery.sumoselect.min.js"></script>
+    <script src="~/dist/js/app.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.typeahead.js"></script>
+    <link href="~/Scripts/MultiSelect/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/MultiSelect/js/multiselect.min.js"></script>
+    <script src="~/Scripts/SFDCScripts/SFDCScript.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <script src="~/Scripts/DataTableScripts/jquery-1.12.3.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.flash.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/jszip.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.print.min.js"></script>
+
+    <link href="~/Scripts/DataTableScripts/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Scripts/DataTableScripts/buttons.dataTables.min.css" rel="stylesheet" />
+
+
+    <link href="~/bootstrap/css/jquery.sumoselect.min.css" rel="stylesheet" />
+    <script src="~/bootstrap/js/jquery.sumoselect.min.js"></script>
+
+
+
+    <style>
+        .ListTable thead tr {
+            background-color: #d2401a;
+            color: white;
+            font-size: 13px;
+        }
+
+        table.dataTable,
+        table.dataTable th,
+        table.dataTable td {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+
+        .SumoSelect > .CaptionCont > span.placeholder {
+            color: darkgray;
+            font-style: normal;
+        }
+    </style>
+
+
+</head>
+<body>
+
+    <div style="width: 100%; height: 100%;">
+        <table border="0" align="center" style="width: 98%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div align="center" style="width: 100%; margin-bottom: 15px;" class="row">
+                            <label style="font-size: 18px; color: #0165C4">
+                                <b>HIL Limited</b></label><br>
+                            <label style="font-size: 18px; color: #0026ff">
+                                <b>Closed Complaints Plant</b></label><br>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="text" style="display:none;" value="@FD" id="FD" />
+        <input type="text" style="display:none;" value="@TD" id="TD"/>
+        <input type="text" style="display:none;" value="@PC" id="PC"/>
+        <input type="text" style="display:none;" value="@PT" id="PT"/>
+        <input type="text" style="display:none;" value="@PN" id="PN" />
+
+
+
+        <form class="form-horizontal" role="form" style="font-size: small">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="">
+                    Plant : 
+                </label>
+                <div class="col-sm-2">
+                    <select id="PlantFilter" multiple="multiple" class="form-control"></select>
+                </div>
+            </div>
+        </form>
+
+
+        <table class="ListTable" id="ClosedComplaintsPlant">
+
+            <thead>
+                <tr>
+                    <td>Complaint Tracking No</td>
+                    <td>Complaint Code</td>
+                    <td>Plant</td>
+                    <td>Customer Name</td>
+                    <td>Secondary Customer</td>
+                    <td>Visit Date</td>
+                    <td>City</td>
+                    <td>State</td>
+                    <td>Invoice Details</td>
+                    <td>Product Division</td>
+                    <td>Supplied Qty</td>
+                    <td>Complaint/<br />Breakage/<br />Defect Qty</td>
+                    <td>% Defect</td>
+                    <td>UOM</td>
+                    <td>Net Loss/<br />Actual Defect<br /> Qty</td>
+                    <td>Complaint Category</td>
+                    <td>Compensation Mode</td>
+                    <td>Compensation No</td>
+                    <td>Compensation Issued Date</td>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+            <tfoot style="display: none;">
+                <tr>
+                    <td>Complaint Tracking No</td>
+                    <td>Complaint Code</td>
+                    <td>Plant</td>
+                    <td>Customer Name</td>
+                    <td>Secondary Customer</td>
+                    <td>Visit Date</td>
+                    <td>City</td>
+                    <td>State</td>
+                    <td>Invoice Details</td>
+                    <td>Product Division</td>
+                    <td>Supplied Qty</td>
+                    <td>Complaint/<br />Breakage/<br />Defect Qty</td>
+                    <td>% Defect</td>
+                    <td>UOM</td>
+                    <td>Net Loss/<br />Actual Defect<br /> Qty</td>
+                    <td>Complaint Category</td>
+                    <td>Compensation Mode</td>
+                    <td>Compensation No</td>
+                    <td>Compensation Issued Date</td>
+                </tr>
+            </tfoot>
+
+
+        </table>
+    </div>
+
+</body>
+</html>
+
+
+
+
+<script type="text/javascript">
+    var table = null;
+
+    $(document).ready(function () {
+
+        $('#PlantFilter').SumoSelect({ placeholder: 'Plant Name' });
+
+        var FD = $("#FD").val();
+        var TD = $("#TD").val();
+        var PC = $("#PC").val();
+        var PT = $("#PT").val();
+
+        var Data = JSON.stringify({
+            Report: "LastFiveReports",
+            ReportName: "ClosedComplaintsPlant",
+            FD: DateToForeign(FD),
+            TD: DateToForeign(TD),
+            PC: PC,
+            PT: PT
+        });
+
+
+        $.ajax({
+            method: 'POST',
+            url: '../../ComplaintReports/GetReportData',
+            data: { Data: Data },
+        }).then(function successCallback(Resp) {
+            if (Resp == "") {
+                $('#ClosedComplaintsPlant').dataTable({});
+                alert("No Data Available");
+                window.close();
+            }
+            else {
+                Resp = JSON.parse(Resp);
+
+                var TRCode = "";
+
+                for (var i = 0; i < Resp.length; i++) {
+
+                    var PLANT_NAME = Resp[i]["PLANT_NAME"];
+                    var PLANT_NAMEexists = $('#PlantFilter option').filter(function () {
+                        return $(this).text() == PLANT_NAME;
+                    }).length;
+                    if ((Resp[i]["PLANT_NAME"] != "" || Resp[i]["PLANT_NAME"] != "") && (PLANT_NAMEexists == 0)) {
+                        $('#PlantFilter')[0].sumo.add(Resp[i]["PLANT_NAME"], Resp[i]["PLANT_NAME"]);
+                    }
+
+                    TRCode = TRCode + "<tr>";
+
+                    TRCode = TRCode + "<td>" + Resp[i]["COMPLAINT_TRACKING_NO"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["COMPLAINT_CODE"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["PLANT_NAME"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["CUSTOMER_NAME"] + "</td>";
+
+                    TRCode = TRCode + "<td>" + Resp[i]["END_CUSTOMER_DETAILS"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["VISITED_DATE"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["CITY_CODE"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["STATE_NAME"] + "</td>";
+
+                    TRCode = TRCode + "<td>" + Resp[i]["INVOICE_DETAILS"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["DIVISION_NAME"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["supply_qty"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["breakage_qty"] + "</td>";
+
+                    var BreakPercent = "";
+
+                    if (Resp[i]["supply_qty"] == 0 || Resp[i]["supply_qty"] == "" || Resp[i]["breakage_qty"] == 0 || Resp[i]["breakage_qty"] == "") {
+                        BreakPercent = "";
+                    }
+                    else {
+                        BreakPercent = Math.round(((parseFloat(Resp[i]["breakage_qty"]) / parseFloat(Resp[i]["supply_qty"])) * 100) * 100) / 100;
+                    }
+
+                    TRCode = TRCode + "<td>" + BreakPercent + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["UOM"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["NET_LOSS"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["COMPLAINT_TYPE_NAME"] + "</td>";
+
+                    TRCode = TRCode + "<td>" + Resp[i]["COMPENSATION_MODE_NAME"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["ID"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["APPROVED_DATE"] + "</td>";
+
+                    TRCode = TRCode + "</tr>";
+
+                }
+
+
+                $("#ClosedComplaintsPlant tbody").empty();
+
+                $("#ClosedComplaintsPlant tbody").append(TRCode);
+
+                table = $('#ClosedComplaintsPlant').DataTable({
+                    paging: true,
+                    scrollX: "100%",
+                    scrollY: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'A3'
+                        },
+                        'copy', 'csv', 'excel', 'print'
+                    ]
+                });
+
+
+            }
+        },
+        function errorCallback(response) {
+            alert("Error : " + response);
+        });
+    });
+
+
+    $('#PlantFilter').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#ClosedComplaintsPlant").dataTable().fnFilter(choosedFname, 2, true, false);
+        }
+        else {
+            $("#ClosedComplaintsPlant").dataTable().fnFilter("", 2, true, false);
+        }
+    });
+
+
+    function DateToForeign(IndDate) {
+        IndDate = IndDate.split('/');
+        return (IndDate[2] + "-" + IndDate[1] + "-" + IndDate[0]);
+    }
+
+
+</script>

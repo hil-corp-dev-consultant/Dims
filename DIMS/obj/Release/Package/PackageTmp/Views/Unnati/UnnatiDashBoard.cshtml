@@ -1,0 +1,343 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserTypeCode = UP.UserTypeCode;
+    string SessionUserType = UP.UserType;
+    string SessionStateCode = UP.UserStateCode;
+    string SessionStateName = UP.UserStateName;
+}
+
+<style type="text/css">
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>UNNATI Dashboard</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        @* <li>UNNATI</li>*@
+        <li class="active">UNNATI Dashboard</li>
+    </ol>
+
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body" style="overflow-x: scroll; width: 98%">
+                <form role="form" class="form-horizontal">
+                    <div class="form-group" id="DatePickerDiv">
+                        <label class="col-sm-2 control-label">Select Month</label>
+                        <div class="col-sm-2">
+                            <input type="text" ng-change="SelectedDate()" class="form-control Date" id="Date" data-ng-model="StartDate" readonly="readonly" placeholder="Select Month" />
+                        </div>
+
+                    </div>
+                </form>
+                <form role="form" class="form-horizontal">
+                    <input type="text" id="USERNAME_UnnatiDashboard" style="display: none;" value="@SessionUserName" />
+                    <input type="text" id="USERCODE_UnnatiDashboard" style="display: none;" value="@SessionUserCode" />
+                    <input type="text" id="USERTYPE_UnnatiDashboard" style="display: none;" value="@SessionUserTypeCode" />
+                    <input type="text" id="StateCode_UnnatiDashboard" style="display: none;" value="@SessionStateCode" />
+                    <input type="text" id="StateName_UnnatiDashboard" style="display: none;" value="@SessionStateName" />
+                    <div id="UnnatiUsersDiv">
+                        <table id="UnnatiDashboard_Table" class="table ListTable">
+                            <thead>
+                                <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;" rowspan="2" colspan="1" id="DashboardHeaderText">All Zones</th>
+                                    <th style="text-align: center; padding-top: 0px; padding-bottom: 0px;" colspan="5">My Stockists</th>
+
+                                    <th style="text-align: center; padding-top: 0px; padding-bottom: 0px;" colspan="6">My Retailers</th>
+                                </tr>
+
+                                <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+                                    @*  <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;" id="DashboardHeaderText">All Zones</th>*@
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Total<br />
+                                        Enrollment<br />for Current<br />Month</th>
+@*                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Total
+                                        <br />
+                                        Volumes
+                                        <br />
+                                        Reported
+                                        <br />
+                                        (MT)</th>*@
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Total <br /> Points<br />For Current <br />Month</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">No. of<br />
+                                        Current<br />
+                                        Month<br />
+                                        Transactions</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">No. of
+                                        <br />
+                                        Current<br />
+                                        Month
+                                        <br />
+                                        Redemptions</th>
+                                    @*                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Pending<br />
+                                        Approvals</th>*@
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Pending<br />
+                                        Redemptions >45 Days</th>
+
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Total<br />
+                                        Enrollment<br />for Current<br />Month</th>
+@*                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Total
+                                        <br />
+                                        Volumes
+                                        <br />
+                                        Reported
+                                        <br />
+                                        (MT)</th>*@
+                                     <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Total <br /> Points<br />For Current <br />Month</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">No. of
+                                        <br />
+                                        Current<br />
+                                        Month<br />
+                                        Transactions</th>
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">No. of
+                                        <br />
+                                        Current
+                                        <br />
+                                        Month<br />
+                                        Redemptions</th>
+                                    @*                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Pending
+                                        <br />
+                                        Approvals</th>*@
+                                    <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Pending
+                                        <br />
+                                        Redemptions >45 Days</th>
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th style="text-align: right; font-weight: bold;">TOTAL</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    @*                                    <th></th>
+                                    <th></th>*@
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <div id="StockiestDiv">
+                        <table id="UnnatiDashboard_StockiesTable" class="table ListTable">
+                            <thead>
+                               @* <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+
+                                    <th style="text-align: center; padding-top: 0px; padding-bottom: 0px;" colspan="4">My UNNATI Dashboard</th>
+                                </tr>*@
+
+                                <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+
+
+                                    <th style="padding-top: 5px; padding-bottom: 5px;text-align:center">Total Redemptions (Nos)</th>
+                                    <th style="padding-top: 5px; padding-bottom: 5px;text-align:center">Points Earned</th>
+                                    <th style="padding-top: 5px; padding-bottom: 5px;text-align:center">Point Balance</th>
+                                    @* <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Nearest Redemption</th>*@
+
+                                </tr>
+                            </thead>
+                            @*<tfoot>
+                            <tr>
+                                <th style="text-align: right">Total:</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>*@
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        //alert("We are showing Current Month Dashboard");
+        //var Date = new Date();
+        //var Month = Date.getMonth() + "-" + Date.getFullYear();
+        var Month = "";
+        GetServerDateTime();
+
+
+
+        $("#UnnatiDashboard_Table").dataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            "columnDefs": [{
+                "targets": [0],
+                className: "dt-body-left"
+
+            },
+    {
+        "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        className: "dt-body-right"
+    }],
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+
+
+
+                for (var i = 1; i <= 10; i++) {
+
+                    //if (i == 2 || i == 7) {
+                    //    // Total over all pages
+                    //    total = api
+                    //        .column(i)
+                    //        .data()
+                    //        .reduce(function (a, b) {
+                    //            return intVal(a) + intVal(b);
+                    //        }, 0);
+
+                    //    // Total over this page
+                    //    pageTotal = api
+                    //        .column(i, { page: 'current' })
+                    //        .data()
+                    //        .reduce(function (a, b) {
+                    //            return (intVal(a) + intVal(b)).toFixed(2);
+                    //        }, 0);
+
+                    //    // Update footer
+                    //    //$(api.column(i).footer()).html(
+                    //    //    pageTotal.toFixed(3) + ' ( ' + total.toFixed(3) + ' total)'
+                    //    //);
+
+                    //    $(api.column(i).footer()).html(
+                    //        pageTotal
+                    //    );
+                    //} else {
+                        total = api
+                          .column(i)
+                          .data()
+                          .reduce(function (a, b) {
+                              return intVal(a) + intVal(b);
+                          }, 0);
+
+                        // Total over this page
+                        pageTotal = api
+                            .column(i, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+
+                        // Update footer
+                        //$(api.column(i).footer()).html(
+                        //    pageTotal.toFixed(3) + ' ( ' + total.toFixed(3) + ' total)'
+                        //);
+
+                        $(api.column(i).footer()).html(
+                            pageTotal
+                        );
+                    }
+
+                //}
+            }
+        });
+
+        $("#UnnatiDashboard_StockiesTable").dataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            "columnDefs": [
+    {
+        "targets": [0, 1, 2],
+        className: "dt-body-right"
+    }],
+
+        });
+
+        $("#UnnatiDashboard_Table tfoot tr").each(function () {
+            $(this).find('th:eq(0)').css({ "text-align": "left" });
+            $(this).find('th:eq(1)').css({ "text-align": "right" });
+            $(this).find('th:eq(2)').css({ "text-align": "right" });
+            $(this).find('th:eq(3)').css({ "text-align": "right" });
+            $(this).find('th:eq(4)').css({ "text-align": "right" });
+            $(this).find('th:eq(5)').css({ "text-align": "right" });
+            $(this).find('th:eq(6)').css({ "text-align": "right" });
+            $(this).find('th:eq(7)').css({ "text-align": "right" });
+            $(this).find('th:eq(8)').css({ "text-align": "right" });
+            $(this).find('th:eq(9)').css({ "text-align": "right" });
+            $(this).find('th:eq(10)').css({ "text-align": "right" });
+        });
+
+        $("#Date").datepicker({
+            format: "mm-yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            autoclose: true
+        });
+    });
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+                    Month = result.split('/')[1] + "-" + result.split('/')[2];
+                    $("#Date").datepicker('setEndDate', result);
+                    $("#Date").val(Month);
+                }
+            }
+        });
+    }
+
+</script>
+

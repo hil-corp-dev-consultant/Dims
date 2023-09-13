@@ -1,0 +1,1010 @@
+﻿@*Module            : SFDC.
+    DocumentName        : JourneyPlanDetails.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for Journey Plan Details.
+    Developer Name      : Harish Kothuri.
+    Change Log          : NA.*@
+
+
+@using LabelNames = DIMS.Content.Resource_Files.JourneyPlanDetails; @*get label names from XML File*@
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    /*.numericCol {
+        float: right;
+    }*/
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Create Journey Plan</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Journey Plan Details</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('JourneyPlanList')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SaveJourneyPlanDetails()" id="SaveJP">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                <a href ng-click="go('JourneyPlanDetails')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+                <a href ng-click="SendForApproval()" id="JPSendApprove">
+                    <i class=" fa fa-thumbs-o-up" title="Send for Approval"></i>
+                </a>
+                @*@if (@SessionUserType != "FSO")
+                    {
+                        <a href ng-click="MakeApprovedJP()" id="MakeApproved">
+                            <i class="fa fa-check" title="Approve Plan"></i>
+                        </a>
+                    }*@
+            </div>
+        </div>
+    </nav>
+</section>
+@*<input type="text" id="LoginRoleCode" hidden="hidden" value="@SessionUserType" />
+    <input type="text" id="LoginUserId" hidden="hidden" value="@SessionUserCode" />*@
+<input type="text" id="SessionUserCode" style="display:none;" value="@SessionUserCode" />
+<input type="text" id="SessionUserName" style="display:none;" value="@SessionUserName" />
+<input type="text" id="SessionUserRole" style="display:none;" value="@SessionUserType" />
+
+<input type="text" id="SessionUserZone" style="display:none;" value="@SessionZone_Code" />
+<input type="text" id="SessionUserState" style="display:none;" value="@SessionStateCode" />
+
+
+<input type="text" id="LoginUserOrgLevelId" style="display:none;" />
+
+<input type="text" id="LoginUserParentId" style="display:none;" />
+
+<input type="text" id="PlanedDistrictCount" style="display:none;" />
+
+<input type="text" id="ActualDistrictCount" style="display:none;" />
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-body" @*style="overflow-x: scroll; width: 98%;" *@>
+                <h3 class="box-title"></h3>
+                <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small;" action="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.Name</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="LoginUsername" data-ng-model="LoginUsername" disabled="disabled" value="@SessionUserName" />
+                        </div>
+                        <label class="col-sm-3 control-label">@LabelNames.Month<span class="Mandatory">*</span></label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="JPDMonth" data-ng-model="JPDMonth" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.CreatedDate</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="JPDCreatedDate" data-ng-model="JPDCreatedDate" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">@LabelNames.Status</label>
+                        <div class="col-sm-3" id="ParentJPDStatus">
+                            <input type="text" class="form-control gray" id="JPDStatus" data-ng-model="JPDStatus" disabled="disabled" />
+                            @* <select class="form-control" id="JPDStatus" data-ng-model="JPDStatus">
+                                    <option value="">Select Status</option>
+                                    <option value="Created">Created</option>
+                                    <option value="Submitted">Submitted</option>
+                                    <option value="Approved">Approved</option>
+                                </select>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Visit Planned</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="VistPlaned" data-ng-model="VistPlaned" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">Actual Visit</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="ActualVisit" data-ng-model="ActualVisit" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Volume Plan For Month (MT)</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="VistPlaneForMonth" data-ng-model="VistPlaneForMonth" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3 col-sm-offset-8">
+                            <button class="btn btn-info" id="NewCounterPrioritization">New Counter Prioritization</button>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="col-sm-2 control-label" ng-model="SalesState" id="lblCustomerCode" data-val="">Customer Code<span class="Mandatory">*</span></label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="Stockist" type="text" disabled="disabled" data-ng-model="Stockist">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="GetStockistdata('GetJourneyCustomerDetails','SFDCCustomerDetails','Journeyplan Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="col-sm-3 control-label" for="SubStockist" id="lblCustomerName" ng-model="SalesDistrict" data-val="">Customer Name </label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="SubStockist" type="text" disabled="disabled" data-ng-model="SubStockist">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="GetStockistdata('GetJourneyCustomerDetails','SFDCCustomerDetails','Journeyplan Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Customer Type</label>
+                            <div class="col-sm-3">
+                                <input class="form-control gray" id="CustomerType" type="text" disabled="disabled" data-ng-model="CustomerType">
+                            </div>
+                            <label class="col-sm-3 control-label" for="VolumePlanforMonth">Volume Plan for Month (MT)<span class="Mandatory">*</span></label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="VolumePlanforMonth" data-ng-model="VolumePlanforMonth" placeholder="Volume Plan for Month" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="DateforNextOrder">Next Order Date<span class="Mandatory">*</span></label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="DateforNextOrder" readonly="readonly" />
+                            </div>
+                            <div class="col-sm-3 col-sm-offset-3">
+                                <button class="btn btn-info" id="NewCounterPrioritization" data-toggle="modal" data-target="#NewCounterPrioritizationPopup">New Counter Prioritization</button>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-offset-5">
+                                <button class="btn btn-info" id="GetDetails" disabled="disabled" data-res="">Add</button>
+                                <button type="button" id="EditData" class="btn btn-info" disabled="disabled">Update</button>
+                                <button type="button" id="DeleteData" class="btn btn-info" disabled="disabled">Delete</button>
+                            </div>
+                        </div>*@
+                </form>
+                <div style="padding:10px;"></div>
+                <div style="overflow:auto">
+                <table id="JPDTable" class="table tablecss" width="100%" cellspacing="0">
+                    <thead id="JPDTableHead">
+                    </thead>
+                    <tfoot id="JPDTTableFoot" style="display:none;">
+
+                    </tfoot>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<div class="modal fade" id="NewCounterPrioritizationPopup">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="PreviewHeading">
+                    New Counter Prioritization
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small;" action="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Sales District</label>
+                        <div class="col-sm-3">
+                            <select id="SalesDistric" class="form-control">
+                                <option value="">Select</option>
+                            </select>
+
+                            @*<div class="input-group add-on">
+                                    <input class="form-control" id="SalesDistric" type="text" disabled="disabled" data-ng-model="SalesDistric">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="GetStockistdata('GetSalesDistrict','EmployeeSalesDistrict','Sales District')"><i class="glyphicon glyphicon-new-window"></i></button>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Volume From</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" id="VolumeFrom" type="text" data-ng-model="VolumeFrom">
+                        </div>
+                        <label class="col-sm-2 control-label">Volume To</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" id="VolumeTo" type="text" data-ng-model="VolumeTo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-2 text-center">
+                            @*<button class="btn btn-info" id="AddCounterSubmit">Submit</button>*@
+                            <input type="button" id="AddCounterSubmit" value="Submit" class="btn btn-info">
+                        </div>
+                    </div>
+                    <div style="padding:10px;"></div>
+                    <div style="overflow:auto;">
+                    <table id="CounterPrioritization" class="table tablecss">
+                        <thead>
+                            <tr>
+                                <th data-bsortable='true' style="text-align:center;"><input type="checkbox" name="btSelectAll" id="selectAll" onchange="CheckAllChange()" /></th>
+                                <th>Customer Name</th>
+                                <th>Customer Type</th>
+                                <th>State</th>
+                                <th>District</th>
+                                <th>Monthly Volume</th>
+                                @*<th>Other</th>*@
+                            </tr>
+                        </thead>
+                    </table>
+                    </div>
+                    <div style="padding:10px;"></div>
+                    <div class="form-group">
+                        <div class="col-sm-2 col-sm-offset-10 text-right">
+                            <input type="button" id="AddCounterToJourneyPlan" value="Add" class="btn btn-info">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal_ApproveReject" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Journey Plan Approvel</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure,you want to approve</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" ng-click="PlanApprove()">Approve</button>
+                <button type="button" class="btn btn-info" ng-click="PlanReject()">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var Res = "";
+    var SelectedTrIndex;
+    var SelectedStockist = "";
+    var SelectedSubStockist = "";
+    var ServerDate = "";
+    var NoofDaysInmonth = "";
+    //$('#LoginUsername').val('@SessionUserName');
+    $(document).ready(function () {//Document.ready for working in page load
+        $('#NewCounterPrioritization').attr("disabled", true);
+        $("#JPDMonth").datepicker({
+            format: "MM-yyyy",
+            startView: "months",
+            autoclose: true,
+            minViewMode: "months"
+        });
+
+        $("#DateforNextOrder").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true
+        });
+        GetServerDateTime();
+        var columnSort = new Array;
+        $('#CounterPrioritization').find('thead tr th').each(function () {
+            if ($(this).attr('data-bSortable') == 'true') {
+                columnSort.push({ "bSortable": false });
+            } else {
+                columnSort.push({ "bSortable": true });
+            }
+        });
+
+        $("#CounterPrioritization").dataTable({
+            "aoColumns": columnSort
+            //"scrollX": true
+        });
+
+
+
+        //   jQuery('.dataTable').wrap('<div class="dataTables_scroll" />');
+
+    });
+
+    $('#VolumeFrom').keypress(function (e) {
+        return onlyNumerics(e);
+    });
+    $('#VolumeTo').keypress(function (e) {
+        return onlyNumerics(e);
+    });
+    var table;
+
+    $('#JPDMonth').datepicker().on('changeDate', function () {
+
+        var tabletext = $('#JPDTable tbody tr td').text();
+        if (tabletext == "" || tabletext == "No data available in table") {
+            if ($('#JPDMonth').val() != "") {
+                $('.datepicker').hide();
+                $("#loading").css('display', 'block');
+                var SelectedMonth = $('#JPDMonth').val();
+                $.ajax({
+                    url: "../../SFDC/GetMonthDays",
+                    type: 'POST',
+                    async: false,
+                    data: { SelectedMonth: SelectedMonth },
+                    beforeSend: function () {
+
+                        ShowLoader();
+                    },
+                    success: function (response) {
+                        Res = parseInt(response);
+                        NoofDaysInmonth = Res;
+                        $("#JPDTableHead").empty();
+                        //$('#JPDTable').dataTable().clear().draw();
+                        var Html = "";
+                        Html += "<tr>";
+                        Html += "<th rowspan='2' data-bSortable='true'>Customer Code</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblStockist' + "</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblSubStockist' + "</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblSalesRegion' + "</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblSalesDistrict' + "</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblLastYearSameMonthMT' + "</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>Last Three Months Average (MT)</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblVolumePlanforMonthMT' + "</th>";
+
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblActualVolumeMTD' + "</th>";
+
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblNoofdaysofStockAvg' + "</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblLastOrderDate' + "</th>";
+                        Html += "<th rowspan='2' data-bSortable='true'>" + '@LabelNames.TblExpectedDateforNextOrder' + "</th>";
+                        // Html += "<th colspan=" + Res + ">" + SelectedMonth + "</th>";
+                        var MonthName = SelectedMonth.split('-');
+                        for (var i = 1; i <= Res; i++) {
+                            if (i.toString().length < 2)
+                                i = "0" + i;
+                            Html += "<th colspan='2'>" + MonthName[0] + "-" + i + "</th>";
+                        }
+                        $('#GetDetails').data('res', Res);
+                        Html += "</tr>";
+
+                        Html += "<tr>";
+                        for (var i = 1; i <= Res; i++) {
+                            Html += "<th>Planned</th>";
+                            Html += "<th>Actual</th>";
+                        }
+                        Html += "</tr>";
+
+
+
+                        Htmlfoot = "<tr>";
+                        Htmlfoot += "<th colspan='7' style='text-align: right'>TOTAL:</th>";
+                        Htmlfoot += "<th>0</th>";
+                        Htmlfoot += "<th>0</th>";
+                        //Htmlfoot += "<th></th>";
+                        Htmlfoot += "<th colspan='3' style='text-align: right'>TOTAL:</th>";
+                        for (var i = 1; i <= Res; i++) {
+                            Htmlfoot += "<th class='Planed_Foot" + i + "' style='text-align: right'>0</th>";
+                            Htmlfoot += "<th class='Actual_Foot" + i + "' style='text-align: right'>0</th>";
+                        }
+                        Htmlfoot += "</tr>";
+                        Htmlfoot += "<tr>";
+                        //  Htmlfoot += "<th colspan='9' style='text-align: right'></th>";
+                        Htmlfoot += "<th colspan='12' style='text-align: right'>Sum of District:</th>";
+                        for (var i = 1; i <= Res; i++) {
+                            Htmlfoot += "<th class='Planed_District" + i + "' style='text-align: right'>0</th>";
+                            Htmlfoot += "<th class='Actual_District" + i + "' style='text-align: right'>0</th>";
+                        }
+                        Htmlfoot += "</tr>";
+
+
+
+
+                        var ResponseMTValues = GetUserbasedVlues(Res);
+
+
+
+                        //   var SelectedMonth = $('#JPDMonth').val();
+                        // var CustomerCode = $('#Stockist').val();
+
+                        var HtmlBody = "";
+                        var Data = JSON.stringify({
+                            "SelectedMonth": SelectedMonth,
+                            //"CustomerCode": StockistCode,
+                            "NoofDaysinMoth": Res,
+                            "MasterType": "SFDCCustomerDetails",
+                            "UserCode": $('#SessionUserCode').val(),
+                            "Role": $('#SessionUserRole').val()
+                        });
+                        var Response = "";
+                        for (var k = 0; k < ResponseMTValues.length; k++) {
+                            HtmlBody += "<tr>";
+                            HtmlBody += "<td style='text-align:right;'>" + ResponseMTValues[k]["CustomerCode"] + "</td>";
+                            HtmlBody += "<td>" + ResponseMTValues[k]["Customer Name"] + "</td>";
+                            HtmlBody += "<td>" + ResponseMTValues[k]["Customer Type Name"] + "</td>";
+                            HtmlBody += "<td>" + ResponseMTValues[k]["State Name"] + "</td>";
+                            HtmlBody += "<td>" + ResponseMTValues[k]["District"] + "</td>";
+                            // HtmlBody += "<td>" + JSONTotalCustomers[k]["District"] + "</td>";
+
+                            HtmlBody += "<td style='text-align:right;'>" + parseFloat(ResponseMTValues[k]["LAST_YEAR_SAME_MONTH"]).toFixed(2) + "</td>";
+
+                            HtmlBody += "<td style='text-align:right;'>" + parseFloat(ResponseMTValues[k]["LAST_QUARTER_MONTHLY_AVG"]).toFixed(2) + "</td>";
+                            HtmlBody += "<td></td>";
+                            HtmlBody += "<td style='text-align:right;'>" + parseFloat(ResponseMTValues[k]["ACTUAL_VOLUME_MTD"]).toFixed(2) + "</td>";
+                            HtmlBody += "<td style='text-align:right;'>" + Res + "</td>";
+                            HtmlBody += "<td style='text-align:right;'>" + ResponseMTValues[k]["LAST_ORDER_DATE"] + "</td>";
+                            HtmlBody += "<td style='text-align:right;'>" + ResponseMTValues[k]["EXCEPT_NEXT_ORDER_DATE"] + "</td>";//NextOrderDate
+                            //HtmlBody += "<td></td>";//NextOrderDate
+                            for (var i = 0; i < Res; i++) {
+                                var j = parseInt(i + 1);
+                                HtmlBody += "<td class='Planed" + j + "' style='text-align:center;'>" + "<input type='checkbox' name='Planed' data-dist='" + ResponseMTValues[k]["District"] + "' class='Planed' id='" + ResponseMTValues[k]["CustomerCode"] + "_" + SelectedMonth + "_" + j + "'/>" + "</td>";
+                                HtmlBody += "<td class='Actual" + j + "' style='text-align:center;'>" + "<input type='checkbox' name='Actual' class='Actual' data-dist='" + ResponseMTValues[k]["District"] + "' id='" + ResponseMTValues[k]["CustomerCode"] + "_" + SelectedMonth + "_" + "Actual" + "_" + j + "' disabled=disabled/>" + "</td>";
+                            }
+
+                            HtmlBody += "</tr>";
+                        }
+
+                        $('#JPDTable > tbody').append(HtmlBody);
+                        $('#JPDTableHead').append(Html);
+                        $('#JPDTTableFoot').empty();
+                        $('#JPDTTableFoot').append(Htmlfoot);
+
+
+                        $('#GetDetails').removeAttr("disabled");
+
+                        PrepareDatatable();
+                        //  HideLoader();
+
+                    },
+                    complete: function () {
+                        HideLoader();
+                    },
+                    error: function (error) {
+                        HideLoader();
+                        alert("" + error);
+                    }
+                });
+            }
+        } else {
+            alert("This table is already contains data");
+        }
+    });
+
+
+    function PrepareDatatable() {
+        //var columnSort = new Array;
+        //$('#JPDTable').find('thead tr th').each(function () {
+        //    if ($(this).attr('data-bSortable') == 'true') {
+        //        columnSort.push({ "bSortable": true });
+        //    } else {
+        //        columnSort.push({ "bSortable": false });
+        //    }
+        //});
+        //    $("#JPDTable").dataTable();
+        //table = $("#JPDTable").dataTable({
+        //  //  "bDestroy": true,
+        //    "bSortable": true,
+        //    // 'scroll': true,
+        //    "order": [[0, "desc"]],
+        //    scrollY: "200px",
+        //    scrollX: true,
+        //    scrollCollapse: true,
+        //    paging: true,
+        //    fixedColumns: {
+        //        leftColumns: 0
+        //    },
+        //    //"bDestroy": true,
+        //    //"bSort": false,
+        //    //"bScrollCollapse": true,
+        //    //"paging": false,
+        //    //"ordering": false,
+        //    //"info": false,
+        //    //"bFilter": false,
+        //    //"bDestroy": true,
+        //    //'scroll': true,
+        //    //"order": [[0, "desc"]],
+        //    "aoColumns": columnSort,
+        //    "footerCallback": function (tfoot, data, start, end, display) {
+        //        var api = this.api();
+        //        $(api.column(8).footer()).html(
+        //            api.column(8).data().reduce(function (a, b) {
+        //                var res = a + b;
+        //                return parseFloat(res).toFixed(2);
+        //            }, 0)
+        //        );
+        //    }
+        //});
+
+        var table123 = $("#JPDTable").DataTable({
+            //"bDestroy": true,
+            "bSortable": false,
+            "bSort": false,
+            searching: false,
+            scrollY: "200px",
+            scrollX: true,
+            "columnDefs": [
+        { "className": "dt-right", "targets": [0, 5, 6, 8, 9] },
+         { "className": "Edit", "targets": [7] }
+            ],
+            paging: false,
+            fixedColumns: {
+                leftColumns: 2
+            },
+
+            "footerCallback": function (tfoot, data, start, end, display) {
+
+                var api = this.api();
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+                if (api.column(7).data().length) {
+                    var total = api
+                    .column(7)
+                    .data()
+                    .reduce(function (a, b) {
+                        $(api.column(7).footer()).html(parseFloat(intVal(a) + intVal(b)).toFixed(2));
+                        $(api.column(7).footer()).css({ "text-align": "right" });
+                        $('#VistPlaneForMonth').val(parseFloat(intVal(a) + intVal(b)).toFixed(2));
+                        return intVal(a) + intVal(b);
+                    });
+                }
+                else { total = 0 };
+
+                if (api.column(8).data().length) {
+                    var total = api
+                    .column(8)
+                    .data()
+                    .reduce(function (a, b) {
+                        $(api.column(8).footer()).html(parseFloat(intVal(a) + intVal(b)).toFixed(2));
+                        $(api.column(8).footer()).css({ "text-align": "right" });
+                        return intVal(a) + intVal(b);
+                    });
+                }
+                else { total = 0 };
+
+                // $('#input[type=checkbox]').trigger('change');
+
+            }
+            //"fnInitComplete": function () {
+            //    // Disable TBODY scoll bars
+            //    $('.dataTables_scrollBody').css({
+            //        'overflow': 'hidden',
+            //        'border': '0'
+            //    });
+
+            //    // Enable TFOOT scoll bars
+            //    $('.dataTables_scrollFoot').css('overflow', 'auto');
+
+            //    // $('.dataTables_scrollHead').css('overflow', 'auto');
+
+            //    // Sync TFOOT scrolling with TBODY
+            //    $('.dataTables_scrollFoot').on('scroll', function () {
+            //        $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
+            //    });
+
+            //    $('.dataTables_scrollHead').on('scroll', function () {
+            //        $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
+            //    });
+            //}
+        });
+        table123.MakeCellsEditable({
+            "onUpdate": myCallbackFunction_JP,
+            "inputCss": 'my-input-class',
+            "columns": [7],//Edit Column Index
+            "allowNulls": {
+                "columns": [7],//Edit Column Index
+                "errorClass": 'error'
+            },
+            "confirmationButton": {
+                "confirmCss": 'my-confirm-class',
+                "cancelCss": 'my-cancel-class'
+            },
+            "onkeypress": 'OnlyNumber',
+            "FormName": 'JourneyPlan',
+            "MaxServerDate": ServerDate
+        });
+
+
+        $('.Edit').css({ "text-align": "right" });
+        //   jQuery('.dataTable').wrap('<div class="dataTables_scroll" />');
+        $('#NewCounterPrioritization').attr("disabled", false);
+    }
+
+    function GetUserbasedVlues(NoofDays) {
+
+        var SelectedMonth = $('#JPDMonth').val();
+        // var CustomerCode = $('#Stockist').val();
+
+        var Data = JSON.stringify({
+            "SelectedMonth": SelectedMonth,
+            //"CustomerCode": StockistCode,
+            "NoofDaysinMoth": NoofDays,
+            "MasterType": "SFDCCustomerDetails",
+            "UserCode": $('#SessionUserCode').val(),
+            "Role": $('#SessionUserRole').val()
+        });
+        var Response = "";
+        $.ajax({
+            method: 'POST',
+            url: '../../SFDC/GetUserbasedvaluesJP',
+            data: { Data: Data },
+            beforeSend: function () {
+                //  ShowLoader();
+            },
+            async: false,
+        }).then(function successCallback(Res) {
+            // Response = Res;
+
+            Response = JSON.parse(Res);
+            //  HideLoader();
+        });
+        // alert(Response);
+        return Response;
+
+    }
+
+    function columnsum(columnnum) {
+        var totalSUM = 0;
+        $("#JPDTable tbody tr").each(function () {
+            var getValue = $(this).find("td:eq(" + columnnum + ")").html().replace("$", "");
+            var filteresValue = getValue.replace(/\,/g, '');
+            totalSUM += Number(filteresValue)
+        });
+        return totalSUM;
+    }
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+                    ServerDate = result;
+                    $("#DateforNextOrder").datepicker('setStartDate', result);
+                    $("#JPDMonth").datepicker('setStartDate', result);
+                    $("#JPDMonth").datepicker('setEndDate', result);
+                }
+            }
+        });
+    }
+
+    function GetUserUnderCustomers() {
+
+        var JsonData = JSON.stringify({
+            "MasterType": "SFDCCustomerDetails",
+            "UserCode": $('#SessionUserCode').val(),
+            "Role": $('#SessionUserRole').val()
+        });
+
+        var Result = "";
+        $.ajax({
+            method: 'POST',
+            url: '../../SFDC/getMasterData',
+            data: { MasterType: JsonData },
+            async: false,
+        }).then(function successCallback(Res) {
+            // Response = Res;
+            Result = JSON.parse(Res);
+        });
+        return Result;
+    }
+
+    function myCallbackFunction_JP(updatedCell, updatedRow) {
+        console.log("updatedRow :" + updatedRow);
+        console.log("updatedCell :" + updatedCell);
+
+
+        //alert($("#JPDTable > tfoot > tr:first").find("th:eq(1)").html());
+        //$("#JPDTable > tfoot > tr:first").find("th:eq(1) > div").html(columnsum(7));
+        //alert(columnsum(7));
+        //alert($("#JPDTable > tfoot > tr:first").find("th:eq(1)").html());
+        //$("#JPDTable > tfoot > tr:first").find("th:eq(1)").html(columnsum(7));
+        //$("#JPDTable > tfoot > tr:first").find("th:eq(2)").html(columnsum(8));
+    }
+
+
+    $('#AddCounterSubmit').click(function () {
+        var SalesDistrict = $('#SalesDistric').val();
+        var VolumeFrom = $('#VolumeFrom').val();
+        var VolumeTo = $('#VolumeTo').val();
+
+        if (VolumeFrom == "" || VolumeFrom == null) {
+            alert("Please Enter volume From");
+        } else if (VolumeTo == "" || VolumeTo == null) {
+            alert("Please Enter volume To");
+        } else if (parseInt(VolumeFrom) > parseInt(VolumeTo)) {
+            alert("Volume From shold be lessthan volume To");
+        }
+        else {
+            ShowLoader();
+            var Data = JSON.stringify({
+                "VolumeFrom": VolumeFrom,
+                "VolumeTo": VolumeTo,
+                "SalesDistrict": SalesDistrict,
+                "LoginUserCode": $('#SessionUserCode').val(),
+                "Role": $('#SessionUserRole').val(),
+                "OrgLevelId": $('#LoginUserOrgLevelId').val()
+            });
+            $.ajax({
+                method: 'POST',
+                url: '../../SFDC/GetEmployeeBasedNewCustomer',
+                data: { Data: Data },
+                async: false,
+            }).then(function successCallback(Res) {
+                if (Res != "") {
+                    $('#CounterPrioritization').DataTable().rows().remove().draw();
+                    var JsonRes = JSON.parse(Res);
+                    for (var i = 0; i < JsonRes.length; i++) {
+                        $('#CounterPrioritization').dataTable().fnAddData(["<input type='checkbox' id='" + JsonRes[i]["ID"] + "' onchange='CheckboxRowChecked()'/>", JsonRes[i]["CUSTOMER_NAME"], JsonRes[i]["CustomerType"], JsonRes[i]["STATE_DESC"], JsonRes[i]["CUSTOMER_DISTRICT"], JsonRes[i]["EXPECTED_VOLUME_TARGET"]]);
+                    }
+
+                    $('#CounterPrioritization tr td:nth-child(1)').css('text-align', 'center');
+                    $('#CounterPrioritization tr td:nth-child(5)').css('text-align', 'right');
+                    HideLoader();
+
+                } else {
+                    HideLoader();
+                }
+            });
+
+        }
+        getdaysinmonth();
+    });
+
+    $('#NewCounterPrioritization').click(function () {
+        $('#NewCounterPrioritizationPopup').modal('show');
+        $('#SalesDistric').val("");
+        $('#VolumeFrom').val("");
+        $('#VolumeTo').val("");
+        $('#CounterPrioritization').DataTable().rows().remove().draw();
+    });
+
+    function CheckAllChange() {
+        try {
+            var Iden = "";
+            $("#CounterPrioritization tbody tr").each(function () {
+
+                $("#CounterPrioritization tbody tr").find("input[type=checkbox]").prop('checked', $("#selectAll").is(":checked"));
+            });
+        }
+        catch (e) {
+            alert("Error CheckAllChange: " + e);
+        }
+
+    }
+
+
+    //Stockist table row checkbox checked
+    function CheckboxRowChecked() {
+        try {
+            var AllChecked = true;
+            $("#CounterPrioritization tbody tr").each(function () {
+                var CheckId = $(this).children().find("input[type=checkbox]").attr('id');
+                if ($("#" + CheckId).is(":checked")) {
+                }
+                else {
+                    AllChecked = false;
+                }
+            });
+            $("#selectAll").prop('checked', AllChecked);
+        }
+        catch (e) {
+            alert("Error StockistRowChecked: " + e);
+        }
+    }
+
+    $('#AddCounterToJourneyPlan').click(function () {
+        var table1 = $('#CounterPrioritization').DataTable();
+        ShowLoader();
+        $("#CounterPrioritization tbody tr input:checked").each(function () {
+            var SelectedMonth = $('#JPDMonth').val();
+            var CheckId = "NEW_" + $(this).attr('id');
+
+            var IsExists = false;
+            var TableData = $('#JPDTable').dataTable().fnGetData();
+
+            for (var i = 0; i < TableData.length; i++) {
+                if (CheckId == TableData[i][0]) {
+                    IsExists = TableData[i][1];
+                }
+            }
+
+            var $row = $(this).closest('tr');
+            var data = table1.row($row).data();
+            var addData = [];
+            addData.push(CheckId);
+            addData.push(data[1]);//Name
+            addData.push(data[2]);//Type
+            addData.push(data[3]);//state
+            addData.push(data[4]);//dist
+            addData.push("0");//Last year same month
+            addData.push("0");//Last quarter monthly avg
+            addData.push("");//volume plan for month
+            addData.push("0");//actual volume
+            addData.push(Res);//No.of days
+            addData.push("");//last order date
+            addData.push("");//excepted next order date
+
+            for (var i = 0; i < Res; i++) {
+                var j = parseInt(i + 1);
+                addData.push("<input type='checkbox' name='Planed' data-dist='" + data[4] + "' class='Planed' id='" + CheckId + "_" + SelectedMonth + "_" + j + "'/>");
+                addData.push("<input type='checkbox' name='Actual' class='Actual' data-dist='" + data[4] + "' id='" + CheckId + "_" + SelectedMonth + "_" + "Actual" + "_" + j + "' disabled=disabled />");
+                //  HtmlBody += "<td class='Planed" + j + "' style='text-align:center;'>" + "<input type='checkbox' name='Planed' data-dist='" + ResponseMTValues[k]["District"] + "' class='Planed' id='" + ResponseMTValues[k]["CustomerCode"] + "_" + SelectedMonth + "_" + j + "'/>" + "</td>";
+                //  HtmlBody += "<td class='Actual" + j + "' style='text-align:center;'>" + "<input type='checkbox' name='Actual' class='Actual' data-dist='" + ResponseMTValues[k]["District"] + "' id='" + ResponseMTValues[k]["CustomerCode"] + "_" + SelectedMonth + "_" + "Actual" + "_" + j + "' disabled=disabled />" + "</td>";
+
+                // $('.Planed').parent().css('text-align', 'center');
+            }
+
+            if (IsExists != false) {
+                alert("Customer Code has been added already " + IsExists);
+            } else {
+              
+
+                var addId = $('#JPDTable').dataTable().fnAddData(addData);
+                $('.Planed').parent().css('text-align', 'center');
+                $('.Actual').parent().css('text-align', 'center');
+
+
+                //  $($('#JPDTable').dataTable().fnGetNodes()).filter('#' + CheckId + "_" + SelectedMonth + "_" + 1).parent().addClass('Planed');
+
+                //$('#JPDTable').dataTable().fnSettings().aoData[addId[0]].filter('#' + CheckId + "_" + SelectedMonth + "_" + 1).parent().nTr.id = 'the_id_I_want'
+
+
+
+
+                //var RowCount = $('#JPDTable').DataTable().data().count();
+
+                //RowData[12].setAttribute("class", "plan");
+
+                var oSettings = $('#JPDTable').dataTable().fnSettings();
+                var nTr = oSettings.aoData[addId[0]].nTr;
+
+                var P = 11;
+                var A = 12;
+                for (var j = 12; j <= parseInt((Res * 2) + 11) ; j++) {
+                    //console.log(i);
+
+                    //j++;
+                    if (j % 2 == 0) {
+                        //  console.log("even :" + i);
+                        //       $('#JPDTable tbody tr:eq(' + i + ')').find('td:eq(' + j + ')').addClass('Planed');
+                        $('td', nTr)[j].setAttribute('class', 'Planed' + parseInt(j - P));
+                        P++;
+                        //$('td', nTr)[j + 1].setAttribute('class', 'Actual' + parseInt(j - 11));
+                    }
+                    else {
+                        //$('#JPDTable tbody tr:eq(' + i + ')').find('td:eq(' + j + ')').addClass('Actual');
+                       // $('td', nTr)[j + 1].setAttribute('class', 'Planed' + parseInt(j - 11));
+                        $('td', nTr)[j].setAttribute('class', 'Actual' + parseInt(j - A));
+                        A++;
+                    }
+                }
+            }
+            //for (var i = 0; i < $('#JPDTable tbody tr').length; i++) {
+            //    for (var j = 12; j <= parseInt(Res + 12) ; j++) {
+            //        //console.log(i);
+            //        if (j % 2 == 0) {
+            //            //  console.log("even :" + i);
+
+            //            $('#JPDTable tbody tr:eq(' + i + ')').find('td:eq(' + j + ')').addClass('Planed');
+            //            //$('td', nTr)[i].setAttribute('class', 'Planed');
+            //        } else {
+            //            $('#JPDTable tbody tr:eq(' + i + ')').find('td:eq(' + j + ')').addClass('Actual');
+            //            //$('td', nTr)[i].setAttribute('class', 'Actu');
+            //        }
+            //    }
+            //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //for (var i = 0; i < nRows.length; i++) {
+            //    if (nRows[i].cells[0].innerHTML == CheckId) {
+
+
+            //        //   nRows[i].cells[10].setAttribute("class", "plan");
+            //    }
+            //}
+
+
+
+            //  theNode.setAttribute('id', 'alarmNum' + 1);
+
+            $('#NewCounterPrioritizationPopup').modal('hide');
+            //for (var i = 0; i < Res; i++) {
+            //    var j = parseInt(i + 1);
+            //    $('#' + CheckId + "_" + SelectedMonth + "_" + j).parent().addClass('Planed' + j);
+            //    $('#' + CheckId + "_" + SelectedMonth + "_" + "Actual" + "_" + j).parent().addClass('Actual' + j);
+            //}
+            HideLoader();
+
+
+        });
+    });
+
+    function getdaysinmonth() {
+        var SelectedMonth = $('#JPDMonth').val();
+        $.ajax({
+            url: "../../SFDC/GetMonthDays",
+            type: 'POST',
+            async: false,
+            data: { SelectedMonth: SelectedMonth },
+            async: false,
+            cache: false,
+            success: function (response) {
+                Res = parseInt(response);
+            }, error: function (error) {
+                alert("" + error);
+            }
+        });
+    }
+
+   
+    ///* Create an array with the values of all the checkboxes in a column */
+    //$.fn.dataTable.ext.order['dom-checkbox'] = function (settings, col) {
+    //    return this.api().column(col, { order: 'index' }).nodes().map(function (td, i) {
+    //        return $('input', td).prop('checked') ? '1' : '0';
+    //    });
+    //}
+</script>

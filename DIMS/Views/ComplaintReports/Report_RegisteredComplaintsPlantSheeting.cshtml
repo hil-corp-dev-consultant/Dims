@@ -1,0 +1,369 @@
+﻿@{
+    Layout = null;
+    string FD = Request.QueryString["FD"].ToString();
+    string TD = Request.QueryString["TD"].ToString();
+    string PC = Request.QueryString["Plant"].ToString();
+    string PN = Request.QueryString["PN"].ToString();
+
+    if (PN == "ALL")
+    {
+        PN = "";
+    }
+    
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registered Complaints Plant Sheeting</title>
+
+    @Styles.Render("~/bundles/Allcss")
+    <link href="~/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/dist/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/bootstrap/ionicons/css/ionicons.min.css" rel="stylesheet" />
+
+
+    @Styles.Render("~/bundles/DataTablecss")
+    <link href="~/bootstrap/css/jquery.sumoselect.min.css" rel="stylesheet" />
+    <script src="~/bootstrap/DataTables-1.10.5/js/jquery.js"></script>
+    <script src="~/plugins/jQueryUI/jquery-ui.min1.js"></script>
+    <script src="~/bootstrap/DataTables-1.10.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/bootstrap/js/fileinput.js"></script>
+    <script src="~/bootstrap/DataTables-1.10.5/js/dataTables.responsive.js"></script>
+    <script src="~/bootstrap/js/dataTables.cellEdit.js"></script>
+
+
+
+
+
+    @Scripts.Render("~/bundles/AllJs")
+    @Scripts.Render("~/bundles/Angularjs")
+
+    <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/bootstrap/js/jquery.sumoselect.min.js"></script>
+    <script src="~/dist/js/app.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.typeahead.js"></script>
+    <link href="~/Scripts/MultiSelect/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/MultiSelect/js/multiselect.min.js"></script>
+    <script src="~/Scripts/SFDCScripts/SFDCScript.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <script src="~/Scripts/DataTableScripts/jquery-1.12.3.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.flash.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/jszip.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.print.min.js"></script>
+
+    <link href="~/Scripts/DataTableScripts/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Scripts/DataTableScripts/buttons.dataTables.min.css" rel="stylesheet" />
+
+
+    <link href="~/bootstrap/css/jquery.sumoselect.min.css" rel="stylesheet" />
+    <script src="~/bootstrap/js/jquery.sumoselect.min.js"></script>
+
+
+    <style>
+        .ListTable thead tr {
+            background-color: #d2401a;
+            color: white;
+            font-size: 13px;
+        }
+
+        .SumoSelect > .CaptionCont > span.placeholder {
+            color: darkgray;
+            font-style: normal;
+        }
+    </style>
+
+
+</head>
+<body>
+
+    <div style="width: 100%; height: 100%;">
+        <table border="0" style="width: 98%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div align="center" style="width: 100%; margin-bottom: 15px;" class="row">
+                            <label style="font-size: 18px; color: #0165C4">
+                                <b>HIL Limited</b></label><br>
+                            <label style="font-size: 18px; color: #0026ff">
+                                <b>Registered Complaints Plant Sheeting</b></label><br>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="text" style="display:none;" value="@FD" id="FD" />
+        <input type="text" style="display:none;" value="@TD" id="TD"/>
+        <input type="text" style="display:none;" value="@PC" id="PC" />
+        <input type="text" style="display:none;" value="@PN" id="PN" />
+
+
+
+        <form class="form-horizontal" role="form" style="font-size: small">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="">
+                    Plant : 
+                </label>
+                <div class="col-sm-2">
+                    <select id="PlantFilter" multiple="multiple" class="form-control"></select>
+                </div>
+            </div>
+        </form>
+
+        <table id="RegiteredComplaintsPlantSheeting" class="ListTable">
+            <thead>
+                <tr>
+                    <td>Complaint Tracking No</td>
+                    <td>Complaint Code</td>
+                    <td>Plant</td>
+                    <td>Customer Name</td>
+                    <td>Sub Stockiest</td>
+                    <td>Party Code</td>
+                    <td>Complaint Received Date</td>
+                    <td>City</td>
+                    <td>State</td>
+                    <td>Product Division</td>
+                    <td>Invoice Details</td>
+                    <td>InvoiceDate</td>
+                    <td>Supplied Qty.(Nos)</td>
+                    <td>Complaint Qty.(Nos)</td>
+                    <td>% Defect</td>
+                    <td>Complaint Type</td>
+                </tr>
+            </thead>
+
+
+            <tbody></tbody>
+
+
+            <tfoot style="display: none;">
+                <tr>
+                    <td>Complaint Tracking No</td>
+                    <td>Complaint Code</td>
+                    <td>Plant</td>
+                    <td>Customer Name</td>
+                    <td>Sub Stockiest</td>
+                    <td>Party Code</td>
+                    <td>Complaint Received Date</td>
+                    <td>City</td>
+                    <td>State</td>
+                    <td>Product Division</td>
+                    <td>Invoice Details</td>
+                    <td>InvoiceDate</td>
+                    <td>Supplied Qty.(Nos)</td>
+                    <td>Complaint Qty.(Nos)</td>
+                    <td>% Defect</td>
+                    <td>Complaint Type</td>
+                </tr>
+            </tfoot>
+        </table>
+
+
+    </div>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+    var table = null;
+
+    $(document).ready(function () {
+
+        $('#PlantFilter').SumoSelect({ placeholder: 'Plant Name' });
+
+        var FD = $("#FD").val();
+        var TD = $("#TD").val();
+        var PC = $("#PC").val();
+
+        var Data = JSON.stringify({
+            Report: "LastFiveReports",
+            ReportName: "RegisteredComplaintsPlantSheeting",
+            FD: DateToForeign(FD),
+            TD: DateToForeign(TD),
+            PC: PC
+        });
+
+        $.ajax({
+            method: 'POST',
+            url: '../../ComplaintReports/GetReportData',
+            data: { Data: Data },
+        }).then(function successCallback(Resp) {
+            if (Resp == "") {
+                alert("No Data Available");
+                $('#RegiteredComplaintsPlantSheeting').dataTable({});
+                window.close();
+            }
+            else {
+                Resp = JSON.parse(Resp);
+
+                var TRCode = "";
+
+
+                for (var i = 0; i < Resp.length; i++) {
+
+                    var PLANT_NAME = Resp[i]["PLANT_NAME"];
+                    var PLANT_NAMEexists = $('#PlantFilter option').filter(function () {
+                        return $(this).text() == PLANT_NAME;
+                    }).length;
+                    if ((Resp[i]["PLANT_NAME"] != "" || Resp[i]["PLANT_NAME"] != "") && (PLANT_NAMEexists == 0)) {
+                        $('#PlantFilter')[0].sumo.add(Resp[i]["PLANT_NAME"], Resp[i]["PLANT_NAME"]);
+                    }
+
+
+                    TRCode = TRCode + "<tr>";
+
+                    TRCode = TRCode + "<td>" + Resp[i]["ID"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["COMPLAINT_CODE"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["PLANT_NAME"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["CUSTOMER_NAME"] + "</td>";
+
+                    TRCode = TRCode + "<td>" + Resp[i]["END_CUSTOMER_DETAILS"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["CUSTOMER_CODE"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["COMPLAINT_RECEIVED_DATE"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["CITY_CODE"] + "</td>";
+
+                    TRCode = TRCode + "<td>" + Resp[i]["STATE"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["DIVISION_NAME"] + "</td>";
+
+                    var LineData = Resp[i]["LineData"];
+
+                    if (LineData.length == 0) {
+                        TRCode = TRCode + "<td></td>";
+                        TRCode = TRCode + "<td></td>";
+                        TRCode = TRCode + "<td></td>";
+                        TRCode = TRCode + "<td></td>";
+                        TRCode = TRCode + "<td></td>";
+                    }
+                    else {
+
+                        var INVOICE_NO = "";
+                        var INVOICE_DATE = "";
+                        var QTY_SUPPLIED = "";
+                        var BreakageQtyNos = "";
+                        var BreakPercent = "";
+
+                        for (var j = 0; j < LineData.length; j++) {
+
+                            if (LineData[j]["INVOICE_NO"] == "") {
+                                INVOICE_NO = INVOICE_NO + "-,<br>";
+                            }
+                            else {
+                                INVOICE_NO = INVOICE_NO + LineData[j]["INVOICE_NO"] + ",<br>";
+                            }
+
+                            if (LineData[j]["INVOICE_DATE"] == "") {
+                                INVOICE_DATE = INVOICE_DATE + "-,<br>";
+                            }
+                            else {
+                                INVOICE_DATE = INVOICE_DATE + LineData[j]["INVOICE_DATE"] + ",<br>";
+                            }
+
+                            if (LineData[j]["QTY_SUPPLIED"] == "") {
+                                QTY_SUPPLIED = QTY_SUPPLIED + "-,<br>";
+                            }
+                            else {
+                                QTY_SUPPLIED = QTY_SUPPLIED + LineData[j]["QTY_SUPPLIED"] + ",<br>";
+                            }
+
+                            if (LineData[j]["BreakageQtyNos"] == "") {
+                                BreakageQtyNos = BreakageQtyNos + "-,<br>";
+                            }
+                            else {
+                                BreakageQtyNos = BreakageQtyNos + LineData[j]["BreakageQtyNos"] + ",<br>";
+                            }
+
+
+
+                            if (LineData[j]["QTY_SUPPLIED"] == "" || LineData[j]["BreakageQtyNos"] == "" || LineData[j]["QTY_SUPPLIED"] == 0 || LineData[j]["BreakageQtyNos"] == 0) {
+                                BreakPercent = "-,<br>";
+                            }
+                            else {
+                                var Percent = (parseFloat(LineData[j]["BreakageQtyNos"]) / parseFloat(LineData[j]["QTY_SUPPLIED"])) * 100;
+                                Percent = Math.round(Percent * 100) / 100;
+                                BreakPercent = BreakPercent + Percent + ",<br>";
+                            }
+
+                        }
+
+
+                        TRCode = TRCode + "<td>" + (INVOICE_NO.substring(0, INVOICE_NO.length - 5)) + "</td>";
+                        TRCode = TRCode + "<td>" + (INVOICE_DATE.substring(0, INVOICE_DATE.length - 5)) + "</td>";
+                        TRCode = TRCode + "<td>" + (QTY_SUPPLIED.substring(0, QTY_SUPPLIED.length - 5)) + "</td>";
+                        TRCode = TRCode + "<td>" + (BreakageQtyNos.substring(0, BreakageQtyNos.length - 5)) + "</td>";
+                        TRCode = TRCode + "<td>" + (BreakPercent.substring(0, BreakPercent.length - 5)) + "</td>";
+
+                    }
+
+                    TRCode = TRCode + "<td>" + Resp[i]["COMPLAINT_CATEGORY_NAME"] + "</td>";
+
+                    TRCode = TRCode + "</tr>";
+                }
+
+                $("#RegiteredComplaintsPlantSheeting tbody").empty();
+
+                $("#RegiteredComplaintsPlantSheeting tbody").append(TRCode);
+
+                table = $('#RegiteredComplaintsPlantSheeting').DataTable({
+                    paging: true,
+                    scrollX: "100%",
+                    scrollY: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'A3'
+                        },
+                        'copy', 'csv', 'excel', 'print'
+                    ]
+                });
+
+            }
+        },
+        function errorCallback(response) {
+            alert("Error : " + response);
+        });
+
+    });
+
+
+    $('#PlantFilter').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#RegiteredComplaintsPlantSheeting").dataTable().fnFilter(choosedFname, 2, true, false);
+        }
+        else {
+            $("#RegiteredComplaintsPlantSheeting").dataTable().fnFilter("", 2, true, false);
+        }
+    });
+
+
+    function DateToForeign(IndDate) {
+        IndDate = IndDate.split('/');
+        return (IndDate[2] + "-" + IndDate[1] + "-" + IndDate[0]);
+    }
+
+
+</script>

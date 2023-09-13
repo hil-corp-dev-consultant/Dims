@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Master>
+  <TableName>TBL_STATE</TableName>
+  <Field>
+    <FN>STATE_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>STATE_DESC</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>AREA_NAME</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COUNTRY_DESC</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  
+  <!--<Field>
+    <FN>Country_Id</FN>
+    <FT>int</FT>
+    <IN>False</IN>
+    <MTN>TBL_COUNTRY</MTN>
+    <MTLC>Country_Name</MTLC>
+    <MTLCV>Country_Id</MTLCV>
+  </Field>-->
+</Master>

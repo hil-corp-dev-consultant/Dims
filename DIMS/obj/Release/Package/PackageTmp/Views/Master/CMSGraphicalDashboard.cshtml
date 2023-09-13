@@ -1,0 +1,157 @@
+﻿@*  Module              : DIMS Client Application.
+    DocumentName        : CMSGraphicalDashboard.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for generate Dashboard for CMS.
+    Developer Name      : Rajanna Bhanothu.
+    Change Log          : NA.*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserId = UP.UserCode;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeID = UP.UserTypeCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Dashboard</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">CMS Graphical Dashboard</li>
+    </ol>
+</section>
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <input type="text" id="SessionUserTypeID" style="display: none" value="@SessionUserTypeID" />
+    <input type="text" id="SessionUserId" style="display: none" value="@SessionUserId" />
+    <input type="text" id="BusinessUnit" style="display: none" />
+    <div class="row" id="CMS_Graphical_Dashboard">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <table id="MasterTable" class="table" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="background-color:#d2401a;color:white;">
+                                <td>
+                                    Product
+                                </td>
+                                <td>
+                                    No of Complaint
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Sheeting
+                                </td>
+                                <td>
+                                    Aerocon
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("#tbl_RoleAccessConfig").dataTable({
+        "bDestroy": true,
+        scrollY: "200px",
+        scrollX: true,
+        scrollCollapse: true,
+        paging: true,
+        fixedColumns: {
+            leftColumns: 0
+        },
+    });
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '../../Users/GetRightToAccess',
+            type: 'GET',
+            data: { AccessData: JSON.stringify({ UserRole: $("#SessionUserTypeID").val(), FormCode: 'CSR' }) },
+            success: function (AccessData) {
+                if (AccessData == "") {
+                    $("#CSRDiv").css('display', 'none');
+                }
+                else {
+                    AccessData = JSON.parse(AccessData);
+                    if (AccessData[0]["IS_VIEW"] == true) {
+                        $("#CSRDiv").css('display', 'block');
+                    }
+                    else {
+                        $("#CSRDiv").css('display', 'none');
+                    }
+                }
+            }
+        });
+
+        $("#BusinessUnit").val("");
+        var UserId = $("#SessionUserId").val();
+        var UserType = $("#SessionUserTypeID").val();
+
+        if (UserType == "QH") {
+            $("#BusinessUnit").val("");
+        }
+        else if (UserType == "CSM") {
+            if (UserId == "50001048" || UserId == "50001049") {
+                $("#BusinessUnit").val("SBU1");
+            }
+            else if (UserId == "50000822") {
+                $("#BusinessUnit").val("SBU2");
+            }
+            else if (UserId == "50001234") {
+                $("#BusinessUnit").val("SBU3");
+            }
+        } else if (UserType == "CSM_BU3" || UserType == "QAM_SBU3" || UserType == "Plant_MHD") {
+            $("#BusinessUnit").val("SBU3");
+        }
+        else if (UserType == "CSM_BU2" || UserType == "FSO_BU2") {
+            $("#BusinessUnit").val("SBU2");
+        }
+        else if (UserType == "SH_BU3" || UserType == "RSH_BU3" || UserType == "NSH_BU3") {
+            $("#BusinessUnit").val("SBU3");
+        }
+        else if (UserId == "50002304" || UserId == "KAM" || UserId == "kam") {
+            $("#BusinessUnit").val("SBU2");
+        }
+        else if (UserId == "2019" || UserId == "2021") {
+            $("#BusinessUnit").val("SBU3");
+        }
+        else {
+            $("#BusinessUnit").val("SBU1");
+        }
+
+        //svprasadk 28-08-2020 get plant list start
+        var BusinessUnit = $("#BusinessUnit").val();
+        if (BusinessUnit == "SBU3") {
+            $("#plantList").show();
+        } else {
+            $("#plantList").hide();
+            $("#plantList").val('');
+        }
+        //svprasadk 28-08-2020 get plant list end
+    });
+</script>

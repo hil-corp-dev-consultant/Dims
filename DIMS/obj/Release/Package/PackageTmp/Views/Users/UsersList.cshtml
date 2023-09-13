@@ -1,0 +1,309 @@
+﻿@*
+
+Module              : DIMS Solution.
+DocumentName        : UsersList.cs
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Showing the Users List.
+Developer Name      : Swamy Ayyappa Peddinti.
+Change Log          : NA.
+
+*@
+
+
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+}
+
+<style>
+    table tr {
+        cursor: pointer;
+    }
+
+    table thead tr th {
+        vertical-align: middle;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 style="font-family: Calibri;font-size:18px;font-weight:500;">In Active Users List</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>User Management</li>
+        <li class="active">In Active Users List</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href onclick="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+</section>
+<div class="CustomHeight_Section" style="overflow:auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+               <div class="box-header">
+                        <button onclick="ActivateInactiveUsers()" class="btn btn-primary pull-right" id="ActivateUsers" type="button" style="background-color:#d2401a;border:1px solid #d2401a;" >Activate Users</button>
+                        <input type="text" id="CurrentUserName" value="@SessionUserName" style="display:none;" />
+                    </div>
+                <div class="box-body" style="overflow-x: scroll; width: 98%" id="UsersListDiv">                    
+                    <table class="table" id="UsersList">
+                        <thead>
+                            <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+                                <th class="nosort">
+                                    <input type="checkbox" id="UsersCheckAll" onchange="UsersCheckAllChange()" /></th>
+                                <th>User Code</th>
+                                <th>User Name</th>
+                                <th>User Role</th>
+                                <th>User Type</th>
+                                <th>Site Detail Code</th>
+                                <th>Company Detail Code</th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                                <th>Last Login</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>                       
+                        <tfoot style="display: none;">
+                            <tr>
+                                <th>
+                                    <input type="checkbox" onchange="UsersCheckAllChange()" /></th>
+                                <th>User Code</th>
+                                <th>User Name</th>
+                                <th>User Role</th>
+                                <th>User Type</th>
+                                <th>Site Detail Code</th>
+                                <th>Company Detail Code</th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                                <th>Last Login</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        FillUsersTable();
+    });
+
+
+    //Get Inactive Users
+    function FillUsersTable() {
+
+
+        try {
+            $.ajax({
+                method: 'POST',
+                url: '../../Users/GetUsersList',
+                data: { Req: "INACTIVE" },
+            }).then(function successCallback(Resp) {
+                if (Resp == "FALSE") {
+                }
+                else {
+                    $("#UsersList tbody").remove();
+                    Resp = JSON.parse(Resp);
+                    var TableBody = "";
+
+                    for (var i = 0; i < Resp.length; i++) {
+
+                        TableBody = TableBody + "<tr id='Row_" + Resp[i]["USER_CODE"] + "'>";
+
+                        TableBody = TableBody + "<td><input type='checkbox' id='USR_" + Resp[i]["USER_CODE"] + "' onchange='UsersRowClick()' /></td>";
+
+                        TableBody = TableBody + "<td>" + Resp[i]["USER_CODE"] + "</td>";
+                        TableBody = TableBody + "<td>" + Resp[i]["USER_NAME"] + "</td>";
+
+                        TableBody = TableBody + "<td>" + Resp[i]["USER_ROLE_NAME"] + "</td>";
+                        TableBody = TableBody + "<td>" + Resp[i]["USER_TYPE"] + "</td>";
+                        TableBody = TableBody + "<td>" + Resp[i]["SITE_DETAIL_CODE"] + "</td>";
+
+                        TableBody = TableBody + "<td>" + Resp[i]["COMPANY_DETAIL_CODE"] + "</td>";
+                        TableBody = TableBody + "<td>" + Resp[i]["CREATED_BY"] + "</td>";
+                        TableBody = TableBody + "<td>" + ConvertToViewDate(Resp[i]["CREATED_DATE"]) + "</td>";
+                        TableBody = TableBody + "<td>" + ConvertToViewDate(Resp[i]["LAST_LOGIN"]) + "</td>";
+
+                        TableBody = TableBody + "</tr>";
+                    }
+
+                    $("#UsersList").append("<tbody>" + TableBody + "</tbody>");
+
+                    $("#UsersList").dataTable();
+                }
+            }, function errorCallback(response) {
+                alert("Error : " + response);
+            });
+        }
+        catch (e) {
+            alert("Error : FillUsersTable : " + e);
+        }
+
+
+    }
+
+
+    //Check All function in the Users table
+    function UsersCheckAllChange() {
+
+        try {
+            var Iden = "";
+
+            $("#UsersList tbody tr").each(function () {
+                Iden = ($(this).attr("id"));
+                Iden = Iden.replace("Row_", "USR_");
+                $("#" + Iden + "").prop('checked', $("#UsersCheckAll").is(":checked"));
+            });
+        }
+        catch (e) {
+            alert("Error UsersCheckAllChange: " + e);
+        }
+    }
+
+
+    //Users table row checkbox checked
+    function UsersRowClick() {
+        try {
+            var AllChecked = true;
+
+            $("#UsersList tbody tr").each(function () {
+                Iden = ($(this).attr("id")).replace("Row_", "USR_");
+                if ($("#" + Iden + "").is(":checked")) {
+                }
+                else {
+                    AllChecked = false;
+                }
+            });
+
+            $("#UsersCheckAll").prop('checked', AllChecked);
+
+        }
+        catch (e) {
+            alert("Error UsersRowClick: " + e);
+        }
+    }
+
+
+    //Active In Active Users
+    function ActivateInactiveUsers() {
+        try {
+            var Iden = "";
+            var UsersArray = new Array();
+
+            $("#UsersList tbody tr").each(function () {
+                Iden = ($(this).attr("id")).replace("Row_", "USR_");
+                if ($("#" + Iden + "").is(":checked")) {
+                    UsersArray.push(Iden.replace("USR_", ""));
+                }
+            });
+
+
+            if (UsersArray == "[]" || UsersArray.length == 0) {
+                alert("Select Atleast One User");
+            }
+            else {
+
+                UsersArray = JSON.stringify({
+                    CurrentUserName: $("#CurrentUserName").val(),
+                    UsersArray: UsersArray
+                });
+
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ActivateUsers", "Users")',
+                    dataType: "json",
+                    data: { UsersArray: UsersArray },
+                    async: true,
+                    cache: false,
+                    success: function (Response) {
+                        if (Response == "TRUE") {
+                            alert("Successfully Done");
+                            window.location.reload();
+                            //FillUsersTable();
+                        }
+                        else {
+                            alert("Error Occured try again");
+                        }
+                    },
+                    error: function (data) {
+                        alert("Error occured");
+                    }
+                });
+            }
+
+        }
+        catch (e) {
+            alert("Error ActivateInactiveUsers: " + e);
+        }
+    }
+    function DownloadFile(typeoffile)
+    {
+        if (!$('#UsersList').DataTable().data().count()) {
+            alert("No Data Available");
+            return;
+        }
+
+        
+        var WhereCondition = "";
+        var Data = JSON.stringify({
+            ReportName: "InactiveList",
+            WhereClause: WhereCondition
+
+        });
+
+
+
+        $.ajax({
+
+            url: '../../Home/SetInputData',
+            type: "POST",
+            datatype: "JSON",
+            data: { InputData: Data, ReportType: typeoffile, FileName: "INACTIVE" },
+            async: false,
+            cache: false,
+            beforeSend: function () {
+                ShowLoader();
+            },
+            success: function (response) {
+                window.location.href = '../../Home/GenerateReport_Inactive_UserList';
+            },
+            complete: function () {
+                HideLoader();
+            },
+            error: function () {
+                alert("Technical error has been occured.Please try again later");
+
+            }
+        });
+    }
+
+</script>

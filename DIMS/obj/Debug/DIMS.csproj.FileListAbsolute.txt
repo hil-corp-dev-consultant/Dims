@@ -1,0 +1,2248 @@
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\Close.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\colorbox.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\temp.html
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-csp.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-mocks.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-scenario.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\errors.json
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js.map
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\popup\Report.pdf
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\monthlyreport.pdf
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.debug.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\modernizr-2.5.3.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.intellisense.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate-vsdoc.js
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DIMS.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DIMS.pdb
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\ClosedXML.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\EntityFramework.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\iAppUtils.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\WebGrease.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\EntityFramework.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.Cache
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.pdb
+E:\ASD\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csprojResolveAssemblyReference.cache
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\Close.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\colorbox.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\temp.html
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-csp.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-mocks.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-scenario.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\errors.json
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js.map
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\popup\Report.pdf
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\monthlyreport.pdf
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.debug.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\modernizr-2.5.3.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.intellisense.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate-vsdoc.js
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DIMS.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DIMS.pdb
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\ClosedXML.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\EntityFramework.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\iAppUtils.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\WebGrease.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\EntityFramework.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.Cache
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.pdb
+E:\ASD\DIMS\DIMS CMS SBU3\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csprojResolveAssemblyReference.cache
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\Close.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\colorbox.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\temp.html
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-csp.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-mocks.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-scenario.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\errors.json
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js.map
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\popup\Report.pdf
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.debug.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\modernizr-2.5.3.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.intellisense.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate-vsdoc.js
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DIMS.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DIMS.pdb
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\ClosedXML.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\EntityFramework.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\iAppUtils.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\itextsharp.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\WebGrease.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\itextsharp.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\EntityFramework.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.Cache
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.pdb
+E:\ASD\DIMS\DIMS Application\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csprojResolveAssemblyReference.cache
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\Close.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\colorbox.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\temp.html
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-csp.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-mocks.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-scenario.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\errors.json
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js.map
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\popup\Report.pdf
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.debug.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\modernizr-2.5.3.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.intellisense.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate-vsdoc.js
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DIMS.dll.config
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DIMS.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DIMS.pdb
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\ClosedXML.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\EntityFramework.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\iAppUtils.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\itextsharp.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\WebGrease.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\itextsharp.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\EntityFramework.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csprojAssemblyReference.cache
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.cache
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CoreCompileInputs.cache
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CopyComplete
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+D:\dims2-pc@ad\projects\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.pdb
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\Close.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\colorbox.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\temp.html
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-csp.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-mocks.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-scenario.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\errors.json
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\angular.min.js.map
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\popup\Report.pdf
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.debug.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\modernizr-2.5.3.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.intellisense.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Scripts\jquery.validate-vsdoc.js
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DIMS.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DIMS.pdb
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\ClosedXML.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\EntityFramework.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\iAppUtils.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\itextsharp.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\WebGrease.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\itextsharp.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\EntityFramework.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.Cache
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+D:\Srinath\DIMS\DIMSSolution\DIMS\obj\Debug\DIMS.pdb
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\Close.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\colorbox.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\temp.html
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-animate.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-aria.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-cookies.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-csp.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-loader.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-message-format.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-messages.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-mocks.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-resource.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-route.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-scenario.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-touch.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\errors.json
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\angular.min.js.map
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\popup\Report.pdf
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery.validate.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery.validate.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.debug.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\modernizr-2.5.3.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.intellisense.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Scripts\jquery.validate-vsdoc.js
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DIMS.dll.config
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DIMS.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DIMS.pdb
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\ClosedXML.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\EntityFramework.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\iAppUtils.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\itextsharp.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Http.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\WebGrease.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\itextsharp.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Http.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\EntityFramework.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.csprojAssemblyReference.cache
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.cache
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CoreCompileInputs.cache
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CopyComplete
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+D:\Vikas\New folder (2)\DIMSSolution\DIMS\obj\Debug\DIMS.pdb
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\Close.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\colorbox.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\temp.html
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-animate.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-aria.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-cookies.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-csp.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-loader.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-message-format.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-messages.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-mocks.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-resource.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-route.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-scenario.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-touch.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\errors.json
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-touch.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-sanitize.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-route.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-resource.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-messages.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-message-format.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-loader.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-cookies.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-aria.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular-animate.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\angular.min.js.map
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\popup\Report.pdf
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery-ui-1.8.20.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery.unobtrusive-ajax.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery.validate.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery.validate.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery.validate.unobtrusive.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.debug.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\knockout-2.1.0.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\modernizr-2.5.3.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery-1.7.1.intellisense.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Scripts\jquery.validate-vsdoc.js
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DIMS.dll.config
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DIMS.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DIMS.pdb
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\ClosedXML.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\EntityFramework.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\iAppUtils.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\itextsharp.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Http.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\WebGrease.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\itextsharp.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Http.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\EntityFramework.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.csprojAssemblyReference.cache
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.cache
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CoreCompileInputs.cache
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CopyComplete
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+D:\Vikas\DIMS-Updated-19jan22\DIMSSolution\DIMS\obj\Debug\DIMS.pdb
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.min.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\css\fileinput.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\css\iportman.font.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\css\jquery.sumoselect.min.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\css\select-multiple.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\dataTables.responsive.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables.min.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\css\jquery.dataTables_themeroller.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.bootstrap.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\dataTables.fixedHeader.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_disabled.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\back_enabled_hover.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\favicon.ico
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_disabled.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\forward_enabled_hover.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_asc_disabled.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_both.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\sort_desc_disabled.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\dataTables.responsive.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.dataTables.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\js\jquery.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DatePickers\bootstrap-datetimepicker.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DatePickers\moment.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\font-awesome\css\font-awesome.min.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.svg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.svg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\js\bootstrap.typeahead.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\js\fileinput.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\js\jquery.select-multiple.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\js\jquery.sumoselect.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\js\npm.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\css\bootstrap.css.map
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\DataTables-1.10.5\images\Sorting icons.psd
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.eot
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.ttf
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\fontawesome-webfont.woff
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\font-awesome\fonts\FontAwesome.otf
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.eot
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.ttf
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\bootstrap\fonts\glyphicons-halflings-regular.woff2
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Images\DigitalSigns\Avinash.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Images\PageLoader.gif
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Add.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Attachments.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Backward.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Excel.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\FastBackward.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\FastForward.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Forward.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Pdf.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Print.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Refresh.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Save.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\Search.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\NavBarImages\WorkFlowProcess.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\Close.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\colorbox.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\jquery.colorbox.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\jquery.magnific-popup.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\magnific-popup.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\temp.html
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\ProfilePhotos\user-icon-profile.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\rdlcpdf\libeay32.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\rdlcpdf\libgcc_s_dw2-1.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\rdlcpdf\ssleay32.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\rdlcpdf\wkhtmltopdf.exe
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\angular-statehelper.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\angular-ui.router.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\bootstrap-datepicker.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.dataTables.min.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.flash.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.html5.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\buttons.print.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\dataTables.buttons.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery-1.12.3.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jquery.dataTables.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\jszip.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\pdfmake.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DataTableScripts\vfs_fonts.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DIMS\Crypto.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\DIMS\CustomerNotification.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\monthlyreport.pdf
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\popup\Report.pdf
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DIMSFiles\Approvals\Test.csv
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\BudgetTargetUpload\Daily Target upload  format.xlsx
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\BudgetTargetUpload\Discount upload for Revenue calculation.xlsx
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\BudgetTargetUpload\Freight Upload.xlsx
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\rdlcpdf\Report.pdf
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.css
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\ImagePicker\image-picker.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\images\sort_asc.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\images\sort_both.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\images\sort_desc.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\ModelPopup.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\MultiSelect\js\multiselect.min.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\Reports\DiscountStructure.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\Reports\NetBilling.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectDiscountWithCommisssion.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\Reports\ProjectWithDirectBilling.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\Reports\Reports.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Scripts\SFDCScripts\ZHJourneyPlan.js
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\UserLoginImages\Camera.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\UserLoginImages\Diamond.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\UserLoginImages\hil-logo.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\UserLoginImages\HIL_MIN.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\UserLoginImages\images.jpg
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\UserLoginImages\Logistics.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\UserLoginImages\Solutions.png
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\About.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\Contact.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\Index.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\Test.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\Test1.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\Before_Login.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\HomePage.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\InvoiceListMockUp.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\AdminChangePasword.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\UserLoginImageSelection.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\SampleScreens.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Unnati\UnnatiRewardsCatalogPoints.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\BudgetTargetUpload.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\DailySalesTracker.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructure.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\DiscountStructureNew.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\KSMReport.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\KSMReportDetail.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockist.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\NetBillingForStockistNew.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBilling.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountDirectBillingList.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommission.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\ProjectDiscountWithCommissionList.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\AddNotification.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Home\Notification.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Users\StateWiseUsersList.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\PriceCardRateUpload.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\Reports\DiscountSummary.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\SFDC\ZHJourneyPlanDetails.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Views\SFDC\FSODeviationSummeryReport.cshtml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Controllers\ReportsController.cs
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DIMS.dll.config
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DIMS.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DIMS.pdb
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Antlr3.Runtime.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\ClosedXML.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DocumentFormat.OpenXml.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\EntityFramework.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Excel.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\iAppUtils.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\ICSharpCode.SharpZipLib.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\itextsharp.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\itextsharp.xmlworker.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Contracts.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Exchange.WebServices.Auth.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Exchange.WebServices.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Newtonsoft.Json.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Helpers.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Http.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Mvc.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Optimization.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Razor.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.WebPages.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\WebGrease.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\WebMatrix.Data.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\WebMatrix.WebData.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.AspNet.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.Core.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OAuth.Consumer.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\EntityFramework.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Excel.pdb
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\itextsharp.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Exchange.WebServices.pdb
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Exchange.WebServices.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Exchange.WebServices.Auth.pdb
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Exchange.WebServices.Auth.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Web.Infrastructure.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Microsoft.Web.WebPages.OAuth.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\Newtonsoft.Json.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Net.Http.Formatting.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Helpers.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Http.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Http.WebHost.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.Razor.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.WebPages.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.WebPages.Deployment.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\System.Web.WebPages.Razor.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\WebMatrix.Data.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\bin\WebMatrix.WebData.xml
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.AssemblyReference.cache
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AddScheme.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.AdminChangePassword.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Compensation.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintRegistration.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.ComplaintStatusReport.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CorrectiveMeasures.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetFC.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CreateTargetList.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.CustomerMaster.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DailyOrderTracking.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.DocumentSeries.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.EditScheme.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Investigation.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.Invoice_Details.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanDetails.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.JourneyPlanList.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.MarketMap.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.NoticeConfiguration.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PartnerIssues.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.PlantMaster.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.Content.Resource_Files.SchemesList.resources
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.GenerateResource.cache
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CoreCompileInputs.cache
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.csproj.CopyComplete
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.dll
+D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\obj\Debug\DIMS.pdb

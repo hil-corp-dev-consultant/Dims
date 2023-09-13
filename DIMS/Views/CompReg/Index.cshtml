@@ -1,0 +1,878 @@
+﻿@{
+    Layout = null;
+}
+
+@*<script src="~/Scripts/bootstrap-datepicker.min.js"></script>*@
+
+<style type="text/css">
+    textarea {
+        resize: none;
+    }
+
+    .Expand {
+        background-color: #3C8DBC;
+        color: white;
+    }
+
+    .CloseOpen {
+        cursor: pointer;
+        background-color: #3C8DBC;
+    }
+
+    .smallbutton {
+        border: 0px solid white;
+        border-radius: 4px;
+        color: white;
+    }
+
+    .innertable thead tr th {
+        padding: 2px;
+    }
+
+    .tabdiv {
+        padding-top: 10px;
+    }
+
+    .Mandatory {
+        color: red;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Complaint Registration</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Registration</li>
+        <li class="active">Complaint Registration</li>
+    </ol>
+
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+
+    <!--- Dummy --->
+
+    <input type="button" value="Add" onclick="SaveFunction()" style="background-color: #3295D6" />
+
+    <!--- Dummy --->
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    @*                    <h3 class="box-title">Complaint Registration</h3>*@
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Complaint Received Date<span class="Mandatory">*</span></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="complaintReceivedDate_CRT" data-ng-model="complaintReceivedDate_CRT" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Complaint Registration Date</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="ComplaintRegistrationDate_CRT" data-ng-model="ComplaintRegistrationDate_CRT" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Registrant Type<span class="Mandatory">*</span></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="Registrant_Type" data-ng-model="Registrant_Type" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Sales Representative Employee Code<span class="Mandatory">*</span></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="Sales_Representative_Employee_Code" data-ng-model="Sales_Representative_Employee_Code" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Sales Representative Employee Name<span class="Mandatory">*</span></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="Sales_Representative_Employee_Name" data-ng-model="Sales_Representative_Employee_Name" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Complaint Desc</label>
+                                            <div class="col-sm-7">
+                                                <textarea class="form-control" id="Complaint_Desc" data-ng-model="Complaint_Desc"></textarea>
+                                                @*                                                <input type="text" class="form-control" id="Complaint_Desc" data-ng-model="Complaint_Desc" />*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Remarks</label>
+                                            <div class="col-sm-7">
+                                                <textarea class="form-control" id="Remarks" data-ng-model="Remarks"></textarea>
+                                                @*                                                <input type="text" class="form-control" id="Remarks" data-ng-model="Remarks" />*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Complaint Tracking No</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" data-ng-model="Complaint_Tracking_No" id="Complaint_Tracking_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                CR Series Code<span class="Mandatory">*</span></label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" data-ng-model="CR_Series_Code" id="CR_Series_Code" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Registration Status</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" data-ng-model="Registration_Status" id="Registration_Status" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Complaint Code</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" data-ng-model="Complaint_Code" id="Complaint_Code" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                Approved Date</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" data-ng-model="Approved_Date" id="Approved_Date" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 tabdiv">
+                                <div class="col-sm-12 CloseOpen" onclick="FormToggle('CustDetails')">
+                                    <img src="~/Images/en_next.png" id="CustDetails_Img" />
+                                    <a class="Expand">Customer Details</a>
+                                </div>
+
+                                <div class="row" style="padding-top: 30px; display: none;" id="CustDetails_Form">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-4">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Customer Code<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Customer_Code" data-ng-model="Customer_Code" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Customer Name<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Customer_Name" data-ng-model="Customer_Name" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Customer Type</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Customer_Type" data-ng-model="Customer_Type" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Location</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Customer_Location" data-ng-model="Customer_Location" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        City</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Contact_City" data-ng-model="Contact_City" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        State<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Contact_State" data-ng-model="Contact_State" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Area<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Contact_Area" data-ng-model="Contact_Area" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Contact Person</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Contact_Person" data-ng-model="Contact_Person" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Contact Number</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Contact_Number" data-ng-model="Contact_Number" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Fax</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Customer_Fax" data-ng-model="Customer_Fax" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Email</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Customer_Email" data-ng-model="Customer_Email" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Complaint Mode</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Complaint_Mode" data-ng-model="Complaint_Mode" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Product Type<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Product_Type" data-ng-model="Product_Type" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Product Category<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Product_Category" data-ng-model="Product_Category" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Sub-Stockiest/Direct Customer</label>
+                                                    <div class="col-sm-7">
+                                                        <textarea class="form-control" id="SubStockiest_Direct_Customer" data-ng-model="SubStockiest_Direct_Customer"></textarea>
+                                                        @*                                                        <input type="text" class="form-control" id="Sub-Stockiest_Direct_Customer" data-ng-model="Sub-Stockiest_Direct_Customer" />*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Is Project Party ?<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="checkbox" id="Is_Project_Party" data-ng-model="Is_Project_Party" />
+                                                        @*                                                        <input type="text" class="form-control" id="Is_Project_Party" data-ng-model="Is_Project_Party" />*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Site Address</label>
+                                                    <div class="col-sm-7">
+                                                        <textarea class="form-control" id="Site_Address" data-ng-model="Site_Address"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 tabdiv">
+                                <div class="col-sm-12 CloseOpen" onclick="FormToggle('Material_Supply_Detail')">
+                                    <img src="~/Images/en_next.png" id="Material_Supply_Detail_Img" />
+                                    <a class="Expand">Material Supply Detail</a>
+                                </div>
+
+                                <div class="row" style="padding-top: 30px; display: none;" id="Material_Supply_Detail_Form">
+                                    <div class="col-sm-12">
+                                        <table class="table innertable" id="Material_Supply_Detail_Table">
+                                            <thead>
+                                                <tr style="background-color: #B2CCED">
+                                                    <th>S.No</th>
+                                                    <th>Material Belongs To</th>
+                                                    <th>Product Supplied From</th>
+                                                    <th>Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+
+                                        <input type="button" value="Add" id="Mat_Sup_Det_Add" style="background-color: #3295D6" class="smallbutton" />
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 tabdiv">
+                                <div class="col-sm-12 CloseOpen" onclick="FormToggle('Priortize_Classify')">
+                                    <img src="~/Images/en_next.png" id="Priortize_Classify_Img" />
+                                    <a class="Expand">Priortize & Classify</a>
+                                </div>
+
+                                <div class="row" style="padding-top: 30px; display: none;" id="Priortize_Classify_Form">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-6">
+
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Complaint Type<span class="Mandatory">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Complaint_Type" data-ng-model="Complaint_Type" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Complaint Category</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Complaint_Category" data-ng-model="Complaint_Category" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6">
+
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Complaint Priority</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Complaint_Priority" data-ng-model="Complaint_Priority" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                        Complaint_Severity</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="Complaint_Severity" data-ng-model="Complaint_Severity" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 tabdiv">
+                                <div class="col-sm-12 CloseOpen" onclick="FormToggle('Receipt_Details_Sheeting')">
+                                    <img src="~/Images/en_next.png" id="Receipt_Details_Sheeting_Img" />
+                                    <a class="Expand">Receipt Details For Sheeting</a>
+                                </div>
+
+                                <div class="row" style="padding-top: 30px; display: none;" id="Receipt_Details_Sheeting_Form">
+                                    <div class="col-sm-12">
+                                        <table class="table innertable" id="Receipt_Details_Sheeting_Table">
+                                            <thead>
+                                                <tr style="background-color: #B2CCED">
+                                                    <th>S No</th>
+                                                    <th>Item Type(Product Name)</th>
+                                                    <th>Size(M)</th>
+
+                                                    <th>Invoice No</th>
+                                                    <th>Invoice Date</th>
+                                                    <th>Batch No</th>
+
+                                                    <th>Received Qty (Nos)</th>
+                                                    <th>Breakage Qty(Nos)</th>
+                                                    <th>Type of Defect</th>
+
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+
+                                        <input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" />
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+
+
+    $(function ()
+    {
+        $("#complaintReceivedDate_CRT").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $("#ComplaintRegistrationDate_CRT").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $("#Approved_Date").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+
+    });
+
+
+    function FormToggle(DivName)
+    {
+        try
+        {
+            if ($("#" + DivName + "_Form").css("display") == "none")
+            {
+                $("#" + DivName + "_Form").css("display", "block");
+                $("#" + DivName + "_Img").attr("src", "../../Images/en_expend.png");
+            }
+            else if ($("#" + DivName + "_Form").css("display") == "block")
+            {
+                $("#" + DivName + "_Form").css("display", "none");
+                $("#" + DivName + "_Img").attr("src", "../../Images/en_next.png");
+            }
+        }
+        catch (e)
+        {
+            alert("Error : " + e);
+        }
+    }
+
+
+    function SaveFunction()
+    {
+        console.clear();
+        try
+        {
+
+            var complaintReceivedDate_CRT = $("#complaintReceivedDate_CRT").val();
+            var ComplaintRegistrationDate_CRT = $("#ComplaintRegistrationDate_CRT").val();
+            var Registrant_Type = $("#Registrant_Type").val();
+            var Sales_Representative_Employee_Code = $("#Sales_Representative_Employee_Code").val();
+            var Sales_Representative_Employee_Name = $("#Sales_Representative_Employee_Name").val();
+            var Complaint_Desc = $("#Complaint_Desc").val();
+            var Remarks = $("#Remarks").val();
+
+            var Complaint_Tracking_No = $("#Complaint_Tracking_No").val();
+            var CR_Series_Code = $("#CR_Series_Code").val();
+            var Registration_Status = $("#Registration_Status").val();
+            var Complaint_Code = $("#Complaint_Code").val();
+            var Approved_Date = $("#Approved_Date").val();
+
+
+
+            var Customer_Code = $("#Customer_Code").val();
+            var Customer_Name = $("#Customer_Name").val();
+            var Customer_Type = $("#Customer_Type").val();
+            var Customer_Location = $("#Customer_Location").val();
+            var Contact_City = $("#Contact_City").val();
+            var Contact_State = $("#Contact_State").val();
+            var Contact_Area = $("#Contact_Area").val();
+
+            var Contact_Person = $("#Contact_Person").val();
+            var Contact_Number = $("#Contact_Number").val();
+            var Customer_Fax = $("#Customer_Fax").val();
+            var Customer_Email = $("#Customer_Email").val();
+            var Complaint_Mode = $("#Complaint_Mode").val();
+            var Product_Type = $("#Product_Type").val();
+            var Product_Category = $("#Product_Category").val();
+
+            var SubStockiest_Direct_Customer = $("#SubStockiest_Direct_Customer").val();
+            var Is_Project_Party = $("#Is_Project_Party").val();
+            var Site_Address = $("#Site_Address").val();
+
+
+
+
+            var Complaint_Type = $("#Complaint_Type").val();
+            var Complaint_Category = $("#Complaint_Category").val();
+            var Complaint_Priority = $("#Complaint_Priority").val();
+            var Complaint_Severity = $("#Complaint_Severity").val();
+
+
+            //Material_Supply_Detail_Table                //Table
+            //Receipt_Details_Sheeting_Table              //Table
+
+
+
+
+            var Flag = 0;
+
+            if (complaintReceivedDate_CRT == "")
+            {
+                Flag = Flag + 1;
+                $("#complaintReceivedDate_CRT").css("border-color", "red");
+            }
+            else
+            {
+                $("#complaintReceivedDate_CRT").css("border-color", "#d2d6de");
+            }
+
+            if (Registrant_Type == "")
+            {
+                Flag = Flag + 1;
+                $("#Registrant_Type").css("border-color", "red");
+            }
+            else
+            {
+                $("#Registrant_Type").css("border-color", "#d2d6de");
+            }
+
+            if (Sales_Representative_Employee_Code == "")
+            {
+                Flag = Flag + 1;
+                $("#Sales_Representative_Employee_Code").css("border-color", "red");
+            }
+            else
+            {
+                $("#Sales_Representative_Employee_Code").css("border-color", "#d2d6de");
+            }
+
+            if (Sales_Representative_Employee_Name == "")
+            {
+                Flag = Flag + 1;
+                $("#Sales_Representative_Employee_Name").css("border-color", "red");
+            }
+            else
+            {
+                $("#Sales_Representative_Employee_Name").css("border-color", "#d2d6de");
+            }
+
+
+            if (CR_Series_Code == "")
+            {
+                Flag = Flag + 1;
+                $("#CR_Series_Code").css("border-color", "red");
+            }
+            else
+            {
+                $("#CR_Series_Code").css("border-color", "#d2d6de");
+            }
+
+            if (Customer_Code == "")
+            {
+                Flag = Flag + 1;
+                $("#Customer_Code").css("border-color", "red");
+            }
+            else
+            {
+                $("#Customer_Code").css("border-color", "#d2d6de");
+            }
+
+
+            if (Customer_Name == "")
+            {
+                Flag = Flag + 1;
+                $("#Customer_Name").css("border-color", "red");
+            }
+            else
+            {
+                $("#Customer_Name").css("border-color", "#d2d6de");
+            }
+
+            if (Contact_State == "")
+            {
+                Flag = Flag + 1;
+                $("#Contact_State").css("border-color", "red");
+            }
+            else
+            {
+                $("#Contact_State").css("border-color", "#d2d6de");
+            }
+
+            if (Contact_Area == "")
+            {
+                Flag = Flag + 1;
+                $("#Contact_Area").css("border-color", "red");
+            }
+            else
+            {
+                $("#Contact_Area").css("border-color", "#d2d6de");
+            }
+
+            if (Product_Type == "")
+            {
+                Flag = Flag + 1;
+                $("#Product_Type").css("border-color", "red");
+            }
+            else
+            {
+                $("#Product_Type").css("border-color", "#d2d6de");
+            }
+
+            if (Product_Category == "")
+            {
+                Flag = Flag + 1;
+                $("#Product_Category").css("border-color", "red");
+            }
+            else
+            {
+                $("#Product_Category").css("border-color", "#d2d6de");
+            }
+
+            if (Is_Project_Party == "")
+            {
+                Flag = Flag + 1;
+                $("#Is_Project_Party").css("border-color", "red");
+            }
+            else
+            {
+                $("#Is_Project_Party").css("border-color", "#d2d6de");
+            }
+
+
+
+            if (Complaint_Type == "")
+            {
+                Flag = Flag + 1;
+                $("#Complaint_Type").css("border-color", "red");
+            }
+            else
+            {
+                $("#Complaint_Type").css("border-color", "#d2d6de");
+            }
+
+
+            Flag = 0;
+
+            if (Flag > 0)
+            {
+                return;
+            }
+            else
+            {
+                var FormData = JSON.stringify({
+                    complaintReceivedDate_CRT: complaintReceivedDate_CRT,
+                    ComplaintRegistrationDate_CRT: ComplaintRegistrationDate_CRT,
+                    Registrant_Type: Registrant_Type,
+                    Sales_Representative_Employee_Code: Sales_Representative_Employee_Code,
+                    Sales_Representative_Employee_Name: Sales_Representative_Employee_Name,
+                    Complaint_Desc: Complaint_Desc,
+                    Remarks: Remarks,
+
+                    Complaint_Tracking_No: Complaint_Tracking_No,
+                    CR_Series_Code: CR_Series_Code,
+                    Registration_Status: Registration_Status,
+                    Complaint_Code: Complaint_Code,
+                    Approved_Date: Approved_Date
+                });
+
+                var CustomerDetails = JSON.stringify({
+                    Customer_Code: Customer_Code,
+                    Customer_Name: Customer_Name,
+                    Customer_Type: Customer_Type,
+                    Customer_Location: Customer_Location,
+                    Contact_City: Contact_City,
+                    Contact_State: Contact_State,
+                    Contact_Area: Contact_Area,
+
+                    Contact_Person: Contact_Person,
+                    Contact_Number: Contact_Number,
+                    Customer_Fax: Customer_Fax,
+                    Customer_Email: Customer_Email,
+                    Complaint_Mode: Complaint_Mode,
+                    Product_Type: Product_Type,
+                    Product_Category: Product_Category,
+
+                    SubStockiest_Direct_Customer: SubStockiest_Direct_Customer,
+                    Is_Project_Party: Is_Project_Party,
+                    Site_Address: Site_Address
+                });
+
+                var Priortize_Classify = JSON.stringify({
+                    Complaint_Type: Complaint_Type,
+                    Complaint_Category: Complaint_Category,
+                    Complaint_Priority: Complaint_Priority,
+                    Complaint_Severity: Complaint_Severity
+                });
+
+                var ComplaintData = JSON.stringify({
+                    FormData: FormData,
+                    CustomerDetails: CustomerDetails,
+                    Priortize_Classify: Priortize_Classify
+                });
+
+
+            }
+
+
+
+
+
+
+            $.ajax({
+                type: 'POST',
+                //url: '@Url.Action("SaveComplaint")',
+                url: '../../CompReg/SaveComplaint',
+                data: { Complaint: ComplaintData },
+                async: false,
+                success: function (response)
+                {
+                    alert(response);
+                },
+                error: function (er)
+                {
+                    alert("Error : " + er);
+                    alert(JSON.stringify(er));
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*
+            complaintReceivedDate_CRT
+            ComplaintRegistrationDate_CRT
+            Registrant_Type
+            Sales_Representative_Employee_Code
+            Sales_Representative_Employee_Name
+            Complaint_Desc
+            Remarks
+
+            Complaint_Tracking_No
+            CR_Series_Code
+            Registration_Status
+            Complaint_Code
+            Approved_Date
+
+
+
+            Customer_Code
+            Customer_Name
+            Customer_Type
+            Customer_Location
+            Contact_City
+            Contact_State
+            Contact_Area
+
+            Contact_Person
+            Contact_Number
+            Customer_Fax
+            Customer_Email
+            Complaint_Mode
+            Product_Type
+            Product_Category
+
+            SubStockiest_Direct_Customer
+            Is_Project_Party
+            Site_Address
+
+
+
+
+            Complaint_Type
+            Complaint_Category
+            Complaint_Priority
+            Complaint_Severity
+
+
+            Material_Supply_Detail_Table                //Table
+            Receipt_Details_Sheeting_Table              //Table
+            */
+        }
+        catch (e)
+        {
+            alert("Error : SaveFunction : " + e);
+        }
+
+    }
+
+
+
+</script>

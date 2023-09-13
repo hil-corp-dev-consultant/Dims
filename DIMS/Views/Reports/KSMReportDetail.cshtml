@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+    
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>KSMReport Detail</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Reports</li>
+        <li class="active">KSMReport Detail</li>
+    </ol>
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-header">
+
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Stockist Name</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control gray" id="StockistName" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Year</label>
+                        <div class="col-sm-2">
+                            <select id="Year" class="form-control gray">
+                                <option value="0">--Select--</option>
+                                <option value="1">2016</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+
+                <table id="KSMReportDownload" class="table tablecss ListTable" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>04/01/2016</td>
+                            <td><i class="fa fa-file-pdf-o"></i></td>
+                        </tr>
+                           <tr>
+                            <td>01/03/2016</td>
+                            <td><i class="fa fa-file-pdf-o"></i></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#MonthYear").val("MAY-2016");
+        bindZones();
+
+    });
+
+
+    $("#ZonalName").change(function () {
+        var stateName = $("#ZonalName").val()
+        $.ajax({
+            url: '../SFDC/BindStates',
+            type: 'post',
+            async: 'false',
+            datatype: 'JSON',
+            data: { stateName: stateName },
+            success: function (data) {
+                var s = JSON.parse(data);
+                $("#StateName").empty();
+                $("#StateName").append($("<option></option>").val("").html("--select--"));
+                for (var j = 0; j < s.length; j++) {
+                    $("#StateName").append($("<option></option>").val(s[j]["STATE_DESC"]).html(s[j]["STATE_DESC"]));
+                }
+            }
+        })
+    })
+
+    function bindZones() {
+        $.ajax({
+            url: '../SFDC/BindZones',
+            async: false,
+            method: 'POST',
+            success: function (data) {
+                var r = JSON.parse(data);
+                $("#ZonalName").empty();
+                $("#ZonalName").append($("<option></option>").val("").html("--select--"));
+                for (var j = 0; j < r.length; j++) {
+                    $("#ZonalName").append($("<option></option>").val(r[j]["ZONE_NAME"]).html(r[j]["ZONE_NAME"]));
+                }
+            }
+        })
+    }
+
+
+
+</script>

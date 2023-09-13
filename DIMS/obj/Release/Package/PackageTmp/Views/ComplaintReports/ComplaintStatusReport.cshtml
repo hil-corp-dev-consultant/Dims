@@ -1,0 +1,464 @@
+﻿@using LabelName = DIMS.Content.Resource_Files.ComplaintStatusReport;
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserId = UP.UserCode;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeID = UP.UserTypeCode;
+    
+}
+
+
+<style>
+    #InvoiceListTab, th, td {
+        border: 1px solid black;
+    }
+
+    .DarkGreen {
+        background-color: #339900;
+    }
+
+    .LightGreen {
+        background-color: #00FF00;
+    }
+
+    .Yellow {
+        background-color: #FFFF00;
+    }
+
+    .DarkRed {
+        background-color: #FF0000;
+    }
+
+    .LightRed {
+        background-color: #FF4545;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Complaint Status Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li>Complaint Reports</li>
+        <li class="active">Complaint Status Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 5px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <select id="StateFilter" ng-model="StateFilter" ng-change="StateChange()" style="float: left;"></select>
+            </div>
+        </div>
+    </nav>
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;">
+
+        <input type="text" id="SessionUserTypeID" style="display: none" value="@SessionUserTypeID" />
+        <input type="text" id="SessionUserId" style="display: none" value="@SessionUserId" />
+        <input type="text" id="BusinessUnit" style="display: none" />
+        <div class="row" id="CSRDiv">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-header">
+                    </div>
+                    <div class="box-body pad">
+                        <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                    @LabelName.FromDate
+                                </label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" id="txtFromDate" type="text" readonly="readonly" data-ng-model="txtFromDate" onchange="Fromdatetodate()">
+                                </div>
+                                <label class="col-sm-3 control-label" for="txtComplaintRegisteredDate">
+                                    @LabelName.ToDate
+                                </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="txtToDate" ng-model="ToDate" readonly="readonly" onchange="Fromdatetodate()" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                    @LabelName.ComplaintTrackingNumber
+                                </label>
+                                <div class="col-sm-3">
+                                    <div class="input-group add-on">
+                                        <input class="form-control" id="txtComplaintTrackingNumber" type="text" ng-model="Complaint_Tracking_Number">
+                                        @*<div class="input-group-btn">
+
+                                            <span class="btn btn-default" ng-click="Getdata('GetComplaintTrackingNumber','ComplaintTrackingNumber','Complaint Register')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>*@
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" type="submit" ng-click="Getdata('ComplaintTrackingNumber','ComplaintTrackingNumber','Complaint Register')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-sm-3 control-label">
+                                    @LabelName.CustomerName
+                                </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtCustomerName" disabled="disabled" ng-model="Customer_Name" />
+                                </div>
+
+                            </div>
+                            <div class="form-group" id="CustDivision">
+                                @*VIKAS G, 14-07-2022*@
+                                <label class="col-sm-2 control-label" for="StockistID" id="lblStockist">
+                                    Customer Code/Name
+                                </label>
+                                <div class="col-sm-3" id="divStockist">
+                                    <input id="CustomerCode" class="form-control" />
+                                </div>
+                                <label class="col-sm-3 control-label">
+                                    Division
+                                </label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="DivisionFilter" ng-model="DivisionFilter" ng-change="DivisionChange()" style="float: left;"></select>
+                                </div>
+                                @*VIKAS G, 14-07-2022*@
+                            </div>
+
+                            @*svprasadk 28-08-2020 get plant list start*@
+                            <div class="form-group" id="plantList">
+                                <label class="col-sm-2 control-label">
+                                    Plant Name
+                                </label>
+                                <div class="col-sm-3">
+                                    <div class="input-group add-on">
+                                        <input class="form-control" id="PLANT_CODE" type="text" data-ng-model="PLANT_CODE" style="display:none">
+                                        <input class="form-control" id="PLANT_NAME" type="text" data-ng-model="PLANT_NAME">
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" ng-click="Getdata('PlantList','PlantList','Plant List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<label class="col-sm-3 control-label">
+                Division
+            </label>
+            <div class="col-sm-3">
+                <select class="form-control" id="DivisionFilter" ng-model="DivisionFilter" ng-change="DivisionChange()" style="float: left;"></select>
+            </div>*@
+
+                            </div>
+                            @*svprasadk 28-08-2020 get plant list end*@
+                            <div class="form-group">
+                                <div class="col-sm-5 control-label">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" ng-checked="CheckAll" id="txtComplaintRegistered" data-ng-model="ComplaintRegistered" onclick="Salescheck()">@LabelName.ComplaintRegistered
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" ng-checked="CheckAll" id="txtComplaintWaitingForInvestigation" data-ng-model="ComplaintWaitingForInvestigation" onclick="Salescheck()">@LabelName.ComplaintWaitingForInvestigation
+                                    </label>
+                                </div>
+                                <div class="col-sm-6 control-label">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" ng-checked="CheckAll" id="txtComplaintAssigned" data-ng-model="ComplaintAssigned" onclick="Salescheck()">@LabelName.ComplaintAssigned
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" ng-checked="CheckAll" id="txtInvestigatedUnderReviews" data-ng-model="InvestigatedUnderReviews" onclick="Salescheck()">@LabelName.InvestigatedandUnderReviews
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-5 control-label">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" ng-checked="CheckAll" id="txtCompensationunderReview" data-ng-model="Compensation_under_Review" onclick="Salescheck()">@LabelName.CompensationunderReview
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" ng-checked="CheckAll" id="txtCompensationApprovedandSent" data-ng-model="CompensationApprovedandSent" onclick="Salescheck()">@LabelName.CompensationApprovedandSent
+                                    </label>
+                                </div>
+                                <div class="col-sm-6 control-label">
+                                    @*VIKAS G, 22-06-22*@
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" id="txtSalesreturn" data-ng-model="Sales_Return" onclick="Salescheckall()">Sales Return
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" id="txtCheckAll" data-ng-model="CheckAll" onclick="Salescheck()">@LabelName.CheckAll
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6 col-sm-offset-4">
+                                    <button ng-click="Generate_Report()" class="btn btn-info navbar-btn" type="button">Generate Report</button>
+                                    <button onclick="ResetAll()" class="btn btn-info navbar-btn" type="button">Reset</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row" style="padding-top: 30px; display: none" id="CustomerAddress_Form">
+                                    <table class="table tablecss" id="InvoiceListTab">
+                                        <thead>
+                                            <tr>
+                                                <th style="vertical-align: middle; color: white;">S.No</th>
+                                                <th style="vertical-align: middle; color: white;">Plant Name</th>
+                                                <th style="vertical-align: middle; color: white;">Complaint Tracking No</th>
+                                                @*<th style="vertical-align: middle; color: white;">Complaint Code</th>*@
+                                                <th style="vertical-align: middle; color: white;">Complaint Status</th>
+                                                <th style="vertical-align: middle; color: white;">Customer Code</th>
+                                                <th style="vertical-align: middle; color: white;">Customer Name</th>
+                                                @* VIKAS G, 11-11-2022 get party type details start *@
+                                                <th style="vertical-align: middle; color: white;">Customer Location</th>
+                                                <th style="vertical-align: middle; color: white;">Customer Contact No.</th>
+                                                @* VIKAS G, 11-11-2022 get party type details start *@
+                                                <th style="vertical-align: middle; color: white;">Secondary Customer</th>
+                                                @* svprasadk 14-12-2020 get party type details start *@
+                                                <th style="vertical-align: middle; color: white;">Party Code</th>
+                                                <th style="vertical-align: middle; color: white;">Party Name</th>
+                                                <th style="vertical-align: middle; color: white;">Party Address</th>
+                                                <th style="vertical-align: middle; color: white;">Party Mobile</th>
+                                                @* svprasadk 14-12-2020 get party type details end *@
+                                                <th style="vertical-align: middle; color: white;">State Name</th>
+                                                <th style="vertical-align: middle; color: white;">Registered By</th>
+                                                <th style="vertical-align: middle; color: white;">Sales Person</th>
+                                                <th style="vertical-align: middle; color: white;">Businees Unit</th>
+                                                <th style="vertical-align: middle; color: white;">Product Type</th>
+                                                <th style="vertical-align: middle; color: white;">Registered Date</th>
+                                                <th style="vertical-align: middle; color: white;">Attended Date</th>
+                                                <th style="vertical-align: middle; color: white;">Investigated Date</th>
+                                                <th style="vertical-align: middle; color: white;">No of Days</th>
+                                                <th style="vertical-align: middle; color: white;">Investigation Done By</th>
+                                                @*<th style="vertical-align: middle; color: white;">Delay Days</th>*@
+                                                @*<th style="vertical-align: middle; color: white;">Delay Reason</th>*@
+                                                <th style="vertical-align: middle; color: white;">Supplied Qty</th>
+                                                <th style="vertical-align: middle; color: white;">Breakage/ Defect Qty</th>
+                                                <th style="vertical-align: middle; color: white;">Net Loss/ Actual Defect Qty</th>
+                                                <th style="vertical-align: middle; color: white;">Compensation Approved Date</th>
+                                                <th style="vertical-align: middle; color: white;">Compensation Mode</th>
+                                                <th style="vertical-align: middle; color: white;">Rejected Remarks</th>
+                                                <th style="vertical-align: middle; color: white;">No of Days To Compensation</th>
+                                                @*<th style="vertical-align: middle; color: white;">Complaint Code</th>*@
+                                                <th style="vertical-align: middle; color: white;">Complaint Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+
+                                    </table>
+                                </div>
+                                <div class="row" style="padding-top: 30px; display: none" id="SalesReturnForm">
+                                    @*VIKAS G ,22-6-22*@
+                                    <table class="table tablecss" id="SalesReturnTab">
+                                        <thead>
+                                            <tr>
+                                                <th style="vertical-align: middle; color: white;">S.No</th>
+                                                <th style="vertical-align: middle; color: white;">Plant Name</th>
+                                                <th style="vertical-align: middle; color: white;">Customer Name</th>
+                                                <th style="vertical-align: middle; color: white;">Document No</th>
+                                                <th style="vertical-align: middle; color: white;">TOT Bill Qty</th>
+                                                <th style="vertical-align: middle; color: white;">SKU Count</th>
+                                                <th style="vertical-align: middle; color: white;">Sales State Name</th>
+                                                <th style="vertical-align: middle; color: white;">Business Unit</th>
+                                                <th style="vertical-align: middle; color: white;">Created Date</th>
+                                                <th style="vertical-align: middle; color: white;">TOT Net Wt</th>
+                                                <th style="vertical-align: middle; color: white;">TOT Gross Wt</th>
+                                                <th style="vertical-align: middle; color: white;">TOT Amount</th>
+                                                <th style="vertical-align: middle; color: white;">INV TYPE</th>
+
+                                            </tr>
+
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Legend" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Legend for Complaint Monitoring Screen</h4>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <ul class="list-group">
+                                <li class="list-group-item Yellow">Complaint Registered</li>
+                                <li class="list-group-item Yellow">Complaint Accepted</li>
+                                <li class="list-group-item DarkRed">Complaint Rejected After Registration</li>
+                                <li class="list-group-item LightRed">Complaint Canceled After Registration</li>
+                                <li class="list-group-item Yellow">Complaint Assigned</li>
+                                <li class="list-group-item LightGreen">Complaint Waiting For Investigation</li>
+                                <li class="list-group-item LightGreen">Complaint Under Investigation</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-group">
+                                <li class="list-group-item LightGreen">Complaint Investigation Reviewed</li>
+                                <li class="list-group-item DarkRed">Complaint Rejected At Investigation</li>
+                                <li class="list-group-item LightRed">Complaint Canceled At Investigation</li>
+                                <li class="list-group-item DarkGreen">Compensation Waiting for Review</li>
+                                <li class="list-group-item DarkGreen">Compensation Under Review</li>
+                                <li class="list-group-item DarkGreen">Compensation Approved and Sent</li>
+                                <li class="list-group-item DarkRed">Compensation Rejected</li>
+                                <li class="list-group-item LightRed">Compensation Canceled</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '../../Users/GetRightToAccess',
+            type: 'GET',
+            data: { AccessData: JSON.stringify({ UserRole: $("#SessionUserTypeID").val(), UserId: $("#SessionUserId").val(),FormCode: 'CSR' }) },
+            success: function (AccessData) {
+                if (AccessData == "") {
+                    $("#StateFilter").css('display', 'none');
+                    $("#CSRDiv").css('display', 'none');
+                }
+                else {
+                    AccessData = JSON.parse(AccessData);
+                    if (AccessData[0]["IS_VIEW"] == true) {
+                        $("#CSRDiv").css('display', 'block');
+                    }
+                    else {
+                        $("#CSRDiv").css('display', 'none');
+                        $("#StateFilter").css('display', 'none');
+                    }
+                }
+            }
+        });
+       
+        $("#BusinessUnit").val("");
+        var UserId = $("#SessionUserId").val();
+        var UserType = $("#SessionUserTypeID").val();
+
+        if (UserType == "QH") {
+            $("#BusinessUnit").val("");
+        }
+        else if (UserType == "CSM") {
+        if (UserId == "50001048" || UserId == "50001049" || UserId == "50002662" || UserId == "88016512") {
+            $("#BusinessUnit").val("SBU1");
+        }
+        else if (UserId == "50000822") {
+                $("#BusinessUnit").val("SBU2");
+            }
+            else if (UserId == "50001234") {
+                $("#BusinessUnit").val("SBU3");
+            }
+        } else if (UserType == "CSM_BU3" || UserType == "QAM_SBU3" || UserType == "Plant_MHD") {
+            $("#BusinessUnit").val("SBU3");
+        }
+        else if (UserType == "CSM_BU2" || UserType == "FSO_BU2") {
+            $("#BusinessUnit").val("SBU2");
+        }
+        else if (UserType == "SH_BU3" || UserType == "RSH_BU3" || UserType == "NSH_BU3") {
+            $("#BusinessUnit").val("SBU3");
+        }
+        else if (UserId == "50002304" || UserId == "KAM" || UserId == "kam") {
+            $("#BusinessUnit").val("SBU2");
+        }
+        else if (UserId == "2019" || UserId == "2021") {
+            $("#BusinessUnit").val("SBU3");
+        }
+        else if (UserType == "CSM_BU8" || UserType == "QAM_SBU8" || UserType == "FSO_BU8" || UserType == "Plant_MHD") {
+            $("#BusinessUnit").val("SBU8");
+        }
+        else {
+            $("#BusinessUnit").val("SBU1");
+        }
+
+
+        //svprasadk 28-08-2020 get plant list start
+        var BusinessUnit = $("#BusinessUnit").val();
+        if (BusinessUnit == "SBU3") {
+            $("#plantList").show();
+            $("#CustDivision").hide();
+            $("#CustDivision").val("");
+        } else {
+            $("#plantList").hide();
+            $("#plantList").val("");
+        }
+        //svprasadk 28-08-2020 get plant list end
+    });
+
+
+    $(function () {
+        $("#txtFromDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtToDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+    });
+
+
+    function Fromdatetodate() {
+        var MyDate = $("#txtFromDate").val();
+        if ($("#txtFromDate").val() != "") {
+            $("#txtToDate").datepicker('setStartDate', MyDate);
+        }
+    }
+
+    function ResetAll() {
+        location.reload();
+    }
+    function Salescheck() {
+        debugger
+
+        if ($("#txtComplaintRegistered").is(':checked') || $("#txtComplaintWaitingForInvestigation").is(':checked') || $("#txtComplaintAssigned").is(':checked') || $("#txtInvestigatedUnderReviews").is(':checked') || $("#txtCompensationunderReview").is(':checked') || $("#txtCompensationApprovedandSent").is(':checked') || $("#txtCheckAll").is(':checked')) {
+            $("#txtSalesreturn").removeAttr('checked');
+            //$("#SalesReturnForm").css('display', 'none');
+            //$("#CustomerAddress_Form").css('display', 'block');
+            //$("#InvoiceListTab tbody").empty();
+            //$("#SalesReturnTab tbody").empty();
+        }
+        else if ($("#txtSalesreturn").is(':checked')) {
+            //$("#SalesReturnForm").css('display', 'block');
+            //$("#CustomerAddress_Form").css('display', 'none');
+            //$("#InvoiceListTab tbody").empty();
+            //$("#SalesReturnTab tbody").empty();
+        }
+    }
+
+    function Salescheckall() {
+        debugger
+        if ($("#txtSalesreturn").is(':checked')) {
+            $("#txtComplaintRegistered").removeAttr('checked');
+            $("#txtComplaintWaitingForInvestigation").removeAttr('checked');
+            $("#txtComplaintAssigned").removeAttr('checked');
+            $("#txtInvestigatedUnderReviews").removeAttr('checked');
+            $("#txtCompensationunderReview").removeAttr('checked');
+            $("#txtCompensationApprovedandSent").removeAttr('checked');
+            // $("#txtSalesreturn").removeAttr('checked');
+            $("#txtCheckAll").removeAttr('checked');
+            //$("#SalesReturnForm").css('display', 'block');
+            //$("#CustomerAddress_Form").css('display', 'none');
+            //$("#InvoiceListTab tbody").empty();
+            //$("#SalesReturnTab tbody").empty();
+        }
+        else if (!$("#txtSalesreturn").is(':checked')) {
+            //$("#SalesReturnForm").css('display', 'none');
+            //$("#CustomerAddress_Form").css('display', 'block');
+            //$("#InvoiceListTab tbody").empty();
+            //$("#SalesReturnTab tbody").empty();
+        }
+    }
+</script>

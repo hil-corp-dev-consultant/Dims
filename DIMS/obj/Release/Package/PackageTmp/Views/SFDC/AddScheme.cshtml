@@ -1,0 +1,204 @@
+﻿@*
+
+Module              : CMS - DIMS Solution.
+DocumentName        : AddScheme.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Add Scheme Screen.
+Developer Name      : Harish Kothuri.
+Change Log          : NA.
+
+*@
+
+@using LabelNames = DIMS.Content.Resource_Files.AddScheme;
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 id="updatescheme">Create Scheme</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Create Scheme</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('SchemesList')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SaveSchemesData()">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+@*                <a href ng-click="go('AddScheme')" id="AddNewHide">
+                    <i class="fa fa-file-o fa-4" title="Add New" ></i>
+                </a>*@
+               @* <a>
+                    <i class="fa fa-paperclip fa-4" title="Attachements"></i>
+                </a>
+                <a href ng-click="SendForApproval()">
+                    <i class=" fa fa-thumbs-o-up" title="Send for Reviews"></i>
+                </a>
+                <a href ng-click="go('Compensation')">
+                    <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body">
+                <form role="form" class="form-horizontal">
+                    <h5><b>Scheme Details</b></h5>
+                    <div class="form-group">
+                         <label class="hidden" id="Created">@SessionUserName</label>
+                        <label class="col-sm-2 control-label">@LabelNames.SchemeName</label>
+                        <div class="col-sm-3">
+                            <input type="hidden" class="form-control" data-ng-model="EditId"/>
+                            <input type="text" class="form-control" id="SchemeName" data-ng-model="SchemeName" />
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.SchemeID</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="SchemeID" data-ng-model="SchemeID" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.SchemeDescription</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="SchemeDescription" data-ng-model="SchemeDescription" />
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.Target</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="Target" data-ng-model="Target" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.Eligibility</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="Eligibility" data-ng-model="Eligibility" />
+                        </div>
+
+                    </div>
+                    <h5><b>Product and Area</b></h5>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.Category</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input class="form-control" id="Category" type="text" disabled="disabled" data-ng-model="Category">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="Getdata('GetScheme_Category','SFDCSchemeCategory','Categories List')"><i class="glyphicon glyphicon-new-window"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.Product</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input class="form-control" id="Product" type="text" disabled="disabled" data-ng-model="Product">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="Getdata('GetScheme_Product','SFDCSchemeProduct','Products List')"><i class="glyphicon glyphicon-new-window"></i></button>
+                                </div>
+                            </div>                          
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.StartDate</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="StartDate" readonly="readonly" data-ng-model="StartDate" />
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.Enddate</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="EndDate" readonly="readonly" data-ng-model="EndDate" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.Zone</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input class="form-control" id="Zone" type="text" disabled="disabled" data-ng-model="Zone">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="Getdata('GetScheme_Zone','ZoneMasterList','Zones List')"><i class="glyphicon glyphicon-new-window"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.State</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input class="form-control" id="State" type="text" disabled="disabled" data-ng-model="State">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="Getdata('GetScheme_State','StateMasterList','States List')" ><i class="glyphicon glyphicon-new-window"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.TerritoryArea</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input class="form-control" id="TerritoryArea" type="text" disabled="disabled" data-ng-model="TerritoryArea">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="Getdata('GetScheme_Territory','TerritoryAreaMasterList','Areas List')"><i class="glyphicon glyphicon-new-window"></i></button>
+                                </div>
+                            </div>
+                        </div>
+@*                        <label class="col-sm-2 control-label">@LabelNames.Location</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input class="form-control" id="Location" type="text" disabled="disabled" data-ng-model="Location">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="Getdata('GetScheme_Location','CityMasterList','cities List')"><i class="glyphicon glyphicon-new-window"></i></button>
+                                </div>
+                            </div>
+                        </div>*@
+                                                <label class="col-sm-2 control-label">@LabelNames.Status</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="Status" data-ng-model="Status">
+                                <option value="">Select Status</option>
+                                <option value="Active">Active</option>
+                                <option value="InActive">In Active</option>
+                            </select>
+                        </div>
+                    </div>                                   
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        $("#StartDate").datepicker({
+            "autoclose": true
+        });
+        $("#EndDate").datepicker({
+            "autoclose": true
+        });
+    });
+
+
+</script>
+

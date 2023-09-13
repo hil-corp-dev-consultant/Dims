@@ -1,0 +1,395 @@
+﻿@{
+    Layout = null;
+    //string Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string Role = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    table thead tr th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table tfoot tr th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table tbody tr td {
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>DIMS monitoring log</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>DIMS Monitoring Log</li>
+        <li class="active">DIMS Monitoring Log</li>
+    </ol>
+    @if (@Role.Trim() != "STOCKIST")
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href onclick="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+        <div class="box-body">
+        <form class="form-horizontal" role="form" style="font-size: small">
+           <div style="padding:10px;"></div>
+            <input type="text" id="SessionUserRole" style="display:none;" value="@Role" />
+            <input type="text" id="SessionUserCode" style="display:none;" value="@SessionUserCode" />
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    From Date <span class="Mandatory">*</span>
+                </label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="UsersFromDate" placeholder="From Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                </div>
+                <label class="col-sm-2 control-label">
+                    To Date <span class="Mandatory">*</span>
+                </label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="UsersToDate" placeholder="To Date" readonly />
+                </div>
+                <label class="col-sm-2 control-label" for="Zone">
+                    Category
+                </label>
+                <div class="col-sm-2">
+                    <select id="Category" class="form-control">
+                        <option value="All">All</option>
+                        <option value="Employee">Employee</option>
+                        <option value="Stockist">Stockist</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-2 text-center">
+                    <button type="button" class="btn btn-info navbar-btn" onclick="GetActInctUsersList()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div style="padding:10px;"></div>
+        <div id="StateWiseTableID" style="overflow:auto;">
+            <table id="StateWiseUser" class="table ListTable" width="80%">
+                <thead>
+                    <tr>
+                        <th>State</th>
+                        <th>User id Created</th>
+                        <th>Active</th>
+                        <th>InActive</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+       </div>
+    </div>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+
+        $('#UsersFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#UsersFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#UsersToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#UsersToDate').bind('keypress', function (e) {
+            return false;
+        });
+        GetServerDateTime();
+        $('#StateWiseUser').dataTable({
+            filter: false,
+            paging: false,
+            "bSort": false,
+            "columnDefs": [
+                   {
+                       "targets": [1, 2, 3],
+                       className: "dt-body-center"
+                   }],
+            fixedColumns: {
+                leftColumns: 0
+            }
+        });
+    });
+
+    $("#UsersFromDate").datepicker().on("changeDate", function (e) {
+        $("#UsersToDate").datepicker('setStartDate', $("#UsersFromDate").val());
+        $("#UsersToDate").val("");
+    });
+    $("#UsersToDate").datepicker().on("changeDate", function (e) {
+        if ($("#UsersFromDate").val() == "") {
+            $("#UsersToDate").val("");
+        } else {
+            $("#UsersFromDate").datepicker('setEndDate', $("#UsersToDate").val());
+        }
+    });
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+                    $("#UsersFromDate").datepicker('setEndDate', result);
+                    $("#UsersToDate").datepicker('setEndDate', result);
+                }
+            }
+        });
+    }
+
+    function GetActInctUsersList() {
+        var FromDate = $('#UsersFromDate').val();
+        var ToDate = $('#UsersToDate').val();
+        var UserCategory = $('#Category').val();
+        if (FromDate == "" || FromDate == null) {
+            alert("Please select From date");
+        } else if (ToDate == "" || ToDate == null) {
+            alert("Please select To data");
+        } else {
+            ShowLoader();
+            var table123 = $('#StateWiseUser').DataTable();
+            var JsonData = JSON.stringify({
+                "FromDate": FromDate,
+                "ToDate": ToDate,
+                "UserCategory": UserCategory,
+                "UserCode": $('#SessionUserCode').val(),
+                "Role": $('#SessionUserRole').val()
+            });
+            $.ajax({
+                url: '../../Users/GetDimsMonitorLogData',
+                type: 'POST',
+                data: { Data: JsonData },
+                success: function (response) {
+                    if (response != "") {
+                        var Result = JSON.parse(response);
+
+                        var TotalStateUserCreated = 0;
+                        var TotalStateActive = 0;
+                        var TotalStateInActive = 0;
+
+                        var TotalZoneWiseUserCreated = 0;
+                        var TotalZoneWiseActiveUserCount = 0;
+                        var TotalZoneWiseInactiveCount = 0;
+
+                        var HtmlData = '';
+                        if (Result[0]["StateName"] != "HP & JK") {
+                            HtmlData += '<tr>';
+                            HtmlData += '<td>' + Result[0]["StateName"] + '</td>';
+                            HtmlData += '<td>' + Result[0]["UserIdCreated"] + '</td>';
+                            HtmlData += '<td>' + Result[0]["Active"] + '</td>';
+                            HtmlData += '<td>' + Result[0]["Inactive"] + '</td>';
+                            HtmlData += '</tr>';
+
+                            TotalStateUserCreated += parseInt(Result[0]["UserIdCreated"]);
+                            TotalStateActive += parseInt(Result[0]["Active"]);
+                            TotalStateInActive += parseInt(Result[0]["Inactive"]);
+                        }
+                        HtmlData += '<tr>';
+                        HtmlData += '<td>' + Result[1]["StateName"] + '</td>';
+                        HtmlData += '<td>' + Result[1]["UserIdCreated"] + '</td>';
+                        HtmlData += '<td>' + Result[1]["Active"] + '</td>';
+                        HtmlData += '<td>' + Result[1]["Inactive"] + '</td>';
+                        HtmlData += '</tr>';
+
+                        TotalStateUserCreated += parseInt(Result[1]["UserIdCreated"]);
+                        TotalStateActive += parseInt(Result[1]["Active"]);
+                        TotalStateInActive += parseInt(Result[1]["Inactive"]);
+
+                        var FirstRecord = 0;
+
+                        //for (var i = 2; i < Result.length; i++) {
+                        for (var i = 2; i < Result.length; i++) {
+                            if (Result[i]["ZoneCode"] == Result[i - 1]["ZoneCode"] || FirstRecord == 0) {
+                                HtmlData += '<tr>';
+                                HtmlData += '<td>' + Result[i]["StateName"] + '</td>';
+                                HtmlData += '<td>' + Result[i]["UserIdCreated"] + '</td>';
+                                HtmlData += '<td>' + Result[i]["Active"] + '</td>';
+                                HtmlData += '<td>' + Result[i]["Inactive"] + '</td>';
+                                HtmlData += '</tr>';
+                                TotalStateUserCreated += parseInt(Result[i]["UserIdCreated"]);
+                                TotalStateActive += parseInt(Result[i]["Active"]);
+                                TotalStateInActive += parseInt(Result[i]["Inactive"]);
+                                FirstRecord = 1;
+                            }
+                            else {
+                                HtmlData += '<tr>';
+                                HtmlData += '<td style="background-color: darkgray">' + Result[i - 1]["ZoneName"] + ' Total </td>';
+                                HtmlData += '<td style="background-color: darkgray">' + TotalStateUserCreated + '</td>';
+                                HtmlData += '<td style="background-color: darkgray">' + TotalStateActive + '</td>';
+                                HtmlData += '<td style="background-color: darkgray">' + TotalStateInActive + '</td>';
+                                HtmlData += '</tr>';
+
+                                TotalZoneWiseUserCreated += TotalStateUserCreated;
+                                TotalZoneWiseActiveUserCount += TotalStateActive;
+                                TotalZoneWiseInactiveCount += TotalStateInActive;
+
+
+                                TotalStateUserCreated = TotalStateActive = TotalStateInActive = 0;
+                                FirstRecord = 0;
+
+                                HtmlData += '<tr>';
+                                HtmlData += '<td>' + Result[i]["StateName"] + '</td>';
+                                HtmlData += '<td>' + Result[i]["UserIdCreated"] + '</td>';
+                                HtmlData += '<td>' + Result[i]["Active"] + '</td>';
+                                HtmlData += '<td>' + Result[i]["Inactive"] + '</td>';
+                                HtmlData += '</tr>';
+                                TotalStateUserCreated += parseInt(Result[i]["UserIdCreated"]);
+                                TotalStateActive += parseInt(Result[i]["Active"]);
+                                TotalStateInActive += parseInt(Result[i]["Inactive"]);
+                            }
+                        }
+
+                        HtmlData += '<tr>';
+                        HtmlData += '<td style="background-color:darkgray;">' + Result[Result.length - 1]["ZoneName"] + ' Total </td>';
+                        HtmlData += '<td style="background-color:darkgray;">' + TotalStateUserCreated + '</td>';
+                        HtmlData += '<td style="background-color:darkgray;">' + TotalStateActive + '</td>';
+                        HtmlData += '<td style="background-color:darkgray;">' + TotalStateInActive + '</td>';
+                        HtmlData += '</tr>';
+                        TotalZoneWiseUserCreated += TotalStateUserCreated;
+                        TotalZoneWiseActiveUserCount += TotalStateActive;
+                        TotalZoneWiseInactiveCount += TotalStateInActive;
+                        HtmlData += '<tr>';
+                        HtmlData += '<td style="background-color:darkgray;">TOTAL</td>';
+                        HtmlData += '<td style="background-color:darkgray;">' + TotalZoneWiseUserCreated + '</td>';
+                        HtmlData += '<td style="background-color:darkgray;">' + TotalZoneWiseActiveUserCount + '</td>';
+                        HtmlData += '<td style="background-color:darkgray;">' + TotalZoneWiseInactiveCount + '</td>';
+                        HtmlData += '</tr>';
+
+                        table123.clear().draw();
+                        table123.destroy();
+                        $("#StateWiseUser tbody").empty();
+
+                        $("#StateWiseUser tbody").append(HtmlData);
+                        $("#StateWiseUser").dataTable({
+                            "searching": false,
+                            "paging": false,
+                            "bDestroy": true,
+                            "columnDefs": [{ "targets": [1, 2, 3], className: "dt-body-center" }],
+                            "bSort": false
+                        });
+                        HideLoader();
+
+                    }
+                }, error: function (e) {
+                    console.log("Error :" + e);
+                    HideLoader();
+                }
+            });
+        }
+    }
+
+    function DownloadFile(FileType) {
+        var FromDate = $('#UsersFromDate').val();
+        var ToDate = $('#UsersToDate').val();
+        var UserCategory = $('#Category').val();
+        var TableRowsCount = $('#StateWiseUser').DataTable().data().count();
+
+        if (FromDate == "" || FromDate == null) {
+            alert("Please select From date");
+        } else if (ToDate == "" || ToDate == null) {
+            alert("Please select To data");
+        } else if (TableRowsCount == 0) {
+            alert("There is no data");
+        } else {
+            ShowLoader();
+            var AuditLogTxHtml = "<table border='1'>" + $('#StateWiseUser thead').html() + $('#StateWiseUser tbody').html() + "</table>  <div style='height: 25px;'></div>";
+            $.ajax({
+                url: '/Home/ExportdataFinanceDashboard',
+                type: 'POST',
+                beforeSend: function () {
+                    //ShowLoader();
+                },
+                data: { QueryVal: AuditLogTxHtml },
+                success: function (result) {
+                    if (result == "ok") {
+                        window.location.href = "../../Home/GetExcelFinaceDashBoard?reportname=DIMS_MonitorLog";
+                    }
+                },
+                complete: function () {
+                    HideLoader();
+                },
+                error: function (e) {
+                    HideLoader();
+                    alert(e);
+                }
+            });
+            //var JsonData = JSON.stringify({
+            //    "FileType": FileType,
+            //    "FromDate": FromDate,
+            //    "ToDate": ToDate,
+            //    "UserCategory": UserCategory
+            //});
+
+            //$.ajax({
+            //    url: '../../Home/SetInputData',
+            //    type: "POST",
+            //    datatype: "JSON",
+            //    data: { InputData: JsonData, ReportType: FileType, FileName: "DIMS_MonitorLog" },
+            //    async: false,
+            //    cache: false,
+            //    success: function (response) {
+            //        if (response == "") {
+            //            ShowLoader();
+            //            window.location.href = '../../Home/GenerateReport_DIMSMonitorLog';
+            //            HideLoader();
+            //        }
+            //    }, error: function (e) {
+            //        console.log("Error :" + e);
+            //        HideLoader();
+            //    }
+            //});
+        }
+    }
+</script>

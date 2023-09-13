@@ -1,0 +1,930 @@
+﻿@*
+
+    Module              : CMS - DIMS Solution.
+    DocumentName        : CreateTargetFC.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for Creating Target.
+    Developer Name      : Swamy Ayyappa
+    Change Log          : NA.
+
+*@
+
+@using LabelNames = DIMS.Content.Resource_Files.CreateTargetFC;
+@{
+    Layout = null;
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeCode = UP.UserTypeCode;
+
+    string StateCode = UP.UserStateCode;
+    string StateName = UP.UserStateName;
+
+    string ZoneCode = UP.UserZoneCode;
+    string ZoneName = UP.UserZoneName;
+
+}
+
+<style type="text/css">
+    button {
+        cursor: pointer;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Sales Target</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Sales Target</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('CreateTargetList')" style="float: left;">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href onclick="SaveCreateTargetData()" style="float: left;">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                @*<a href ng-click="go('CreateTarget')" style="float: left; display: none;">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="cf">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body">
+                <form role="form" class="form-horizontal">
+                    <input type="text" id="FormIdentity" style="display: none;" />
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display:none;" />
+                    <input type="text" id="UserName" value="@SessionUserName" style="display:none;" />
+                    <input type="text" id="CreatedBy" value="@SessionUserCode" style="display:none;" />
+                    <input type="text" id="SessionUserTypeCode" value="@SessionUserTypeCode" style="display:none;" />
+                    <input type="text" style="display:none;" id="UserStateCode" value="@StateCode" />
+                    <input type="text" style="display:none;" id="UserStateName" value="@StateName" />
+                    <input type="text" style="display:none;" id="UserZoneCode" value="@ZoneCode" />
+                    <input type="text" style="display:none;" id="UserZoneName" value="@ZoneName" />
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">@LabelNames.ZonalSalesHead</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input type="text" class="form-control" id="ZonalName" disabled="disabled" />
+                                <input type="text" class="form-control" id="ZonalCode" disabled="disabled" style="display: none;" />
+                                <div class="input-group-btn ZoneMasterLookUp">
+                                    <span class="btn btn-default" type="submit" id="ZoneMasterLookUp" ng-click="Getdata('GetZone','ZoneMaster','Zone List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.State</label>
+                        <div class="col-sm-3">
+                            <div class="input-group add-on">
+                                <input type="text" class="form-control" id="StateName" data-ng-model="StateName" disabled="disabled" />
+                                <input type="text" class="form-control" id="StateCode" data-ng-model="StateCode" style="display: none;" />
+                                <div class="input-group-btn StateMasterLookUp">
+                                    <span class="btn btn-default" type="submit" id="StateMasterLookUp" ng-click="Getdata('GetState','StateMasterInZone','State List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">@LabelNames.StateHeadEmpCode</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="StateHeadEmpCode" data-ng-model="StateHeadEmpCode" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.StateHeadName</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="StateHeadName" data-ng-model="StateHeadName" disabled="disabled" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">@LabelNames.MonthYear<span class="Mandatory">*</span></label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="MonthYear" data-ng-model="MonthYear" readonly="readonly" />
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.StateTarget</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="StateTarget" data-ng-model="StateTarget" />
+                        </div>
+                    </div>
+
+                    <h5 style="font-weight:bold">Revenue Tracker</h5>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Target (in Rs. Lacs)</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="taregtinrs" data-ng-model="taregtinrs" onkeypress="return isNumberKey(event)" />
+                        </div>
+                    </div>
+
+                    <h5 style="font-weight:bold">Credit Limit Tracker (<span style="font-weight:bold; font-size:smaller;">For State Head</span>)</h5>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Target(#)</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="targetforsh" data-ng-model="targetforsh" onkeypress="return isNumberKey(event)" />
+                        </div>
+                        <label class="col-sm-2 control-label">Actuals/Approved(#)</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="actualsapprovedforsh" data-ng-model="actualsapprovedforsh" onkeypress="return isNumberKey(event)" maxlength="3" />
+                        </div>
+                    </div>
+
+                    <h5 style="font-weight:bold"> Credit Limit Tracker (<span style="font-weight:bold; font-size:smaller;">For Territory Manager</span>)</h5>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Target(#)</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="targetfortm" data-ng-model="targetfortm" onkeypress="return isNumberKey(event)" />
+                        </div>
+                        <label class="col-sm-2 control-label">Actuals/Approved(#)</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="actualsapprovedfortm" data-ng-model="actualsapprovedfortm" onkeypress="return isNumberKey(event)" />
+                        </div>
+                    </div>
+
+                    <div class="row tabdiv" id="CreateTargetTableDiv">
+                        <div class="col-sm-12">
+                            <div  style="overflow:auto;">
+                            <table class="table innertable" id="CreateTargetTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display: none;">Sl No</th>
+                                        <th>Employee Code</th>
+                                        <th>Employee Name</th>
+                                        <th>Employee Role/ Designation</th>
+                                        <th>Overall Sales Volume (Target)</th>
+                                        <th>Key Stockist Volume</th>
+                                        <th>No of Stockist Billed</th>
+                                        <th>Overall CC sheet Volume</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr style="display: none;">
+                                        <th style="display: none;">Sl No</th>
+                                        <th>Employee Code</th>
+                                        <th>Employee Name</th>
+                                        <th>Employee Role/ Designation</th>
+                                        <th>Overall Sales Volume (Target)</th>
+                                        <th>Key Stockist Volume</th>
+                                        <th>No of Stockist Billed</th>
+                                        <th>Overall CC sheet Volume</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var ForeignDate = TodayDateTime;
+    ForeignDate = ForeignDate.split('/')[1] + "/" + ForeignDate.split('/')[0] + "/" + ForeignDate.split('/')[2];
+
+
+    $("#MonthYear").datepicker({
+        format: "MM-yyyy",
+        startView: "months",
+        autoclose: "true",
+        minViewMode: "months"
+        //endDate: new Date(ForeignDate)
+    });
+
+    allowTwoDecimalPoints($("#taregtinrs"));
+    $(document).ready(function () {
+        //console.clear();
+
+        //var SessionUserTypeCode = $("#SessionUserTypeCode").val();
+
+        //if (SessionUserTypeCode == "") {
+        //    $(".content").empty();
+        //}
+        //if (SessionUserTypeCode == "ZH" || SessionUserTypeCode == "ZSC") {
+        //    $("#ZoneMasterLookUp").css("pointer-events", "none");
+        //    $("#ZonalCode").val($("#UserZoneCode").val());
+        //    $("#ZonalName").val($("#UserZoneName").val());
+        //}
+        //else if (SessionUserTypeCode == "SH") {
+
+        //    $("#ZonalCode").val($("#UserZoneCode").val());
+        //    $("#ZonalName").val($("#UserZoneName").val());
+
+
+        //    $("#StateCode").val($("#UserStateCode").val());
+        //    $("#StateName").val($("#UserStateName").val());
+
+        //    $("#StateHeadEmpCode").val($("#UserCode").val());
+        //    $("#StateHeadName").val($("#UserName").val());
+
+        //GetChildTableData();
+
+        //}
+    });
+
+
+
+    function GetChildTableData() {
+
+        //if ($("#ZonalCode").val() == "") {
+        //    alert("Please Select Zone Code");
+        //    return;
+        //}
+        //if ($("#StateCode").val() == "") {
+        //    alert("Please Select State Code");
+        //    return;
+        //}
+
+        var Data = JSON.stringify({
+            ZoneCode: $("#ZonalCode").val(),
+            StateCode: $("#StateCode").val(),
+            //MonthYear: $("#MonthYear").val()
+            StateHeadEmpCode: $("#StateHeadEmpCode").val()
+
+        });
+
+        $.ajax({
+            method: 'POST',
+            url: '../../SFDC/GetFSOTMinState',
+            data: { Data: Data },
+        }).then(function successCallback(Resp) {
+
+            if (Resp == "") {
+                $("#CreateTargetTable tbody").empty();
+            }
+            else {
+                $("#CreateTargetTable tbody").empty();
+
+                Resp = JSON.parse(Resp);
+                //alert(Resp);
+                //if (Resp["Status"] == "") {
+
+                //    Resp = Resp["Child"];
+
+                var TRCode = "";
+                for (var i = 0; i < Resp.length; i++) {
+
+                    if (Resp[i]["USER_ROLE_CODE"] == "FSO" || Resp[i]["USER_ROLE_CODE"] == "FSO_BU2" || Resp[i]["USER_ROLE_CODE"] == "TM") {
+                        TRCode = TRCode + "<tr id='CTTROW_" + (i + 1) + "'>";
+
+                        TRCode = TRCode + "<td style='display:none;'>" + (i + 1) + "</td>";
+                        TRCode = TRCode + "<td>" + Resp[i]["EMPLOYEE_CODE"] + "</td>";
+                        TRCode = TRCode + "<td>" + Resp[i]["EMPLOYEE_NAME"] + "</td>";
+                        TRCode = TRCode + "<td>" + Resp[i]["ORG_LEVEL_NAME"] + "</td>";
+                        TRCode = TRCode + "<td><input type='text' id='OSVT_" + (i + 1) + "' onkeypress='return isNumber(event)' onchange='AddOverAllSalesVolume(this.id)' /></td>";
+                        TRCode = TRCode + "<td><input type='text' id='KSTV_" + (i + 1) + "' onkeypress='return isNumber(event)' /></td>";
+                        TRCode = TRCode + "<td><input type='text' id='NSTB_" + (i + 1) + "' onkeypress='return isNumber(event)' /></td>";
+                        TRCode = TRCode + "<td><input type='text' id='OCSV_" + (i + 1) + "' onkeypress='return isNumber(event)' /></td>";
+
+                        TRCode = TRCode + "</tr>";
+                    }
+                }
+
+                $("#CreateTargetTable tbody").empty();
+                $("#CreateTargetTable tbody").remove();
+                $("#CreateTargetTable").append("<tbody>" + TRCode + "</tbody>");
+
+                $('#CreateTargetTable').DataTable({
+                    'bDestroy': true,
+                    'bFilter': false,
+                    'scroll': true,
+                    'paging': false,
+                    'ordering': false,
+                    'info': false
+                });
+
+                $("#StateTarget").val("");
+
+                //}
+                //else {
+
+                //    //$("#FormIdentity").val(Resp["Status"]);
+
+                //    //Resp = Resp["Child"];
+
+                //    var TRCode = "";
+                //    for (var i = 0; i < Resp.length; i++) {
+
+                //        TRCode = TRCode + "<tr id='CTTROW_" + (i + 1) + "'>";
+
+                //        TRCode = TRCode + "<td style='display:none;'>" + (i + 1) + "</td>";
+                //        TRCode = TRCode + "<td>" + Resp[i]["EmployeeCode"] + "</td>";
+                //        TRCode = TRCode + "<td>" + Resp[i]["EmployeeName"] + "</td>";
+                //        TRCode = TRCode + "<td>" + Resp[i]["EmployeeRoleDesignation"] + "</td>";
+                //        TRCode = TRCode + "<td><input type='text' id='OSVT_" + (i + 1) + "' onkeypress='return isNumber(event)' onchange='AddOverAllSalesVolume(this.id)' value='" + Resp[i]["OverallSalesVolumeTarget"] + "' /></td>";
+                //        TRCode = TRCode + "<td><input type='text' id='KSTV_" + (i + 1) + "' onkeypress='return isNumber(event)' value='" + Resp[i]["KeyStockistVolume"] + "' /></td>";
+                //        TRCode = TRCode + "<td><input type='text' id='NSTB_" + (i + 1) + "' onkeypress='return isNumber(event)' value='" + Resp[i]["NoofStockistBilled"] + "' /></td>";
+                //        TRCode = TRCode + "<td><input type='text' id='OCSV_" + (i + 1) + "' onkeypress='return isNumber(event)' value='" + Resp[i]["OverallCCSheetVolume"] + "' /></td>";
+
+                //        TRCode = TRCode + "</tr>";
+
+                //    }
+
+
+                //    $("#CreateTargetTable tbody").empty();
+                //    $("#CreateTargetTable tbody").remove();
+                //    $("#CreateTargetTable").append("<tbody>" + TRCode + "</tbody>");
+
+                //    $('#CreateTargetTable').DataTable({
+                //        'bDestroy': true,
+                //        'bFilter': false,
+                //        'scroll': true,
+                //        'paging': false,
+                //        'ordering': false,
+                //        'info': false
+                //    });
+
+                //    AddOverAllSalesVolume("");
+
+                //}
+
+            }
+        },
+        function errorCallback(response) {
+            alert("Error : " + response);
+        });
+    }
+
+
+    //Save the Data To DataBase using the Service
+    function SaveCreateTargetData() {
+        try {
+
+            var FormIdentity = $("#FormIdentity").val();
+            var ZonalCode = $("#ZonalCode").val();
+            var ZonalName = $("#ZonalName").val();
+            var StateCode = $("#StateCode").val();
+            var StateName = $("#StateName").val();
+            var StateHeadEmpCode = $("#StateHeadEmpCode").val();
+            var StateHeadName = $("#StateHeadName").val();
+            var MonthYear = $("#MonthYear").val();
+            var StateTarget = $("#StateTarget").val();
+            var CreatedBy = $("#CreatedBy").val();
+
+            var taregtinrs = $("#taregtinrs").val();
+
+            var targetforsh = $("#targetforsh").val();
+            var actualsapprovedforsh = $("#actualsapprovedforsh").val();
+
+            var targetfortm = $("#targetfortm").val();
+            var actualsapprovedfortm = $("#actualsapprovedfortm").val();
+
+            if (taregtinrs == "" || taregtinrs == undefined) {
+                taregtinrs = "0";
+            }
+            if (targetforsh == "" || targetforsh == undefined) {
+                targetforsh = "0";
+            }
+            if (actualsapprovedforsh == "" || actualsapprovedforsh == undefined) {
+                actualsapprovedforsh = "0";
+            }
+            if (targetfortm == "" || targetfortm == undefined) {
+                targetfortm = "0";
+            }
+            if (actualsapprovedfortm == "" || actualsapprovedfortm == undefined) {
+                actualsapprovedfortm = "0";
+            }
+
+
+            var Flag = 0;
+
+            if (ZonalName == "") {
+                //alert("Please Select Month and Year");
+                $("#ZonalName").css("border-color", "red");
+                Flag = Flag + 1;
+            }
+            else {
+                $("#ZonalName").css("border-color", "#d2d6de");
+            }
+
+
+
+            if (MonthYear == "") {
+                //alert("Please Select Month and Year");
+                $("#MonthYear").css("border-color", "red");
+                Flag = Flag + 1;
+            }
+            else {
+                $("#MonthYear").css("border-color", "#d2d6de");
+            }
+
+
+            if (StateName == "") {
+                //alert("Please Select Month and Year");
+                $("#StateName").css("border-color", "red");
+                Flag = Flag + 1;
+            }
+            else {
+                $("#StateName").css("border-color", "#d2d6de");
+            }
+
+
+
+
+            if (Flag == 0) {
+
+                var RowId = "";
+
+                var CreateTargetChildTableData = new Array();
+                $("#CreateTargetTable tbody tr").each(function () {
+                    RowId = ($(this).attr("id"));
+
+                    CreateTargetChildTableData.push({
+
+                        SlNo: $("#CreateTargetTable tbody #" + RowId + " td")[0].innerHTML,
+                        EmployeeCode: $("#CreateTargetTable tbody #" + RowId + " td")[1].innerHTML,
+                        EmployeeName: $("#CreateTargetTable tbody #" + RowId + " td")[2].innerHTML,
+                        EmployeeRoleDesignation: $("#CreateTargetTable tbody #" + RowId + " td")[3].innerHTML,
+                        OverallSalesVolumeTarget: $("#OSVT_" + (RowId.replace('CTTROW_', '')) + "").val(),
+                        KeyStockistVolume: $("#KSTV_" + (RowId.replace('CTTROW_', '')) + "").val(),
+                        NoofStockistBilled: $("#NSTB_" + (RowId.replace('CTTROW_', '')) + "").val(),
+                        OverallCCSheetVolume: $("#OCSV_" + (RowId.replace('CTTROW_', '')) + "").val()
+
+                    });
+                });
+
+                var CreateTargetData = JSON.stringify({
+                    FormIdentity: FormIdentity,
+                    ZonalCode: ZonalCode,
+                    ZonalName: ZonalName,
+                    StateCode: StateCode,
+                    StateName: StateName,
+                    StateHeadEmpCode: StateHeadEmpCode,
+                    StateHeadName: StateHeadName,
+                    MonthYear: MonthYear,
+                    StateTarget: StateTarget,
+                    CreatedBy: CreatedBy,
+                    taregtinrs: taregtinrs,
+                    targetforsh: targetforsh,
+                    targetfortm: targetfortm,
+                    actualsapprovedforsh: actualsapprovedforsh,
+                    actualsapprovedfortm: actualsapprovedfortm,
+                    CreateTargetChildTableData: CreateTargetChildTableData
+                });
+
+
+                $.ajax({
+                    method: 'POST',
+                    url: '../../SFDC/SaveCreateTargetData',
+                    data: { CreateTargetData: CreateTargetData },
+                }).then(function successCallback(response) {
+
+                    if (response == "") {
+                        alert("Data is Not Saved.Try Later");
+
+                    }
+                    else if (response == "TRUE") {
+                        alert("Successfully Updated the Data");
+                        var scope = angular.element($("#cf")).scope();
+                        //var scope = $("#cf").scope;
+                        scope.$apply(function () {
+                            scope.go("CreateTargetList/");
+                        })
+                    }
+                    else if (response == "FALSE") {
+                        alert("Data Not Updated.Try Later");
+                        var scope = angular.element($("#cf")).scope();
+                        //var scope = $("#cf").scope;
+                        scope.$apply(function () {
+                            scope.go("CreateTargetList/");
+                        })
+                    }
+                    else {
+                        response = JSON.parse(response);
+                        if (response["Result"] == "TRUE") {
+                            $("#FormIdentity").val(response["Identity"]);
+                            alert("Successfully Saved the Data");
+                            var scope = angular.element($("#cf")).scope();
+                            //var scope = $("#cf").scope;
+                            scope.$apply(function () {
+                                scope.go("CreateTargetList/");
+                            })
+                        }
+                    }
+                },
+                function errorCallback(response) {
+                    alert("Error : " + response);
+                });
+
+            }
+        }
+        catch (e) {
+            alert("Error : SaveCreateTargetData : " + e);
+        }
+    }
+
+
+    function AddOverAllSalesVolume(Identity) {
+        try {
+
+            if (Identity == "") {
+            }
+            else {
+                var ThisBoxValue = $("#" + Identity + "").val();
+
+                if (isNaN(ThisBoxValue)) {
+                    alert("Invalid Entry");
+                    $("#" + Identity + "").val("");
+                }
+                else {
+                    ThisBoxValue = Math.round(ThisBoxValue * 1000) / 1000;
+                    $("#" + Identity + "").val(ThisBoxValue);
+                }
+            }
+
+            var ColumnTotal = 0;
+            var RowId = "";
+
+            $("#CreateTargetTable tbody tr").each(function () {
+                var RowId = ($(this).attr("id"));
+                var TextBoxData = $("#OSVT_" + (RowId.replace('CTTROW_', '')) + "").val();
+
+                if (TextBoxData == "") {
+                    TextBoxData = 0;
+                }
+                ColumnTotal = ColumnTotal + parseFloat(TextBoxData);
+            });
+
+            ColumnTotal = Math.round(ColumnTotal * 1000) / 1000;
+            $("#StateTarget").val(ColumnTotal);
+
+        }
+        catch (e) {
+            alert("Error: AddOverAllSalesVolume : " + e);
+        }
+
+    }
+
+
+    function GetCreateTargetForEdit(Identity) {
+        $("#MonthYear").attr("disabled", "disabled");
+        //$("#StateMasterLookUp").attr("disabled", "disabled");
+        //$("#ZoneMasterLookUp").attr("disabled", "disabled");
+        $(".StateMasterLookUp").children(".btn-default").css("pointer-events", "none");
+        $(".ZoneMasterLookUp").children(".btn-default").css("pointer-events", "none");
+
+        $.ajax({
+            method: 'POST',
+            url: '../../SFDC/GetCreateTargetForEdit',
+            data: { RecordId: Identity },
+        }).then(function successCallback(Resp) {
+
+            if (Resp == "") {
+            }
+            else {
+
+                Resp = JSON.parse(Resp);
+
+                //var Header = Resp["Header"][0];
+                //var Child = Resp["Child"];
+
+                $("#ZonalCode").val(Resp[0]["ZoneCode"]);
+                $("#ZonalName").val(Resp[0]["ZoneName"]);
+                $("#StateCode").val(Resp[0]["StateCode"]);
+                $("#StateName").val(Resp[0]["StateName"]);
+                $("#StateHeadEmpCode").val(Resp[0]["StateHeadEmpCode"]);
+                $("#StateHeadName").val(Resp[0]["StateHeadEmpName"]);
+                $("#MonthYear").val(Resp[0]["MonthYear"]);
+                $("#StateTarget").val(Resp[0]["StateTarget"]);
+                $("#taregtinrs").val(Resp[0]["RevenueTarget"]);
+                $("#targetforsh").val(Resp[0]["SHCreditTarget"]);
+                $("#actualsapprovedforsh").val(Resp[0]["SHCreditApprovals"]);
+                $("#targetfortm").val(Resp[0]["TMCreditTarget"]);
+                $("#actualsapprovedfortm").val(Resp[0]["TMCreditApprovals"]);
+
+                var TRCode = "";
+
+                for (var i = 0; i < Resp.length; i++) {
+
+                    TRCode = TRCode + "<tr id='CTTROW_" + (i + 1) + "'>";
+
+                    TRCode = TRCode + "<td style='display:none;'>" + (i + 1) + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["EmployeeCode"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["EmployeeName"] + "</td>";
+                    TRCode = TRCode + "<td>" + Resp[i]["EmployeeRoleDesignation"] + "</td>";
+                    TRCode = TRCode + "<td><input type='text' id='OSVT_" + (i + 1) + "' onkeypress='return isNumber(event)' onchange='AddOverAllSalesVolume(this.id)' value='" + Resp[i]["OverallSalesVolumeTarget"] + "' /></td>";
+                    TRCode = TRCode + "<td><input type='text' id='KSTV_" + (i + 1) + "' onkeypress='return isNumber(event)' value='" + Resp[i]["KeyStockistVolume"] + "' /></td>";
+                    TRCode = TRCode + "<td><input type='text' id='NSTB_" + (i + 1) + "' onkeypress='return isNumber(event)' value='" + Resp[i]["NoofStockistBilled"] + "' /></td>";
+                    TRCode = TRCode + "<td><input type='text' id='OCSV_" + (i + 1) + "' onkeypress='return isNumber(event)' value='" + Resp[i]["OverallCCSheetVolume"] + "' /></td>";
+
+                    TRCode = TRCode + "</tr>";
+
+                }
+
+                $("#CreateTargetTable tbody").empty();
+                $("#CreateTargetTable tbody").remove();
+
+                $("#CreateTargetTable").append("<tbody>" + TRCode + "</tbody>");
+
+                $('#CreateTargetTable').DataTable({
+                    'bDestroy': true,
+                    'bFilter': false,
+                    'scroll': true,
+                    'paging': false,
+                    'ordering': false,
+                    'info': false
+                });
+
+            }
+        },
+        function errorCallback(response) {
+            alert("Error : " + response);
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function NumberTextBoxWith2DecimalPoints(Identity) {
+        try {
+            var BoxValue = $("#" + Identity).val();
+            if (isNaN(BoxValue)) {
+                alert("Enter Valid Number");
+                $("#" + Identity).val("");
+            }
+            else {
+                BoxValue = Math.round(BoxValue * 100) / 100;
+                $("#" + Identity).val(BoxValue);
+            }
+        }
+        catch (e) {
+            alert("Error : TextBoxWith2DecimalPoints : " + e);
+        }
+    }
+
+
+    function NumberTextBoxWithInteger(Identity) {
+        try {
+            var BoxValue = $("#" + Identity).val();
+            if (isNaN(BoxValue)) {
+                alert("Enter Valid Number");
+                $("#" + Identity).val("");
+            }
+            else {
+                if (BoxValue.indexOf('.') > -1) {
+                    alert("Enter Valid Number");
+                    $("#" + Identity).val("");
+                }
+            }
+        }
+        catch (e) {
+            alert("Error : NumberTextBoxWithInteger : " + e);
+        }
+    }
+
+    // $("#OSVT_1")
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="CreateTargetTableFormDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document" style="width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Create Target Edit</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+
+                        <input type="text" id="CTT_RowId" data-ng-model="CTT_RowId" style="display: none;" />
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.SalesEmployeeCode</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="SalesEmployeeCode" data-ng-model="SalesEmployeeCode" disabled="disabled" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.SalesEmployeeName</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="SalesEmployeeName" data-ng-model="SalesEmployeeName" disabled="disabled" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.SalesEmployeeRoleDesignation</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" id="SalesEmployeeRoleDesignation" data-ng-model="SalesEmployeeRoleDesignation" disabled="disabled">
+                                    <option value="">Select</option>
+                                    <option value="FSO">FSO</option>
+                                    <option value="TM">TM</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.Target</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="Target" data-ng-model="Target" disabled="disabled" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.OverallSalesVolumeTarget</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="OverallSalesVolumeTarget" data-ng-model="OverallSalesVolumeTarget" onkeypress="return isNumber(event)" onchange="TextBoxWith2DecimalPoints('OverallSalesVolumeTarget')" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.KeyStockistVolume</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="KeyStockistVolume" data-ng-model="KeyStockistVolume" onkeypress="return isNumber(event)" onchange="NumberTextBoxWith2DecimalPoints('KeyStockistVolume')" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.PercentStockistBilled</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="PercentStockistBilled" data-ng-model="PercentStockistBilled" onkeypress="return isInteger(event)" onchange="NumberTextBoxWithInteger('PercentStockistBilled')" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.DailySalesHuddle</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="DailySalesHuddle" data-ng-model="DailySalesHuddle" disabled="disabled" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.WeeklySalesReview</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="WeeklySalesReview" data-ng-model="WeeklySalesReview" disabled="disabled" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.MonthlySalesReview</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="MonthlySalesReview" data-ng-model="MonthlySalesReview" disabled="disabled" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.NewStockistVolume</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="NewStockistVolume" data-ng-model="NewStockistVolume" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.NewStockistsAppointed</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="NewStockistsAppointed" data-ng-model="NewStockistsAppointed" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.NewSubStockistsAppointed</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="NewSubStockistsAppointed" data-ng-model="NewSubStockistsAppointed" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.NewSubStockistVolume</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="NewSubStockistVolume" data-ng-model="NewSubStockistVolume" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.JourneyPlan</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="JourneyPlan" data-ng-model="JourneyPlan" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.NewStockistConversionPlan</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="NewStockistConversionPlan" data-ng-model="NewStockistConversionPlan" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.NewSubStockistConversionPlan</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="NewSubStockistConversionPlan" data-ng-model="NewSubStockistConversionPlan" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.PercentVisitsPlannedvsActual</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="PercentVisitsPlannedvsActual" data-ng-model="PercentVisitsPlannedvsActual" disabled="disabled" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.PercentAdherencetoPJP</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="PercentAdherencetoPJP" data-ng-model="PercentAdherencetoPJP" disabled="disabled" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.PercentStockistsTrackingInventory</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="PercentStockistsTrackingInventory" data-ng-model="PercentStockistsTrackingInventory" disabled="disabled" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@LabelNames.PercentStockistInventoryTrackedbyFSO</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="PercentStockistInventoryTrackedbyFSO" data-ng-model="PercentStockistInventoryTrackedbyFSO" disabled="disabled" />
+                            </div>
+                            <label class="col-sm-2 control-label">@LabelNames.StockistIssuesOpenfor30Days</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="StockistIssuesOpenfor30Days" data-ng-model="StockistIssuesOpenfor30Days" disabled="disabled" />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CTT_Update" class="btn btn-primary" onclick="SaveCTTData()">Update</button>
+                <button type="button" id="CTT_Close" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,331 @@
+﻿@*
+
+Module              : CMS - DIMS Solution.
+DocumentName        : CMS_Management_Information_System.cs
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for CMS Management Information System.
+Developer Name      : Swamy Ayyappa Peddinti.
+Change Log          : NA.
+
+
+*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.ComplaintRegistration;
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeID = UP.UserTypeCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    /*table tr {
+        cursor: pointer;
+    }*/
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Management Information System</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">Management Information System</li>
+    </ol>
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal">
+                        <div class="row">
+
+
+                            <div class="table-responsive">
+                                <table class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;">MANAGEMENT INFORMATION SYSTEM FOR QUALITY AUDIT FUNCTION -
+                                            <label id="FincialYear">2015-16</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="CustomerResponse" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;" colspan="18">
+                                                <label>Customer Response</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>UOM</th>
+                                            <th>2011-12</th>
+                                            <th>2012-13</th>
+                                            <th>2013-14</th>
+                                            <th>2014-15</th>
+                                            <th>Apr-15</th>
+                                            <th>May-15</th>
+                                            <th>Jun-15</th>
+                                            <th>Jul-15</th>
+                                            <th>Aug-15</th>
+                                            <th>Sep-15</th>
+                                            <th>Oct-15</th>
+                                            <th>Nov-15</th>
+                                            <th>Dec-15</th>
+                                            <th>Jan-16</th>
+                                            <th>Feb-16</th>
+                                            <th>Mar-16</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="LossToTheCompant" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;" colspan="19">
+                                                <label>Loss to the Company</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>UOM</th>
+                                            <th>2011-12</th>
+                                            <th>2012-13</th>
+                                            <th>2013-14</th>
+                                            <th>2014-15</th>
+                                            <th>Apr-15</th>
+                                            <th>May-15</th>
+                                            <th>Jun-15</th>
+                                            <th>Jul-15</th>
+                                            <th>Aug-15</th>
+                                            <th>Sep-15</th>
+                                            <th>Oct-15</th>
+                                            <th>Nov-15</th>
+                                            <th>Dec-15</th>
+                                            <th>Jan-16</th>
+                                            <th>Feb-16</th>
+                                            <th>Mar-16</th>
+                                            <th>YTD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="NetLossPlantWise" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;" colspan="18">
+                                                <label>Net Loss Plant Wise</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Kondapalli</th>
+                                            <th>Wada</th>
+                                            <th>Blsr</th>
+                                            <th>Trsr</th>
+                                            <th>Jcd</th>
+                                            <th>Satharia</th>
+                                            <th>Fbd</th>
+                                            <th>Chhindwara</th>
+                                            <th>Hyd</th>
+                                            <th>Chennai</th>
+                                            <th>Golan</th>
+                                            <th>Tmpr-Pnls</th>
+                                            <th>Pnls-Fbd</th>
+                                            <th>Jhajjar	Dhura</th>
+                                            <th>Tmpr-Blocks</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="ComplaintStatisticsAcrossPlants" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;" colspan="18">
+                                                <label>Complaint Statistics Across Plants</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Kondapalli</th>
+                                            <th>Wada</th>
+                                            <th>Blsr</th>
+                                            <th>Trsr</th>
+                                            <th>Jcd</th>
+                                            <th>Satharia</th>
+                                            <th>Fbd</th>
+                                            <th>Chhindwara</th>
+                                            <th>Hyd</th>
+                                            <th>Chennai</th>
+                                            <th>Golan</th>
+                                            <th>Tmpr-Pnls</th>
+                                            <th>Pnls-Fbd</th>
+                                            <th>Jhajjar	Dhura</th>
+                                            <th>Tmpr-Blocks</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="ZoneWiseLossandCustomerSatisfaction" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;" colspan="9">
+                                                <label>Zone Wise Loss and Customer Satisfaction</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>South</th>
+                                            <th>South1</th>
+                                            <th>West</th>
+                                            <th>East1</th>
+                                            <th>East</th>
+                                            <th>North1</th>
+                                            <th>North</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="PercentNetLosstoBreakages" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;" colspan="18">
+                                                <label>% Net Loss to Breakages</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>UOM</th>
+                                            <th>2012-13</th>
+                                            <th>2013-14</th>
+                                            <th>2014-15</th>
+                                            <th>Apr-15</th>
+                                            <th>May-15</th>
+                                            <th>Jun-15</th>
+                                            <th>Jul-15</th>
+                                            <th>Aug-15</th>
+                                            <th>Sep-15</th>
+                                            <th>Oct-15</th>
+                                            <th>Nov-15</th>
+                                            <th>Dec-15</th>
+                                            <th>Jan-16</th>
+                                            <th>Feb-16</th>
+                                            <th>Mar-16</th>
+                                            <th>YTD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="QAFEfficiencyMatrix" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;" colspan="17">
+                                                <label>QAF Efficiency Matrix</label>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>Vijay</th>
+                                            <th>Prasad</th>
+                                            <th>Kamraj</th>
+                                            <th>Kapil</th>
+                                            <th>Vijitender</th>
+                                            <th>Shad Ali</th>
+                                            <th>Ajay</th>
+                                            <th>BK Singh</th>
+                                            <th>Dilip</th>
+                                            <th>Kripa</th>
+                                            <th>Sukh</th>
+                                            <th>Surya</th>
+                                            <th>Deepak</th>
+                                            <th>Diwakar</th>
+                                            <th>Ramdas</th>
+                                            <th>Other</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+</section>
+
+<script type="text/javascript">
+
+    //$(document).ready(function () {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: '../ComplaintReports/CMS_MIS_InitialRequest',
+    //        datatype: 'JSON',
+    //        async: false,
+    //        success: function (response) {
+
+    //        }
+    //    });
+
+    //});
+
+
+</script>

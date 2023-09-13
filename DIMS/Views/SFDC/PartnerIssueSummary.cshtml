@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "PartnerIssueSummary";
+
+    //DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    //string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    //string SessionUserCode = UP.UserCode;
+    //string SessionUserName = UP.UserName;
+    //string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    //string SessionUserTypeCode = UP.UserTypeCode;
+    //string SessionUserType = UP.UserType;
+}
+<style>
+ 
+
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Partner Issue Summary</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('PartnerIssueSummary')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Partner Issue Summary</li>
+    </ol>
+
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="EditPartnerIssueSummaryDiv">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body" @*style="overflow-x: scroll; width: 98%"*@>                
+                <div class="pull-right" style="margin-left: 15px;">
+                    <button type="button" id="Reset" ng-click="Reset()" class="btn btn-info navbar-btn" style="background-color:#d2401a;border:1px solid #d2401a;color:white">
+                        Reset Filter
+                    </button>
+                </div>
+                <form role="form" class="form-horizontal" style="font-size: small;margin-top:36px;">
+                     <div class="form-group">
+@*                        <label class="col-sm-2 control-label">@LabelNames.TerritoryArea</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="TerritoryArea" multiple="multiple">
+
+                            </select>
+                        </div>*@
+                       <label class="col-sm-2 control-label">From Date</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control Date" id="FromDate" data-ng-model="StartDate" readonly="readonly" placeholder="From Date" />
+                        </div>
+                       <label class="col-sm-2 control-label">To Date</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control Date" id="ToDate" data-ng-model="EndDate" readonly="readonly" placeholder="To Date"/>
+                        </div>
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div style="overflow:auto;">
+                <table class="table tablecss" id="PartnerIssueSummarytbl">
+                    <thead>
+                        <tr style="background-color:#d2401a;color:white">                            
+                            <th style="text-align:center" colspan="4">Partner Issue Summary # (YTD)</th>
+                        </tr>
+                        <tr style="background-color: #d2401a; color: white">
+                            <th style="text-align:center">STATE</th>
+                            <th style="text-align:center">No of Issues Logged in</th>
+                            <th style="text-align:center">Issues resolved</th>
+                            <th style="text-align:center">Issues Pending</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+   <div class="modal fade" id="PartnerIssueSummaryList" role="dialog">
+        <div class="modal-dialog">
+            @*style="background-color:cyan"*@
+            <!-- Modal content-->
+            <div class="modal-content" >
+                <div class="modal-header" style="background-color:#d2401a;color:white">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align: center">&nbsp;Partner Issue Summary List</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="overflow:auto;">
+                    <table border="2" width="50%" style="text-align: center" id="PartnerIssueSummaryListtbl" class="table tablecss">
+                        <thead>
+                            <tr style="background-color:#d2401a;color:white">
+                                <th style="text-align:center">State</th>
+                                <th style="text-align:center">Issue Description</th>
+                                <th style="text-align:center">Issue Status</th>
+                            </tr>
+                        </thead>
+                        <tbody> </tbody>
+                    </table>
+                </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+       
+        $("#FromDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $("#ToDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        //$('#ToDate').bind('keypress', function (e) {
+        //    return false;
+        //    $(this).datepicker('hide');
+        //});
+       
+
+        $("#PartnerIssueSummaryListtbl").dataTable();
+    });
+    
+
+</script>
+

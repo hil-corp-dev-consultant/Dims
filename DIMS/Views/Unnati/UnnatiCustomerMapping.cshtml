@@ -1,0 +1,251 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserTypeCode = UP.UserTypeCode;
+    string SessionUserType = UP.UserType;
+}
+
+<style type="text/css">
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>UNNATI User Mapping</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href ng-click="go('UnnatiDashBoard')">UNNATI</a></li>
+        <li class="active">UnnatiUserMapping</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;" id="Unnati_Customer_Mapping_Section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-body" style="overflow-x: scroll; width: 98%">
+                        <form role="form" class="form-horizontal" id="UnnatiCustomerFileUploadForm" method="post" enctype="multipart/form-data">
+                            <input type="text" id="USERNAME_UnnatiCustomerMapping" style="display: none;" value="@SessionUserName" />
+                            <input type="text" id="USERCODE_UnnatiCustomerMapping" style="display: none;" value="@SessionUserCode" />
+                            <input type="text" id="USERTYPE_UnnatiCustomerMapping" style="display: none;" value="@SessionUserTypeCode" />
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="CustomerMappingddl" ng-model="CustomerMappingddl" ng-change="GetCustomerDetails()">
+
+                                        <option value="UnMapped">UnMapped</option>
+                                        <option value="ALL">All</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <input style="border: 1px solid; border-radius: 6px; margin-top: 5px; margin-bottom: 5px;" type="file" id="UnnatiCustomerFormFile" name="UnnatiCustomerFormFile" class="filestyle" onchange="UnnatiCustomerFileUploaded()" />
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="button" class="btn btn-info" value="Submit" onclick="ImportUnnatiCustomer()" />
+                                </div>
+                            </div>
+
+
+
+
+                            <table id="UnnatiUserMapping_Table" class="table ListTable">
+                                <thead>
+                                    <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Membership ID</th>
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Member Name</th>
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Member Type</th>
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Enrollment Date</th>
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Zone</th>
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">District</th>
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">State</th>
+                                        <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Customer Code/<br />
+                                            Org Level Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</div>
+
+<div class="modal fade" id="CustomerColumnPopup">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #d2401a; color: #fff;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" style="font-size: 12px;">
+                    <b>Column Names and order Should be as below</b>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 12px;"><b>Make Sure About Column Names and order as below :</b></p>
+                <p>Membership ID</p>
+                <p>Member Name</p>
+                <p>Member Type</p>
+                <p>Enrollment Date</p>
+                <p>Zone</p>
+                <p>District</p>
+                <p>State</p>
+                <p>Customer Code/Org Level Id</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CustomerResultPopup">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #d2401a; color: #fff;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" style="font-size: 12px;">Below Mentioned Customer Code/Orglevel Id's Not Exist
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="CustomerBody" style="overflow: auto">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $(window).resize(function () {
+            $('.CustomHeight_Section').height($(window).height() - 170);
+        });
+        $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    });
+
+
+    function UnnatiCustomerFileUploaded() {
+        var filename = $("#UnnatiCustomerFormFile").val();
+        var extension = filename.replace(/^.*\./, '');
+
+        if (extension == "xlsx" || extension == "xls") {
+
+        }
+        else {
+            alert("Invalid File");
+            $("#UnnatiCustomerFormFile").val("");
+        }
+    }
+
+    function ImportUnnatiCustomer() {
+        var FormData1 = $("#UnnatiCustomerFormFile").prop("files")[0];
+        if (FormData1 != "undefined" && FormData1 != null) {
+            // var formData = FormData1;
+            var formData = new FormData($("#UnnatiCustomerFileUploadForm")[0]);
+
+            ShowLoader();
+
+            $.ajax({
+                url: '../../Unnati/UploadCustomerMappingFile',
+                type: 'POST',
+                data: formData,
+                async: false,
+                beforeSend: function () {
+                   ShowLoader();
+                },
+                success: function (Resp) {
+
+                    if (Resp == "Columns Doesn't Exist") {
+                        $("#CustomerColumnPopup").modal('show');
+                        $("#UnnatiCustomerFormFile").val("");
+                    }
+                    else {
+
+
+                        if (Resp == "TRUE" || Resp == "FALSE") {
+
+                            if (Resp == "TRUE") {
+                                alert("Successfully Updated");
+                            }
+                            else {
+                                alert("Failed to Update");
+                            }
+                            //$scope.GetCustomerDetails();
+                            var Data = JSON.stringify({
+                                UserCode: $("#USERCODE_UnnatiCustomerMapping").val(),
+                                CustomerType: $("#CustomerMappingddl").val()
+                            })
+
+                            //angular.injector(['ng', 'DIMSApp']).get("DIMSUnnatiFactory").getUnnatiEnrollmentData(Data).success(function (response) {
+                            //    TableReference.draw();
+                            //    HideLoader();
+                            //});
+
+                            var scope = angular.element(document.getElementById('Unnati_Customer_Mapping_Section')).scope();
+                            scope.$apply(function () {
+                                scope.GetCustomerDetails();
+                            });
+
+                            $("#UnnatiCustomerFormFile").val("");
+                        }
+                        else {
+
+                            $("#CustomerBody").append(Resp);
+
+                            var scope = angular.element(document.getElementById('Unnati_Customer_Mapping_Section')).scope();
+                            scope.$apply(function () {
+                                scope.GetCustomerDetails();
+                            });
+
+                            $("#CustomerResultPopup").modal('show');
+
+                            $("#UnnatiCustomerFormFile").val("");
+
+                        }
+                    }
+
+                       HideLoader();
+
+                },
+                complete: function () {
+                    HideLoader();
+                },
+                error: function () {
+                    HideLoader();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        } else {
+            alert("Please select file");
+        }
+    }
+</script>
+

@@ -1,0 +1,361 @@
+﻿@*
+
+    Module              : DIMS Solution.
+    DocumentName        : GetUsersStockistList.cs
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for generating passwords for the stockists.
+    Developer Name      : Swamy Ayyappa Peddinti.
+    Change Log          : NA.
+
+*@
+
+
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+}
+
+<style>
+    table tr {
+        cursor: pointer;
+    }
+
+    table thead tr th {
+        vertical-align: middle;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 style="font-family: Calibri;font-size:18px;font-weight:500;">Stockist List</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Stockist List</li>
+        <li class="active">Stockist List</li>
+    </ol>
+</section>
+<div class="CustomHeight_Section" style="overflow:auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">                   
+                    <button onclick="MakeStockistsToUsers()" class="btn btn-primary pull-right" id="StockistUsers" type="button" style="background-color:#d2401a;border:1px solid #d2401a;">Create Users</button>
+                    <input type="text" id="CurrentUserName" value="@SessionUserName" style="display:none;" />                   
+                </div>
+                <div class="box-body" style="overflow-x: scroll; width: 98%" id="StockistListDiv">                    
+                    <table class="table" id="StockistList">
+                        <thead>
+                            <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+                                <th>
+                                    <input type="checkbox" id="StockistCheckAll" onchange="StockistCheckAllChange()" />
+                                </th>
+                                <th>CUSTOMER_CODE</th>
+                                <th>CUSTOMER_NAME</th>
+                                <th>CUSTOMER_TYPE_NAME</th>
+                                <th>CITY_NAME</th>
+                                <th>STATE_NAME</th>
+                                <th>ZONE_NAME</th>
+                                <th>COUNTRY_CODE</th>
+                                <th>EMAIL</th>
+                                <th>PHONE1</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        @*                        <tfoot style="display: none;">
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" onchange="StockistCheckAllChange()" /></th>
+                                    <th>CUSTOMER_CODE</th>
+                                    <th>CUSTOMER_NAME</th>
+                                    <th>CUSTOMER_TYPE_NAME</th>
+                                    <th>CITY_NAME</th>
+                                    <th>STATE_NAME</th>
+                                    <th>ZONE_NAME</th>
+                                    <th>COUNTRY_CODE</th>
+                                    <th>EMAIL</th>
+                                    <th>PHONE1</th>
+                                </tr>
+                            </tfoot>*@
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="custModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#D2401A; color:#FFFFFF">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">List of Customers who dont have Email/Phone Number</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <form class="form-horizontal" role="form">
+                                <fieldset>
+                                    <div class="form-group" style="padding-left: 30px">
+                                        <label class="control-label" id="lblcuscode" style="text-align:center"></label>
+                                        <br />
+                                        <label class="control-label" id="lblFail" style="text-align:center; color:red"></label>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="background-color: #d2401a">Close</button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        //var Data=JSON.stringify({"Usercode":"50002319","Name":"ALL"});
+
+        //$.ajax({
+        //    method: 'POST',
+        //    url: '../../Users/GetStockistList_Name',
+        //    data: { InputData: Data },
+        //    success: function () {
+        //        FillStockistTable();
+        //    }
+        //})
+        FillStockistTable();
+    });
+
+
+
+    //function FillStockistTable() {
+
+
+    //    try {
+    //        $.ajax({
+    //            method: 'POST',
+    //            url: '../../Users/GetStockistList',
+    //        }).then(function successCallback(Resp) {
+    //            if (Resp == "FALSE") {
+    //            }
+    //            else {
+    //                Resp = JSON.parse(Resp);
+    //                var TableBody = "";
+    //                //$("#StockistList tbody").empty();
+
+    //                $("#StockistList tbody").remove();
+
+    //                for (var i = 0; i < Resp.length; i++) {
+
+    //                    TableBody = TableBody + "<tr id='STRow_" + Resp[i]["CUSTOMER_CODE"] + "'>";
+
+    //                    TableBody = TableBody + "<td><input type='checkbox' id='STK_" + Resp[i]["CUSTOMER_CODE"] + "' onchange='StockistRowChecked()' /></td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["CUSTOMER_CODE"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["CUSTOMER_NAME"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["CUSTOMER_TYPE_NAME"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["CITY_NAME"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["STATE_NAME"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["ZONE_NAME"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["COUNTRY_CODE"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["EMAIL"] + "</td>";
+    //                    TableBody = TableBody + "<td>" + Resp[i]["PHONE1"] + "</td>";
+
+
+    //                    TableBody = TableBody + "</tr>";
+
+    //                }
+
+    //                $("#StockistList").append("<tbody>" + TableBody + "</tbody>");
+
+    //                $("#StockistList").dataTable();
+
+    //                //var table = $('#StockistList').DataTable({
+    //                //    "scrollX": true,
+    //                //    'aoColumnDefs': [{
+    //                //        'bSortable': false,
+    //                //        'aTargets': ['nosort']
+    //                //    }]
+    //                //});
+
+    //            }
+    //        }, function errorCallback(response) {
+    //            alert("Error : " + response);
+    //        });
+    //    }
+    //    catch (e) {
+    //        alert("Error : FillStockistTable : " + e);
+    //    }
+
+
+    //}
+
+
+    //Get Stockists who does not have any User Login
+    function FillStockistTable() {
+
+        $("#StockistList").dataTable().fnDestroy();
+        var tableUserMapping = $("#StockistList").DataTable({
+
+            "bDestroy": true,
+            "bSortable": true,
+            'scroll': true, "order": [[1, "desc"]],
+            "processing": false, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+
+            "ajax": {
+                url: '../../Users/GetStockistList',
+                "type": "POST",
+                "datatype": "json"
+            }
+              , "columns": [{ "data": "CUSTOMER_CODE", "name": "CUSTOMER_CODE" },
+                        { "data": "CUSTOMER_CODE", "name": "CUSTOMER_CODE", "bSortable": "true" },
+                        { "data": "CUSTOMER_NAME", "name": "CUSTOMER_NAME", "bSortable": "true" },
+                        { "data": "CUSTOMER_TYPE_NAME", "name": "CUSTOMER_TYPE_NAME", "bSortable": "true" },
+                        { "data": "CITY_NAME", "name": "CITY_NAME", "bSortable": "true" },
+                        { "data": "STATE_NAME", "name": "STATE_NAME", "bSortable": "true" },
+                        { "data": "ZONE_NAME", "name": "ZONE_NAME", "bSortable": "true" },
+                        { "data": "COUNTRY_CODE", "name": "COUNTRY_CODE", "bSortable": "true" },
+                        { "data": "EMAIL", "name": "EMAIL", "bSortable": "true", },
+                          { "data": "PHONE1", "name": "PHONE1", "bSortable": "true", }
+
+              ],
+            'columnDefs': [{
+                'targets': 0,
+                'searchable': false,
+                'orderable': false,
+                'className': 'dt-body-center',
+                'render': function (data, type, full, meta) {
+                    // alert(data);
+                    return '<input type="checkbox" name="id[]" value="'
+                       + $('<div/>').text(data).html() + '" id="STK_' + $('<div/>').text(data).html() + '" onchange="StockistRowChecked()">';
+                }
+            }],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                $(nRow).attr("id", 'STRow_' + aData["CUSTOMER_CODE"]);
+                return nRow;
+            }
+        });
+    }
+
+    //Check All function in the Stockist table
+    function StockistCheckAllChange() {
+
+        try {
+            var Iden = "";
+
+            $("#StockistList tbody tr").each(function () {
+                Iden = ($(this).attr("id"));
+                Iden = Iden.replace("STRow_", "STK_");
+                $("#" + Iden + "").prop('checked', $("#StockistCheckAll").is(":checked"));
+            });
+        }
+        catch (e) {
+            alert("Error StockistCheckAllChange: " + e);
+        }
+
+    }
+
+
+    //Stockist table row checkbox checked
+    function StockistRowChecked() {
+        try {
+            var AllChecked = true;
+
+            $("#StockistList tbody tr").each(function () {
+                Iden = ($(this).attr("id")).replace("STRow_", "STK_");
+                if ($("#" + Iden + "").is(":checked")) {
+                }
+                else {
+                    AllChecked = false;
+                }
+            });
+
+            $("#StockistCheckAll").prop('checked', AllChecked);
+
+        }
+        catch (e) {
+            alert("Error StockistRowChecked: " + e);
+        }
+    }
+
+
+    //Create Users from the Stockists
+    function MakeStockistsToUsers() {
+        debugger
+        try {
+            var Iden = "";
+            var StockistArray = new Array();            
+            $("#StockistList tbody tr").each(function () {
+                //Iden = ($(this).attr("id")).replace("STRow_", "STK_");
+
+                //if ($("#" + Iden + "").is(":checked")) {
+                //    StockistArray.push(Iden.replace("STK_", ""));
+                //}
+                if ($(this).find('input[type="checkbox"]').is(':checked')) {
+                    //alert($.inArray($(this).find('td').eq(1).text(), StockistArray));
+                    if ($.inArray($(this).find('td').eq(1).text(),StockistArray)<0)
+                    StockistArray.push($(this).find('td').eq(1).text());
+                }
+            });
+            if (StockistArray == "[]" || StockistArray.length == 0) {
+                alert("Select Atleast One Stockist");
+            }
+            else {
+                StockistArray = JSON.stringify({
+                    CurrentUserName: $("#CurrentUserName").val(),
+                    StockistArray: StockistArray
+                });
+                // alert(StockistArray);
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("MakeStockistsToUsers", "Users")',
+                    dataType: "json",
+                    data: { StockistArray: StockistArray },
+                    async: true,
+                    cache: false,
+                    success: function (Response) {
+                        if (Response == "SUCCESS") {
+                            alert("User Created Successfully");
+                            window.location.reload();
+                        }
+                        else {
+                            
+                            $("#lblcuscode").html("List of Customers fail to create as users: ");
+                            $("#lblFail").html(Response);
+                            $("#custModal").modal('show');
+                            //window.location.reload();
+                        }
+                    },
+                    error: function (data) {
+                        alert("Error Occured");
+                    }
+                });
+            }
+        }
+        catch (e) {
+            alert("Error: MakeStockistsToUsers :" + e);
+        }
+    }
+
+</script>

@@ -1,0 +1,228 @@
+﻿@{    
+    Layout = null;
+}
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Budget Target Upload</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Reports</li>
+        <li class="active">Budget Target Upload</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;" id="BudgetTargetUploadDiv">
+                <div class="box-body" @*style="overflow-x: scroll; width: 98%"*@>
+                    <div class="row">
+                        <form id="FileUploadForm" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <div class="col-sm-4" style="margin-bottom:5px;">
+                                    <div class="input-group">
+                                        <input class="btn btn-primary filestyle" style="background-color: white;width: 100%; color: black;" type="file" id="FileUpload" name="FileUpload"/>
+                                    </div>
+                                </div>                                
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <input type="submit" class="btn btn-info" value="Submit" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                   <div style="padding:10px;"></div>
+                    <div class="row">
+                        @*<div class="col-sm-4">
+                            <label class="control-label">Select Month</label>
+                        </div>*@
+                        <div class="col-sm-4" style="margin-bottom:5px;">
+                            <input type="text" class="form-control Date" id="MonthYear" data-ng-model="StartDate" readonly="readonly" placeholder="Select Month" />
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="button" class="btn btn-info" value="Get" onclick="GetSelectedMonthBudget()" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:10px;"></div>
+                    <table id="BudgetTargetTable" class="table tablecss" width="100%" cellspacing="0" style="margin-left: 9px;">
+                        <thead>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <div style="padding:10px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        $("#MonthYear").datepicker({
+            format: 'MM yyyy',
+            autoclose: true,
+            startView: "months",
+            minViewMode: "months"
+        });        
+    });
+
+    function GetSelectedMonthBudget() {
+        var MonthYear = $('#MonthYear').val().split(' ');
+        if (MonthYear == "" || MonthYear == null || MonthYear == "null") {
+            alert("Please select Month");
+        }
+        else {
+            var Data = JSON.stringify({ Month: MonthYear[0], Year: MonthYear[1] });
+            GetBudgetTarget(Data);
+        }
+    }
+
+    $("#FileUploadForm").submit(function () {        
+        var filename = $("#FileUpload").val();
+        var extension = filename.replace(/^.*\./, '');
+
+        if (extension != "xlsx" && extension != "xls") {
+            alert("Please select an Excel file to Upload");
+        }
+        else {
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                url: '../../Reports/UploadExcel',
+                type: 'POST',
+                data: formData,
+                async: false,
+                success: function (response) {
+                    if (response != "" && response != null && response != "null") {
+                        var Result = JSON.parse(response);
+                        var Month = Result[0]["TargetMonth"];
+                        var Year = Result[0]["TargetYear"];
+                        var Data = JSON.stringify({ Month: Month, Year: Year });
+                        GetBudgetTarget(Data);
+                    }
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            return false;
+        }
+        $("#FileUpload").val("");
+    });
+
+    function GetBudgetTarget(Data) {
+        $("#FileUpload").val("");
+        $.ajax({
+            url: '../../Reports/GetBudgetTarget',
+            type: 'POST',
+            data: { Data: Data },
+            async: false,
+            success: function (response) {
+                $('#BudgetTargetTable').empty();
+                
+                if (response != "" && response != null && response != "null") {
+                    var THead = '';
+                    var TBody = '';
+                    if (response != "" && response != null && response != "null") {
+                        var Result = JSON.parse(response);
+                        var year = Result[0]["Year"];
+                        var month = Result[0]["MonthNumber"];
+                        var monthStart = new Date(year, month - 1, 1);
+                        var monthEnd = new Date(year, month, 1);
+                        var DaysInMonth = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
+
+                        var MainHead = '';
+                        var DayHead = '';
+                        MainHead += '<tr>';
+                        MainHead += '<td></td>';
+                        MainHead += '<td></td>';
+                        for (var i = 1; i <= DaysInMonth; i++) {
+                            MainHead += '<td style="text-align:center;">' + Result[Result.length - 2]["Day" + i].substring(0, 3).toUpperCase() + '</td>';
+                            DayHead += '<td style="text-align:center;font-weight:bold;">' + i + '</td>';
+                        }
+                        MainHead += '<td rowspan="3" style="text-align:center;font-weight:bold;">' + Result[0]["Month"].substring(0, 3).toUpperCase() + ' ' + Result[0]["Year"] + ' TGT for CC Sheet</td>';
+                        MainHead += '</tr>';
+
+                        var WeekHead = '<tr>';
+                        WeekHead += '<td rowspan="2" style="text-align:center;font-weight:bold;">STATE</td>';
+                        WeekHead += '<td rowspan="2" style="text-align:center;font-weight:bold;">' + Result[0]["Month"].substring(0, 3).toUpperCase() + ' ' + Result[0]["Year"] + ' TGT</td>';
+                        var FirstWeekSpan = (7 - Result[Result.length - 1]["Day1"]) + 1;
+                        WeekHead += '<td colspan="' + FirstWeekSpan + '" style="text-align:center;font-weight:bold;">Week 1</td>';
+                        WeekHead += '<td colspan="7" style="text-align:center;font-weight:bold;">Week 2</td>';
+                        WeekHead += '<td colspan="7" style="text-align:center;font-weight:bold;">Week 3</td>';
+                        WeekHead += '<td colspan="7" style="text-align:center;font-weight:bold;">Week 4</td>';
+                        var LastWeekSpan = DaysInMonth - (FirstWeekSpan + 21);
+                        if (LastWeekSpan > 0) {
+                            WeekHead += '<td colspan="' + LastWeekSpan + '" style="text-align:center;font-weight:bold;">Week 5</td>';
+                        }
+                        WeekHead += '</tr>';
+
+                        THead = MainHead + WeekHead + DayHead;
+                        for (var i = 0; i < Result.length - 2; i++) {
+                            if (Result[i]["State"].indexOf('TOTAL') > -1) {
+                                TBody += '<tr style="background-color:#8AD4EE;">';
+                            }
+                            else {
+                                TBody += '<tr>';
+                            }
+                            TBody += '<td>' + Result[i]["State"] + '</td>';
+                            TBody += '<td style="text-align:center;">' + Result[i]["Target"] + '</td>';
+                            for (var j = 1; j <= DaysInMonth; j++) {
+                                if (Result[i]["Day" + j] == "" || Result[i]["Day" + j] == null || Result[i]["Day" + j] == "null") {
+                                    Result[i]["Day" + j] = "";
+                                }
+                                TBody += '<td style="text-align:center;">' + Result[i]["Day" + j] + '</td>';
+                            }
+                            TBody += '<td style="text-align:center;">' + Result[i]["TargetForCCSheet"] + '</td>';
+                            TBody += '</tr>';
+                        }
+
+                        var HtmlData = '<thead>';
+                        HtmlData += THead;
+                        HtmlData += '</thead>';
+                        HtmlData += '<tbody>';
+                        HtmlData += TBody;
+                        HtmlData += '</tbody>';
+                        HtmlData += '<tfoot style="display:none;">';
+                        HtmlData += THead;
+                        HtmlData += '</tfoot>';
+                        //$('#BudgetTargetTable').dataTable().fnClearTable();
+                        $('#BudgetTargetTable').append(HtmlData);
+
+                        $('#BudgetTargetTable').DataTable({
+                            "ordering": false,
+                            bPaginate: false
+                        });
+                    }
+                }
+                else {
+                    alert("No data available");
+                }
+
+
+                var width = $(window).width(), height = $(window).height();
+                var totalheight = height - 191;
+                if (height <= 800) {
+                    totalheight = height - 148;
+                }
+                jQuery('.dataTable').wrap('<div class="dataTables_scroll" />');
+                $('.content').css({ "max-height": totalheight, "overflow-y": "auto" });
+                $('.content-header > h2').css({ "font-size": "18px", "font-weight": "500" });
+            }
+        });
+    }
+</script>
+

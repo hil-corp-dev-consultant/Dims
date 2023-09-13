@@ -1,0 +1,127 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserTypeCode = UP.UserTypeCode;
+    string SessionUserType = UP.UserType;
+    string SessionStateName = UP.UserStateName;
+    
+}
+
+<style type="text/css">
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Points Balance Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href ng-click="go('UnnatiDashBoard')">UNNATI</a></li>
+        <li class="active">Points Balance Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+                <a href ng-click="DownloadFile('TEXT')">
+                    <i class="fa fa-file-text-o fa-4" title="Download Text"></i>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body">
+                <form role="form" name="UnnatiPointBalanceForm" class="form-horizontal">
+                    <input type="text" id="USERNAME_UnnatiPointBalance" style="display: none;" value="@SessionUserName" />
+                    <input type="text" id="USERCODE_UnnatiPointBalance" style="display: none;" value="@SessionUserCode" />
+                    <input type="text" id="USERTYPE_UnnatiPointBalance" style="display: none;" value="@SessionUserTypeCode" />
+                    <input type="text" id="StateName_UnnatiPointBalance" style="display: none;" value="@SessionStateName" />
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-sm-offset-2 control-label">Minimum Point Balance<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="MinimumBalancePt" ng-model="MinimumBalancePt" onkeypress="return isInteger(event)" maxlength="10" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-sm-offset-2 control-label">Maximum Point Balance<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="MaximumBalancePt" ng-model="MaximumBalancePt" onkeypress="return isInteger(event)" maxlength="11" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-3">
+                            <input type="button" class="btn btn-success" style="background-color: #d2401a;border:1px solid #d2401a;" value="Submit" name="Submit" ng-click="GetPointBalanceReport()">
+                        </div>
+                    </div>
+                    <input type="button" value="Advanced" data-toggle="tooltip" data-placement="right" ng-disabled="UnnatiPointBalanceForm.$invalid" id="AdvancedColumnEditing" style="background-color: #d2401a" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />
+                  
+
+            <label class="control-label-Nodata " id="PointBalanceNodataLabel" style="display: none;">No data available....</label>
+            <div style="padding:10px;"></div>
+            <table id="PointBalanceReportList" class="table" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div style="padding:20px;"></div>
+
+            <div class="form-group PageTotals" style="display:none;">
+                <div class="col-sm-6">
+                <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;">TOTAL Number of Customers </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control gray" style="font-weight: bold;" disabled="disabled" id="Total_Members" />
+                </div>
+                </div>
+                <div class="col-sm-6">
+                <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;">TOTAL Points Balance </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control gray" style="font-weight: bold;" disabled="disabled" id="SUM_Points" />
+                </div>
+                </div>
+            </div>
+            </form>  
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        $("#AdvancedColumnEditing").attr("title", ToolTipvalue);
+
+        $('#PointBalanceReport').parents('div.dataTables_wrapper').first().hide();
+
+    });
+
+</script>
+

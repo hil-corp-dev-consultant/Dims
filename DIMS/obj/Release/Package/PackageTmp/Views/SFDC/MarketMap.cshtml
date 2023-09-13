@@ -1,0 +1,443 @@
+﻿@*Module            : Sales Process Management.
+    DocumentName        : MarketMap.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for MarketMap List.
+    Developer Name      : Harish Kothuri.
+    Change Log          : NA.*@
+
+@using LabelNames = DIMS.Content.Resource_Files.MarketMap;
+@{
+    Layout = null;
+    //  string Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string Role = UP.UserTypeCode;
+}
+
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    .tab-pane {
+        padding-top: 20px;
+    }
+
+    ul li {
+        cursor: pointer;
+    }
+    .hidetd {
+        display:none;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Market Map</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management.</li>
+        <li class="active">Market Map</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @* <a href ng-click="go('AddMarketMap')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;" id="EditMarketMapDiv">
+                <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                <div class="box-body">
+                @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small; margin-top: 0px;">
+                    <div id="HIL">
+                        <div class="box-header">
+                            <div class="pull-right" style="margin-left: 15px;">
+                                <button type="button" class="btn btn-info navbar-btn" ng-click="GetCustomersHIL()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                    Submit
+                                </button>
+                                <button type="button" class="btn btn-info navbar-btn" onclick="ResetFiltersHIL()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                    Reset Filter
+                                </button>
+                            </div>
+                        </div>                        
+                        <div hidden>
+                            <label class="col-sm-2 control-label" for="txtOrderNo">
+                                From Date <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="OrderFromDate" placeholder="From Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                            </div>
+                            <label class="col-sm-2 control-label" for="txtBatchNo">
+                                To Date <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="OrderToDate" placeholder="To Date" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">                            
+                            <label class="col-sm-2 control-label" for="SalesEmapName">
+                                Zone<span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="Zone" multiple="multiple" class="form-control"></select>
+                            </div>
+                            
+                            <label class="col-sm-2 control-label" for="SalesEmapName">
+                                State<span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="State" multiple="multiple" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">                           
+                            <label class="col-sm-2 control-label" for="TerriotryArea">
+                                Territory/Area
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                            </div>
+                            <label class="col-sm-2 control-label" for="StockistID">
+                                Customer Code/Name
+                            </label>
+                            <div class="col-sm-3">
+                                <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                                @*<select id="StockistID" multiple="multiple" class="form-control"></select>*@
+                            </div>
+                            </div>
+                        <div class="form-group">                           
+                            @*<div class="col-sm-4">
+                                    <input id="CustomerCode" class="form-control" />
+                                </div>*@
+                        </div>
+                    </div>
+                    <div id="Others">
+                        <div class="box-header">
+                            <div class="pull-right" style="margin-left: 15px;">
+                                <button type="button" id="Othermart" class="btn btn-info navbar-btn"  style="background-color: #d2401a;border:1px solid #d2401a;">
+                                    Submit
+                                </button>
+                                <button type="button" class="btn btn-info navbar-btn" onclick="ResetFiltersOthers()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                    Reset Filter
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="txtOrderNo">
+                                    From Date <span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="OrderFromDateOthers" placeholder="From Date" readonly onchange="DateValidation('OrderFromDateOthers', 'OrderToDateOthers');" />
+                                </div>
+                                <label class="col-sm-2 control-label" for="txtBatchNo">
+                                    To Date <span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="OrderToDateOthers" placeholder="To Date" readonly />
+                                </div>
+                            <label class="col-sm-1 control-label" for="SalesEmapName">
+                                Zone
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="ZoneOthers" multiple="multiple" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">                           
+                            <label class="col-sm-2 control-label" for="SalesEmapName">
+                                State
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="StateOthers" multiple="multiple" class="form-control"></select>
+                            </div>
+                            <label class="col-sm-2 control-label" for="TerriotryArea">
+                                Territory/Area
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="TerriotryAreaOthers" multiple="multiple" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label class="col-sm-2 control-label" for="StockistID">
+                                Customer Name
+                            </label>
+                            <div class="col-sm-3">
+                                <input id="CustomerCodeOthers" class="form-control" placeholder="Customer Code/Name" />
+                                @*<select id="StockistID" multiple="multiple" class="form-control"></select>*@
+                            </div>
+                            @*<div class="col-sm-4">
+                                    <input id="CustomerCode" class="form-control" />
+                                </div>*@
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </form>
+                <ul class="nav nav-tabs marketmaptabs" style="padding-top: 10px;" id="marketmaptabs">
+                    <li class="" id="HilTab"><a data-toggle="tab" id="HilTabA" onclick="HILCounterClick()">HIL Counters</a></li>
+                    <li class="" id="OthersTab"><a data-toggle="tab" id="OthersTabA" onclick="CompetitorCustomersHILProspectsClick()">Competitor Customers / HIL Prospects</a></li>
+                    <li id="btnAddCounter">&nbsp;&nbsp<button class="btn btn-info navbar-btn" id="AddCounter" style="background-color: #d2401a; color: white" onclick="AddCounter()" type="button"> Add New Counter</button></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="HILCounters" class="tab-pane">
+                        <table id="MarketMap" class="table ListTable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="CompetitorCustomersHILProspects" class="tab-pane">
+                        <table id="MarketMapCompetitorCustomersHILProspects" class="table ListTable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+
+                        </table>
+                    </div>
+                </div>                 
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        //$('#Stockistname').SumoSelect({ placeholder: 'Customer Name' });
+        //$('#StockistID').SumoSelect({ placeholder: 'Customer Code' });
+        //$('#Zone').SumoSelect({ placeholder: 'Zone' });
+        //$('#State').SumoSelect({ placeholder: 'State' });
+        //$('#TerritoryArea').SumoSelect({ placeholder: 'Territory/Area' });
+        //$('#SalesEmployeeCode').SumoSelect({ placeholder: 'Employee Code' });
+        //$('#SalesEmployeeName').SumoSelect({ placeholder: 'Employee Name' });
+        //$('#Location').SumoSelect({ placeholder: 'Location' });
+
+        $('#SalesEmapName').SumoSelect({ placeholder: 'Sales Employee' });
+        $('#PlantSumo').SumoSelect({ placeholder: 'Plant' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'Terriotry/Area' });
+        $('#Location').SumoSelect({ placeholder: 'Location' });
+
+        //Others
+
+        //$('#StockistnameOthers').SumoSelect({ placeholder: 'Customer Name' });
+        //$('#StockistIDOthers').SumoSelect({ placeholder: 'Customer Code' });
+        //$('#ZoneOthers').SumoSelect({ placeholder: 'Zone' });
+        //$('#StateOthers').SumoSelect({ placeholder: 'State' });
+        //$('#TerritoryAreaOthers').SumoSelect({ placeholder: 'Territory/Area' });
+        //$('#SalesEmployeeCodeOthers').SumoSelect({ placeholder: 'Employee Code' });
+        //$('#SalesEmployeeNameOthers').SumoSelect({ placeholder: 'Employee Name' });
+        //$('#LocationOthers').SumoSelect({ placeholder: 'Location' });
+
+        $('#SalesEmapNameOthers').SumoSelect({ placeholder: 'Sales Employee' });
+        $('#PlantSumoOthers').SumoSelect({ placeholder: 'Plant' });
+        $('#ZoneOthers').SumoSelect({ placeholder: 'Zone' });
+        $('#StateOthers').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryAreaOthers').SumoSelect({ placeholder: 'Terriotry/Area' });
+        $('#LocationOthers').SumoSelect({ placeholder: 'Location' });
+
+
+        $('#OrderFromDate').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+
+        Others
+
+        $('#OrderFromDateOthers').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+        });
+        $('#OrderFromDateOthers').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDateOthers').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+        });
+        $('#OrderToDateOthers').bind('keypress', function (e) {
+            return false;
+        });
+
+
+
+        HILCounterClick();
+        $("#HilTab").addClass("active");
+        $("#AddCounter").hide();
+    });
+
+
+    function resetcomment() {
+        //function ResetFilters() {
+        //    // $('#ddlOrderBattery').SumoSelect.un
+        //    var Stockistname = $('#Stockistname option').length;
+        //    var StockistID = $('#StockistID option').length;
+        //    var Zone = $('#Zone option').length;
+        //    var State = $('#State option').length;
+        //    var TerritoryArea = $('#TerritoryArea option').length;
+        //    var SalesEmployeeCode= $('#SalesEmployeeCode').length;
+        //    var SalesEmployeeName = $('#SalesEmployeeName').length;
+
+
+        //    for (var i = 0; i < SalesEmployeeCode; i++) {
+        //        $('#SalesEmployeeCode')[0].sumo.unSelectItem(i);
+        //    }
+        //    for (var i = 0; i < SalesEmployeeName; i++) {
+        //        $('#SalesEmployeeName')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    for (var i = 0; i < StockistID; i++) {
+        //        $('#StockistID')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    for (var i = 0; i < Stockistname; i++) {
+        //        $('#Stockistname')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    for (var i = 0; i < Zone; i++) {
+        //        $('#Zone')[0].sumo.unSelectItem(i);
+        //    }
+        //    for (var i = 0; i < State; i++) {
+        //        $('#State')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    for (var i = 0; i < TerritoryArea; i++) {
+        //        $('#TerritoryArea')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    //Others
+        //    var StockistnameOthers = $('#StockistnameOthers option').length;
+        //    var StockistIDOthers = $('#StockistIDOthers option').length;
+        //    var ZoneOthers = $('#ZoneOthers option').length;
+        //    var StateOthers = $('#StateOthers option').length;
+        //    var TerritoryAreaOthers = $('#TerritoryAreaOthers option').length;
+        //    var SalesEmployeeCodeOthers = $('#SalesEmployeeCodeOthers').length;
+        //    var SalesEmployeeNameOthers = $('#SalesEmployeeNameOthers').length;
+
+
+        //    for (var i = 0; i < SalesEmployeeCodeOthers; i++) {
+        //        $('#SalesEmployeeCodeOthers')[0].sumo.unSelectItem(i);
+        //    }
+        //    for (var i = 0; i < SalesEmployeeNameOthers; i++) {
+        //        $('#SalesEmployeeNameOthers')[0].sumo.unSelectItem(i);
+        //    }
+        //    for (var i = 0; i < StockistIDOthers; i++) {
+        //        $('#StockistIDOthers')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    for (var i = 0; i < StockistnameOthers; i++) {
+        //        $('#StockistnameOthers')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    for (var i = 0; i < ZoneOthers; i++) {
+        //        $('#ZoneOthers')[0].sumo.unSelectItem(i);
+        //    }
+        //    for (var i = 0; i < StateOthers; i++) {
+        //        $('#StateOthers')[0].sumo.unSelectItem(i);
+        //    }
+
+        //    for (var i = 0; i < TerritoryAreaOthers; i++) {
+        //        $('#TerritoryAreaOthers')[0].sumo.unSelectItem(i);
+        //    }
+        //    //$("#DailyOrder").dataTable().fnFilter("", 2, true, false);
+        //    //$("#DailyOrder").dataTable().fnFilter("", 7, true, false);
+        //    //$("#DailyOrder").dataTable().fnFilter("", 5, true, false);
+        //    //$("#DailyOrder").dataTable().fnFilter("", 10, true, false);
+        //    //$("#DailyOrder").dataTable().fnFilter("", 6, true, false);
+        //}
+    }
+
+    function HILCounterClick() {
+        try {
+            $("#HILCounters").show();
+            $("#HIL").show();
+            $("#Others").hide();
+            $("#CompetitorCustomersHILProspects").hide();
+            $("#AddCounter").hide();
+        }
+        catch (e) {
+            alert("Error HILCounterClick : " + e);
+        }
+    }
+
+    function CompetitorCustomersHILProspectsClick() {
+        try {
+            $("#HILCounters").hide();
+            $("#HIL").hide();
+            $("#Others").show();
+            $("#CompetitorCustomersHILProspects").show();
+            $("#AddCounter").show();
+        }
+        catch (e) {
+            alert("Error CompetitorCustomersHILProspects : " + e);
+        }
+    }
+
+    function AddCounter() {
+        var url = '../Home/Homepage#/AddNewCounter';
+        window.location.href = url;
+    }
+
+
+    function ResetFiltersHIL() {
+        window.location.reload();
+    }
+
+    function ResetFiltersOthers() {
+        window.location.reload();
+    }
+
+
+    $("#OrderFromDateOthers").datepicker().on("changeDate", function (e) {
+        $("#OrderToDateOthers").datepicker('setStartDate', $("#OrderFromDateOthers").val());
+        //$("#OrderToDate").data("datepicker").setStartDate((moment(e.date).add(0, 'days')));
+        $("#OrderToDateOthers").val("");
+    });
+</script>

@@ -1,0 +1,443 @@
+﻿@{
+    Layout = null;
+}
+
+
+<style type="text/css">
+    label {
+        font-weight: 500;
+        padding-top: 1px;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Invoice List</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Invoice List</li>
+        <li class="active">Invoice List</li>
+    </ol>
+
+</section>
+
+
+
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                      <button ng-click="Getdata('getInvoiceData')" ></button>
+                    <form role="form" class="form-inline">
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlCustomerName" multiple="multiple" id="ddlCustomerName" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select Customer Name</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlCustomerId" multiple="multiple" id="ddlCustomerId" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select Customer Id</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlZone" multiple="multiple" id="ddlZone" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select Zone</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlState" multiple="multiple" id="ddlState" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select State</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlTerritoryArea" multiple="multiple" id="ddlTerritoryArea" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select Territory/Area</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <br />
+
+                    <form role="form" class="form-inline">
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <input name="FromDate" id="FromDate" class="form-control" style="width: 200px; font-style: italic;" placeholder="Fromdate" />
+                                @*                                <select name="FromDate" multiple="multiple" id="FromDate" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">From Date</span><label><i></i></label></p>*@
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <input name="ToDate" id="ToDate" class="form-control" style="width: 200px; font-style: italic;" placeholder="ToDate" />
+                                @*                                <select name="ToDate" multiple="multiple" id="ToDate" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">To Date</span><label><i></i></label></p>*@
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlSalesEmployee" multiple="multiple" id="ddlSalesEmployee" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select Sales Employee</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlPlant" multiple="multiple" id="ddlPlant" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select Plant</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div tabindex="0" class="SumoSelect">
+                                <select name="ddlLocation" multiple="multiple" id="ddlLocation" class="form-control" style="display: none;"></select><p class="CaptionCont SlectBox"><span class="placeholder">Select Location</span><label><i></i></label></p>
+                                <div class="optWrapper multiple">
+                                    <ul class="options"></ul>
+                                    <div class="MultiControls">
+                                        <p class="btnOk">OK</p>
+                                        <p class="btnCancel">Cancel</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="box-header">
+
+                    <table class="table" id="InvoiceListTab">
+                        <thead>
+                            <tr style="background-color: #3C8DBC; color: white; font-size: 13px;">
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Billing Doc. No.</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Invoice No.	</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Invoice Date</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Customer Pricing Group</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Sales Group</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Distribution Channel</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Plant Description</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Material Code</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Material Description</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Bill Quanity</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">UOM	Alternte (UOM)</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Gross Weight </th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Net Weight</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Customer Group</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Material Flight Group</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Bill to Party Code</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Bill to Party Name</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Ship to Party Code</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Ship to Party Name</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Sales Employee</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Excise Invoice No.</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Sales Region</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Sales Description</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Transporter Code</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Transporter Name</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Vehicle Number</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Driver Mobile Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+
+                        </tbody>
+                        <tfoot style="display: none;">
+                            <tr>
+                                <th>Billing Doc. No.</th>
+                                <th>Invoice No.	</th>
+                                <th>Invoice Date</th>
+                                <th>Customer Pricing Group</th>
+                                <th>Sales Group</th>
+                                <th>Distribution Channel</th>
+                                <th>Plant Description</th>
+                                <th>Material Code</th>
+                                <th>Material Description</th>
+                                <th>Bill Quanity</th>
+                                <th>UOM	Alternte (UOM)</th>
+                                <th>Gross Weight </th>
+                                <th>Net Weight</th>
+                                <th>Customer Group</th>
+                                <th>Material Flight Group</th>
+                                <th>Bill to Party Code</th>
+                                <th>Bill to Party Name</th>
+                                <th>Ship to Party Code</th>
+                                <th>Ship to Party Name</th>
+                                <th>Sales Employee</th>
+                                <th>Excise Invoice No.</th>
+                                <th>Sales Region</th>
+                                <th>Sales Description</th>
+                                <th>Transporter Code</th>
+                                <th>Transporter Name</th>
+                                <th>Vehicle Number	</th>
+                                <th>Driver Mobile Number</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#InvoiceListTab").DataTable({ "scrollX": true });
+    });
+
+</script>

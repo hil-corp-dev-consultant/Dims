@@ -1,0 +1,208 @@
+﻿@*Module            : SFDC.
+DocumentName        : SchemesList.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Schemes List.
+Developer Name      : Harish Kothuri.
+Change Log          : NA.*@
+
+@using LabelNames = DIMS.Content.Resource_Files.SchemesList;
+@{
+    Layout = null;
+}
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 146px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Schemes List</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Schemes List</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('AddScheme')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+               @* <a href>
+                    <i class="fa fa-print fa-4" title="Print"></i>
+                </a>
+                <a href>
+                    <i class="fa fa-file-excel-o fa-4" title="Excel"></i>
+                </a>
+                <a href>
+                    <i class="fa fa-file-pdf-o fa-4" title="Pdf"></i>
+                </a>
+                <a href>
+                    <i class="fa fa-paperclip fa-4" title="Attachements"></i>
+                </a>
+                <a href>
+                    <i class=" fa fa-thumbs-o-up" title="Send for Reviews"></i>
+                </a>
+                <a href>
+                    <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="SchemeListId">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-body">
+                <h3 class="box-title"></h3>
+                <div class="pull-right" style="margin-left: 15px;">
+                    <button type="button" class="btn btn-info navbar-btn" id="ResetSchemeData" ng-click="ResetSchemeData()"  style="background-color:#d2401a;border:1px solid #d2401a;color:white" >
+                        Reset Filter</button>
+                </div>
+                <form role="form" class="form-horizontal" style="font-size: small; margin-top: 36px;">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.Scheme</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="SchemeName" multiple="multiple">
+
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.Category</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Category" multiple="multiple">
+
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2 control-label">@LabelNames.Product</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Product" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">@LabelNames.Zone</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Zone" multiple="multiple">
+
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.State</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="State" multiple="multiple">
+
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.TerritoryArea</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Area" multiple="multiple">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label hidden">@LabelNames.Location</label>
+                        <div class="col-sm-2 hidden" >
+                            <select class="form-control" id="Location" data-ng-model="Location" multiple="multiple">
+
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2 control-label">@LabelNames.FromDate</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control Date" id="FromDate" data-ng-model="StartDate" readonly="readonly" placeholder="From Date" />
+                        </div>
+                        <label class="col-sm-2 control-label">@LabelNames.ToDate</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control Date" id="ToDate" data-ng-model="EndDate" readonly="readonly" placeholder="To Date"/>
+                        </div>
+                    </div>
+                </form>
+               <div style="padding:10px;"></div>
+                <div style="overflow:auto;">
+                <table id="SchemesList" class="table tablecss" width="100%" cellspacing="0">
+                    <thead>
+                        <tr style="background-color:#d2401a;color:white">
+                            <th>Id</th>
+                            <th>@LabelNames.TblSchemeID</th>
+                            <th>@LabelNames.TblSchemeName</th>
+                            <th>@LabelNames.TblSchemeDesc</th>
+                            <th>@LabelNames.TblCategory</th>
+                            <th>@LabelNames.TblProduct</th>
+                            <th>@LabelNames.TblStartDate</th>
+                            <th>@LabelNames.TblEndDate</th>
+                            <th>@LabelNames.TblEligibility</th>
+                            @*<th>@LabelNames.TblBonus</th>*@
+                            <th>@LabelNames.TblZone</th>
+                            <th>@LabelNames.TblState</th>
+                            <th>@LabelNames.TblTerritory</th>
+                         @*   <th>@LabelNames.TblLocation</th>*@
+                            <th>@LabelNames.TblStatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        $('#SchemeName').SumoSelect({ placeholder: 'Scheme' });
+        $('#Category').SumoSelect({ placeholder: 'Category' });
+        $('#Product').SumoSelect({ placeholder: 'Product' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#Area').SumoSelect({ placeholder: 'TerritoryCode' });
+        $('#Location').SumoSelect({ placeholder: 'Location' });
+
+        $("#FromDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+            //format: "mm-yyyy",
+            //viewMode: "months",
+            //minViewMode: "months",
+            //autoclose: true
+        });
+        $("#ToDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        //$("#SchemesList").dataTable();
+        //$("#SchemesList").dataTable({
+        //    "scrollX": true
+        //});
+
+    });
+</script>
+

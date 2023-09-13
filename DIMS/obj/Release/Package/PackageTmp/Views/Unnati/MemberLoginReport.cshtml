@@ -1,0 +1,118 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserTypeCode = UP.UserTypeCode;
+    string SessionUserType = UP.UserType;
+}
+
+
+<style type="text/css">
+
+    table tbody tr {
+    
+    cursor:default;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>UNNATI Member Login Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href ng-click="go('UnnatiDashBoard')"> UNNATI</a></li>
+        <li class="active">Member Login Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @* <a href ng-click="Get()">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>*@
+
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+                <a href ng-click="DownloadFile('TEXT')">
+                    <i class="fa fa-file-text-o fa-4" title="Download Text"></i>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-header">
+                <form role="form" name="UnnatiMemberLoginForm" class="form-horizontal">
+                     <input type="text" id="USERNAME_UnnatiMemberLogin" style="display: none;" value="@SessionUserName" />
+                    <input type="text" id="USERCODE_UnnatiMemberLogin" style="display: none;" value="@SessionUserCode" />
+                    <input type="text" id="USERTYPE_UnnatiMemberLogin" style="display: none;" value="@SessionUserTypeCode" />
+                    <div class="form-group">
+                        <label class="col-sm-3 col-sm-offset-2 control-label">From Date</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="MemberLoginFromDate" ng-model="MemberLoginFromDate" readonly required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-sm-offset-2 control-label">To Date</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="MemberLoginToDate" ng-model="MemberLoginToDate" readonly required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-3">
+                            <input type="button" class="btn btn-success" value="Submit" style="background-color: #d2401a;" name="Submit" ng-click="GetMemberLoginReport()">
+                        </div>
+
+                    </div>
+                    <input type="button" value="Advanced" data-toggle="tooltip" data-placement="right" ng-disabled="UnnatiMemberLoginForm.$invalid" id="AdvancedColumnEditing" style="background-color: #d2401a" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />
+
+
+                </form>
+
+            </div>
+          
+            <label class="control-label-Nodata " id="MemberLoginNodataLabel" style="display: none;">No data available....</label>
+            <table id="MemberLoginReportList" class="table" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#AdvancedColumnEditing").attr("title", ToolTipvalue);
+        $("#MemberLoginFromDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#MemberLoginToDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+
+        $('#MemberLoginReport').parents('div.dataTables_wrapper').first().hide();
+    });
+
+</script>
+

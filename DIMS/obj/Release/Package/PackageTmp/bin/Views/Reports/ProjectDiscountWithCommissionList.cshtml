@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];   
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;   
+    string SessionUserType = UP.UserTypeCode;   
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Project Discount With Commisssion List</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Discounts/Provisions</li>
+        <li class="active">Project Discount With Commission List</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a id="HideAddNew" href ng-click="go('ProjectDiscountWithCommission')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+                <button  ng-click="ApproveRequest()" id="Approve">
+                   Approve Request
+                </button>
+                <button ng-click="RejectRequestPopup()" id="Reject">
+                    Reject Request
+                </button>
+            </div>
+        </div>
+    </nav>
+</section>
+<input type="text" id="USERNAME" style="display: none;" value="@SessionUserName" />
+<input type="text" id="USERCODE" style="display: none;" value="@SessionUserCode" />
+<input type="text" id="USERTYPE" style="display: none;" value="@SessionUserType" />
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body">                
+                <table id="ProjectDiscountWithCommisssion" class="table Listtable" width="100%">
+                    <thead>
+                        <tr style="background-color: #d2401a; color: white">
+                            <th style="text-align: center; vertical-align: inherit;"><input type="checkbox" id="StockistCheckAll" /></th>
+                            <th style="text-align: center; vertical-align: inherit;">Discount ID</th>
+                            <th style="text-align: center; vertical-align: inherit;">Customer Code</th>
+                            <th style="text-align: center; vertical-align: inherit;">Customer Name</th>
+                            <th style="text-align: center; vertical-align: inherit;">Zone</th>
+                            <th style="text-align: center; vertical-align: inherit;">State</th>
+                            <th style="text-align: center; vertical-align: inherit;">District</th>
+                            <th style="text-align: center; vertical-align: inherit;">Price card Rate (INR/M)</th>
+                            <th style="text-align: center; vertical-align: inherit;">Agreed Rate (INR/M)</th>
+                            <th style="text-align: center; vertical-align: inherit;">Commission (%)</th>
+                            <th style="text-align: center; vertical-align: inherit;">Expected Sale (MT)</th>
+                            <th style="text-align: center; vertical-align: inherit;">Expected NSR (INR)</th>
+                            <th style="text-align: center; vertical-align: inherit;">Stockist Code</th>
+                            <th style="text-align: center; vertical-align: inherit;">Stockist Name</th>
+                            <th style="text-align: center; vertical-align: inherit;">Requester</th>
+                            <th style="text-align: center; vertical-align: inherit;">Request Status</th>
+                            <th style="text-align: center; vertical-align: inherit;">Remarks</th>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div style="padding:10px;"></div>
+                <div class="row">                   
+                    <div class="col-sm-4">
+                    <span style="border-left:35px solid grey"></span>&nbsp;<span style="font-size: 12px;">Waiting Approval For ZH/Waiting Approval For NSH</span>
+                    </div>
+                    <div class="col-sm-3">
+                    <span style="border-left:35px solid red"></span>&nbsp;<span style="font-size: 12px;">Rejected by ZH/Rejected by NSH</span>
+                    </div>
+                    <div class="col-sm-3">
+                    <span style="border-left:35px solid green"></span>&nbsp;<span style="font-size: 12px;">Approved by NSH</span>
+                    </div>
+                    <div class="col-sm-2">
+                    <label style="color: red; font-size: 12px;">M=Meter</label>
+                    <label  style="font-size: 12px;">MT=Metric Tons</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<div class="modal fade" id="RemarksLookUp">
+    <div class="modal-dialog modal-sm" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title">
+                    <b>Remarks</b>
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                        <textarea class="form-control" id="Remarks" data-ng-model="Remarks" maxlength="300"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" style="margin-left: 100px" ng-click="RejectRequest()">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $("#Remarks").keypress(function (e) {
+        if (e.charCode == 94) {
+            return false;
+        }
+    })
+</script>

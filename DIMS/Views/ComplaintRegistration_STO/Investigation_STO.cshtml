@@ -1,0 +1,2637 @@
+﻿@*SBU3
+
+    Module              : CMS - DIMS Solution.
+    DocumentName        : RegistrationList_STO.cs
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Description         : This Doc is for used for Complaint Investigation_STO.
+    Developer Name      : SVPRASADK.
+    Change Log          : NA.
+    Date Started        : 17-07-2020
+
+
+*@
+
+
+
+@using LabelNames = DIMS.Content.Resource_Files.Investigation;
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE_STO = UP.SITEDETAIL_CODE;
+    string SessionUserCode_STO = UP.UserCode;
+    string SessionUserName_STO = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE_STO = UP.COMPANYDETAIL_CODE;
+    string SessionUserType_STO = UP.UserType;
+    string SessionUserTypeID_STO = UP.UserTypeCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+
+    /*.modal {
+        opacity: 0.8 !important;
+    }*/
+
+    table tr {
+        cursor: pointer;
+    }
+
+    .filestyle {
+        border: 1px solid;
+        border-radius: 6px;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Investigation_STO</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">Investigation_STO</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('ComplaintPendingApproval_STO')" id="PendingApprovalsList" style="float: left; display: none;">
+                    <i class="fa fa-list fa-4" title="Pending Approvals List"></i>
+                </a>
+                <a href ng-click="go('InvestigationList_STO')" id="InvList" style="float: left;">
+                    <i class="fa fa-list fa-4" title="Investigation_STO List"></i>
+                </a>
+                <a href id="CompInvSave" onclick="SaveInvestigationDataWithFiles_STO()" style="float: left;">
+                    <i class="fa fa-floppy-o fa-4" title="Save Investigation_STO"></i>
+                </a>
+                <a href ng-click="go('Investigation_STO')" id="InvNew" style="float: left;">
+                    <i class="fa fa-file-o fa-4" title="Create New Investigation_STO"></i>
+                </a>
+                <a href ng-click="SendInvestigationForApproval_STO()" id="SendInvestigationApproval" style="float: left;">
+                    <i class=" fa fa-forward" title="Send Investigation_STO for Review"></i>
+                </a>
+                @*<a href ng-click="SendInvestigationForApproval_STO()" id="SendInvestigationApproval" style="float: left;">
+            <i class=" fa fa-thumbs-o-up" title="Send Investigation_STO for Review"></i>
+        </a>*@
+                <a href ng-click="GetApprovalPopUp_STO()" id="MakeApproved_STO" style="float: left;">
+                    <i class="fa fa-check" title="Approve Complaint"></i>
+                </a>
+                <span style="float:left; padding-right:10px;">RECEIVING PLANT </span>
+                <select id="FROM_PLANT_CODE" ng-model="FROM_PLANT_CODE" disabled="disabled" ng-change="PlantChange()" style="float: left;"></select>
+                <a href id="SuperSaveInvestigation" onclick="SaveInvestigationDataWithFiles_STO()" style="float: left; display: none; margin-left: 10px;">
+                    <i class="fa fa-floppy-o fa-4" title="Change Action"></i>
+                </a>
+                <a href ng-click="SaveInvestigationData_STO()" id="hiddenInvDataSave" style="display:none">
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;" id="InvestigationNewView">
+                    <div class="box-header">
+                        <form name="test" class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" enctype="multipart/form-data">
+                            <div class="row">
+                                <input type="text" style="display: none;" id="MyTest" />
+                                <input type="text" style="display: none;" id="TodayDateInv" />
+                                <div class="col-sm-12">
+
+                                    <input type="text" id="FormIdentity_STO" name="FormIdentity_STO" style="display: none;" />
+                                    <input type="text" id="CREATED_BY" name="CREATED_BY" style="display: none;" value="@SessionUserName_STO" />
+                                    <input type="text" id="CreatedByCode" name="CreatedByCode" style="display: none;" value="@SessionUserCode_STO" />
+                                    <input type="text" id="SessionUserType_STO" name="SessionUserType_STO" style="display: none;" value="@SessionUserType_STO" />
+                                    <input type="text" id="SessionUserTypeID_STO" name="SessionUserTypeID_STO" style="display: none;" value="@SessionUserTypeID_STO" />
+
+
+                                    <input type="text" id="SITEDETAIL_CODE" style="display: none;" value="@SessionSITEDETAIL_CODE_STO" />
+                                    <input type="text" id="COMPANYDETAIL_CODE" style="display: none;" value="@SessionCOMPANYDETAIL_CODE_STO" />
+                                    <input type="text" id="COMPLAINT_REGISTERED_DOC_SERIES_CODE" data-ng-model="COMPLAINT_REGISTERED_DOC_SERIES_CODE" style="display: none;" />
+                                    <input type="text" id="COMPLAINT_REGISTERED_CODE" data-ng-model="COMPLAINT_REGISTERED_CODE" style="display: none;" />
+                                    <input type="text" id="COMPLAINT_REGISTERED_DOC_NUM" data-ng-model="COMPLAINT_REGISTERED_DOC_NUM" style="display: none;" />
+
+
+                                    <input type="text" id="COMPLAINT_TYPE_CODE" data-ng-model="COMPLAINT_TYPE_CODE" style="display: none;" />
+                                    <input type="text" id="COMPLAINT_TYPE_NAME" data-ng-model="COMPLAINT_TYPE_NAME" style="display: none;" />
+
+                                    <input type="text" id="COMPLAINT_CATEGORY_CODE" style="display: none;" />
+
+                                    <input type="text" id="COMPLAINT_CATEGORY_CODE" data-ng-model="COMPLAINT_CATEGORY_CODE" style="display: none;" />
+                                    <input type="text" id="COMPLAINT_CATEGORY_NAME" data-ng-model="COMPLAINT_CATEGORY_NAME" style="display: none;" />
+
+                                    <input type="text" class="form-control" id="PRODUCT_TYPE_NAME" data-ng-model="PRODUCT_TYPE_NAME" style="display: none;" />
+                                    <input type="text" class="form-control" id="PRODUCT_TYPE_CODE" data-ng-model="PRODUCT_TYPE_CODE" style="display: none;" />
+
+                                    <input type="text" class="form-control" id="COMPLAIN_DESC" data-ng-model="COMPLAIN_DESC" style="display: none;" />
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-1 control-label">@LabelNames.ComplaintTrackingNo</label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="COMPLAINT_TRACKING_NO" data-ng-model="COMPLAINT_TRACKING_NO" disabled="disabled" />
+                                                <input type="text" class="form-control" id="COMPLAINT_NUMBER" data-ng-model="COMPLAINT_NUMBER" disabled="disabled" style="display: none;" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" id="ComplaintNumberSpan" ng-click="Getdata('GetComplaint_No_STO','COMPLAINT_NUMBER','Assigned Complaint List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelNames.InvestigatorType<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            @*<div class="input-group add-on">*@
+                                            <input type="text" class="form-control gray" id="INVESTIGATOR_TYPE_NAME" data-ng-model="INVESTIGATOR_TYPE_NAME" disabled="disabled" />
+                                            @*<input type="text" class="form-control" id="Investigator_Type_ID" data-ng-model="Investigator_Type_ID" readonly="readonly" style="display: none;" />*@
+                                            <input type="text" class="form-control gray" id="INVESTIGATOR_TYPE_CODE" data-ng-model="INVESTIGATOR_TYPE_CODE" readonly="readonly" style="display: none;" />
+                                            @*<div class="input-group-btn">
+                                                <span class="btn btn-default" id="Investigator_TypeSpan" ng-click="Getdata('GetInvestigator_Type_STO','INVESTIGATOR_TYPE_NAME_STO','Users List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                            </div>*@
+                                            @*</div>*@
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelNames.InvestigationId</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="INVESTIGATION_ID" data-ng-model="INVESTIGATION_ID" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-1 control-label">Compl Recv Date<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="COMPLAINT_RECEIVED_DATE" data-ng-model="COMPLAINT_RECEIVED_DATE" onchange="ReceivedDateChange()" />
+                                        </div>
+
+                                        <label class="col-sm-1 control-label">@LabelNames.InvestigationDoneBy</label>
+                                        <div class="col-sm-3">
+                                            @*<div class="input-group add-on">*@
+                                                <input type="text" class="form-control gray" id="INVESTIGATION_DONE_BY_NAME" data-ng-model="INVESTIGATION_DONE_BY_NAME" disabled="disabled" />
+                                                <input type="text" class="form-control gray" id="INVESTIGATION_DONE_BY_CODE" data-ng-model="INVESTIGATION_DONE_BY_CODE" readonly="readonly" style="display: none;" />
+                                                @*<div class="input-group-btn">
+                                                    <span class="btn btn-default" id="GetInvestigation_Done_BySpan" ng-click="Getdata('GetInvestigation_Done_By_STO','INVESTIGATION_DONE_BY_NAME_STO','Employee Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>*@
+                                            @*</div>*@
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelNames.IGSSeriesCode<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="DOC_SERIES_CODE" data-ng-model="DOC_SERIES_CODE" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" id="CRSeriesCode" ng-click="Getdata('GetIGS_Series_Code_STO','CRSeriesCode','Document Series')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-1 control-label">Compl Reg Date</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="COMPLAINT_REGISTERED_DATE" data-ng-model="COMPLAINT_REGISTERED_DATE" disabled="disabled" />
+                                        </div>
+
+                                        <label class="col-sm-1 control-label">@LabelNames.VisitedDate@*<span id="VisitedDateSpanId" class="Mandatory">*</span>*@</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="VISITED_DATE" data-ng-model="VISITED_DATE" readonly="readonly" onchange="VisitedDateChange()" />
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelNames.InvestigationDate</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="INVESTIGATION_DATE" data-ng-model="INVESTIGATION_DATE" readonly="readonly" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">Compl Attn Date<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="COMPLAINT_ATTENDED_DATE" data-ng-model="COMPLAINT_ATTENDED_DATE" readonly="readonly" onchange="Complaint_Attended_DateChanged()" />
+                                        </div>
+
+                                        <label class="col-sm-1 control-label">@LabelNames.PreviousVisitDate</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="PREVIOUS_VISITED_DATE" data-ng-model="PREVIOUS_VISITED_DATE" readonly="readonly" />
+                                        </div>
+                                        @*<label class="col-sm-1 control-label">@LabelNames.InvestigationStatus</label>*@
+                                        <label class="col-sm-1 control-label">Complaint Status</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="SHOW_STATUS" data-ng-model="SHOW_STATUS" disabled="disabled" />
+                                            <input type="text" class="form-control gray" style="display: none" id="INVESTIGATION_STATUS" data-ng-model="INVESTIGATION_STATUS" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-1 control-label">@LabelNames.Delay</label>
+                                        <div class="col-sm-3">
+                                            <input type="checkbox" id="DELAY" data-ng-model="DELAY" onclick="DelayClick()" />
+                                        </div>
+
+
+                                        <label class="col-sm-1 control-label">SUPPLY PLANT MHD CODE</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="PLANT_MHD_CODE" data-ng-model="PLANT_MHD_CODE" disabled="disabled" />
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelNames.ApprovalDate</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="APPROVED_DATE" data-ng-model="APPROVED_DATE" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-1 control-label DelayGroup">DELAY Days<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3 DelayGroup">
+                                            <input type="text" class="form-control" id="DELAY_DAYS" data-ng-model="DELAY_DAYS" onkeypress="return isInteger(event)" />
+                                        </div>
+
+                                        <label class="col-sm-1 control-label DelayGroupDummy" style="display: none;"></label>
+                                        <div class="col-sm-3 DelayGroupDummy" style="display: none;">
+                                            <input type="hidden" class="form-control" style="display: none;" />
+                                        </div>
+
+
+                                        <label class="col-sm-1 control-label">SUPPLY PLANT MHD NAME</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="PLANT_MHD_NAME" data-ng-model="PLANT_MHD_NAME" disabled="disabled" />
+                                        </div>
+                                        <label class="col-sm-1 control-label NoticeTypeClass">Notice Type</label>
+                                        <div class="col-sm-3 NoticeTypeClass">
+                                            <input type="radio" id="System" value="System" name="NOTICE_TYPE" />
+                                            <label for="SystemGenerated">System Generated</label>
+                                            <input type="radio" id="Manual" value="Manual" name="NOTICE_TYPE" />
+                                            <label for="Manual">Manual</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label DelayGroup">DELAY Reason<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-3 DelayGroup">
+                                            <textarea class="form-control" id="DELAY_REASON" data-ng-model="DELAY_REASON" maxlength="300"></textarea>
+                                        </div>
+
+                                        <label class="col-sm-1 control-label" style="display: none;"></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" style="display: none;" />
+                                        </div>
+                                        <label class="col-sm-1 control-label" style="display: none;"></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" style="display: none;" />
+                                        </div>
+                                        <label id="lblAttachments" class="col-sm-2 control-label">Attachments</label>
+                                        <div class="col-sm-3" id="NewInvestigationFileUploadDiv">
+                                            <label class="col-sm-2 control-label" id="SelectedComplaintFiles" data-ng-model="ComplaintFilesPath" style="display: none;"></label>
+                                            <label class="col-sm-2 control-label" id="SelectedFiles" data-ng-model="FilesPath" style="width: 100%;"></label>
+                                            <input type="file" id="InvestigationFile" name="InvestigationFile" class="filestyle" onchange="FileUploaded()" multiple="" />
+                                            <input type="button" value="Upload" id="btnUpload" class="btn btn-info navbar-btn" onclick="UploadFiles()" />
+                                            <input type="button" value="Clear" id="btnClear" class="btn btn-info navbar-btn" onclick="ClearFiles()" />
+                                            <input type="hidden" id="ClickUploadFile" class="form-control" value="0" style="display: none;" />
+                                            <input type="hidden" id="ClickSaveComplaint" class="form-control" value="0" style="display: none;" />
+                                        </div>
+                                        <div class="col-sm-3" id="LoadInvestigationFileUploadDiv">
+                                            <ul id="ComplaintFilesUploaded"></ul>
+                                            <ul id="InvestigationFilesUploaded"></ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 tabdiv" id="CustomerDetails">
+                                        <div class="col-sm-12 CloseOpen" onclick="FormToggle('CustDetails')">
+                                            <img src="~/Images/en_next.png" id="CustDetails_Img" />
+                                            <a class="Expand">Supply Plant Details</a>
+                                        </div>
+                                        <div class="row" style="padding-top: 30px; display: none;" id="CustDetails_Form">
+                                            <div class="col-sm-12 form-group">
+                                                <label class="col-sm-3 control-label">PLANT CODE<span class="Mandatory">*</span></label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control gray" id="TO_PLANT_CODE" data-ng-model="TO_PLANT_CODE" disabled="disabled" />
+                                                </div>
+                                                <label class="col-sm-3 control-label">PLANT NAME<span class="Mandatory">*</span></label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control gray" id="TO_PLANT_NAME" data-ng-model="TO_PLANT_NAME" disabled="disabled" />
+                                                </div>
+                                                <div style="display:none">
+                                                    <label class="col-sm-3 control-label">SUB STOCKIEST / DIRECT CUSTOMER</label>
+                                                    <div class="col-sm-3">
+                                                        <textarea class="form-control SubStockiest_Direct_CustomerDIV" id="END_CUSTOMER_DETAILS" data-ng-model="END_CUSTOMER_DETAILS" maxlength="300"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                            <div class="col-sm-12 form-group">
+                                                @*<label class="col-sm-3 control-label">PLANT NAME<span class="Mandatory">*</span></label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control gray" id="TO_PLANT_NAME" data-ng-model="TO_PLANT_NAME" disabled="disabled" />
+                                                </div>*@
+                                                <div style="display:none">
+                                                    <label class="col-sm-3 control-label">SITE ADDRESS</label>
+                                                    <div class="col-sm-3">
+                                                        <textarea class="form-control" id="SITE_ADDRESS" data-ng-model="SITE_ADDRESS" maxlength="300"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 form-group">
+                                                <label class="col-sm-3 control-label">COMPLAINT MODE</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control gray" id="COMPLAINT_MODE_NAME" data-ng-model="COMPLAINT_MODE_NAME" disabled="disabled" />
+                                                    <input type="text" class="form-control" id="COMPLAINT_MODE_CODE" data-ng-model="COMPLAINT_MODE_CODE" readonly="readonly" style="display: none;" />
+                                                </div>
+                                                <label class="col-sm-3 control-label">PRODUCT TYPE<span class="Mandatory">*</span></label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control gray" id="PRODUCT_CATEGORY_NAME" data-ng-model="PRODUCT_CATEGORY_NAME" disabled="disabled" />
+                                                    <input type="text" class="form-control" id="PRODUCT_CATEGORY_CODE" data-ng-model="PRODUCT_CATEGORY_CODE" readonly="readonly" style="display: none;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 tabdiv">
+                                        <div class="col-sm-12 CloseOpen" onclick="FormToggle('Material_Supply_Detail')">
+                                            <img src="~/Images/en_next.png" id="Material_Supply_Detail_Img" />
+                                            <a class="Expand">Material Supply Detail</a>
+                                        </div>
+                                        <div class="row" style="padding-top: 30px; display: none;" id="Material_Supply_Detail_Form">
+                                            <div class="col-sm-12" id="MatSupDet_BU3">
+                                                <table class="table innertable" id="Material_Supply_Detail_Table_BU3">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Product Code</th>
+                                                            <th>Product Name</th>
+                                                            <th>
+                                                                Material<br />
+                                                                Belongs To
+                                                            </th>
+                                                            <th>
+                                                                Product<br />
+                                                                Supplied From
+                                                            </th>
+                                                            <th>Name</th>
+                                                            <th>UOM</th>
+                                                            <th>
+                                                                Supply<br />
+                                                                Qty
+                                                            </th>
+                                                            <th>
+                                                                Defect<br />
+                                                                Qty
+                                                            </th>
+                                                            <th>
+                                                                Actual<br />
+                                                                Defect Qty
+                                                            </th>
+                                                            <th style="display: none;">Material Belongs To Code</th>
+                                                            <th style="display: none;">Product Supplied From Code</th>
+                                                            <th style="display: none;">Name Code</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                <input type="button" value="Add" id="Mat_Sup_Det_BU3_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenMSD_BU3Model()" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 tabdiv">
+                                        <div class="col-sm-12 CloseOpen" onclick="FormToggle('Supply_Details')">
+                                            <img src="~/Images/en_next.png" id="Supply_Details_Img" />
+                                            <a class="Expand">Supply Details</a>
+                                        </div>
+                                        <div class="row" style="padding-top: 30px; display: none;" id="Supply_Details_Form">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <div class="row" id="PeriodBasedDiv">
+                                                        <div class="form-group">
+                                                            <label for="label-2-2" class="col-sm-3 control-label" style="text-align: right; padding-top: 0px;">
+                                                                @LabelNames.PeriodBased
+                                                            </label>
+                                                            <div class="col-sm-7">
+                                                                <input type="checkbox" id="PERIOD_BASED" name="PIBased" data-ng-model="PERIOD_BASED" onchange="PeriodOrInvoiceBased('P')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" id="InvoiceBasedDiv">
+                                                        <div class="form-group">
+                                                            <label for="label-2-2" class="col-sm-3 control-label" style="text-align: right; padding-top: 0px;">
+                                                                @LabelNames.InvoiceBased
+                                                            </label>
+                                                            <div class="col-sm-7">
+                                                                <input type="checkbox" id="INVOICE_BASED" name="PIBased" data-ng-model="INVOICE_BASED" onchange="PeriodOrInvoiceBased('I')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6" id="PeriodBasedDates">
+                                                    <div class="row">
+                                                        <div class="form-group input-group">
+                                                            <label>Date Supply From</label>
+                                                            <input type="text" id="DATE_SUPPLY_FROM" data-ng-model="DATE_SUPPLY_FROM" onchange="InvDateSupplyFromChange()" />
+                                                            @*<input type="text" id="DATE_SUPPLY_FROM" data-ng-model="DATE_SUPPLY_FROM" onchange="SupplyDatesChange()" />*@
+                                                            <label>Date Supply To</label>
+                                                            @*<input type="text" id="DATE_SUPPLY_TO" data-ng-model="DATE_SUPPLY_TO" onchange="InvDateSupplyToChange()" />*@
+                                                            <input type="text" id="DATE_SUPPLY_TO" data-ng-model="DATE_SUPPLY_TO" onchange="SupplyDatesChange()" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-12" id="TextAreaDiv" style="padding-top: 2%;">
+
+                                                <div class="col-sm-10">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                                Invoice Details
+                                                            </label>
+                                                            <div class="col-sm-7">
+                                                                <textarea class="form-control" id="INVOICE_DETAILS" data-ng-model="INVOICE_DETAILS" maxlength="3000"></textarea>
+                                                                <input type="text" id="HiddenInvoiceDetails" style="display: none;" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                                Product Details
+                                                            </label>
+                                                            <div class="col-sm-7">
+                                                                <textarea class="form-control" id="PRODUCT_DETAILS" data-ng-model="PRODUCT_DETAILS" maxlength="3000"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12" id="SupplyDetailsTableSBU3">
+                                                <table class="table innertable" id="Supply_Details_TableSBU3" style="margin-top: 10px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Product Code</th>
+                                                            <th>Product Name</th>
+                                                            <th>Invoice No</th>
+                                                            <th>Invoice Date</th>
+                                                            <th>Batch No</th>
+                                                            <th>
+                                                                Supplied<br />
+                                                                Qty(Nos)
+                                                            </th>
+                                                            <th>
+                                                                Defect
+                                                                <br />
+                                                                Qty(Nos)
+                                                            </th>
+                                                            <th>
+                                                                Actual
+                                                                <br />
+                                                                Defect
+                                                                <br />
+                                                                Qty(Nos)
+                                                            </th>
+                                                            <th>Transporter</th>
+                                                            <th>Defect Type</th>
+                                                            <th>REMARKS</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                <input type="button" value="Add" id="Supply_Details_AddSBU3" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenSupDetModelsBU3()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 tabdiv" id="InvestigationRemarksDiv">
+                                        <div class="col-sm-12 CloseOpen" onclick="FormToggle('Investigation_Remarks')">
+                                            <img src="~/Images/en_next.png" id="Investigation_Remarks_Img" />
+                                            <a class="Expand">Investigation Remarks</a>
+                                        </div>
+                                        <div class="row" style="padding-top: 30px; display: none;" id="Investigation_Remarks_Form">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-10">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-5 control-label" style="text-align: right; font-weight: bold;">
+                                                                Nature of Complaint<br />
+                                                                (Provide Technical Description of Complaint)
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                <textarea class="form-control" id="NATURE_OF_COMPLAINT" data-ng-model="NATURE_OF_COMPLAINT" maxlength="3000"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            @*<label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">@LabelNames.Observationsbyofficial</label>*@
+                                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Investigation Finding</label>
+                                                            <div class="col-sm-7">
+                                                                <textarea class="form-control" id="OBSERVATIONS_BY_OFFICIAL" data-ng-model="OBSERVATIONS_BY_OFFICIAL" maxlength="3000"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                                Corrective Action
+                                                            </label>
+                                                            <div class="col-sm-7">
+                                                                <textarea class="form-control" id="REMARKS" data-ng-model="REMARKS" maxlength="3000"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-10" style="display:none">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                                                Preventive Action
+                                                            </label>
+                                                            <div class="col-sm-7">
+                                                                <textarea class="form-control" id="PREVENTIVE_ACTION" data-ng-model="PREVENTIVE_ACTION" maxlength="3000"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+    <div class="modal fade" id="MaterialSupplyDetailModalBU3" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabelBU3">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="MSDModalLabelBU3">@LabelNames.MaterialSupplyDetail</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <input type="hidden" id="BU3MSD_id" />
+
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Product Code<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="PRODUCT_CODE" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" ng-click="Getdata('GetProductMasterInvBU3_STO','GetProductMaster_STO','Product Details List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Product Name</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control disabled" id="PRODUCT_NAME" data-ng-model="DEFECTED_NO" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            @LabelNames.MSD_MaterialBelongsTo<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="PLANT_NAME" disabled="disabled" />
+                                                <input type="text" class="form-control" id="PLANT_CODE" style="display: none;" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" ng-click="Getdata('GetPlantMasterInvBU3_STO','GetPlantMaster','Plant List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            @LabelNames.MSD_ProductSuppliedFrom<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="SUPPLIER_TYPE_NAME" disabled="disabled" />
+                                                <input type="text" class="form-control" id="SUPPLIER_TYPE_CODE" style="display: none;" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" ng-click="Getdata('GetProductSuppliedFromInvBU3_STO','SUPPLIER_TYPE_CODE_STO','Supplier List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            @LabelNames.MSD_Name<span class="Mandatory">*</span>
+                                        </label>
+
+                                        <div class="col-sm-4">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="SUPPLIER_NAME" disabled="disabled" />
+                                                <input type="text" class="form-control" id="SUPPLIER_CODE" style="display: none;" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" ng-click="Getdata('GetMSD_NameInvBU3_STO','MSD_Name','')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            @LabelNames.MSD_UOM<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="UOM" disabled="disabled" value="EA" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            @LabelNames.MSD_SupplyQty<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="SUPPLIED_NO" onkeypress="return isNumber(event)" onchange="MSD_QuantityChangesBU3(this.id)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Defect Qty<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="DEFECTED_NO" onkeypress="return isNumber(event)" onchange="MSD_QuantityChangesBU3(this.id)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Actual Defect Qty<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="ACTUAL_DEFECTED_NO" onkeypress="return isNumber(event)" onchange="MSD_QuantityChangesBU3(this.id)" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="BU3MSD_Save" class="btn btn-info" onclick="SaveMSDBU3Data()">Save</button>
+                    <button type="button" id="BU3MSD_Delete" class="btn btn-info" onclick="DeleteMSDBU3()">Delete</button>
+                    <button type="button" id="BU3MSD_Close" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="SupplyDetailModalSBU3" tabindex="-1" role="dialog" aria-labelledby="SDModalLabelBU3">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="SDModalLabelBU3">Supply Lines</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <input type="hidden" id="SD_IDBU3" data-ng-model="SD_IDBU3" />
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Product Code<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_PRODUCT_CODE" data-ng-model="CMS_INV_SD_BU3_STO_PRODUCT_CODE" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" ng-click="Getdata('GetProductMasterInvSDBU3_STO','GetProductMaster_STO','Product Details List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Product Name
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_PRODUCT_NAME" data-ng-model="CMS_INV_SD_BU3_STO_PRODUCT_NAME" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Invoice No@*<span class="Mandatory">*</span>*@
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_INVOICE_NO" data-ng-model="CMS_INV_SD_BU3_STO_INVOICE_NO" maxlength="10" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Invoice Date<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_INVOICE_DATE" data-ng-model="CMS_INV_SD_BU3_STO_INVOICE_DATE" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Batch No
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_BATCH_NO" data-ng-model="CMS_INV_SD_BU3_STO_BATCH_NO" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Supplied Qty(Nos)<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_SUPPLIED_NO" data-ng-model="CMS_INV_SD_BU3_STO_SUPPLIED_NO" onkeypress="return isInteger(event)" onchange="SDMBSuppliedBreakageQtyChange(this.id)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right; float: left;">
+                                            Defect Qty(Nos)<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_DEFECTED_NO" data-ng-model="CMS_INV_SD_BU3_STO_DEFECTED_NO" onkeypress="return isInteger(event)" onchange="SDMBSuppliedBreakageQtyChange(this.id)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right; float: left;">
+                                            Actual Defect Qty(Nos)<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_ACTUAL_DEFECTED_NO" data-ng-model="CMS_INV_SD_BU3_STO_ACTUAL_DEFECTED_NO" onkeypress="return isInteger(event)" onchange="SDMBSuppliedBreakageQtyChange(this.id)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Transporter
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_TRANSPORTER" data-ng-model="CMS_INV_SD_BU3_STO_TRANSPORTER" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            Defect Type<span class="Mandatory">*</span>
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_DEFECT_TYPE_NAME" data-ng-model="CMS_INV_SD_BU3_STO_DEFECT_TYPE_NAME" disabled="disabled" />
+                                                <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_DEFECT_TYPE_CODE" data-ng-model="CMS_INV_SD_BU3_STO_DEFECT_TYPE_CODE" style="display: none;" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" ng-click="Getdata('GetDefectTypeMasterInvBU3_STO','GetDefectTypeMaster','Defect Type List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            REMARKS
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="CMS_INV_SD_BU3_STO_REMARKS" data-ng-model="CMS_INV_SD_BU3_STO_REMARKS" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="SD_SaveBU3" class="btn btn-info" onclick="SaveSDDataBU3()">Save</button>
+                    <button type="button" id="SD_DeleteBU3" class="btn btn-info" onclick="DeleteSDBU3()">Delete</button>
+                    <button type="button" id="SD_CloseBU3" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="BIS_SizePopUp" tabindex="-1" role="dialog" aria-labelledby="BIS_SizePopUpLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="BIS_SizePopUpLabel">Site Observation Sheet</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+
+                        <div class="row">
+                            <table id="SizeFromSDtoBIS" class="ListTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Size</th>
+                                        <th>Gross Weight</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot style="display: none;">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ApprovalsActionForm" tabindex="-1" role="dialog" aria-labelledby="ApprovalsLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ApprovalsLabel">Approvals Action Form</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">
+                                            REMARKS
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <textarea class="form-control" id="APPROVALS_REMARKS" data-ng-model="APPROVALS_REMARKS" maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="rejectedoverphonedisable" ng-click="MakeApproved_STO('Approved')">Approve</button>
+                    <button type="button" class="btn btn-info" ng-click="MakeApproved_STO('Rejected')">Reject</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //ACSHEETS
+        if ($("#PRODUCT_CATEGORY_CODE").val() == "11") {
+            $("#Total_Recovery_Tons").prop("disabled", true);
+        }
+            //CCSHEETS
+        else if ($("#PRODUCT_CATEGORY_CODE").val() == "14") {
+            $("#Total_Recovery_Tons").prop("disabled", false);
+        }
+    });
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    //Date Pickers
+    $(function () {
+
+        var ForeignDate = TodayDateTime;
+
+        //alert(ForeignDate);
+
+        ForeignDate = ForeignDate.split('/')[1] + "/" + ForeignDate.split('/')[0] + "/" + ForeignDate.split('/')[2];
+
+        $("#TodayDateInv").val(TodayDateTime);
+
+        $("#BIS_Batch_No").datepicker({
+            format: 'ddmmyy',
+            autoclose: true
+        });
+        $("#COMPLAINT_RECEIVED_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#COMPLAINT_REGISTERED_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#COMPLAINT_ATTENDED_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#VISITED_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#PREVIOUS_VISITED_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#INVESTIGATION_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        //$("#APPROVED_DATE").datepicker({
+        //    format: 'dd/mm/yyyy',
+        //    autoclose: true
+        //});
+        $("#INVOICE_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#DATE_SUPPLY_TO").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#DATE_SUPPLY_FROM").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#InvoiceDateB").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#CMS_INV_SD_BU3_STO_INVOICE_DATE").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#SD_InvoiceDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: new Date(ForeignDate)
+        });
+        $("#FormIdentity_STO").bind('change', function () {
+            enabledisableFileUpload();
+        });
+        $("#SelectedComplaintFiles").on('change', function () {
+            showComplaintFiles();
+        });
+        $("#SelectedFiles").on('change', function () {
+            enabledisableFileUpload();
+        });
+        $("#INVESTIGATION_STATUS").on('change', function () {
+            enabledisableFileUpload();
+        });
+        //console.log('InvestigationFilesUploaded', $("ul#InvestigationFilesUploaded li").length)
+        if ($("#SelectedFiles").text() != "" || $("ul#InvestigationFilesUploaded li").length > 0) {
+            $("#ClickUploadFile").val(1);
+            $("#ClickSaveComplaint").val(1);
+        }
+    });
+
+
+
+    function InvDateSupplyFromChange() {
+        var MyDate = $("#DATE_SUPPLY_FROM").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#DATE_SUPPLY_TO").datepicker('setStartDate', MyDate);
+            $("#DATE_SUPPLY_TO").val("");
+        }
+        SupplyDatesChange();
+    }
+
+
+
+    function VisitedDateChange() {
+        var MyDate = $("#VISITED_DATE").val();
+
+        DelayCheckAutoCalcSBU3();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            //$("#PREVIOUS_VISITED_DATE").datepicker('setEndDate', MyDate);
+            //$("#PREVIOUS_VISITED_DATE").val("");
+        }
+    }
+
+    function ReceivedDateChange() {
+        var RecDate = $("#COMPLAINT_RECEIVED_DATE").val();
+        if (RecDate == "") { }
+        else {
+            $("#COMPLAINT_ATTENDED_DATE").datepicker('setStartDate', RecDate);
+            $("#VISITED_DATE").datepicker('setStartDate', RecDate);
+        }
+        DelayCheckAutoCalcSBU3();
+    }
+
+
+    //Size Pop up click logic
+    function OpenSizePopUpFromSupplyDetails() {
+        var TRCode = "";
+        var RowCount = 0;
+
+        $("#Supply_Details_Table tbody tr").each(function () {
+            RowId = ($(this).attr("id"));
+            RowCount = RowCount + 1;
+            TRCode = TRCode + "<tr id='SDT_" + RowCount + "' onclick='SizeTableRowClick(this.id)'>";
+            TRCode = TRCode + "<td>" + $("#Supply_Details_Table tbody #" + RowId + " td")[1].innerHTML + "</td>";
+            TRCode = TRCode + "<td>" + $("#Supply_Details_Table tbody #" + RowId + " td")[2].innerHTML + "</td>";
+            TRCode = TRCode + "<td>" + $("#Supply_Details_Table tbody #" + RowId + " td")[3].innerHTML + "</td>";
+            TRCode = TRCode + "</tr>";
+        });
+
+        $("#SizeFromSDtoBIS tbody").empty();
+        $("#SizeFromSDtoBIS tbody").remove();
+        $("#SizeFromSDtoBIS").append("<tbody>" + TRCode + "</tbody>");
+        $("#SizeFromSDtoBIS").dataTable({
+            "bDestroy": true,
+            'scroll': true,
+            "paging": false,
+            "ordering": false,
+            "info": false
+        });
+        $("#BIS_SizePopUp").modal('show');
+    }
+
+
+    //Size Pop up click logic
+    function OpenSizePopUpFromSupplyDetailsOne() {
+        var TRCode = "";
+        var RowCount = 0;
+
+        $("#Supply_Details_Table tbody tr").each(function () {
+            RowId = ($(this).attr("id"));
+            RowCount = RowCount + 1;
+            TRCode = TRCode + "<tr id='SDT_" + RowCount + "' onclick='SizeTableRowClickOne(this.id)'>";
+            TRCode = TRCode + "<td>" + $("#Supply_Details_Table tbody #" + RowId + " td")[1].innerHTML + "</td>";
+            TRCode = TRCode + "<td>" + $("#Supply_Details_Table tbody #" + RowId + " td")[2].innerHTML + "</td>";
+            TRCode = TRCode + "<td>" + $("#Supply_Details_Table tbody #" + RowId + " td")[3].innerHTML + "</td>";
+            TRCode = TRCode + "</tr>";
+        });
+
+        $("#SizeFromSDtoBIS tbody").empty();
+        $("#SizeFromSDtoBIS tbody").remove();
+        $("#SizeFromSDtoBIS").append("<tbody>" + TRCode + "</tbody>");
+        $("#SizeFromSDtoBIS").dataTable({
+            "bDestroy": true,
+            'scroll': true,
+            "paging": false,
+            "ordering": false,
+            "info": false
+        });
+        $("#BIS_SizePopUp").modal('show');
+
+    }
+
+
+    //Size Pop Up Table Row Click
+    function SizeTableRowClick(RowId) {
+        try {
+
+            $("#BIS_Size").val($("#SizeFromSDtoBIS tbody #" + RowId + " td")[1].innerHTML);
+            $("#BIS_Product_Name").val($("#SizeFromSDtoBIS tbody #" + RowId + " td")[0].innerHTML);
+            $("#BIS_SizePopUp").modal('hide');
+
+        }
+        catch (e) {
+            alert("Error :SizeTableRowClick :" + e);
+        }
+    }
+
+
+    //Size Pop Up Table Row Click
+    function SizeTableRowClickOne(RowId) {
+        try {
+
+            $("#BISP_Size").val($("#SizeFromSDtoBIS tbody #" + RowId + " td")[1].innerHTML);
+            $("#BISP_Product").val($("#SizeFromSDtoBIS tbody #" + RowId + " td")[0].innerHTML);
+            $("#BIS_SizePopUp").modal('hide');
+
+        }
+        catch (e) {
+            alert("Error :SizeTableRowClick :" + e);
+        }
+    }
+
+    function Complaint_Attended_DateChanged() {
+        var Division = $("#PRODUCT_CATEGORY_CODE").val();
+        if (($("#PRODUCT_TYPE_NAME").val() == "SBU1") || ($("#PRODUCT_TYPE_NAME").val() == "SBU2") || ($("#PRODUCT_TYPE_NAME").val() == "SBU3" && Division == "36")) {
+            var COMPLAINT_ATTENDED_DATE = $("#COMPLAINT_ATTENDED_DATE").val();
+            if (COMPLAINT_ATTENDED_DATE == "") {
+                $("#VISITED_DATE").val("");
+            }
+            else {
+                $("#VISITED_DATE").val(COMPLAINT_ATTENDED_DATE);
+                $("#VISITED_DATE").datepicker("setDate", COMPLAINT_ATTENDED_DATE);
+            }
+        }
+        else if ($("#PRODUCT_TYPE_NAME").val() == "SBU3") {
+
+        }
+    }
+
+    /*       Material Supply Detail       */
+
+
+
+    /*      MSD BU3     */
+
+    function OpenMSD_BU3Model() {
+        try {
+
+            var CNO = $("#COMPLAINT_TRACKING_NO").val();
+            if (CNO == "") {
+                alert("Select Complaint Number");
+                return;
+            }
+            var Division = $("#PRODUCT_CATEGORY_CODE").val();
+            if ($("#PRODUCT_TYPE_NAME").val() == "SBU3" && Division != "36") {
+            }
+            else {
+                return;
+            }
+
+            $("#BU3MSD_id").val("");
+
+            $("#PRODUCT_CODE").val("");
+            $("#PRODUCT_NAME").val("");
+
+            $("#PLANT_NAME").val("");
+            $("#PLANT_CODE").val("");
+
+            $("#SUPPLIER_TYPE_NAME").val("");
+            $("#SUPPLIER_TYPE_CODE").val("");
+
+            $("#SUPPLIER_NAME").val("");
+            $("#SUPPLIER_CODE").val("");
+
+            $("#UOM").val("EA");
+            $("#SUPPLIED_NO").val("");
+            $("#DEFECTED_NO").val("");
+            $("#ACTUAL_DEFECTED_NO").val("");
+
+
+            $("#BU3MSD_Delete").hide();
+            $("#BU3MSD_Save").text("Save");
+
+            $("#MaterialSupplyDetailModalBU3").modal('show');
+        }
+        catch (e) {
+            alert("Error : OpenBU3 :" + e);
+        }
+    }
+
+
+    function SaveMSDBU3Data() {
+
+        var MSD_id = $("#BU3MSD_id").val();
+
+        var PRODUCT_CODE = $("#PRODUCT_CODE").val();
+        var PRODUCT_NAME = $("#PRODUCT_NAME").val();
+
+        var PLANT_NAME = $("#PLANT_NAME").val();
+        var PLANT_CODE = $("#PLANT_CODE").val();
+
+        var SUPPLIER_TYPE_NAME = $("#SUPPLIER_TYPE_NAME").val();
+        var SUPPLIER_TYPE_CODE = $("#SUPPLIER_TYPE_CODE").val();
+
+        var SUPPLIER_NAME = $("#SUPPLIER_NAME").val();
+        var SUPPLIER_CODE = $("#SUPPLIER_CODE").val();
+
+        var UOM = $("#UOM").val();
+        var SUPPLIED_NO = $("#SUPPLIED_NO").val();
+        var DEFECTED_NO = $("#DEFECTED_NO").val();
+        var ACTUAL_DEFECTED_NO = $("#ACTUAL_DEFECTED_NO").val();
+
+        UOM = "EA";
+
+        var Flag = 0;
+
+        if (PRODUCT_CODE == "") {
+            Flag = Flag + 1;
+            $("#PRODUCT_CODE").css("border-color", "red");
+        }
+        else {
+            $("#PRODUCT_CODE").css("border-color", "#d2d6de");
+        }
+
+        if (PLANT_NAME == "") {
+            Flag = Flag + 1;
+            $("#PLANT_NAME").css("border-color", "red");
+        }
+        else {
+            $("#PLANT_NAME").css("border-color", "#d2d6de");
+        }
+
+        if (SUPPLIER_TYPE_NAME == "") {
+            Flag = Flag + 1;
+            $("#SUPPLIER_TYPE_NAME").css("border-color", "red");
+        }
+        else {
+            $("#SUPPLIER_TYPE_NAME").css("border-color", "#d2d6de");
+        }
+
+        if (SUPPLIER_NAME == "") {
+            Flag = Flag + 1;
+            $("#SUPPLIER_NAME").css("border-color", "red");
+        }
+        else {
+            $("#SUPPLIER_NAME").css("border-color", "#d2d6de");
+        }
+
+        if (UOM == "") {
+            Flag = Flag + 1;
+            $("#UOM").css("border-color", "red");
+        }
+        else {
+            $("#UOM").css("border-color", "#d2d6de");
+        }
+
+        if (SUPPLIED_NO == "") {
+            Flag = Flag + 1;
+            $("#SUPPLIED_NO").css("border-color", "red");
+        }
+        else {
+            $("#SUPPLIED_NO").css("border-color", "#d2d6de");
+        }
+
+        if (DEFECTED_NO == "") {
+            Flag = Flag + 1;
+            $("#DEFECTED_NO").css("border-color", "red");
+        }
+        else {
+            $("#DEFECTED_NO").css("border-color", "#d2d6de");
+        }
+
+
+        if (ACTUAL_DEFECTED_NO == "") {
+            Flag = Flag + 1;
+            $("#ACTUAL_DEFECTED_NO").css("border-color", "red");
+        }
+        else {
+            $("#ACTUAL_DEFECTED_NO").css("border-color", "#d2d6de");
+        }
+
+
+        if (Flag > 0) {
+            return;
+        }
+        else {
+
+
+            if (isNaN(SUPPLIED_NO) || isNaN(DEFECTED_NO) || isNaN(ACTUAL_DEFECTED_NO)) {
+                alert("Enter valid numbers in Supply, Defect and Actual Defect Quantities");
+                return;
+            }
+            else {
+                SUPPLIED_NO = parseInt(SUPPLIED_NO);
+                DEFECTED_NO = parseInt(DEFECTED_NO);
+                ACTUAL_DEFECTED_NO = parseInt(ACTUAL_DEFECTED_NO);
+
+                if (parseInt(SUPPLIED_NO) < parseInt(DEFECTED_NO)) {
+                    alert("Defect Quantity cannot be morethan Supply Quantity");
+                    return;
+                }
+                if (parseInt(SUPPLIED_NO) < parseInt(ACTUAL_DEFECTED_NO)) {
+                    alert("Actual Defect Quantity cannot be morethan Supply Quantity");
+                    return;
+                }
+            }
+
+
+
+            if (MSD_id == "") {
+
+                MSD_id = $("#Material_Supply_Detail_Table_BU3 tbody tr").length + 1;
+                var TRCode = "";
+
+                TRCode = TRCode + "<td>" + PRODUCT_CODE + "</td>";
+                TRCode = TRCode + "<td>" + PRODUCT_NAME + "</td>";
+                TRCode = TRCode + "<td>" + PLANT_NAME + "</td>";
+                TRCode = TRCode + "<td>" + SUPPLIER_TYPE_NAME + "</td>";
+
+                TRCode = TRCode + "<td>" + SUPPLIER_NAME + "</td>";
+                TRCode = TRCode + "<td>" + UOM + "</td>";
+                TRCode = TRCode + "<td>" + SUPPLIED_NO + "</td>";
+                TRCode = TRCode + "<td>" + DEFECTED_NO + "</td>";
+
+                TRCode = TRCode + "<td>" + ACTUAL_DEFECTED_NO + "</td>";
+                TRCode = TRCode + "<td style='display:none;'>" + PLANT_CODE + "</td>";
+                TRCode = TRCode + "<td style='display:none;'>" + SUPPLIER_TYPE_CODE + "</td>";
+                TRCode = TRCode + "<td style='display:none;'>" + SUPPLIER_CODE + "</td>";
+
+                TRCode = "<tr class='MousePointer' id='BU3MSD_" + MSD_id + "' onclick='EditMSDBU3(this.id)'><td>" + MSD_id + "</td>" + TRCode + "</tr>";
+                $("#Material_Supply_Detail_Table_BU3 tbody").append(TRCode);
+
+            }
+            else {
+
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[0].innerHTML = MSD_id;
+
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[1].innerHTML = PRODUCT_CODE;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[2].innerHTML = PRODUCT_NAME;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[3].innerHTML = PLANT_NAME;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[4].innerHTML = SUPPLIER_TYPE_NAME;
+
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[5].innerHTML = SUPPLIER_NAME;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[6].innerHTML = UOM;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[7].innerHTML = SUPPLIED_NO;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[8].innerHTML = DEFECTED_NO;
+
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[9].innerHTML = ACTUAL_DEFECTED_NO;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[10].innerHTML = PLANT_CODE;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[11].innerHTML = SUPPLIER_TYPE_CODE;
+                $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + " td")[12].innerHTML = SUPPLIER_CODE;
+
+            }
+
+            $("#BU3MSD_id").val("");
+
+            $("#PRODUCT_CODE").val("");
+            $("#PRODUCT_NAME").val("");
+
+            $("#PLANT_NAME").val("");
+            $("#PLANT_CODE").val("");
+
+            $("#SUPPLIER_TYPE_NAME").val("");
+            $("#SUPPLIER_TYPE_CODE").val("");
+
+            $("#SUPPLIER_NAME").val("");
+            $("#SUPPLIER_CODE").val("");
+
+            $("#UOM").val("");
+            $("#SUPPLIED_NO").val("");
+            $("#DEFECTED_NO").val("");
+            $("#ACTUAL_DEFECTED_NO").val("");
+
+            SaveDataToServerInvestigation('MaterialSupplyDetail');
+            $("#MaterialSupplyDetailModalBU3").modal("hide");
+
+        }
+
+    }
+
+
+    function EditMSDBU3(RowId) {
+        try {
+            var IS = $("#INVESTIGATION_STATUS").val();
+            var UserTypeCode = $("#SessionUserTypeID_STO").val();
+            if (IS == "Approved" || IS == "Rejected") {
+                if ((IS == "Approved") && (UserTypeCode == "CSM" || UserTypeCode == "QH" || UserTypeCode == "CSM_BU2" || UserTypeCode == "CSM_BU3")) {
+                }
+                else {
+                    return;
+                }
+            }
+
+
+            $("#BU3MSD_id").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[0].innerHTML);
+
+            $("#PRODUCT_CODE").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[1].innerHTML);
+            $("#PRODUCT_NAME").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[2].innerHTML);
+
+            $("#PLANT_NAME").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[3].innerHTML);
+            $("#PLANT_CODE").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[10].innerHTML);
+
+            $("#SUPPLIER_TYPE_NAME").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[4].innerHTML);
+            $("#SUPPLIER_TYPE_CODE").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[11].innerHTML);
+
+            $("#SUPPLIER_NAME").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[5].innerHTML);
+            $("#SUPPLIER_CODE").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[12].innerHTML);
+
+            $("#UOM").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[6].innerHTML);
+            $("#SUPPLIED_NO").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[7].innerHTML);
+            $("#DEFECTED_NO").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[8].innerHTML);
+            $("#ACTUAL_DEFECTED_NO").val($("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[9].innerHTML);
+
+
+            $("#MaterialSupplyDetailModalBU3").modal('show');
+            $("#BU3MSD_Delete").show();
+            $("#BU3MSD_Save").text("Update");
+
+        }
+        catch (e) {
+            alert("Error : EditMSD : " + e);
+        }
+
+    }
+
+
+    function DeleteMSDBU3() {
+        var MSD_id = $("#BU3MSD_id").val();
+
+        $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + MSD_id + "").remove();
+
+        $("#BU3MSD_id").val();
+
+        $("#BU3MSD_id").val("");
+
+        $("#PRODUCT_CODE").val("");
+        $("#PRODUCT_NAME").val("");
+
+        $("#PLANT_NAME").val("");
+        $("#PLANT_CODE").val("");
+
+        $("#SUPPLIER_TYPE_NAME").val("");
+        $("#SUPPLIER_TYPE_CODE").val("");
+
+        $("#SUPPLIER_NAME").val("");
+        $("#SUPPLIER_CODE").val("");
+
+        $("#UOM").val("");
+        $("#SUPPLIED_NO").val("");
+        $("#DEFECTED_NO").val("");
+        $("#ACTUAL_DEFECTED_NO").val("");
+
+
+
+        var i = 1;
+
+        $("#Material_Supply_Detail_Table_BU3 tbody tr").each(function () {
+            $(this).attr("id", "BU3MSD_" + i);
+            $("#Material_Supply_Detail_Table_BU3 tbody #BU3MSD_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+
+        $("#MaterialSupplyDetailModalBU3").modal("hide");
+        SaveDataToServerInvestigation('MaterialSupplyDetail');
+
+    }
+
+    /*      MSD BU3     */
+
+    //DELAY checkbox validation
+    function DelayClick() {
+        if ($("#DELAY").is(':checked') == true) {
+            $(".DelayGroup").show();
+            $(".DelayGroupDummy").hide();
+            DelayCheckAutoCalcSBU3();
+        }
+        else {
+            $(".DelayGroup").hide();
+            $("#DELAY_DAYS").val("");
+            $("#DELAY_REASON").val("");
+            $(".DelayGroupDummy").show();
+        }
+    }
+
+
+    function DelayCheckAutoCalcSBU3() {
+        try {
+
+            var Division = $("#PRODUCT_CATEGORY_CODE").val();
+            if ($("#PRODUCT_TYPE_NAME").val() == "SBU3" && Division != "36") {
+
+                if (($("#DELAY").is(':checked') == true)) {
+                    var RecvDate = $("#COMPLAINT_RECEIVED_DATE").val();
+                    var VisitDate = $("#VISITED_DATE").val();
+
+
+                    if (RecvDate == "" || VisitDate == "") {
+                        $("#DELAY_DAYS").val("");
+                    }
+                    else {
+                        var StartDate = new Date(RecvDate.split('/')[1] + "/" + RecvDate.split('/')[0] + "/" + RecvDate.split('/')[2]);
+                        var EndDate = new Date(VisitDate.split('/')[1] + "/" + VisitDate.split('/')[0] + "/" + VisitDate.split('/')[2]);
+                        var DaysDiff = Math.round((EndDate - StartDate) / (1000 * 60 * 60 * 24));
+                        if (isNaN(DaysDiff) || DaysDiff == null || DaysDiff == "") {
+                            $("#DELAY_DAYS").val("");
+                        }
+                        else {
+                            $("#DELAY_DAYS").val(DaysDiff);
+                        }
+                    }
+                }
+                else {
+                    $("#DELAY_DAYS").val("");
+                }
+            }
+        }
+        catch (e) {
+            alert("DelayCheckAutoCalcSBU3 : " + e);
+        }
+    }
+
+    //Supply Details Period and Invoice Based validations
+    function PeriodOrInvoiceBased(Based) {
+        try {
+
+            $("#INVOICE_DETAILS").val("");
+            //$("#PRODUCT_DETAILS").val("");
+            $("#DATE_SUPPLY_TO").val("");
+            $("#DATE_SUPPLY_FROM").val("");
+
+            //HiddenInvoiceDetails
+
+            if (Based == "P") {
+                $("#Invoice_List_Division").css('display', 'none');
+                if ($("#PERIOD_BASED").is(':checked')) {
+                    $("#INVOICE_BASED").prop('checked', false);
+                    $("#PeriodBasedDates").show();
+                    $("#InvoiceBasedDiv").hide();
+                    SupplyDatesChange();
+                }
+                else {
+                    $("#PeriodBasedDates").hide();
+                    $("#InvoiceBasedDiv").show();
+                }
+            }
+            else if (Based == "I") {
+                if ($("#INVOICE_BASED").is(':checked')) {
+                    $("#PERIOD_BASED").prop('checked', false);
+                    $("#PeriodBasedDates").hide();
+                    $("#PeriodBasedDiv").hide();
+                    InvoiceBasedFun();
+
+                    $("#Invoice_List_Division").css('display', 'block');
+
+                }
+                else {
+                    $("#PeriodBasedDiv").show();
+                    $("#Invoice_List_Division").css('display', 'none');
+
+                }
+            }
+        }
+        catch (e) {
+            alert("Error : PeriodOrInvoiceBased : " + e);
+        }
+    }
+
+
+    //Supply Details Invoice Based validations
+    function InvoiceBasedFun() {
+        if ($("#INVOICE_BASED").is(':checked')) {
+
+            var RowId = "";
+            var PD = "";
+
+            $("#Invoice_List_Table tbody tr").each(function () {
+                RowId = ($(this).attr("id"));
+                PD = PD + "(" + $("#Invoice_List_Table tbody #" + RowId + " td")[1].innerHTML + "," + $("#Invoice_List_Table tbody #" + RowId + " td")[2].innerHTML + ")-";
+            });
+            if (PD != "") {
+                PD = PD.substr(0, PD.length - 1);
+                PD = $("#HiddenInvoiceDetails").val() + "-" + PD;
+                $("#INVOICE_DETAILS").val(PD);
+            }
+            else {
+                $("#INVOICE_DETAILS").val($("#HiddenInvoiceDetails").val());
+            }
+        }
+    }
+
+
+    //Supply Details Dates Change validations
+    function SupplyDatesChange() {
+        if ($("#PERIOD_BASED").is(':checked')) {
+            var DSFrom = $("#DATE_SUPPLY_FROM").val();
+            var DSTo = $("#DATE_SUPPLY_TO").val();
+            $("#INVOICE_DETAILS").val(DSFrom + " TO " + DSTo);
+        }
+    }
+
+
+
+    //Product details tables populating of Sheeting and Aerocon, Insualtion
+    function AddThingsToProductDetails() {
+
+        $("#PRODUCT_DETAILS").val("");
+        var ProdType = $("#PRODUCT_TYPE_NAME").val();
+        var PD = "";
+        var RowID = "";
+        var Division = $("#PRODUCT_CATEGORY_CODE").val();
+        if (ProdType == "SBU1") {
+
+            $("#Supply_Details_Table tbody tr").each(function () {
+                RowId = ($(this).attr("id"));
+                PD = PD + "(" + $("#Supply_Details_Table tbody #" + RowId + " td")[1].innerHTML + "),";
+            });
+        }
+        else if (ProdType == "SBU2" || (ProdType == "SBU3" && Division == "36")) {
+            $("#Supply_Details_TableB tbody tr").each(function () {
+                RowId = ($(this).attr("id"));
+                PD = PD + "(" + $("#Supply_Details_TableB tbody #" + RowId + " td")[2].innerHTML + "),";
+            });
+        }
+        else if (ProdType == "SBU3") {
+            $("#Supply_Details_TableSBU3 tbody tr").each(function () {
+                RowId = ($(this).attr("id"));
+                PD = PD + "(" + $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[2].innerHTML + "),";
+            });
+        }
+
+        PD = PD.substr(0, PD.length - 1);
+        $("#PRODUCT_DETAILS").val(PD);
+    }
+
+    //Supply Deatils Business Validation
+    function SupplyQuantityNosChange() {
+
+        try {
+            var Size = $("#SD_Size_M").val();
+
+            if (Size == "" || Size == undefined) {
+                //alert("Please Enter Size");
+                //$("#SD_Supplied_Qty_Nos").val("");
+                //$("#SD_Supplied_Qty_M").val("");
+                //$("#SD_Breakage_Qty_Nos").val("");
+                //$("#SD_Breakage_Qty_M").val("");
+                //$("#SD_Breakage_Per").val("");
+                //return;
+            }
+            else {
+                var Supplied_Qty_Nos = $("#SD_Supplied_Qty_Nos").val();
+
+                //$("#SD_Supplied_Qty_M").val("");
+                //$("#SD_Breakage_Qty_Nos").val("");
+                //$("#SD_Breakage_Qty_M").val("");
+                //$("#SD_Breakage_Per").val("");
+
+                if (isNaN(Supplied_Qty_Nos)) {
+                    $("#SD_Supplied_Qty_Nos").val("");
+                }
+                else {
+                    var Supplied_Qty_M = parseFloat(Supplied_Qty_Nos) * parseFloat(Size);
+                    Supplied_Qty_Nos = Math.round(Supplied_Qty_Nos * 10000) / 10000;
+                    Supplied_Qty_M = Math.round(Supplied_Qty_M * 10000) / 10000;
+                    $("#SD_Supplied_Qty_M").val(Supplied_Qty_M);
+                    $("#SD_Supplied_Qty_Nos").val(Supplied_Qty_Nos);
+
+
+                    var SD_Breakage_Qty_Nos = $("#SD_Breakage_Qty_Nos").val();
+
+                    if (parseFloat(SD_Breakage_Qty_Nos) > parseFloat(Supplied_Qty_Nos)) {
+                        //alert("Supply Quantity is less than Breakage Quantity");
+                        $("#SD_Breakage_Qty_Nos").focus();
+                    }
+                    else {
+
+                        var Supply = $("#SD_Supplied_Qty_Nos").val();
+                        var Breakage = $("#SD_Breakage_Qty_Nos").val();
+
+                        if (Supply == "" || Supply == null || Breakage == "" || Breakage == null) {
+                            $("#SD_Breakage_Per").val("");
+                        }
+                        else {
+                            var Percent = (parseFloat(Breakage) / parseFloat(Supply)) * 100;
+                            Percent = Math.round(Percent * 100) / 100;
+                            $("#SD_Breakage_Per").val(Percent);
+                        }
+
+                    }
+                }
+
+
+            }
+        }
+        catch (e) {
+            alert("Error : SupplyQuantityNosChange : " + e);
+        }
+
+    }
+
+
+    //Supply Deatils Business Validation
+    function BreakageQuantityNosChange() {
+        try {
+            var Size = $("#SD_Size_M").val();
+
+            if (Size == "" || Size == undefined) {
+                //alert("Please Enter Size");
+                //$("#SD_Breakage_Qty_Nos").val("");
+                //$("#SD_Breakage_Qty_M").val("");
+                //$("#SD_Breakage_Per").val("");
+            }
+            else {
+                var DEFECTED_NO = $("#SD_Breakage_Qty_Nos").val();
+                $("#SD_Breakage_Qty_M").val("");
+                $("#SD_Breakage_Per").val("");
+
+                if (isNaN(DEFECTED_NO)) {
+                    $("#SD_Breakage_Qty_Nos").val("");
+                }
+                else {
+                    var Supplied_Qty_Nos = $("#SD_Supplied_Qty_Nos").val();
+
+
+                    if (parseFloat(DEFECTED_NO) > parseFloat(Supplied_Qty_Nos)) {
+                        //$("#SD_Breakage_Qty_Nos").val("");
+                        //$("#SD_Breakage_Qty_M").val("");
+                        //$("#SD_Breakage_Per").val("");
+                        //alert("Breakage Quantity cannot be morethan Supply Quantity");
+                    }
+                    else {
+
+                    }
+
+                    var BreakageQty_M = parseFloat(DEFECTED_NO) * Size;
+                    DEFECTED_NO = Math.round(DEFECTED_NO * 10000) / 10000;
+                    BreakageQty_M = Math.round(BreakageQty_M * 10000) / 10000;
+                    $("#SD_Breakage_Qty_Nos").val(DEFECTED_NO);
+                    $("#SD_Breakage_Qty_M").val(BreakageQty_M);
+
+                    Supplied_Qty_Nos = Math.round(Supplied_Qty_Nos * 10000) / 10000;
+
+                    var BreakagePercent = (parseFloat(DEFECTED_NO) / parseFloat(Supplied_Qty_Nos)) * 100;
+
+
+                    if (isNaN(BreakagePercent) || BreakagePercent == Infinity) {
+                        $("#SD_Breakage_Per").val("0");
+                    }
+                    else {
+                        BreakagePercent = Math.round(BreakagePercent * 100) / 100;
+                        $("#SD_Breakage_Per").val(BreakagePercent);
+                    }
+                }
+            }
+        }
+        catch (e) {
+            alert("Error : BreakageQuantityNosChange : " + e);
+        }
+
+    }
+
+
+
+
+    //Supply Deatils Business Validation
+    function SizeChangeDangers() {
+
+        var SD_Size_M = $("#SD_Size_M").val();
+
+        if (SD_Size_M == "" || isNaN(SD_Size_M)) {
+            alert("Enter valid Size");
+            $("#SD_Size_M").val("");
+            return;
+        }
+        else {
+
+            SD_Size_M = Math.round(SD_Size_M * 10000) / 10000;
+            $("#SD_Size_M").val(SD_Size_M);
+
+            var SupNos = $("#SD_Supplied_Qty_Nos").val();
+            if (SupNos == "") {
+            }
+            else {
+                SupNos = Math.round(SupNos * 10000) / 10000;
+                $("#SD_Supplied_Qty_Nos").val(SupNos);
+                var SupM = parseFloat(SupNos) * parseFloat(SD_Size_M);
+                SupM = Math.round(SupM * 10000) / 10000;
+                $("#SD_Supplied_Qty_M").val(SupM);
+            }
+
+            var Breakage = $("#SD_Breakage_Qty_Nos").val();
+
+            if (Breakage == "") {
+            }
+            else {
+                Breakage = Math.round(Breakage * 10000) / 10000;
+                $("#SD_Breakage_Qty_Nos").val(Breakage);
+                var BreakM = parseFloat(Breakage) * parseFloat(SD_Size_M);
+                BreakM = Math.round(BreakM * 10000) / 10000;
+                $("#SD_Breakage_Qty_M").val(BreakM);
+            }
+
+
+            var SupNos = $("#SD_Supplied_Qty_Nos").val();
+            var BrkNos = $("#SD_Breakage_Qty_Nos").val();
+
+            if (SupNos == "" || BrkNos == "") {
+                $("#SD_Breakage_Per").val("");
+            }
+            else {
+                var Percent = (((parseFloat(BrkNos)) / (parseFloat(SupNos))) * 100);
+                Percent = Math.round(Percent * 100) / 100;
+                $("#SD_Breakage_Per").val(Percent);
+            }
+
+        }
+    }
+
+    function MSD_QuantityChangesBU3(Identity) {
+        try {
+            var IPData = $("#" + Identity).val();
+
+            if (IPData == "" || IPData == null || IPData == undefined || isNaN(IPData)) {
+                $("#" + Identity).val("");
+            }
+            else {
+                $("#" + Identity).val(parseInt(IPData));
+            }
+        }
+        catch (e) {
+            alert("Error : MSD_QuantityChanges : " + e);
+        }
+    }
+
+    //Supply Details Quantity Changes for Aerocon and Insulation
+    function SDMBSuppliedBreakageQtyChange(Identity) {
+        try {
+
+            var Supplied = $("#SuppliedQtyNosB").val();
+            var Breakage = $("#BreakageQtyNosB").val();
+
+            if (Supplied == "" || Supplied == undefined || Supplied == null || isNaN(Supplied)) {
+                $("#SuppliedQtyNosB").val("");
+                Supplied = "";
+            }
+            else {
+                $("#SuppliedQtyNosB").val(parseInt(Supplied));
+            }
+
+            if (Breakage == "" || Breakage == undefined || Breakage == null || isNaN(Breakage)) {
+                $("#BreakageQtyNosB").val("");
+                Breakage = "";
+            }
+            else {
+                $("#BreakageQtyNosB").val(parseInt(Breakage));
+            }
+
+            if (Supplied == "" || Breakage == "") {
+
+            }
+            else {
+                if (parseInt(Breakage) > parseInt(Supplied)) {
+                    alert("Breakage Quantity cannot be more than Supplied Quantity");
+                    $("#BreakageQtyNosB").val("");
+                }
+            }
+
+        }
+        catch (e) {
+            alert("Error : SDMBSuppliedBreakageQtyChange : " + e);
+        }
+    }
+
+
+
+
+    //Supply Deatils Business Validation
+    function SaveDataToServerInvestigation(TableName) {
+
+        try {
+
+            var CMS_INV_Material_Supply_Details_SBU3_STO = new Array();
+            $("#Material_Supply_Detail_Table_BU3 tbody tr").each(function () {
+                RowId = ($(this).attr("id"));
+                CMS_INV_Material_Supply_Details_SBU3_STO.push({
+                    SlNo: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[0].innerHTML,
+                    PRODUCT_CODE: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[1].innerHTML,
+                    UOM: "EA",
+                    SUPPLIED_NO: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[7].innerHTML,
+                    DEFECTED_NO: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[8].innerHTML,
+                    ACTUAL_DEFECTED_NO: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[9].innerHTML,
+                    PLANT_CODE: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[10].innerHTML,
+                    SUPPLIER_TYPE_CODE: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[11].innerHTML,
+                    SUPPLIER_CODE: $("#Material_Supply_Detail_Table_BU3 tbody #" + RowId + " td")[12].innerHTML
+                });
+            });
+
+            var CMS_INV_Supply_Details_SBU3_STO = new Array();
+            $("#Supply_Details_TableSBU3 tbody tr").each(function () {
+                RowId = ($(this).attr("id"));
+                CMS_INV_Supply_Details_SBU3_STO.push({
+
+                    SlNo: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[0].innerHTML,
+                    PRODUCT_CODE: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[1].innerHTML,
+                    PRODUCT_NAME: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[2].innerHTML,
+                    INVOICE_NO: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[3].innerHTML,
+                    INVOICE_DATE: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[4].innerHTML,
+                    BATCH_NO: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[5].innerHTML,
+                    SUPPLIED_NO: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[6].innerHTML,
+                    DEFECTED_NO: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[7].innerHTML,
+                    ACTUAL_DEFECTED_NO: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[8].innerHTML,
+                    TRANSPORTER: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[9].innerHTML,
+                    DEFECT_TYPE_NAME: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[10].innerHTML,
+                    REMARKS: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[11].innerHTML,
+                    DEFECT_TYPE_CODE: $("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[12].innerHTML
+                });
+            });
+
+            var NOTICE_TYPE = "";
+            if (($("#System").is(":checked")) == true) {
+                NOTICE_TYPE = "System";
+            }
+            else if (($("#Manual").is(":checked")) == true) {
+                NOTICE_TYPE = "Manual";
+            }
+
+            var InvestigationData = JSON.stringify({
+                FormIdentity_STO: $("#FormIdentity_STO").val(),
+
+                FROM_PLANT_CODE: $("#FROM_PLANT_CODE").val(),
+                COMPLAINT_TRACKING_NO: $("#COMPLAINT_TRACKING_NO").val(),
+                INVESTIGATOR_TYPE_CODE: $("#INVESTIGATOR_TYPE_CODE").val(),
+                COMPLAINT_RECEIVED_DATE: $("#COMPLAINT_RECEIVED_DATE").val(),
+                INVESTIGATION_DONE_BY_CODE: $("#INVESTIGATION_DONE_BY_CODE").val(),
+                DOC_SERIES_CODE: $("#DOC_SERIES_CODE").val(),
+                COMPLAINT_REGISTERED_DATE: $("#COMPLAINT_REGISTERED_DATE").val(),
+                VISITED_DATE: $("#VISITED_DATE").val(),
+                INVESTIGATION_DATE: $("#INVESTIGATION_DATE").val(),
+                COMPLAINT_ATTENDED_DATE: $("#COMPLAINT_ATTENDED_DATE").val(),
+                PREVIOUS_VISITED_DATE: $("#PREVIOUS_VISITED_DATE").val(),
+                INVESTIGATION_STATUS: $("#INVESTIGATION_STATUS").val(),
+                DELAY_CHECK: $("#DELAY").is(':checked'),
+                DELAY_DAYS: $("#DELAY_DAYS").val(),
+                DELAY_REASON: $("#DELAY_REASON").val(),
+                PLANT_MHD_CODE: $("#PLANT_MHD_CODE").val(),
+                APPROVED_DATE: $("#APPROVED_DATE").val(),
+                NOTICE_TYPE: NOTICE_TYPE,
+                //var Attachments = JObj.Property("FilesPath"),
+                //ATTACHMENTS = (Attachments != null) ? $("FilesPath").val() : "",
+
+                TO_PLANT_CODE: $("#TO_PLANT_CODE").val(),
+                COMPLAINT_MODE_CODE: $("#COMPLAINT_MODE_CODE").val(),
+                PRODUCT_CATEGORY_CODE: $("#PRODUCT_CATEGORY_CODE").val(),
+                END_CUSTOMER_DETAILS: $("#END_CUSTOMER_DETAILS").val(),
+                SITE_ADDRESS: $("#SITE_ADDRESS").val(),
+
+                INVOICE_BASED: $("#INVOICE_BASED").val(),
+                PERIOD_BASED: $("#PERIOD_BASED").val(),
+                INVOICE_DETAILS: $("#INVOICE_DETAILS").val(),
+                PRODUCT_DETAILS: $("#PRODUCT_DETAILS").val(),
+                DATE_SUPPLY_FROM: $("#DATE_SUPPLY_FROM").val(),
+                DATE_SUPPLY_TO: $("#DATE_SUPPLY_TO").val(),
+                NATURE_OF_COMPLAINT: $("#NATURE_OF_COMPLAINT").val(),
+                OBSERVATIONS_BY_OFFICIAL: $("#OBSERVATIONS_BY_OFFICIAL").val(),
+                REMARKS: $("#REMARKS").val(),
+                CREATED_BY: $("#CreatedByCode").val(),
+                SITEDETAIL_CODE: $("#SITEDETAIL_CODE").val(),
+                COMPANYDETAIL_CODE: $("#COMPANYDETAIL_CODE").val(),
+                COMPLAINT_REGISTERED_CODE: $("#COMPLAINT_REGISTERED_CODE").val(),
+                COMPLAINT_REGISTERED_DOC_SERIES_CODE: $("#COMPLAINT_REGISTERED_DOC_SERIES_CODE").val(),
+                COMPLAINT_REGISTERED_DOC_NUM: $("#COMPLAINT_REGISTERED_DOC_NUM").val(),
+                COMPLAIN_DESC: $("#COMPLAIN_DESC").val(),
+                PRODUCT_TYPE_CODE: $("#PRODUCT_TYPE_CODE").val(),
+                COMPLAINT_TYPE_CODE: $("#COMPLAINT_TYPE_CODE").val(),
+                COMPLAINT_CATEGORY_CODE: $("#COMPLAINT_CATEGORY_CODE").val(),
+
+                CMS_INV_Material_Supply_Details_SBU3_STO: CMS_INV_Material_Supply_Details_SBU3_STO,
+                CMS_INV_Supply_Details_SBU3_STO: CMS_INV_Supply_Details_SBU3_STO,
+                PREVENTIVE_ACTION: $("#PREVENTIVE_ACTION").val()
+            });
+            console.log('InvestigationData', InvestigationData)
+            $.ajax({
+                method: 'POST',
+                url: '../../ComplaintRegistrationSTO/SaveInvestigation',
+                async: false,
+                data: { InvestigationData: InvestigationData },
+            }).then(function successCallback(response) {
+                console.log('response', response)
+                if (response == "FALSE") {
+                    alert("Error Occured try later");
+                    return;
+                }
+                if (response == "TRUE") {
+                    //$("#SendInvestigationApproval").css("display", "block");
+                    alert("Successfully Saved the data");
+                }
+                else {
+                    var RD = JSON.parse(response);
+                    if (RD["Result"] == "TRUE") {
+                        alert("Successfully Saved the Data");
+                        $("#FormIdentity_STO").val(RD["ID"]);
+                        $("#INVESTIGATION_ID").val(RD["ID"]);
+
+                        //$("#SendInvestigationApproval").css("display", "block");
+                    }
+                }
+
+                if ($("#INVESTIGATION_STATUS").val() == "DRAFT") {
+                    $("#SendInvestigationApproval").css('display', 'block');
+                }
+                else {
+                    $("#SendInvestigationApproval").css('display', 'none');
+                }
+
+            }, function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+
+        }
+        catch (e) {
+            alert("Error : SaveDataToServer : " + e);
+        }
+
+
+    }
+
+
+
+
+    $("#SUPPLIED_NO").change(function () {
+        var SUPPLIED_NO = $("#SUPPLIED_NO").val();
+
+        $("#DEFECTED_NO").val("");
+        $("#MSD_Net_Loss_Qty").val("");
+
+
+        if (SUPPLIED_NO == "" || isNaN(SUPPLIED_NO)) {
+            $("#SUPPLIED_NO").val("");
+        }
+        else {
+            SUPPLIED_NO = Math.round(SUPPLIED_NO * 1000) / 1000;
+            $("#SUPPLIED_NO").val(SUPPLIED_NO);
+        }
+    });
+
+
+    $("#DEFECTED_NO").change(function () {
+        var SUPPLIED_NO = $("#SUPPLIED_NO").val();
+        var DEFECTED_NO = $("#DEFECTED_NO").val();
+
+        $("#MSD_Net_Loss_Qty").val("");
+
+        if (DEFECTED_NO == "" || isNaN(DEFECTED_NO)) {
+            $("#DEFECTED_NO").val("");
+        }
+        else {
+            DEFECTED_NO = Math.round(DEFECTED_NO * 1000) / 1000;
+            $("#DEFECTED_NO").val(DEFECTED_NO);
+        }
+
+        if (DEFECTED_NO > SUPPLIED_NO) {
+            alert("Breakage Quantity cannot be more than Supplied Quantity");
+            $("#DEFECTED_NO").val("");
+        }
+    });
+
+
+    $("#MSD_Net_Loss_Qty").change(function () {
+        var SUPPLIED_NO = $("#SUPPLIED_NO").val();
+        var DEFECTED_NO = $("#DEFECTED_NO").val();
+        var MSD_Net_Loss_Qty = $("#MSD_Net_Loss_Qty").val();
+
+        if (MSD_Net_Loss_Qty == "" || isNaN(MSD_Net_Loss_Qty)) {
+            $("#MSD_Net_Loss_Qty").val("");
+        }
+        else {
+            MSD_Net_Loss_Qty = Math.round(MSD_Net_Loss_Qty * 1000) / 1000;
+            $("#MSD_Net_Loss_Qty").val(MSD_Net_Loss_Qty);
+        }
+
+        if (MSD_Net_Loss_Qty > DEFECTED_NO) {
+            alert("Net Loss Quantity cannot be more than Breakage Quantity");
+            $("#MSD_Net_Loss_Qty").val("");
+        }
+    });
+
+    function SheetingLabels(PC) {
+        if (PC == "14") {
+            $(".ForACSheets").css('display', 'none');
+            $(".ForCCSheets").css('display', 'block');
+        }
+        else if (PC == "11") {
+            $(".ForACSheets").css('display', 'block');
+            $(".ForCCSheets").css('display', 'none');
+        }
+    }
+
+    function OpenSupDetModelsBU3() {
+        try {
+            var CNO = $("#COMPLAINT_TRACKING_NO").val();
+            if (CNO == "") {
+                alert("Select Complaint Number");
+                return;
+            }
+
+            $("#SD_IDBU3").val("");
+            $("#CMS_INV_SD_BU3_STO_PRODUCT_CODE").val("");
+            $("#CMS_INV_SD_BU3_STO_PRODUCT_NAME").val("");
+            $("#CMS_INV_SD_BU3_STO_INVOICE_NO").val("");
+            $("#CMS_INV_SD_BU3_STO_INVOICE_DATE").val("");
+            $("#CMS_INV_SD_BU3_STO_BATCH_NO").val("");
+            $("#CMS_INV_SD_BU3_STO_SUPPLIED_NO").val("");
+            $("#CMS_INV_SD_BU3_STO_DEFECTED_NO").val("");
+            $("#CMS_INV_SD_BU3_STO_ACTUAL_DEFECTED_NO").val("");
+            $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_NAME").val("");
+            $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_CODE").val("");
+            $("#CMS_INV_SD_BU3_STO_TRANSPORTER").val("");
+            $("#CMS_INV_SD_BU3_STO_REMARKS").val("");
+
+
+            $("#SD_DeleteBU3").hide();
+            $("#SD_SaveBU3").text("Save");
+
+            $("#SupplyDetailModalSBU3").modal('show');
+        }
+        catch (e) {
+            alert("Error : OpenSupDetModelsBU3 :" + e);
+        }
+    }
+
+    function SaveSDDataBU3() {
+        try {
+
+            var SD_IDBU3 = $("#SD_IDBU3").val();
+            var PRODUCT_CODE = $("#CMS_INV_SD_BU3_STO_PRODUCT_CODE").val();
+            var PRODUCT_NAME = $("#CMS_INV_SD_BU3_STO_PRODUCT_NAME").val();
+            var INVOICE_NO = $("#CMS_INV_SD_BU3_STO_INVOICE_NO").val();
+            var INVOICE_DATE = $("#CMS_INV_SD_BU3_STO_INVOICE_DATE").val();
+            var BATCH_NO = $("#CMS_INV_SD_BU3_STO_BATCH_NO").val();
+            var SUPPLIED_NO = $("#CMS_INV_SD_BU3_STO_SUPPLIED_NO").val();
+            var DEFECTED_NO = $("#CMS_INV_SD_BU3_STO_DEFECTED_NO").val();
+            var ACTUAL_DEFECTED_NO = $("#CMS_INV_SD_BU3_STO_ACTUAL_DEFECTED_NO").val();
+            var DEFECT_TYPE_NAME = $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_NAME").val();
+            var DEFECT_TYPE_CODE = $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_CODE").val();
+            var TRANSPORTER = $("#CMS_INV_SD_BU3_STO_TRANSPORTER").val();
+            var REMARKS = $("#CMS_INV_SD_BU3_STO_REMARKS").val();
+
+            var Flag = 0;
+
+            if (PRODUCT_CODE == "") {
+                Flag = Flag + 1;
+                $("#CMS_INV_SD_BU3_STO_PRODUCT_CODE").css("border-color", "red");
+            }
+            else {
+                $("#CMS_INV_SD_BU3_STO_PRODUCT_CODE").css("border-color", "#d2d6de");
+            }
+
+            //if (INVOICE_NO == "") {
+            //    Flag = Flag + 1;
+            //    $("#INVOICE_NO").css("border-color", "red");
+            //}
+            //else {
+            //    $("#INVOICE_NO").css("border-color", "#d2d6de");
+            //}
+
+            if (INVOICE_DATE == "") {
+                Flag = Flag + 1;
+                $("#CMS_INV_SD_BU3_STO_INVOICE_DATE").css("border-color", "red");
+            }
+            else {
+                $("#CMS_INV_SD_BU3_STO_INVOICE_DATE").css("border-color", "#d2d6de");
+            }
+
+            if (SUPPLIED_NO == "") {
+                Flag = Flag + 1;
+                $("#CMS_INV_SD_BU3_STO_SUPPLIED_NO").css("border-color", "red");
+            }
+            else {
+                $("#CMS_INV_SD_BU3_STO_SUPPLIED_NO").css("border-color", "#d2d6de");
+            }
+
+            if (DEFECTED_NO == "") {
+                Flag = Flag + 1;
+                $("#CMS_INV_SD_BU3_STO_DEFECTED_NO").css("border-color", "red");
+            }
+            else {
+                $("#CMS_INV_SD_BU3_STO_DEFECTED_NO").css("border-color", "#d2d6de");
+            }
+
+            if (ACTUAL_DEFECTED_NO == "") {
+                Flag = Flag + 1;
+                $("#CMS_INV_SD_BU3_STO_ACTUAL_DEFECTED_NO").css("border-color", "red");
+            }
+            else {
+                $("#CMS_INV_SD_BU3_STO_ACTUAL_DEFECTED_NO").css("border-color", "#d2d6de");
+            }
+
+            if (DEFECT_TYPE_NAME == "") {
+                Flag = Flag + 1;
+                $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_NAME").css("border-color", "red");
+            }
+            else {
+                $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_NAME").css("border-color", "#d2d6de");
+            }
+
+            if (Flag > 0) {
+                return;
+            }
+            else {
+                if (INVOICE_NO == "") {
+                }
+                else if (INVOICE_NO.length == 10) {
+                }
+                else {
+                    alert("Invalid Invoice Number");
+                    return
+                }
+
+
+                if (isNaN(SUPPLIED_NO) || isNaN(DEFECTED_NO) || isNaN(ACTUAL_DEFECTED_NO)) {
+                    alert("Enter valid Numbers in Supplied, Defect and Actual Defect quantities");
+                    return;
+                }
+
+                SUPPLIED_NO = parseInt(SUPPLIED_NO);
+                DEFECTED_NO = parseInt(DEFECTED_NO);
+                ACTUAL_DEFECTED_NO = parseInt(ACTUAL_DEFECTED_NO);
+
+                if (parseInt(SUPPLIED_NO) < parseInt(DEFECTED_NO)) {
+                    alert("Defect quantity cannot be less than the Supplied quantity");
+                    return;
+                }
+                if (parseInt(SUPPLIED_NO) < parseInt(ACTUAL_DEFECTED_NO)) {
+                    alert("Actual Defect quantity cannot be less than the Supplied quantity");
+                    return;
+                }
+
+
+                if (SD_IDBU3 == "") {
+
+                    var TRCode = "";
+
+                    TRCode = TRCode + "<td>" + PRODUCT_CODE + "</td>";
+                    TRCode = TRCode + "<td>" + PRODUCT_NAME + "</td>";
+                    TRCode = TRCode + "<td>" + INVOICE_NO + "</td>";
+                    TRCode = TRCode + "<td>" + INVOICE_DATE + "</td>";
+
+                    TRCode = TRCode + "<td>" + BATCH_NO + "</td>";
+                    TRCode = TRCode + "<td>" + SUPPLIED_NO + "</td>";
+                    TRCode = TRCode + "<td>" + DEFECTED_NO + "</td>";
+                    TRCode = TRCode + "<td>" + ACTUAL_DEFECTED_NO + "</td>";
+
+                    TRCode = TRCode + "<td>" + TRANSPORTER + "</td>";
+                    TRCode = TRCode + "<td>" + DEFECT_TYPE_NAME + "</td>";
+                    TRCode = TRCode + "<td>" + REMARKS + "</td>";
+                    TRCode = TRCode + "<td style='display:none;' >" + DEFECT_TYPE_CODE + "</td>";
+
+
+                    SD_IDBU3 = $("#Supply_Details_TableSBU3 tbody tr").length + 1;
+
+                    TRCode = "<tr class='MousePointer' id='SDBU3_" + SD_IDBU3 + "' onclick='EditSDBBU3(this.id)'><td>" + SD_IDBU3 + "</td>" + TRCode + "</tr>";
+                    $("#Supply_Details_TableSBU3 tbody").append(TRCode);
+                }
+                else {
+
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[0].innerHTML = SD_IDBU3;
+
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[1].innerHTML = PRODUCT_CODE;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[2].innerHTML = PRODUCT_NAME;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[3].innerHTML = INVOICE_NO;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[4].innerHTML = INVOICE_DATE;
+
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[5].innerHTML = BATCH_NO;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[6].innerHTML = SUPPLIED_NO;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[7].innerHTML = DEFECTED_NO;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[8].innerHTML = ACTUAL_DEFECTED_NO;
+
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[9].innerHTML = TRANSPORTER;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[10].innerHTML = DEFECT_TYPE_NAME;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[11].innerHTML = REMARKS;
+                    $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + " td")[12].innerHTML = DEFECT_TYPE_CODE;
+
+                }
+
+
+
+                $("#SupplyDetailModalSBU3").modal("hide");
+                SaveDataToServerInvestigation('Supply_DetailsBU3');
+                AddThingsToProductDetails();
+            }
+        }
+        catch (e) {
+            alert("Error : SaveSDDataB :" + e);
+        }
+    }
+
+
+    function EditSDBBU3(RowId) {
+        try {
+
+            var IS = $("#INVESTIGATION_STATUS").val();
+            var UserTypeCode = $("#SessionUserTypeID_STO").val();
+            if (IS == "Approved" || IS == "Rejected") {
+                if ((IS == "Approved") && (UserTypeCode == "CSM" || UserTypeCode == "QH" || UserTypeCode == "CSM_BU2" || UserTypeCode == "CSM_BU3")) {
+                }
+                else {
+                    return;
+                }
+            }
+
+            $("#SD_IDBU3").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[0].innerHTML);
+
+            $("#CMS_INV_SD_BU3_STO_PRODUCT_CODE").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[1].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_PRODUCT_NAME").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[2].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_INVOICE_NO").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[3].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_INVOICE_DATE").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[4].innerHTML);
+
+            $("#CMS_INV_SD_BU3_STO_BATCH_NO").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[5].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_SUPPLIED_NO").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[6].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_DEFECTED_NO").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[7].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_ACTUAL_DEFECTED_NO").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[8].innerHTML);
+
+            $("#CMS_INV_SD_BU3_STO_TRANSPORTER").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[9].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_NAME").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[10].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_REMARKS").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[11].innerHTML);
+            $("#CMS_INV_SD_BU3_STO_DEFECT_TYPE_CODE").val($("#Supply_Details_TableSBU3 tbody #" + RowId + " td")[12].innerHTML);
+
+            $("#SupplyDetailModalSBU3").modal('show');
+            $("#SD_DeleteBU3").show();
+            $("#SD_SaveBU3").text("Update");
+
+        }
+        catch (e) {
+            alert("Error : EditSDBBU3 : " + e);
+        }
+
+    }
+
+
+    function DeleteSDBU3() {
+        try {
+            var SD_IDBU3 = $("#SD_IDBU3").val();
+
+            $("#Supply_Details_TableSBU3 tbody #SDBU3_" + SD_IDBU3 + "").remove();
+
+            var i = 1;
+
+            $("#Supply_Details_TableSBU3 tbody tr").each(function () {
+                $(this).attr("id", "SDBU3_" + i);
+                $("#Supply_Details_TableSBU3 tbody #SDBU3_" + i + " td")[0].innerHTML = i;
+                i = i + 1;
+            });
+
+            $("#SupplyDetailModalSBU3").modal("hide");
+
+            SaveDataToServerInvestigation('Supply_DetailsBU3');
+            AddThingsToProductDetails();
+        }
+        catch (e) {
+            alert("Error : DeleteSDBU3 : " + e);
+        }
+
+    }
+
+    function FileUploaded() {
+        var filename = $("#InvestigationFile").val();
+        var file = document.getElementById('InvestigationFile').files[0];
+        var extension = filename.replace(/^.*\./, '');
+        //alert(extension + " -- " + file.name)
+
+        if (/\.(jpe?g|png|pdf|zip)$/i.test(file.name) === false) {
+            alert("Please upload jpeg or png or pdf or zip files only!");
+            return;
+        }
+        else if (file.size > 5242880) {
+            alert("File size must not exceed 5MB.");
+            $("#InvestigationFile").val("");
+        } else {
+            alert("Please Upload Attachment");
+        }
+    }
+    var AttachedFiles = new Array();
+    function UploadFiles() {
+        var filename = $("#InvestigationFile").val();
+        var file = document.getElementById('InvestigationFile').files[0];
+        if (filename == "") {
+            return;
+        }
+        if (/\.(jpe?g|png|pdf|zip)$/i.test(file.name) === false) {
+            alert("Please upload jpeg or png or pdf or zip files only!");
+            return;
+        }
+        if (AttachedFiles != null && AttachedFiles.length > 0) {
+            for (var i = 0; i < AttachedFiles.length; i++) {
+                if (AttachedFiles[i].filename.includes(filename)) {
+                    alert("File already selected");
+                    $("#InvestigationFile").val("");
+                    return;
+                }
+            }
+        }
+        if (AttachedFiles != null && AttachedFiles.length >= 3) {
+            alert("Maximum 3 files can be selected");
+            $("#InvestigationFile").val("");
+            return;
+        }
+        if (filename.includes(",")) {
+            alert("File name must not contain comma(,)");
+            $("#InvestigationFile").val("");
+            return;
+        }
+        AttachedFiles.push({
+            file: file,
+            filename: filename
+        });
+        $("#InvestigationFile").val("");
+        var splitFilename = filename.split("\\");
+        $('#SelectedFiles').append("" + splitFilename[2].trim() + "<br/>");
+        //if ($("#PRODUCT_TYPE_NAME").val() == "SBU1") {
+        //SaveInvestigationDataWithFiles_STO();
+        $("#ClickUploadFile").val(1);
+        SaveInvestigationDataWithFiles_STO();
+        //alert("Please Save Complaint");
+        //}
+    }
+    function ClearFiles() {
+        AttachedFiles = new Array();
+        $('#SelectedFiles').text('');
+    }
+    function SaveInvestigationDataWithFiles_STO() {
+        try {
+            var MyTest = $("#MyTest").val();
+            if (MyTest == "") {
+                if (confirm("Do you want to Save data?")) {
+                    $("#MyTest").val("Save");
+                }
+                else {
+                    return;
+                }
+            }
+            //if ($("#SelectedFiles").text() != "" || $("ul#InvestigationFilesUploaded li").length > 0) {
+            //    $("#ClickUploadFile").val(1);
+            //    $("#ClickSaveComplaint").val(1);
+            //}
+            //var file = document.getElementById('InvestigationFile').files.length;
+            //if (file == 0 && ($("#InvestigationFilesUploaded").children().length <= 0 || $("#SelectedFiles").text() == "") && $("#ClickUploadFile").val() == 0) {
+            //    alert("Please Select Attachment and Press Upload and then click on Save button");
+            //    return;
+            //}
+            //if (file >= 0 && $("#ClickUploadFile").val() == 0) {
+            //    alert("Please Upload Attachment and then click on Save button");
+            //    return;
+            //}
+
+            var formData = new FormData();
+            formData.append('ComplaintTrackingNo', $("#COMPLAINT_TRACKING_NO").val());
+            for (var i = 0; i < AttachedFiles.length; i++) {
+                formData.append('InvestigationFile_' + i, AttachedFiles[i].file);
+            }
+            if (AttachedFiles.length > 0) {
+                ShowLoader();
+                $.ajax({
+                    url: '../../ComplaintRegistrationSTO/UploadInvestigationFile',
+                    type: 'POST',
+                    data: formData,
+                    async: true,
+                    success: function (Resp) {
+                        if (Resp != "") {
+                            AttachedFiles = new Array();
+                            $('#SelectedFiles').text('');
+                            $("#InvestigationFile").val("");
+                            $('#SelectedFiles').text(Resp);
+                            HideFileUpload();
+                            HideLoader();
+                            //if ($("#PRODUCT_TYPE_NAME").val() == "SBU1") {
+                            $("#ClickSaveComplaint").val(1);
+                            //}
+                            $('#hiddenInvDataSave').click();
+                        }
+                        else {
+                            HideLoader();
+                            $("#InvestigationFile").val("");
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+            else {
+                $('#hiddenInvDataSave').click();
+            }
+        }
+        catch (e) {
+            alert("Error : SaveDataToServer : " + e);
+        }
+    }
+
+    function enabledisableFileUpload() {
+        if ($("#FormIdentity_STO").val() != "") {
+            if (($("#INVESTIGATION_STATUS").val() == "DRAFT") && ($("#SelectedFiles").text() == ""))
+                ShowFileUpload();
+            else
+                HideFileUpload();
+        } else {
+            ShowFileUpload();
+        }
+    }
+    function HideFileUpload() {
+        $("#NewInvestigationFileUploadDiv").hide();
+        $("#LoadInvestigationFileUploadDiv").show();
+        $("#InvestigationFilesUploaded").empty();
+        if ($("#SelectedFiles").text() != "") {
+            $("#lblAttachments").show();
+            var Paths = $("#SelectedFiles").text().split(',');
+            var mydiv = document.getElementById("LoadInvestigationFileUploadDiv");
+            for (var i = 0; i < Paths.length; i++) {
+                var myList = document.getElementById("InvestigationFilesUploaded");
+                var liTag = document.createElement('li');
+                var aTag = document.createElement('a');
+                aTag.setAttribute('href', window.location.origin + '/DIMSFiles/InvestigationFiles/' + Paths[i]);
+                aTag.setAttribute('target', "_blank");
+                aTag.innerHTML = Paths[i].substring(0, 30);
+                liTag.appendChild(aTag);
+                myList.appendChild(liTag);
+                mydiv.appendChild(myList);
+            }
+        }
+        else {
+            $("#lblAttachments").hide();
+        }
+    }
+    function ShowFileUpload() {
+        $("#LoadInvestigationFileUploadDiv").hide();
+        $("#NewInvestigationFileUploadDiv").show();
+    }
+
+    function showComplaintFiles() {
+        $("#LoadInvestigationFileUploadDiv").show();
+        if ($("#SelectedComplaintFiles").text() != "") {
+            $("#lblAttachments").show();
+            var Paths = $("#SelectedComplaintFiles").text().split(',');
+            var mydiv = document.getElementById("LoadInvestigationFileUploadDiv");
+            for (var i = 0; i < Paths.length; i++) {
+                var myList = document.getElementById("ComplaintFilesUploaded");
+                var liTag = document.createElement('li');
+                var aTag = document.createElement('a');
+                aTag.setAttribute('href', window.location.origin + '/DIMSFiles/ComplaintFiles/' + Paths[i]);
+                aTag.setAttribute('target', "_blank");
+                aTag.innerHTML = Paths[i].substring(0, 30);
+                liTag.appendChild(aTag);
+                myList.appendChild(liTag);
+                mydiv.appendChild(myList);
+            }
+        }
+    }
+</script>

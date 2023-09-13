@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Employee Role Configuration</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Employee Role Configuration</li>
+    </ol>    
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">                
+                <div class="box-body">    
+                 <div style="overflow:auto">            
+                <table id="EmpRoleConfig" class="table tablecss">
+                    <thead>
+                        <tr>
+                            <th>Organization Level Name</th>
+                            <th>Employee Name</th>
+                            <th>Designation</th>
+                            <th>Zone</th>
+                            <th>State</th>                            
+                            <th>Report to whom</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script>
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+</script>

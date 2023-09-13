@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Master>
+  <TableName>Product Master</TableName>
+  <Field>
+    <FN>PRODUCT_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>PRODUCT_NAME</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>PRODUCT_TYPE_NAME</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>PRODUCT_DESC</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <!--<Field>
+    <FN>PRODUCT_CATEGORY_NAME</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>-->
+  <Field>
+    <FN>PRODUCT_CATEGORY_NAME</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>SIZE</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>NET_WEIGHT</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>BASE_UNIT</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>DEVIATION</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+
+
+
+  <Field>
+    <FN>CREATED_BY</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>CREATED_DATE</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+
+  <Field>
+    <FN>ACTIVE</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  
+<Field>
+  <FN>GROSS_WEIGHT</FN>
+  <FT>String</FT>
+  <IN>True</IN>
+  <MTN></MTN>
+  <MTLC></MTLC>
+  <MTLCV></MTLCV>
+</Field>
+</Master>

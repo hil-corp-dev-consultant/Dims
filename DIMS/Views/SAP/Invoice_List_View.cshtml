@@ -1,0 +1,617 @@
+﻿@* Module              : DIMS Client Application.
+    DocumentName        : Invoice_List_View.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for get Invoice List.
+    Developer Name      : Rajanna Bhanothu.
+    Change Log          : NA.*@
+
+
+
+@*@using Inv_Details = DIMS.Content.Resource_Files.Invoice_Details*@
+@{
+    Layout = null;
+    var Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionBusinessunit = UP.USER_PRODUCT_TYPE_CODE;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    /*#StockistID ~ .SlectBox {
+        padding: 5px 8px;
+        width: 250px;
+    }*/
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Invoices</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li class="active">Invoices</li>
+    </ol>
+    @*VIKAS G, 30-06-2022*@
+    @if ((@Role.Trim() != "STOCKIST") && (@Role.Trim() != "BU3_STK"))
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+    @* <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>*@
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;">
+        <div class="row" id="Invoice_List">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+
+                    <div class="box-header">
+                        <div class="navbar-header pull-right" style="margin-left: 15px;">
+                            <button type="button" class="btn btn-info navbar-btn" ng-click="GetData()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                                Submit
+                            </button>
+                            <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                                Reset Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        @*Filters Zone*@
+                        <input type="text" id="BusinessUnit" value="@SessionBusinessunit" style="display: none" />
+                        <form class="form-horizontal" role="form" style="font-size: small" action="">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="txtOrderNo">
+                                    From Date <span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="OrderFromDate" placeholder="From Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                                </div>
+                                <label class="col-sm-2 control-label" for="txtBatchNo">
+                                    To Date <span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="OrderToDate" placeholder="To Date" readonly />
+                                </div>
+
+                                <label class="col-sm-1 control-label" for="SalesEmapName" id="lblZone">
+                                    Zone
+                                </label>
+                                <div class="col-sm-1" id="divZone">
+                                    <select id="Zone" multiple="multiple" class="form-control"></select>
+                                </div>
+
+                                @*VIKAS G, 14-07-2022*@
+                                <!--<label class="col-sm-1 control-label" id="lblSheets">
+                                    Division
+                                </label>
+                                <div class="col-sm-2" id="divSheets">
+                                    <select class="form-control" id="DivisionFilterSBU3" multiple="multiple" ng-model="DivisionFilterSBU3" ng-change="DivisionChange()" style="float: left;"></select>
+                                </div>-->
+                                @*VIKAS G, 14-07-2022*@
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="SalesEmapName" id="lblState">
+                                    State
+                                </label>
+                                <div class="col-sm-2" id="divState">
+                                    <select id="State" multiple="multiple" class="form-control"></select>
+                                </div>
+                                <label class="col-sm-2 control-label" for="TerriotryArea" id="lblTet">
+                                    Territory/Area
+                                </label>
+                                <div class="col-sm-2" id="divTet">
+                                    <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                                </div>                               
+
+                                <label class="col-sm-1 control-label" id="lblSheetsS">
+                                    Division
+                                </label>
+                                <div class="col-sm-2" id="divSheetsS">
+                                    <select class="form-control" id="DivisionFilter" multiple="multiple"></select>
+                                </div>
+
+                                @*VIKAS G, 14-07-2022*@
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="StockistID">
+                                    Customer Code/Name
+                                </label>
+                                @*<div class="col-sm-4">
+                                        <select id="StockistID" multiple="multiple" class="form-control"></select>
+                                    </div>*@
+                                <div class="col-sm-3">
+                                    <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                                </div>
+                            </div>
+                        </form>
+
+                        <div style="padding:10px;"></div>
+                        <div class="table-responsive" id="InvoiceListDiv">
+                            <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                            <input type="text" id="SessionRole" value="@Role.Trim()" style="display: none;" />
+                            <input type="text" id="BusinessUnit" value="@SessionBusinessunit" style="display: none" />
+                            <table id="tbl_InvoiceList" class="table ListTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <br />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="txtOrderNo">
+                                    TOTAL Invoice Value (INR in Lakhs)
+                                </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="TotalInvoiceAmnt" placeholder="Total Invoice Value" disabled="disabled" />
+                                </div>
+
+                                <label class="col-sm-2 control-label" for="txtOrderNo">
+                                    TOTAL Gross weight(MT)
+                                </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="TotalInvoiceGrossWt" placeholder="Total Invoice Gross Wt" disabled="disabled" />
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row" id="Invoice_Details">
+                <div class="col-md-12">
+                    <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                        <div class="box-header">
+                        </div>
+                        <div class="box-body pad">
+                            <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                                <input type="hidden" id="Invoice_id" data-ng-model="Invoice_id_Model" />
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblBilling_Doc_No">
+                                                    @Inv_Details.Billing_Doc_No</label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-5 control-label" id="lblBilling_Doc_No" ng-model="lblBilling_Doc_No"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblBilling_Date">
+                                                    @Inv_Details.Billing_Date<span style="color: #FF0000">*</span>
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-5 control-label" id="lblBilling_Date" ng-model="lblBilling_Date"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblOA_No_Date">
+                                                    @Inv_Details.OA_No_Date
+                                                </label>
+                                                <div class="col-sm-6">
+                        <label class="col-sm-5 control-label" id="lblOA_No_Date" ng-model="lblOA_No_Date"></label>
+                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblSold_To">
+                                                    @Inv_Details.Sold_To
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-5 control-label" id="lblSold_To" ng-model="lblSold_To"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblExcise_Inv_No_Date">
+                                                    @Inv_Details.Excise_Inv_No_Date
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-5 control-label" id="lblExcise_Inv_No_Date" ng-model="lblExcise_Inv_No_Date"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblECC_Number">
+                                                    @Inv_Details.ECC_Number
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-5 control-label" id="lblECC_Number" ng-model="lblECC_Number"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblCIN_No">
+                                                    @Inv_Details.CIN_No
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-5 control-label" id="lblCIN_No" ng-model="lblCIN_No"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" for="lblOrder_Ref_Date">
+                                                    @Inv_Details.Order_Ref_Date
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-sm-5 control-label" id="lblOrder_Ref_Date" ng-model="lblOrder_Ref_Date"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>*@
+    </section>
+
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        debugger
+        $('#DivisionFilter').SumoSelect({ selectAll: true });
+        //$('.selected').removeClass('active');
+        $('#OrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+            // endDate: '05/04/2016',
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+        debugger
+        //VIKAS G, 06-07-2022 START FOR SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+        var Role = $("#SessionRole").val();
+        //if (Role == "BU3_STK") {
+        //    $("#lblZone").css("display", "none");
+        //    $("#divZone").css("display", "none");
+        //    $("#lblState").css("display", "none");
+        //    $("#divState").css("display", "none");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //    $("#lblTet").css("display", "none");
+        //    $("#divTet").css("display", "none");
+        //    $("#lblSheetsS").css("display", "none");
+        //    $("#divSheetsS").css("display", "none");
+        //    $("#lblSheets").css("display", "block");
+        //    $("#divSheets").css("display", "block");
+        //}
+        //else if (Role == "FSO_BU3" || Role == "MDO" || Role == "TM_BU3" || Role == "SH_BU3") {
+        //    $("#lblSheetsS").css("display", "block");
+        //    $("#divSheetsS").css("display", "block");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //}
+        //else {
+        //    $("#lblSheetsS").css("display", "block");
+        //    $("#divSheetsS").css("display", "block");
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //}
+
+        //else if (Role != "BU3_STK" && Role != "FSO_BU3" && Role != "MDO") {
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //   }
+        //if ((Role == "STOCKIST") || (Role == "BU3_STK") ) {
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //}
+        //else if ((Role != "STOCKIST") && (Role != "BU3_STK")) {
+        //    //$("#lblSheetsS").css("display", "none");
+        //    //$("#divSheetsS").css("display", "none");
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //}
+        //else if (Role == "FSO_BU3" || Role == "MDO" || (Role == "STOCKIST") || (Role == "BU3_STK")) {
+        //    $("#lblSheetsS").css("display", "block");
+        //    $("#divSheetsS").css("display", "block");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //}
+        //VIKAS G, 06-07-2022 END FOR SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+        var picker = $('#OrderFromDate').data('datepicker');
+        // picker.endDate(new Date(Date.UTC(2016, 10, 11, 4, 30)))
+        //  picker.endDate(new Date(2016, 04, 04, 4, 30));
+
+        //$('#tbl_InvoiceList').dataTable()
+        //  .columnFilter({
+        //      sPlaceHolder: "head:before",
+        //      aoColumns: [{ type: "text" },
+        //                  { type: "date-range" },
+        //                   { type: "date-range" }
+        //      ]
+
+        //  });
+
+    });
+    var table = $('#tbl_InvoiceList').dataTable();
+    function ResetFilters() {
+        // $('#ddlOrderBattery').SumoSelect.un
+        var StockistName = $('#StockistName option').length;
+        var StockistID = $('#StockistID option').length;
+        var SalesEmapName = $('#SalesEmapName option').length;
+        var Plant = $('#PlantSumo option').length;
+
+        var Zone = $('#Zone option').length;
+        var State = $('#State option').length;
+        var Area = $('#TerriotryArea option').length;
+        var DivisionFilter = $('#DivisionFilter option').length;
+        var Location = $('#Location option').length;
+
+        for (var i = 0; i < StockistID; i++) {
+            $('#StockistID')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < StockistName; i++) {
+            $('#StockistName')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < SalesEmapName; i++) {
+            $('#SalesEmapName')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Plant; i++) {
+            $('#PlantSumo')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Zone; i++) {
+            $('#Zone')[0].sumo.unSelectItem(i);
+        }
+
+
+        for (var i = 0; i < State; i++) {
+            $('#State')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Area; i++) {
+            $('#TerriotryArea')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < DivisionFilter; i++) {
+            $('#DivisionFilter')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < Location; i++) {
+            $('#Location')[0].sumo.unSelectItem(i);
+        }
+
+        $("#OrderFromDate").val("");
+        $("#OrderToDate").val("");
+        // table.fnDraw();
+
+        fnResetAllFilters(table)
+        //table.fnResetAllFilters();
+        //$("#DailyOrder").dataTable().fnFilter("", 2, true, false);
+        //$("#DailyOrder").dataTable().fnFilter("", 7, true, false);
+        //$("#DailyOrder").dataTable().fnFilter("", 5, true, false);
+        //$("#DailyOrder").dataTable().fnFilter("", 10, true, false);
+        //$("#DailyOrder").dataTable().fnFilter("", 6, true, false);
+    }
+
+    $('#StockistName').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 19, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 19, true, false);
+        }
+    });
+    $('#StockistID').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 18, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 18, true, false);
+        }
+    });
+    $('#SalesEmapName').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 26, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 26, true, false);
+        }
+    });
+    $('#PlantSumo').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 8, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 8, true, false);
+        }
+    });
+
+    $('#Zone').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 28, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 28, true, false);
+        }
+    });
+
+    $('#State').on('keyup change', function () {
+
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 29, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 29, true, false);
+        }
+    });
+
+    $('#TerriotryArea').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 30, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 31, true, false);
+        }
+    });
+
+    $('#Location').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_InvoiceList").dataTable().fnFilter(choosedFname, 27, true, false);// 1-->Batch number column index
+        }
+        else {
+            $("#tbl_InvoiceList").dataTable().fnFilter("", 27, true, false);
+        }
+    });
+
+
+
+
+    //$('#OrderFromDate').keydown(function () {
+    //    table.fnDraw();
+    //});
+    //$('#OrderToDate').keyup(function () {
+    //    table.fnDraw();
+    //});
+    $("#OrderFromDate").on("datepicker.change", function (e) {
+
+
+    });
+    $('#OrderFromDate').datepicker().on('changeDate', function (ev) {
+        //  var fromdate = $('#OrderFromDate').val();
+        //  $("#OrderToDate").datepicker({ endDate: new Date() });
+        //  jQuery('#OrderToDate').data("DateTimePicker").minDate(ev.date);
+        // var frompicker = $("#OrderToDate").data("datepicker");
+        // frompicker.minDate(new Date('05-11-2016'))
+
+        $("#OrderToDate").val("");
+        table.fnDraw();
+        // table.draw();
+        // $('#date-daily').change();
+    });
+    $('#OrderToDate').datepicker().on('changeDate', function (ev) {
+        table.fnDraw();
+        //   table.draw();
+        // $('#date-daily').change();
+    });
+    //$("#OrderToDate").on("dp.change", function (e) {
+    //    table.draw();
+
+    //});
+
+
+    $.fn.dataTableExt.afnFiltering.push(
+        function (oSettings, aData, iDataIndex) {
+            var iFini = document.getElementById('OrderFromDate').value;
+
+            var iFfin = document.getElementById('OrderToDate').value;
+            var iStartDateCol = 2;
+            var iEndDateCol = 2;
+
+            iFini = iFini.substring(6, 10) + iFini.substring(3, 5) + iFini.substring(0, 2);
+            iFfin = iFfin.substring(6, 10) + iFfin.substring(3, 5) + iFfin.substring(0, 2);
+
+            // alert(aData[iEndDateCol].substring(6, 10));
+            var datofini = aData[iStartDateCol].substring(6, 10) + aData[iStartDateCol].substring(3, 5) + aData[iStartDateCol].substring(0, 2);
+            var datoffin = aData[iEndDateCol].substring(6, 10) + aData[iEndDateCol].substring(3, 5) + aData[iEndDateCol].substring(0, 2);
+
+            if (iFini === "" && iFfin === "") {
+                return true;
+            }
+            else if (iFini <= datofini && iFfin === "") {
+                return true;
+            }
+            else if (iFfin >= datoffin && iFini === "") {
+                return true;
+            }
+            else if (iFini <= datofini && iFfin >= datoffin) {
+                return true;
+            }
+            return false;
+        }
+    );
+
+</script>

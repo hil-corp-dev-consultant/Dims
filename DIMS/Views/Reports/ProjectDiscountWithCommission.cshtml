@@ -1,0 +1,256 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Project Discount With Commisssion</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Discounts/Provisions</li>
+        <li class="active"><span id="UpdateNav">Create </span>Project Discount with Commission</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('ProjectDiscountWithCommissionList')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SaveProjectDiscountWithCommission()">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<input type="text" id="USERNAME" style="display: none;" value="@SessionUserName" />
+<input type="text" id="USERCODE" style="display: none;" value="@SessionUserCode" />
+<input type="text" id="USERTYPE" style="display: none;" value="@SessionUserType" />
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 9px;">
+            <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" style="color: red; font-size: 18px;margin-left:30px">M=Meter</label>
+                <label class="col-sm-2 control-label" style="color: red; font-size: 18px">MT=Metric Tons</label>
+            </div>
+            <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small; margin-top: 36px;" action="">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Request Created By</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="RequestCreatedBy" type="text" disabled="disabled" data-ng-model="RequestCreatedBy" />
+                    </div>
+                    <label class="col-sm-3 control-label">Created Date</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CreatedDate" type="text" data-ng-model="CreatedDate" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Discount ID</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="DiscountID" type="text" disabled="disabled" data-ng-model="DiscountID" />
+                    </div>
+                    <label class="col-sm-3 control-label">Stockist Code<spann class="Mandatory">*</spann></label>
+                    <div class="col-sm-3">
+                        <div class="input-group add-on">
+                            <input class="form-control gray" id="StockistCode" type="text" disabled="disabled" data-ng-model="StockistCode" />
+                            <div class="input-group-btn Customer">
+                                <span class="btn btn-default Customer" ng-click="Getdata('GetCustomerCodeName','CustomerMasterList1','Stockist List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Code</label>
+                    <div class="col-sm-3">
+                        <div class="input-group add-on">
+                            <input class="form-control gray" id="CustomerCode" type="text" disabled="disabled" data-ng-model="CustomerCode" />
+                            <div class="input-group-btn Customer">
+                                <span class="btn btn-default Customer" ng-click="Getdata('GetCustomerCodeName','SCustomerMasterList','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-sm-3 control-label">Stockist Name</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="StockistName" type="text" data-ng-model="StockistName" disabled="disabled" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Name</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CustomerName" type="text" data-ng-model="CustomerName" disabled="disabled" />
+                    </div>
+                    <label class="col-sm-3 control-label">Commission(%)<span class="Mandatory">*</span></label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CommissionINR" type="text" data-ng-model="CommissionINR" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">District</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="District" type="text" data-ng-model="District" disabled="disabled" />
+                    </div>
+                    <label class="col-sm-3 control-label">Expected Sale (MT)</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="ExpectedSaleMT" type="text" data-ng-model="ExpectedSaleMT" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">State</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="State" type="text" data-ng-model="State" disabled="disabled" />
+                    </div>
+                    <label class="col-sm-3 control-label">Expected NSR (INR)<span class="Mandatory">*</span></label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="ExpectedNSRINR" type="text" data-ng-model="ExpectedNSRINR" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Zone</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="Zone" type="text" data-ng-model="Zone" disabled="disabled" />
+                    </div>
+                    <label class="col-sm-3 control-label">Request Status</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="RequestStatus" disabled="disabled" type="text" data-ng-model="RequestStatus" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Agreed Rate (INR/M)<span class="Mandatory">*</span></label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="AgreedRateINRM" type="text" data-ng-model="AgreedRateINRM" />
+                    </div>
+                    <label class="col-sm-3 control-label">Description</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" id="Description" data-ng-model="Description" maxlength="300"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">PriceCardRate</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="PriceCardRate" type="text" data-ng-model="PriceCardRate" disabled="disabled" />
+                    </div>
+                </div>
+
+                <div class="form-group" hidden>
+                    <input class="form-control gray" id="RequestCreated" type="text" disabled="disabled" data-ng-model="RequestCreated" />
+                    @*                    <label class="col-sm-2 control-label">Customer Name</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CustomerName" type="text" data-ng-model="CustomerName" />
+                    </div>
+                    <label class="col-sm-2 control-label">Customer Code</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CustomerCode" type="text" data-ng-model="CustomerCode" />
+                    </div>*@
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        GetServerDateTime();
+
+    });
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+
+                var result = JSON.parse(response.tabledata);
+
+                if (result == "") {
+                }
+                else {
+                    $("#CreatedDate").val(result);
+                    //$("#DiscountTo").datepicker('setEndDate', result);
+                }
+
+            }
+
+        });
+    }
+
+
+    allowTwoDecimalPoints($("#ExpectedSaleMT"));
+
+    allowTwoDecimalPoints($("#CommissionINR"));
+
+    allowTwoDecimalPoints($("#ExpectedNSRINR"));
+
+    allowTwoDecimalPoints($("#AgreedRateINRM"));
+
+</script>
+
+@*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" style="font-size: small"></form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="TableValuesUpdate()">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
+
+
+
+

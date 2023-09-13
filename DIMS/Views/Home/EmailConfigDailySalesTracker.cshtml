@@ -1,0 +1,159 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP_SALES = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE_SALES = UP_SALES.SITEDETAIL_CODE;
+    string SessionUserCode = UP_SALES.UserCode;
+    string SessionUserName_SALES = UP_SALES.UserName;
+    string SessionCOMPANYDETAIL_CODE_SALES = UP_SALES.COMPANYDETAIL_CODE;
+    string SessionUserType_SALES = UP_SALES.UserTypeCode;
+    string SessionUserTypeID_SALES = UP_SALES.UserType;
+    string SessionStateCode_SALES = UP_SALES.UserStateCode;
+    string SessionZoneCode_SALES = UP_SALES.UserZoneCode;
+    string SessionZoneName_SALES = UP_SALES.UserZoneName;
+    string SessionStateName_SALES = UP_SALES.UserStateName;
+}
+
+<style>
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+
+    .filestyle {
+        border: 1px solid;
+        border-radius: 6px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Email config for daily sales tracker</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Reports</li>
+        <li class="active">Email Config for Daily Sales Tracker</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @* <a href ng-click="go('AddMarketMap')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+
+                    <div class="navbar-header" style="margin-left: 25px;">
+                        <br />
+                        <div class="row">
+                            <button type="button" id="Editbtnid" class="btn btn-info navbar-btn" onclick="btnEdit()" style="background-color:#d2401a;border:1px solid #d2401a; width: 125px; ">
+                                Edit
+                            </button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" id="Savebtnid" class="btn btn-info navbar-btn" onclick="btnSave()" style="background-color:#d2401a;border:1px solid #d2401a;  width: 125px; float:left; display:none">
+                                Save
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" id="Clearbtnid" class="btn btn-info navbar-btn" onclick="btnClear()" style="background-color:#d2401a;border:1px solid #d2401a;  width: 125px; display:none">
+                                Clear
+                            </button>
+                        </div><br />
+                        <textarea cols="100" rows="6" class="form-control gray" id="txtEmail" disabled="disabled"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        ShowLoader();
+        $('#Savebtnid').hide();
+        $('#Clearbtnid').hide();
+        getEmailsforDailySalesTracker();
+        HideLoader();
+
+    });
+
+    function btnEdit() {
+        ShowLoader();
+        $('#txtEmail').removeAttr("disabled", "disabled")
+        $('#txtEmail').removeClass('gray');
+        $('#Editbtnid').hide();
+        $('#Savebtnid').show();
+        $('#Clearbtnid').show();
+
+        HideLoader();
+
+    }
+
+    function btnClear() {
+        $('#Editbtnid').show();
+        $('#Savebtnid').hide();
+        $('#Clearbtnid').hide();
+        $('#txtEmail').addClass('gray');
+        $('#txtEmail').attr("disabled", "disabled");
+        getEmailsforDailySalesTracker();
+       
+    }
+
+    function getEmailsforDailySalesTracker() {
+        $.ajax({
+            url: '../../Home/getEmailsforDailySalesTracker',
+            type: 'POST',
+            async: false,
+            success: function (Resp) {               
+                Resp = JSON.parse(Resp);               
+                var str = "";
+                for (var i = 0; i < Resp.length; i++) {                  
+                    if (i == 0) {
+                        str += "" + Resp[i]["Emails"] + "";
+                    } else {
+                        str += "," + Resp[i]["Emails"] + "";
+                    }
+                }
+                HideLoader();
+                $('#txtEmail').val(str);
+            }
+        });
+    }
+
+    function btnSave() {
+        var txtemail = $('#txtEmail').val();
+        var usercode = $('#UserCode').val();
+
+        var total = JSON.stringify({ 'txtemail': txtemail, 'usercode': usercode });
+       
+        $.ajax({
+            url: '../../Home/SaveEmailsforDailySalesTracker',
+            type: 'POST',
+            data: { total: total },
+            async: false,
+            success: function (Resp) {
+                if(Resp=="TRUE"){
+                    alert("Emails Saved in Database");
+                    window.location.reload();
+                }
+                else {
+                    alert("Error occured! Try again later.");
+                }
+            }
+        });
+    }
+</script>

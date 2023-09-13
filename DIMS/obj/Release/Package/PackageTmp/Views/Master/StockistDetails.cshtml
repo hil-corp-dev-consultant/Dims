@@ -1,0 +1,802 @@
+﻿@using LabelNames = DIMS.Content.Resource_Files.Compensation;
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+<style>
+
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Sockist Details</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Sockist Details</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a style="cursor:pointer" onclick="DownloadExcelFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" onclick="GetStockistDetailsFilterData()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Reset Filter
+                        </button>
+                    </div>
+                    </div>
+                    <div class="box-body">
+                    <form name="test" class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" data-ng-init="GetEditData(39)">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="txtOrderNo">
+                                        From Date <span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="OrderFromDate" placeholder="From Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                                    </div>
+                                    <label class="col-sm-2 control-label" for="txtBatchNo">
+                                        To Date <span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="OrderToDate" placeholder="To Date" readonly />
+                                    </div>
+                                    <label class="col-sm-1 control-label" for="SalesEmapName">
+                                        Zone
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <select id="Zone" multiple="multiple" class="form-control"></select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="SalesEmapName">
+                                        State
+                                    </label>
+                                    <div class="col-sm-2">
+                                        <select id="State" multiple="multiple" class="form-control"></select>
+                                    </div>
+                                    <label class="col-sm-2 control-label" for="TerriotryArea">
+                                        Territory/Area
+                                    </label>
+                                    <div class="col-sm-2">
+                                        <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                                    </div>
+                                    @*<label class="col-sm-2 control-label" for="StockistName">
+                Customer Name
+            </label>
+            <div class="col-sm-2">
+                <select id="StockistName" multiple="multiple" class="form-control"></select>
+            </div>*@
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="StockistID">
+                                        Customer Code/Name
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                                        @*<select id="StockistID" multiple="multiple" class="form-control"></select>*@
+                                    </div>
+                                    @*<div class="col-sm-4">
+                <input id="CustomerCode" class="form-control" />
+            </div>*@
+                                </div>
+                                <input id="UserCode" value="@SessionUserCode" hidden />
+                                <div style="padding:10px;"></div>
+                                <table id="tblStockistDetails" class="table ListTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <div style="padding:10px;"></div>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>   
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    var sdf = $("#UserCode").val();
+    var CustomerArray = new Array();
+    var SelectedState = ""; var Actual_SelectedState = ""; var Actual_SelectedTerritory = "";
+    var data_value = ""; var all_zones = ""; var all_states = ""; var all_territories = ""; var all_customers = "";
+
+
+    $(document).ready(function () {
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'Terriotry/Area' });
+
+        GetServerDateTime();
+
+
+        $('#OrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+
+        GetStockistDetails();
+        GetFilters();
+    });
+
+    function GetStockistDetails() {
+        var WherelaClause = "";
+        var masterType = JSON.stringify({
+            MasterType: "StockistDetails",
+            ID: "561",
+            UserCode: $("#UserCode").val(),
+            "Type": "Get",
+            ReportName: "StockistDetails",
+            WhereClause: WherelaClause
+        });
+
+        $.ajax({
+            url: '../../Home/getReportListColumnNamesData',
+            method: 'POST',
+            data: { Data: masterType },
+            success: function (response) {
+                var Result = JSON.parse(response.tabledata);
+
+                if (Result != "") {
+                    UserDefaultListColumnNames = Result["UserDefaultListColumnNames"];
+                    if (Result.hasOwnProperty('UserListColumnNames')) {
+                        var data1 = JSON.parse(Result["UserListColumnNames"]);
+
+                        var selectedcolumnname = data1["ColumnNames"];
+
+                        CustomColumnID = Result["UserListID"];
+                        $('#undo_redo_to').empty();
+                        var ColArray = new Array();
+                        for (var i = 0; i < selectedcolumnname.length; i++) {
+
+
+                            ColArray.push({
+                                "data": selectedcolumnname[i],
+                                "name": selectedcolumnname[i], "bSortable": true
+                            });
+                            $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                        }
+                        //$scope.UserSelectedColumnName = ColArray;
+                        UserSelectedColumnName = ColArray;
+                    } else {
+
+                        var data1 = JSON.parse(Result["UserDefaultListColumnNames"]);
+
+                        var selectedcolumnname = data1["ColumnNames"];
+
+                        CustomColumnID = "0";
+
+                        $('#undo_redo_to').empty();
+                        var ColArray = new Array();
+                        for (var i = 0; i < selectedcolumnname.length; i++) {
+                            ColArray.push({
+                                "data": selectedcolumnname[i],
+                                "name": selectedcolumnname[i],
+                                "bSortable": "true"
+                            });
+                            $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                        }
+                        //$scope.UserSelectedColumnName = ColArray;
+                        UserSelectedColumnName = ColArray;
+                    }
+
+
+
+                }
+                ShowLoader();
+
+                $.ajax({
+                    url: '../../Home/getReportData', method: 'POST', data: { Data: masterType },
+                    success: function (response) {
+                        getLookUpData_Reports_ServerSideBinding("", "EnrollmentNodataLabel", "", "tblStockistDetails", UserSelectedColumnName);
+                    }
+                });
+
+            }
+        });
+
+    };
+
+    function DownloadExcelFile(filetype) {
+        var WhereClause = "";
+        var FromDate = $('#OrderFromDate').val();
+        var ToDate = $('#OrderToDate').val();
+        var ZoneValue = $('#Zone').val();
+        var StateValue = $('#State').val();
+        var TerritoryValue = $('#TerriotryArea').val();
+
+        var isValidCustCode = isValidCode_Cust($("#CustomerCode").val(), CustomerArray);
+
+
+        var DateRange = DateSplitter('OrderFromDate', 'OrderToDate');
+
+        //var frmdate = fromdate.split("-");
+        //var tdate = todafrote.split("-");
+        //frmdate = frmdate[2] + "/" + frmdate[1] + "/" + frmdate[0];
+        //tdate = tdate[2] + "/" + tdate[1] + "/" + tdate[0];
+        if (!$('#tblStockistDetails').DataTable().data().count()) {
+            alert("No Data Available");
+            return;
+        }
+
+
+        if (FromDate != "" && ToDate != "")
+            {
+            WhereClause = "WHERE  C.CREATED_DATE BETWEEN " + DateRange + " ";
+        }
+
+        if ($("#CustomerCode").val() != "") {
+            if (($("#CustomerCode").val() != "") && (isValidCustCode == false)) {
+            } else {
+                WhereClause += " and CAST(C.STOCKIST_ID AS BIGINT) IN (" + $("#CustomerCode").val().split(':')[0] + ")";
+            }
+        } else if ($("#TerriotryArea").val() != null) {
+            WhereClause += " and CAST(C.STOCKIST_ID AS BIGINT) IN (select DISTINCT ecc.CUSTOMER_CODE from cms_employee_customer_configuration ecc inner join CUSTOMER_SALES_VIEW csv on CAST(ecc.CUSTOMER_CODE AS BIGINT)=CAST(csv.cust_code AS BIGINT) where ecc.ORG_LEVEL_ID IN(" + Actual_SelectedTerritory + "))";
+        } else if ($("#State").val() != null) {
+            WhereClause += " and C.STATE IN(" + Actual_SelectedState + ")";
+        }
+        else if ($("#Zone").val() != null) {
+            WhereClause += " AND C.STOCKIST_ID IN(select distinct STOCKIST_ID from sap_customer_sales_master where zone='" + $("#Zone").val() + "')";
+        }
+        if (($("#Zone").val() == null) && ($("#State").val() == null) && ($("#TerriotryArea").val() == null) && ($("#CustomerCode").val() == "")) {
+            WhereClause += "";
+        }
+
+     
+
+        var FileName = "StockistDetails";
+        var Data = JSON.stringify({
+            ID: $("#UserCode").val(),
+            UserCode: $("#UserCode").val(),
+            ReportName: "StockistDetails",
+            WhereClause: WhereClause
+
+        });
+       
+        $.ajax({
+
+            url: '../../Home/SetInputData',
+            type: "POST",
+            datatype: "JSON",
+            data: { InputData: Data, ReportType: filetype, FileName: FileName },
+            async: false,
+            cache: false,
+            beforeSend: function () {
+                ShowLoader();
+            },
+            success: function (response) {
+                window.location.href = '../../Home/GenerateReport';
+            },
+            complete: function () {
+                HideLoader();
+            },
+            error: function () {
+                alert("Technical error has been occured.Please try again later");
+                HideLoader();
+
+            }
+        });
+    };
+
+    function GetFilters() {
+        ShowLoader();
+        
+            $("#Zone").attr("disabled", false); $("#State").attr("disabled", false); $("#TerriotryArea").attr("disabled", false); $('#CustomerCode').attr("disabled", false);// $("#StockistID").attr("disabled", false);
+            //data_value = "{\"Role\":\"" + "ADMIN" + "\",\"UserCode\":\"" + "50001657" + "\"}";
+            data_value = "{\"Role\":\"" + SessionValue + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+            $.ajax({ url: '../../Home/GetFilters', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                var FilterList = JSON.parse(res);
+                all_zones = "";
+                for (var i = 0; i < FilterList.dtZone.length; i++) {
+                    $('#Zone')[0].sumo.add(FilterList.dtZone[i]["ZONE_CODE"], FilterList.dtZone[i]["ZONE_NAME"]);
+                    if (FilterList.dtZone.length == 0) {
+                        all_zones = "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else if (i == FilterList.dtZone.length - 1) {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'" + ',';
+                    }
+                }
+                CustomerArray.length = 0;
+                $("#CustomerCode").val("");
+                if (FilterList.dtCustomer.length > 0) {
+                    for (var i = 0; i < FilterList.dtCustomer.length; i++) {
+                        CustomerArray.push(FilterList.dtCustomer[i]["STOCKIST_ID"].toString() + ":" + FilterList.dtCustomer[i]["STOCKIST_NAME"].toString());
+                    }
+                }
+                //all_states = "";
+                //for (var i = 0; i < FilterList.dtState.length; i++) {
+                //    if (FilterList.dtState.length == 0) {
+                //        all_states = "'" + FilterList.dtState[i]["STATE_CODE"] + "'";
+                //    } else if (i == FilterList.dtState.length - 1) {
+                //        all_states += "'" + FilterList.dtState[i]["STATE_CODE"] + "'";
+                //    } else {
+                //        all_states += "'" + FilterList.dtState[i]["STATE_CODE"] + "'" + ',';
+                //    }
+                //}
+                //all_territories = "";
+                //for (var i = 0; i < FilterList.dtTerritory.length; i++) {
+                //    if (FilterList.dtTerritory.length == 0) {
+                //        all_territories = "'" + FilterList.dtTerritory[i]["TERRITORY_CODE"] + "'";
+                //    } else if (i == FilterList.dtTerritory.length - 1) {
+                //        all_territories += "'" + FilterList.dtTerritory[i]["TERRITORY_CODE"] + "'";
+                //    } else {
+                //        all_territories += "'" + FilterList.dtTerritory[i]["TERRITORY_CODE"] + "'" + ',';
+                //    }
+                //}
+                //all_customers = "";
+                //for (var i = 0; i < FilterList.dtCustomer.length; i++) {
+                //$('#StockistID')[0].sumo.add(FilterList.dtCustomer[i]["CUSTOMER_CODE"], FilterList.dtCustomer[i]["CUSTOMER_CODE"] + ":" + FilterList.dtCustomer[i]["CUSTOMER_NAME"]);
+                //$('#StockistName')[0].sumo.add(FilterList.dtCustomer[i]["CUSTOMER_CODE"], FilterList.dtCustomer[i]["CUSTOMER_NAME"]);
+                //if (FilterList.dtCustomer.length == 0) {
+                //    all_customers = "'" + FilterList.dtCustomer[i]["CUSTOMER_CODE"] + "'";
+                //} else if (i == FilterList.dtCustomer.length - 1) {
+                //   all_customers += "'" + FilterList.dtCustomer[i]["CUSTOMER_CODE"] + "'";
+                //} else {
+                //    all_customers += "'" + FilterList.dtCustomer[i]["CUSTOMER_CODE"] + "'" + ',';
+                //}
+                //}
+            });
+
+
+            $('#Zone').on('keyup change', function () {
+                ShowLoader();
+                var Clear_State = $('#State option').length;
+                for (var i = 0; i < Clear_State; i++) {
+                    $('#State')[0].sumo.remove(0);
+                }
+
+                //   var Clear_Cust = $('#StockistID option').length;
+                //  for (var i = 0; i < Clear_Cust; i++) {
+                //      $('#StockistID')[0].sumo.remove(0);
+                // }
+                CustomerArray.length = 0;//---------------------------9
+                $('#CustomerCode').val("");
+
+                var Clear_Terrytory = $('#TerriotryArea option').length;
+                for (var i = 0; i < Clear_Terrytory; i++) {
+                    $('#TerriotryArea')[0].sumo.remove(0);
+                }
+
+
+                if ($("#Zone option:selected").length == 0) {
+                    data_value = "{\"Role\":\"" + SessionValue + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+                    $http({ url: '../../Home/GetFilters', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                        var FilterList = JSON.parse(res);
+                        CustomerArray.length = 0;
+                        $("#CustomerCode").val("");
+                        if (FilterList.dtCustomer.length > 0) {
+                            for (var i = 0; i < FilterList.dtCustomer.length; i++) {
+                                CustomerArray.push(FilterList.dtCustomer[i]["STOCKIST_ID"].toString() + ":" + FilterList.dtCustomer[i]["STOCKIST_NAME"].toString());
+                            }
+                        }
+                        HideLoader();
+                    });
+                }
+                else {
+
+                    var data_value = "{\"Zone_Code\":\"" + $("#Zone").val() + "\"}";
+                    $.ajax({ url: '../../Home/GetStatesforZone', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                        if (res != "") {
+                            var dtState = JSON.parse(res);
+                            for (var i = 0; i < dtState.length; i++) {
+                                $('#State')[0].sumo.add(dtState[i]["STATE_CODE"], dtState[i]["STATE_NAME"]);
+                            }
+                            HideLoader();
+                        } else { HideLoader(); }
+
+                        $.ajax({ url: '../../Home/GetCustomersforZone', method: 'POST', data: { Data: data_value } }).success(function (Cust_res) {
+                            if (Cust_res != "") {
+                                var dtCust = JSON.parse(Cust_res);
+                                for (var i = 0; i < dtCust.length; i++) {
+                                    CustomerArray.push(dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());//---------------------1
+                                    //   $('#StockistID')[0].sumo.add(dtCust[i]["CUSTOMER_CODE"].toString(), dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());
+                                    //  $('#StockistName')[0].sumo.add(dtCust[i]["CUSTOMER_CODE"].toString(), dtCust[i]["CUSTOMER_NAME"].toString());
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+
+            $('#State').on('keyup change', function () {
+                ShowLoader();
+                Actual_SelectedState = "";
+                var Clear_Territory = $('#TerriotryArea option').length;
+                for (var i = 0; i < Clear_Territory; i++) {
+                    $('#TerriotryArea')[0].sumo.remove(0);
+                }
+                // var Clear_Cust = $('#StockistID option').length;
+                //  for (var i = 0; i < Clear_Cust; i++) {
+                //     $('#StockistID')[0].sumo.remove(0);
+                //  }
+
+                CustomerArray.length = 0;//------------------------------------2
+                $('#CustomerCode').val("");
+
+                if ($('#State').val() != null) {
+                    var seleState = $('#State').val();
+
+                    for (var k = 0; k < seleState.length; k++) {
+                        SelectedState += "'" + seleState[k] + "',";
+                        Actual_SelectedState += "'" + seleState[k] + "',";
+                    }
+                    SelectedState = SelectedState.substring(',', SelectedState.length - 1);//Selected States with ' '. 
+                    Actual_SelectedState = Actual_SelectedState.substring(',', Actual_SelectedState.length - 1);//Selected States with ' '. 
+                }
+
+                var data_value = "{\"State_Code\":\"" + SelectedState + "\"}";
+                $.ajax({ url: '../../Home/GetTerritoriesforState', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                    if (res != "") {
+
+                        var dtTerritory = JSON.parse(res);
+                        for (var i = 0; i < dtTerritory.length; i++) {
+                            $('#TerriotryArea')[0].sumo.add(dtTerritory[i]["TERRITORY_CODE"], dtTerritory[i]["TERRITORY_NAME"]);
+                        }
+                        //  ShowLoader();
+                        $.ajax({ url: '../../Home/GetCustomersforState', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                            if (res != "") {
+                                // ShowLoader();
+
+                                var dtCust = JSON.parse(res);
+
+                                for (var i = 0; i < dtCust.length; i++) {
+                                    // $('#StockistID')[0].sumo.add(dtCust[i]["CUSTOMER_CODE"].toString(), dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());
+
+                                    CustomerArray.push(dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());//---------------------3
+                                }
+                                HideLoader();
+                            } else {
+                                HideLoader();
+                            }
+                        });
+                    }
+                    HideLoader();
+                });
+
+                if ($("#State").val() == null) {
+                    var data_value = "{\"Zone_Code\":\"" + $("#Zone").val() + "\"}";
+                    if ((SessionValue != "SH") && (SessionValue != "TM") && (SessionValue != "FSO") && (SessionValue != "FSO_BU2") && (SessionValue != "STOCKIST") && (SessionValue != "C&F")) {
+                        $.ajax({ url: '../../Home/GetCustomersforZone', method: 'POST', data: { Data: data_value } }).success(function (Cust_res) {
+                            if (Cust_res != "") {
+                                var dtCust = JSON.parse(Cust_res);
+                                for (var i = 0; i < dtCust.length; i++) {
+                                    //  $('#StockistID')[0].sumo.add(dtCust[i]["CUSTOMER_CODE"].toString(), dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());
+                                    CustomerArray.push(dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());
+                                }
+                                HideLoader();
+                            } else {
+                                HideLoader();
+                            }
+                        });
+                    }
+                    HideLoader();
+                }
+                SelectedState = "";
+                // HideLoader();
+            });
+
+            var SelectedTerritory = "";
+            $('#TerriotryArea').on('keyup change', function () {
+                ShowLoader();
+                Actual_SelectedTerritory = ""; Actual_SelectedState = "";
+                if ((SessionValue == "TM") || (SessionValue == "FSO") || (SessionValue == "FSO_BU2")) {
+                    if ($("#TerriotryArea").val() == null) {
+                        //  var Clear_Cust = $('#StockistID option').length;
+                        //  for (var i = 0; i < Clear_Cust; i++) {
+                        //      $('#StockistID')[0].sumo.remove(0);
+                        //  }
+                        CustomerArray.length = 0;//-------------------------------------4
+                        $('#CustomerCode').val("");
+
+                        HideLoader();
+                    } else if ($("#TerriotryArea").val() != null) {
+                        var seleTerritory = $('#TerriotryArea').val();
+                        for (var k = 0; k < seleTerritory.length; k++) {
+                            SelectedTerritory += "'" + seleTerritory[k] + "',";
+                            Actual_SelectedTerritory += "'" + seleTerritory[k] + "',";
+                        }
+                        SelectedTerritory = SelectedTerritory.substring(',', SelectedTerritory.length - 1);//Selected Territories with ' '. 
+                        Actual_SelectedTerritory = Actual_SelectedTerritory.substring(',', Actual_SelectedTerritory.length - 1);//Selected Territories with ' '. 
+
+                        var data_value = "{\"Territory_Code\":\"" + SelectedTerritory + "\"}";
+                        $.ajax({ url: '../../Home/GetCustomersforTerritory', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                            if (res != "") {
+                                var dtCust = JSON.parse(res);
+                                for (var i = 0; i < dtCust.length; i++) {
+                                    //  $('#StockistID')[0].sumo.add(dtCust[i]["CUSTOMER_CODE"], dtCust[i]["CUSTOMER_CODE"] + ":" + dtCust[i]["CUSTOMER_NAME"]);
+                                    CustomerArray.push(dtCust[i]["CUSTOMER_CODE"] + ":" + dtCust[i]["CUSTOMER_NAME"]);//--------------------5
+                                }
+                                HideLoader();
+                            } else { HideLoader(); }
+                        });
+                    }
+                } else {
+                    //  var Clear_Cust = $('#StockistID option').length;
+                    //  for (var i = 0; i < Clear_Cust; i++) {
+                    //   $('#StockistID')[0].sumo.remove(0);
+                    //   }
+                    CustomerArray.length = 0;//-------------------------------------6
+                    $('#CustomerCode').val("");
+
+                    if ($('#TerriotryArea').val() != null) {
+                        var seleTerritory = $('#TerriotryArea').val();
+                        for (var k = 0; k < seleTerritory.length; k++) {
+                            SelectedTerritory += "'" + seleTerritory[k] + "',";
+                            Actual_SelectedTerritory += "'" + seleTerritory[k] + "',";
+                        }
+                        SelectedTerritory = SelectedTerritory.substring(',', SelectedTerritory.length - 1);//Selected Territories with ' '. 
+                        Actual_SelectedTerritory = Actual_SelectedTerritory.substring(',', Actual_SelectedTerritory.length - 1);//Selected Territories with ' '. 
+                    }
+                    if ($("#TerriotryArea").val() == null) {
+                        var seleState = $('#State').val();
+
+                        for (var k = 0; k < seleState.length; k++) {
+                            SelectedState += "'" + seleState[k] + "',";
+                            Actual_SelectedState += "'" + seleState[k] + "',";
+                        }
+                        SelectedState = SelectedState.substring(',', SelectedState.length - 1);//Selected States with ' '. 
+                        Actual_SelectedState = Actual_SelectedState.substring(',', Actual_SelectedState.length - 1);//Selected States with ' '. 
+
+                        var data_value = "{\"State_Code\":\"" + SelectedState + "\"}";
+                        $.ajax({ url: '../../Home/GetCustomersforState', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                            if (res != "") {
+                                var dtCust = JSON.parse(res);
+                                for (var i = 0; i < dtCust.length; i++) {
+                                    //  $('#StockistID')[0].sumo.add(dtCust[i]["CUSTOMER_CODE"].toString(), dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());
+                                    CustomerArray.push(dtCust[i]["CUSTOMER_CODE"].toString() + ":" + dtCust[i]["CUSTOMER_NAME"].toString());//--------------7
+                                }
+                                HideLoader();
+                            } else { HideLoader(); }
+                        });
+                    } else {
+                        var data_value = "{\"Territory_Code\":\"" + SelectedTerritory + "\"}";
+                        $.ajax({ url: '../../Home/GetCustomersforTerritory', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                            if (res != "") {
+                                var dtCust = JSON.parse(res);
+                                for (var i = 0; i < dtCust.length; i++) {
+                                    // $('#StockistID')[0].sumo.add(dtCust[i]["CUSTOMER_CODE"], dtCust[i]["CUSTOMER_CODE"] + ":" + dtCust[i]["CUSTOMER_NAME"]);
+                                    CustomerArray.push(dtCust[i]["CUSTOMER_CODE"] + ":" + dtCust[i]["CUSTOMER_NAME"]);//-------------8
+                                }
+                                HideLoader();
+                            } else { HideLoader(); }
+                        });
+                    }
+                }
+                SelectedTerritory = "";
+                SelectedState = "";
+            });
+
+            $('#CustomerCode').typeahead({
+                source: CustomerArray
+            });
+
+
+        }
+
+    
+
+    function GetStockistDetailsFilterData() {
+        try {
+            var FromDate = $('#OrderFromDate').val();
+            var ToDate = $('#OrderToDate').val();
+            var ZoneValue = $('#Zone').val();
+            var StateValue = $('#State').val();
+            var TerritoryValue = $('#TerriotryArea').val();
+            
+            var isValidCustCode = isValidCode_Cust($("#CustomerCode").val(), CustomerArray);
+            if (FromDate == "" || FromDate == null) {
+                alert("Please select from date");
+            } else if (ToDate == "" || ToDate == null) {
+                alert("Please select to date");
+            } else if (SessionValue == "ZH" && ZoneValue == null) {
+                alert("please select zone");
+            }
+            else if (SessionValue == "SH" && StateValue == null) {
+                alert("please select state");
+            } else if (SessionValue == "TM" && TerritoryValue == null) {
+                alert("please select Territory");
+            }
+            else if ((SessionValue == "FSO" || SessionValue == "FSO_BU2") && TerritoryValue == null) {
+                alert("please select Territory");
+            }
+            else if (($("#CustomerCode").val() != "") && (isValidCustCode == false)) {
+                alert("Please select proper customer code");
+            }
+            else {
+                ShowLoader();
+                var DateRange = DateSplitter('OrderFromDate', 'OrderToDate');             
+
+
+                var WhereClause = "WHERE  C.CREATED_DATE BETWEEN " + DateRange + " ";
+                if ($("#CustomerCode").val() != "") {
+                    if (($("#CustomerCode").val() != "") && (isValidCustCode == false)) {
+                    } else {
+                        WhereClause += " and CAST(C.STOCKIST_ID AS BIGINT) IN (" + $("#CustomerCode").val().split(':')[0] + ")";
+                    }
+                } else if ($("#TerriotryArea").val() != null) {
+                    WhereClause += " and CAST(C.STOCKIST_ID AS BIGINT) IN (select DISTINCT ecc.CUSTOMER_CODE from cms_employee_customer_configuration ecc inner join CUSTOMER_SALES_VIEW csv on CAST(ecc.CUSTOMER_CODE AS BIGINT)=CAST(csv.cust_code AS BIGINT) where ecc.ORG_LEVEL_ID IN(" + Actual_SelectedTerritory + "))";
+                } else if ($("#State").val() != null) {
+                    WhereClause += " and C.STATE IN(" + Actual_SelectedState + ")";
+                }
+                else if ($("#Zone").val() != null) {
+                    WhereClause += " AND C.STOCKIST_ID IN(select distinct STOCKIST_ID from sap_customer_sales_master where zone='" + $("#Zone").val() + "')";
+                }
+                if (($("#Zone").val() == null) && ($("#State").val() == null) && ($("#TerriotryArea").val() == null) && ($("#CustomerCode").val() == "")) {
+                    WhereClause += " ";
+                }
+
+
+                var Data = JSON.stringify({
+                    MasterType: "StockistDetails",
+                    ID: "561",
+                    UserCode: $("#UserCode").val(),
+                    "Type": "Get",
+                    ReportName: "StockistDetails",
+                    WhereClause: WhereClause
+                });
+
+                
+
+                $.ajax({
+                    url: '../../Home/getReportListColumnNamesData',
+                    method: 'POST',
+                    data: { Data: Data },
+                    success: function (response) {
+                        var Result = JSON.parse(response.tabledata);
+
+                        if (Result != "") {
+                            UserDefaultListColumnNames = Result["UserDefaultListColumnNames"];
+                            if (Result.hasOwnProperty('UserListColumnNames')) {
+                                var data1 = JSON.parse(Result["UserListColumnNames"]);
+
+                                var selectedcolumnname = data1["ColumnNames"];
+
+                                CustomColumnID = Result["UserListID"];
+                                $('#undo_redo_to').empty();
+                                var ColArray = new Array();
+                                for (var i = 0; i < selectedcolumnname.length; i++) {
+
+
+                                    ColArray.push({
+                                        "data": selectedcolumnname[i],
+                                        "name": selectedcolumnname[i], "bSortable": true
+                                    });
+                                    $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                                }
+                                //$scope.UserSelectedColumnName = ColArray;
+                                UserSelectedColumnName = ColArray;
+                            } else {
+
+                                var data1 = JSON.parse(Result["UserDefaultListColumnNames"]);
+
+                                var selectedcolumnname = data1["ColumnNames"];
+
+                                CustomColumnID = "0";
+
+                                $('#undo_redo_to').empty();
+                                var ColArray = new Array();
+                                for (var i = 0; i < selectedcolumnname.length; i++) {
+                                    ColArray.push({
+                                        "data": selectedcolumnname[i],
+                                        "name": selectedcolumnname[i],
+                                        "bSortable": "true"
+                                    });
+                                    $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                                }
+                                //$scope.UserSelectedColumnName = ColArray;
+                                UserSelectedColumnName = ColArray;
+                            }
+
+
+
+                        }
+                        ShowLoader();
+
+                        $.ajax({
+                            url: '../../Home/getReportData', method: 'POST', data: { Data: Data },
+                            success: function (response) {
+                                getLookUpData_Reports_ServerSideBinding("", "EnrollmentNodataLabel", "tblStockistDetails", "tblStockistDetails", UserSelectedColumnName);
+                            }
+                        });
+
+                    }
+                });
+
+
+
+            }
+        } catch (Exception) { }
+
+
+    };
+
+    $("#OrderFromDate").datepicker().on("changeDate", function (e) {
+        $("#OrderToDate").datepicker('setStartDate', $("#OrderFromDate").val());
+        //$("#OrderToDate").data("datepicker").setStartDate((moment(e.date).add(0, 'days')));
+        $("#OrderToDate").val("");
+    });
+    $("#OrderToDate").datepicker().on("changeDate", function (e) {
+        if ($("#OrderFromDate").val() == "") {
+            $("#OrderToDate").val("");
+        } else {
+            $("#OrderFromDate").datepicker('setEndDate', $("#OrderToDate").val());
+        }
+    });
+
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+                    $("#OrderFromDate").datepicker('setEndDate', result);
+                    $("#OrderToDate").datepicker('setEndDate', result);
+                }
+
+            }
+
+        });
+    }
+
+    function ResetFilters() {
+        window.location.reload();
+    }
+
+
+</script>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Master>
+  <TableName>Department</TableName>
+  <Field>
+    <FN>DEPARTMENT_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>DEPARTMENT_NAME</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COMPANYDETAIL_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COMPANYDETAIL_NAME</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <!--<Field>
+    <FN>PID</FN>
+    <FT>int</FT>
+    <IN>False</IN>
+    <MTN>State</MTN>
+    <MTLC>State_Name</MTLC>
+    <MTLCV>State_Id</MTLCV>
+  </Field>-->
+</Master>

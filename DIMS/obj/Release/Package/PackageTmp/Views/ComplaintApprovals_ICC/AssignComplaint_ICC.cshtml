@@ -1,0 +1,201 @@
+﻿@{
+    //Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode_ICC = UP.UserCode;
+    string SessionUserType_ICC = UP.UserType;
+    string SessionUserTypID_ICC = UP.UserTypeCode;
+    string USER_PRODUCT_TYPE_CODE_ICC = UP.USER_PRODUCT_TYPE_CODE;
+
+}
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Assign Complaint ICC</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Approvals</li>
+        <li class="active">Assign Complaint ICC</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="SaveAssnCompl_ICC()" id="CompRegSave_ICC">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                @*<a href ng-click="AssnComplList_ICC()" id="CompRegList_ICC">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>*@
+                <a href ng-click="CreateAssnCompl_ICC()" id="CompRegAssign_ICC">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+                <select id="StateFilter_ICC" ng-model="StateFilter_ICC" ng-change="StateChange_ICC()"></select>
+                @*svprasadk 17-06-2020 SBU 1 requirement to bulk assign complaints start*@
+                <span id="SBU1BulkAssign_ICC" style="display:none">
+                    <input type="text" id="userRoleMaster_ICC" readonly onclick="getUserRoleMaster('GetAssnUserRoleData_ICC','AssnUserRoleMaster_ICC','User Role List')" placeholder="User Role" />
+                    <input type="text" id="usersBasedonRole_ICC" readonly onclick="getUsersBasedonRole('GetAssnUserData_ICC','AssnUserMaster_ICC','User List')" placeholder="User Name" />
+                </span>
+                @*svprasadk 17-06-2020 SBU 1 requirement to bulk assign complaints end*@
+                <input type="text" id="SessionUserTypID_ICC" value="@SessionUserTypID_ICC" style="display:none;" />
+                <input type="text" id="SessionUserCode_ICC" value="@SessionUserCode_ICC" style="display:none;" />
+                <input type="text" id="USER_PRODUCT_TYPE_CODE_ICC" value="@USER_PRODUCT_TYPE_CODE_ICC" style="display:none;" />
+                <input type="text" id="userRoleMasterCode_ICC" value="" style="display:none;" />
+                <input type="text" id="usersBasedonRoleCode_ICC" value="" style="display:none;" />
+            </div>
+        </div>
+    </nav>
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    @*<button type="button" id="Add" class="btn btn-primary" ng-click="SaveAssnCompl_ICC()" style="background-color: #3295D6">Save</button>
+    <button type="button" id="List" class="btn btn-primary" ng-click="AssnComplList_ICC()" style="background-color: #3295D6">List</button>
+    <button type="button" id="New" class="btn btn-primary" ng-click="CreateAssnCompl_ICC()" style="background-color: #3295D6">New</button>*@
+    <div class="row" id="AssignComplaintDiv_ICC">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-body">
+                    @*<button id="btnAssncomplList" ng-click="AssnComplList_ICC()">List</button>
+                    <button id="btnCreateAssncompl" ng-click="CreateAssnCompl_ICC()">Create</button><br />*@
+                    <div class="table-responsive">
+                        <table id="MasterTable_ICC" class="table" width="100%" cellspacing="0">
+                            <thead>
+                                <tr style="background-color: #d2401a; color: white;">
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                        @*<table id="MasterTable123" class="table" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="CmplAssnModal_ICC" tabindex="-1" role="dialog" aria-labelledby="CmplAssnModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="CmplAssnModalLabel">Update Assigned User</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="CmplAssn_id" data-ng-model="CmplAssn_id_Model_ICC" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCmplNo" class="col-sm-5 control-label" style="text-align: right;">
+                                    Complaint No<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCmplNo" data-ng-model="txtCmplNo_Model_ICC" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtCmplDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    Complaint Date<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCmplDate" data-ng-model="txtCmplDate_Model_ICC" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssToUserRole" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned To(User Role)<span class="Mandatory">*</span></label>
+                                <div class="input-group OpenPopupIconFor3Columns col-sm-7">
+                                    <input type="text" class="form-control" id="txtAssToUserRole" data-ng-model="txtAssToUserRole_Model_ICC" readonly="readonly" />
+                                    <span class="input-group-addon AddonButton" ng-click="GetFieldData('GetAssnUserRoleLookupData_ICC','AssnUserRoleMaster_ICC','User Role List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssToUser" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned To(User)<span class="Mandatory">*</span></label>
+                                <div class="input-group OpenPopupIconFor3Columns col-sm-7">
+                                    <input type="text" class="form-control" id="txtAssToUser" data-ng-model="txtAssToUser_Model_ICC" readonly="readonly" />
+                                    <span class="input-group-addon AddonButton" ng-click="GetFieldData('GetAssnUserLookupData_ICC','AssnUserMaster_ICC','User List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssBy" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned By<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtAssBy" data-ng-model="txtAssBy_Model_ICC" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssOn" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned On<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtAssOn" data-ng-model="txtAssOn_Model_ICC" readonly="readonly" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CmplAssign_Save_ICC" class="btn btn-info" ng-click="SaveCmplAssignData_ICC()">Save</button>
+                <button type="button" id="CmplAssign_Close_ICC" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        //svprasadk 18-06-2020 SBU 1 requirement to bulk assign complaints start
+        if ($("#USER_PRODUCT_TYPE_CODE_ICC").val() == "SBU1") {
+            $("#SBU1BulkAssign_ICC").show();
+        } else {
+            $("#SBU1BulkAssign_ICC").hide();
+            $("#userRoleMaster_ICC").val("");
+            $("#usersBasedonRole_ICC").val("");
+        }
+        //svprasadk 18-06-2020 SBU 1 requirement to bulk assign complaints end
+        $.ajax({
+            url: '../../Users/GetRightToAccess',
+            type: 'GET',
+            data: { AccessData: JSON.stringify({ UserRole: $("#SessionUserTypID_ICC").val(), FormCode: 'AC_ICC' }) },
+            success: function (AccessData) {
+                if (AccessData == "") {
+                    $("#AssignComplaintDiv_ICC").css('display', 'none');
+                    $("#IconsNavBar").css('display', 'none');
+                }
+                else {
+                    AccessData = JSON.parse(AccessData);
+                    if (AccessData[0]["IS_VIEW"] == true) {
+                        $("#AssignComplaintDiv_ICC").css('display', 'block');
+                    }
+                    else {
+                        $("#AssignComplaintDiv_ICC").css('display', 'none');
+                    }
+                }
+            }
+        });
+
+    });
+
+
+</script>

@@ -1,0 +1,271 @@
+﻿@{
+    Layout = null;
+    string CTN = Request.QueryString["CTN"].ToString();
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionUserType = UP.UserTypeCode;    
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="font-family: Calibri; font-size: 12px;">
+
+    <div style="width: 100%; height: 100%;font-family: Calibri; font-size: 12px;" id="Report_BreakageInspectionSheetPartBReport">
+
+        <input type="text" style="display:none;" id="SessionUserCode" value="@SessionUserCode" />
+        <input type="text" style="display:none;" id="SessionUserType" value="@SessionUserType" />
+
+        <table style="width: 98%" align="center" border="0">
+            <tr>
+                <td>
+                    <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+                        <label style="font-size: 18px; color: #0165C4">
+                            <b>HIL Limited</b></label><br />
+                        <label style="font-size: 18px; color: #0026ff">
+                            <b>BREAKAGE INSPECTION SHEET</b></label><br />
+                        <label style="font-size: 14px;">
+                            ( Part B )</label><br />
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <input type="text" id="CTN" value="@CTN" style="display:none;" />
+
+
+
+        <div style="width: 98%">
+            <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+
+                <tr>
+                    <td>Complaint Tracking No:<label id="ComplaintTrackingNo"></label></td>
+                    <td style="text-align: right">Dated:<label id="ToDayDate"></label></td>
+                </tr>
+                <tr>
+                    <td>Stockist/Customer Name:<label id="CustomerName"></label></td>
+                    <td style="text-align: right">Product Division:<label id="ProductCategory"></label></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <br />
+
+
+        <div style="width: 98%" id="BreakageInspectionSheetPartBReportDiv">
+            <table style="width: 98%; border-collapse: collapse;" class="ChildTable" id="BISPTable">
+                <thead>
+                    <tr style="background-color: #00FFFF">
+                        <th style="border: 1px solid Black !important; text-align: left;">S No.</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Product Name</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Size</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Barch No</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Defect</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Recovered Product</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Recovery</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <br />
+
+        <table style="border-collapse: collapse;">
+            <tr>
+                <td style="font-weight: bold;">Total Breakage Quantity(in running meters) :</td>
+                <td>
+                    <label id="TotalBreakageQuantity"></label>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Recovery(in running meters) :</td>
+                <td>
+                    <label id="Recovery"></label>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Net Loss(in running meters) :</td>
+                <td>
+                    <label id="NetLoss"></label>
+                </td>
+            </tr>
+        </table>
+
+        <br />
+
+        <div style="width: 40%">
+            <table style="width: 98%; border-collapse: collapse;" class="ChildTable" id="CountingTable">
+                <thead>
+                    <tr style="background-color: #00FFFF; border: 1px solid Black !important;">
+                        <th style="border: 1px solid Black !important;text-align:left;">Batch No</th>
+                        <th style="border: 1px solid Black !important;text-align:left;">Total No Of Defective Sheets (for each batch)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+
+    </div>
+    @*<input type="button" id="PrintReport" onclick="PrintPDF()" value="Save As PDF" />*@
+</body>
+</html>
+
+<script type="text/javascript">
+
+
+    function PrintPDF() {
+        $("#PrintReport").css("display", "none");
+        $.ajax({
+            url: '/Home/Exportdata',
+            type: 'POST',
+            beforeSend: function () {
+                //ShowLoader();
+            },
+            data: { QueryVal: $('#Report_BreakageInspectionSheetPartBReport').html() },
+            success: function (result) {
+                if (result == "ok") {
+                    $("#PrintReport").css("display", "block");
+                    window.location.href = "../../Home/GetPDF?reportname=BreakInspectionSheet_" + $("#CTN").val() + "";
+                }
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+
+        $("#Report_BreakageInspectionSheetPartBReport").width($(window).width());
+
+
+
+        var CTN = $("#CTN").val();
+
+        if (CTN == "") {
+            $("#Report_BreakageInspectionSheetPartBReport").empty();
+            window.close();
+        }
+        else {
+
+            var UserCode = $("#SessionUserCode").val();
+            var UserType = $("#SessionUserType").val();
+
+            var Data = JSON.stringify({
+                CTN: CTN,
+                Report: "BreakageInspectionSheetPartBReport",
+                UserCode: UserCode,
+                UserType: UserType
+            });
+
+
+            $.ajax({
+                method: 'POST',
+                url: '../../ComplaintReports/GetReportData',
+                data: { Data: Data },
+            }).then(function successCallback(response) {
+                if (response == "") {
+                    $("#Report_BreakageInspectionSheetPartBReport").empty();
+                    alert("No Data Available");
+                    window.close();
+                }
+                else {
+                    $("#ComplaintTrackingNo").text(CTN);
+
+                    var Data = JSON.parse(response);
+
+                    $("#ToDayDate").text(Data["ToDay"]);
+
+                    var Header = Data["INV"];
+
+                    $("#CustomerName").text(Header[0]["CUSTOMER_NAME"] + "[" + Header[0]["Customer_Code"] + "]");
+
+                    $("#ProductCategory").text(Header[0]["Product_Category_Name"]);
+
+
+
+
+                    $("#TotalBreakageQuantity").text(Header[0]["Total_Breakage"]);
+                    $("#Recovery").text(Header[0]["Total_Recovery"]);
+                    $("#NetLoss").text(Header[0]["Net_Loss"]);
+
+                    var Lines = Data["Inv_Brk_Ins_Sht"];
+                    var TRCode = "";
+                    for (var i = 0; i < Lines.length; i++) {
+                        TRCode = TRCode + "<tr>";
+
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + (i + 1) + "</td>";
+
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["PRODUCT"] + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["SIZE"] + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["BATCH_NO"] + "</td>";
+
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["DEFECT_TYPE_NAME"] + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["RECOVERYPRODUCT_NAME"] + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["RECOVERY"] + "</td>";
+
+                        TRCode = TRCode + "</tr>";
+                    }
+
+                    $("#BISPTable").append(TRCode);
+
+
+
+
+                    Lines = Data["Counting"];
+                    TRCode = "";
+                    for (var i = 0; i < Lines.length; i++) {
+                        TRCode = TRCode + "<tr>";
+
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["BATCH_NO"] + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Lines[i]["COUNT"] + "</td>";
+
+                        TRCode = TRCode + "</tr>";
+                    }
+
+                    $("#CountingTable").append(TRCode);
+
+                    $.ajax({
+                        url: '/Home/Exportdata',
+                        type: 'POST',
+                        beforeSend: function () {
+                            //ShowLoader();
+                        },
+                        data: { QueryVal: $('#Report_BreakageInspectionSheetPartBReport').html() },
+                        success: function (result) {
+                            if (result == "ok") {
+                                $("#PrintReport").css("display", "block");
+                                window.location.href = "../../Home/GetPDF?reportname=BreakInspectionSheet_" + $("#CTN").val() + "";
+                                window.onfocus = function () {
+                                    window.close();
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+
+                }
+            },
+            function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+        }
+    });
+
+
+</script>

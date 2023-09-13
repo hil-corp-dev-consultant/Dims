@@ -1,0 +1,162 @@
+﻿@*Module            : SFDC.
+DocumentName        : ScoreCards.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Score Cards.
+Developer Name      : Harish Kothuri.
+Change Log          : NA.*@
+
+@{
+    Layout = null;
+
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string UserCode = UP.UserCode;
+    string UserName = UP.UserName;
+    string UserTypeName = UP.UserType;
+    string UserTypeCode = UP.UserTypeCode;
+    
+}
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Scorecard</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>SFDC</li>
+        <li class="active">Score Cards</li>
+    </ol>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <input type="text" id="UserCode" value="@UserCode" style="display:none;" />
+    <input type="text" id="UserType" value="@UserTypeCode" style="display:none;" />
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-body">
+                <div id="ScorecardsTableScope"></div>
+                <a id="GetMyScoreCard" style="display: none; color: blue;cursor:pointer;text-align:right;" onclick="GoToScoreCard('@UserCode')" >Go To My Score Card</a>
+
+                <select id="SC_RoleFilter" onchange="SC_RoleFilterChange()" ></select>
+
+                <div style="padding:10px;"></div>
+                <table id="ScorecardsTable" class="table ListTable" width="100%" cellspacing="0">
+                </table>
+                <div style="padding:10px;"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script>
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    function SC_RoleFilterChange() {
+
+        var UserCode = $("#UserCode").val();
+        var SC_RoleFilter = $("#SC_RoleFilter").val();
+
+        var UserData = JSON.stringify({
+            UserCode: UserCode,
+            UserRole: SC_RoleFilter
+        });
+
+        $.ajax({
+            url: '../../SFDC/GetScoreCardList',
+            type: 'GET',
+            data: { UserData: UserData },
+            success: function (RES) {
+
+                if (RES == "") {
+                    alert("No Data Found");
+                }
+                else {
+                    RES = JSON.parse(RES);
+
+                    var HtmlString = "<thead><tr><td>Employee Code</td><td>Employee Name</td><td>Role</td><td>State</td><td>Zone</td><td>Score</td></tr></thead><tbody>";
+
+                    var RolesList = new Array();
+
+                    for (var i = 0; i < RES.length; i++) {
+
+                        HtmlString = HtmlString + "<tr onclick='GoToScoreCard(" + RES[i]["EMPLOYEE_CODE"] + ")'>";
+                        //HtmlString = HtmlString + "<tr ng-click='GoToScoreCard(" + RES[i]["EMPLOYEE_CODE"] + ")'>";
+
+                        HtmlString = HtmlString + "<td>" + RES[i]["EMPLOYEE_CODE"] + "</td>";
+                        HtmlString = HtmlString + "<td>" + RES[i]["EMPLOYEE_NAME"] + "</td>";
+                        HtmlString = HtmlString + "<td>" + RES[i]["USER_ROLE"] + "</td>";
+                        HtmlString = HtmlString + "<td>" + RES[i]["USER_STATE"] + "</td>";
+                        HtmlString = HtmlString + "<td>" + RES[i]["USER_ZONE"] + "</td>";
+                        HtmlString = HtmlString + "<td>" + RES[i]["SCORE"] + "</td>";
+
+                        HtmlString = HtmlString + "</tr>";
+
+                        //alert(RolesList.indexOf(RES[i]["USER_ROLE"]) + "\t" + (RolesList.indexOf(RES[i]["USER_ROLE"]) > -1));
+
+                        if (RolesList.indexOf(RES[i]["USER_ROLE"]) > -1) {
+                        }
+                        else {
+                            RolesList.push(RES[i]["USER_ROLE"]);
+                        }
+
+
+
+                    }
+
+                    HtmlString = HtmlString + "</tbody>";
+
+                    $("#ScorecardsTable").empty();
+
+
+
+                    $("#ScorecardsTable").append(HtmlString);
+                    $("#ScorecardsTable").dataTable({
+                        scrollY: "200px",
+                        scrollX: true,
+                        scrollCollapse: true,
+                        paging: true,
+                        destroy: true,
+                        fixedColumns: {
+                            leftColumns: 0
+                        }
+                    });
+
+
+
+                }
+
+            }
+        });
+
+
+    }
+
+</script>

@@ -1,0 +1,711 @@
+﻿@*Module            : SFDC.
+    DocumentName        : CreateTargetList.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : To View the list of Create targets.
+    Developer Name      : Swamy Ayyappa.
+    Change Log          : NA.*@
+
+@using LabelNames = DIMS.Content.Resource_Files.CreateTargetList;
+@{
+    Layout = null;
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeCode = UP.UserTypeCode;
+
+    string StateCode = UP.UserStateCode;
+    string StateName = UP.UserStateName;
+
+    string ZoneCode = UP.UserZoneCode;
+    string ZoneName = UP.UserZoneName;
+
+}
+
+
+<style type="text/css">
+    /*
+    label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+    */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Sales Target List</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Sales Target List</li>
+    </ol>
+    @if (@SessionUserTypeCode == "ZH" || @SessionUserTypeCode == "ZSC")
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="go('CreateTarget')" style="float: left;" id="CreateTargetIcon">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="CreateTargetListID">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+                <div class="box-body">                    
+                    <form class="form-horizontal" role="form" style="font-size: small; margin-top: 1px;">
+                        @*<div class="form-group">
+                    <label class="col-sm-1 control-label" for="ZoneFilter">
+                        Zone
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="ZoneFilter" class="form-control"></select>
+                    </div>
+                    <label class="col-sm-1 control-label" for="StateFilter">
+                        State
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="StateFilter" class="form-control">
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label" for="MonthFilter">
+                        Month & Year
+                    </label>
+                    <div class="col-sm-2">
+                        <input id="MonthFilter" class="form-control" onchange="MonthChange()" />
+                    </div>
+                </div>*@
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="MonthFilter">
+                                Month & Year<span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <input id="MonthFilter" class="form-control" />
+                            </div>
+                            <label class="col-sm-1 control-label" for="SalesEmapName">
+                                Zone
+                            </label>
+                            <div class="col-sm-1">
+                                <select id="Zone" multiple="multiple" class="form-control"></select>
+                            </div>
+
+                            <label class="col-sm-2 control-label" for="SalesEmapName">
+                                State
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="State" multiple="multiple" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="TerriotryArea">
+                                Territory/Area
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                            </div>
+                             <div class="col-sm-8">
+                                <div class="pull-right" style="margin-left: 15px;">
+                            <button type="button" class="btn btn-info navbar-btn" onclick="GetTargetsList()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                Submit
+                            </button>
+                            <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                Reset Filter
+                            </button>
+                        </div>
+                            </div>
+                        </div>                        
+                    </form>
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display:none;" />
+                    <input type="text" id="UserName" value="@SessionUserName" style="display:none;" />
+                    <input type="text" id="CreatedBy" value="@SessionUserCode" style="display:none;" />
+                    <input type="text" id="UserTypeCode" value="@SessionUserTypeCode" style="display:none;" />
+
+
+                    <input type="text" style="display:none;" id="UserStateCode" value="@StateCode" />
+                    <input type="text" style="display:none;" id="UserStateName" value="@StateName" />
+                    <input type="text" style="display:none;" id="UserZoneCode" value="@ZoneCode" />
+                    <input type="text" style="display:none;" id="UserZoneName" value="@ZoneName" />
+                    <input type="text" style="display:none;" id="UserType" value="@SessionUserType" />
+                    <input type="text" style="display:none;" id="UserTypec" value="@SessionUserTypeCode" />
+
+
+                    <div style="padding:10px;"></div>
+                    <table id="CreateTargetList" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        @*<tfoot style="display: none;">
+                    <tr>
+                        <th>Employee Code</th>
+                        <th>Employee Name</th>
+                        <th>Role/ Designation</th>
+                        <th>Zone</th>
+                        <th>State</th>
+                        <th>Overall Sales Volume (Target)</th>
+                        <th>Key Stockist volume</th>
+                        <th>No of Stockist Billed</th>
+                        <th>Overall CC sheet Volume	Score Card</th>
+                        <th>Score Card</th>
+                    </tr>
+                </tfoot>*@
+                    </table>
+                   <div style="padding:10px;"></div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                        <label class="col-sm-6 control-label">TOTAL AC Sales(Target)</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control gray" id="ACSalesTarget" data-ng-model="ACSalesTarget" disabled />
+                        </div>
+                        </div>
+                        <div class="col-sm-6">
+                        <label class="col-sm-6 control-label">TOTAL Key Stockist Volume</label>
+                        <div class="col-sm-6">
+                            <input class="form-control gray" type="text" id="KeyStockistVolume" data-ng-model="KeyStockistVolume" disabled />
+                        </div>
+                        </div>
+                    </div>
+                     <div style="padding:10px;"></div>          
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <label class="col-sm-6 control-label">TOTAL No. of Stockist Billed</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control gray" id="StockistBilled" data-ng-model="StockistBilled" disabled/>
+                        </div>
+                        </div>
+                        <div class="col-sm-6">
+                        <label class="col-sm-6 control-label">TOTAL CC Sales(Target)</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control gray" id="CCSalesTarget" data-ng-model="CCSalesTarget" disabled />
+                        </div>
+                        </div>
+                    </div>
+                    <div style="padding:10px;"></div>
+                    <div id="AppendTotals">
+                    </div>
+                </div>      
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var SelectedState = ""; var Actual_SelectedState = ""; var Actual_SelectedTerritory = "";
+    var data_value = ""; var all_zones = ""; var all_states = ""; var all_territories = ""; var all_customers = "";
+    var monthyear = "";
+    var utc = $("#UserTypeCode").val();
+    var UserCode = $("#UserCode").val();
+    $("#MonthFilter").datepicker({
+        format: "MM-yyyy",
+        startView: "months",
+        autoclose: "true",
+        minViewMode: "months"
+        //endDate: new Date(ForeignDate)
+    });
+
+    $(document).ready(function () {
+        if (utc == "NSH") {
+            // alert(utc);
+            //$("#CreateTargetList tbody tr").css("cursor","pointer");
+        }
+
+        //$("#CreateTargetList").removeAttr({ "cursor": "pointer" });
+        $("#Zone").SumoSelect({ placeholder: 'Zone' });
+        $("#State").SumoSelect({ placeholder: 'State' });
+        $("#TerriotryArea").SumoSelect({ placeholder: 'Terriotry/Area' });
+
+        $("#CreateTargetList").dataTable();
+
+        var table = $("#CreateTargetList").dataTable();
+        table.fnDraw();
+
+        jQuery('.dataTable').wrap('<div class="dataTables_scroll" />');
+
+        GetFilters();
+    });
+
+    function GetFilters() {
+        var data_value = ""; var all_zones = ""; var all_states = ""; var all_territories = ""; var all_customers = ""; var CustomerArray = new Array();
+        ShowLoader();
+        if ((SessionValue == "ZH") || (SessionValue == "RCC") || (SessionValue == "ZSC")) {
+            $("#Zone").attr("disabled", false); $("#State").attr("disabled", false); $("#TerriotryArea").attr("disabled", false);// $("#StockistID").attr("disabled", false);
+
+            data_value = "{\"Role\":\"" + "ZH" + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+            $.ajax({ url: '../../Home/GetFilters', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                var FilterList = JSON.parse(res);
+                all_zones = "";
+                for (var i = 0; i < FilterList.dtZone.length; i++) {
+                    $('#Zone')[0].sumo.add(FilterList.dtZone[i]["ZONE_CODE"], FilterList.dtZone[i]["ZONE_NAME"]);
+                    if (FilterList.dtZone.length == 0) {
+                        all_zones = "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else if (i == FilterList.dtZone.length - 1) {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'" + ',';
+                    }
+                }
+                $('select#Zone')[0].sumo.selectItem(0);
+                $('#Zone').trigger("change");
+            });
+        } else if (SessionValue == "SH") {
+            $("#Zone").attr("disabled", true); $("#State").attr("disabled", false); $("#TerriotryArea").attr("disabled", false);// $("#StockistID").attr("disabled", false);
+            data_value = "{\"Role\":\"" + "SH" + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+            $.ajax({ url: '../../Home/GetFilters', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                var FilterList = JSON.parse(res);
+                //all_zones = "";
+                for (var i = 0; i < FilterList.dtZone.length; i++) {
+                    $('#Zone')[0].sumo.add(FilterList.dtZone[i]["ZONE_CODE"], FilterList.dtZone[i]["ZONE_NAME"]);
+
+                }
+                $('select#Zone')[0].sumo.selectItem(0);
+                //all_states = "";
+                for (var i = 0; i < FilterList.dtState.length; i++) {
+                    $('#State')[0].sumo.add(FilterList.dtState[i]["STATE_CODE"], FilterList.dtState[i]["STATE_NAME"]);
+                }
+                $('select#State')[0].sumo.selectItem(0);
+                $('#State').trigger("change");
+            });
+        }
+
+        else if (SessionValue == "TM") {
+            $("#Zone").attr("disabled", true); $("#State").attr("disabled", true); $("#TerriotryArea").attr("disabled", false); // $("#StockistID").attr("disabled", false);
+
+            data_value = "{\"Role\":\"" + "TM" + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+            $.ajax({ url: '../../Home/GetFilters', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                var FilterList = JSON.parse(res);
+
+                for (var i = 0; i < FilterList.dtZone.length; i++) {
+                    $('#Zone')[0].sumo.add(FilterList.dtZone[i]["ZONE_CODE"], FilterList.dtZone[i]["ZONE_NAME"]);
+
+                }
+                $('select#Zone')[0].sumo.selectItem(0);
+
+                for (var i = 0; i < FilterList.dtState.length; i++) {
+                    $('#State')[0].sumo.add(FilterList.dtState[i]["STATE_CODE"], FilterList.dtState[i]["STATE_NAME"]);
+
+                }
+                $('select#State')[0].sumo.selectItem(0);
+
+                for (var i = 0; i < FilterList.dtTerritory.length; i++) {
+                    $('#TerriotryArea')[0].sumo.add(FilterList.dtTerritory[i]["TERRITORY_CODE"], FilterList.dtTerritory[i]["TERRITORY_NAME"]);
+
+                }
+
+            });
+        }
+
+        else if (SessionValue == "FSO" || SessionValue == "FSO_BU2") {
+            $("#Zone").attr("disabled", true); $("#State").attr("disabled", true); $("#TerriotryArea").attr("disabled", false); // $("#StockistID").attr("disabled", false);
+            if (SessionValue == "FSO") {
+                data_value = "{\"Role\":\"" + "FSO" + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+            } else {
+                data_value = "{\"Role\":\"" + "FSO_BU2" + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+            }
+            $.ajax({ url: '../../Home/GetFilters', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                var FilterList = JSON.parse(res);
+
+                for (var i = 0; i < FilterList.dtZone.length; i++) {
+                    $('#Zone')[0].sumo.add(FilterList.dtZone[i]["ZONE_CODE"], FilterList.dtZone[i]["ZONE_NAME"]);
+
+                }
+                $('select#Zone')[0].sumo.selectItem(0);
+
+                for (var i = 0; i < FilterList.dtState.length; i++) {
+                    $('#State')[0].sumo.add(FilterList.dtState[i]["STATE_CODE"], FilterList.dtState[i]["STATE_NAME"]);
+
+                }
+                $('select#State')[0].sumo.selectItem(0);
+
+                for (var i = 0; i < FilterList.dtTerritory.length; i++) {
+                    $('#TerriotryArea')[0].sumo.add(FilterList.dtTerritory[i]["TERRITORY_CODE"], FilterList.dtTerritory[i]["TERRITORY_NAME"]);
+
+                }
+                $('select#TerriotryArea')[0].sumo.selectItem(0);
+                $('#TerriotryArea').trigger("change");
+
+            });
+        }
+
+        else {
+            $("#Zone").attr("disabled", false); $("#State").attr("disabled", false); $("#TerriotryArea").attr("disabled", false);// $("#StockistID").attr("disabled", false);
+            //data_value = "{\"Role\":\"" + "ADMIN" + "\",\"UserCode\":\"" + "50001657" + "\"}";
+            data_value = "{\"Role\":\"" + SessionValue + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+            $.ajax({ url: '../../Home/GetFilters', method: 'POST', data: { Data: data_value } }).success(function (res) {
+                var FilterList = JSON.parse(res);
+                all_zones = "";
+                for (var i = 0; i < FilterList.dtZone.length; i++) {
+                    $('#Zone')[0].sumo.add(FilterList.dtZone[i]["ZONE_CODE"], FilterList.dtZone[i]["ZONE_NAME"]);
+                    if (FilterList.dtZone.length == 0) {
+                        all_zones = "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else if (i == FilterList.dtZone.length - 1) {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'" + ',';
+                    }
+                }
+                CustomerArray.length = 0;
+
+
+            });
+
+        }
+        HideLoader();
+    };
+
+    $('#Zone').on('keyup change', function () {
+        ShowLoader();
+        var Clear_State = $('#State option').length;
+        for (var i = 0; i < Clear_State; i++) {
+            $('#State')[0].sumo.remove(0);
+        }
+
+        var Clear_Terrytory = $('#TerriotryArea option').length;
+        for (var i = 0; i < Clear_Terrytory; i++) {
+            $('#TerriotryArea')[0].sumo.remove(0);
+        }
+
+        var data_value = "{\"Zone_Code\":\"" + $("#Zone").val() + "\"}";
+        $.ajax({ url: '../../Home/GetStatesforZone', method: 'POST', data: { Data: data_value } }).success(function (res) {
+            if (res != "") {
+                var dtState = JSON.parse(res);
+                for (var i = 0; i < dtState.length; i++) {
+                    $('#State')[0].sumo.add(dtState[i]["STATE_CODE"], dtState[i]["STATE_NAME"]);
+                }
+                HideLoader();
+            } else { HideLoader(); }
+
+
+        });
+
+    });
+
+
+    $('#State').on('keyup change', function () {
+        ShowLoader();
+        Actual_SelectedState = "";
+        var Clear_Territory = $('#TerriotryArea option').length;
+        for (var i = 0; i < Clear_Territory; i++) {
+            $('#TerriotryArea')[0].sumo.remove(0);
+        }
+
+
+        if ($('#State').val() != null) {
+            var seleState = $('#State').val();
+
+            for (var k = 0; k < seleState.length; k++) {
+                SelectedState += "'" + seleState[k] + "',";
+                Actual_SelectedState += "'" + seleState[k] + "',";
+            }
+            SelectedState = SelectedState.substring(',', SelectedState.length - 1);//Selected States with ' '.
+            Actual_SelectedState = Actual_SelectedState.substring(',', Actual_SelectedState.length - 1);//Selected States with ' '.
+        }
+
+        var data_value = "{\"State_Code\":\"" + SelectedState + "\"}";
+        $.ajax({ url: '../../Home/GetTerritoriesforState', method: 'POST', data: { Data: data_value } }).success(function (res) {
+            if (res != "") {
+
+                var dtTerritory = JSON.parse(res);
+                for (var i = 0; i < dtTerritory.length; i++) {
+                    $('#TerriotryArea')[0].sumo.add(dtTerritory[i]["TERRITORY_CODE"], dtTerritory[i]["TERRITORY_NAME"]);
+                }
+                //  ShowLoader();
+
+            }
+            HideLoader();
+        });
+
+        if ($("#State").val() == null) {
+            var data_value = "{\"Zone_Code\":\"" + $("#Zone").val() + "\"}";
+            if ((SessionValue != "SH") && (SessionValue != "TM") && (SessionValue != "FSO") && (SessionValue != "FSO_BU2") && (SessionValue != "STOCKIST") && (SessionValue != "C&F")) {
+
+            }
+            HideLoader();
+        }
+        SelectedState = "";
+        // HideLoader();
+    });
+
+    var SelectedTerritory = "";
+    $('#TerriotryArea').on('keyup change', function () {
+        ShowLoader();
+        Actual_SelectedTerritory = ""; Actual_SelectedState = "";
+        if ((SessionValue == "TM") || (SessionValue == "FSO") || (SessionValue == "FSO_BU2")) {
+            if ($("#TerriotryArea").val() == null) {
+
+
+                HideLoader();
+            } else if ($("#TerriotryArea").val() != null) {
+                var seleTerritory = $('#TerriotryArea').val();
+                for (var k = 0; k < seleTerritory.length; k++) {
+                    SelectedTerritory += "'" + seleTerritory[k] + "',";
+                    Actual_SelectedTerritory += "'" + seleTerritory[k] + "',";
+                }
+                SelectedTerritory = SelectedTerritory.substring(',', SelectedTerritory.length - 1);//Selected Territories with ' '.
+                Actual_SelectedTerritory = Actual_SelectedTerritory.substring(',', Actual_SelectedTerritory.length - 1);//Selected Territories with ' '.
+
+                var data_value = "{\"Territory_Code\":\"" + SelectedTerritory + "\"}";
+                HideLoader();
+            }
+        } else {
+
+
+            if ($('#TerriotryArea').val() != null) {
+                var seleTerritory = $('#TerriotryArea').val();
+                for (var k = 0; k < seleTerritory.length; k++) {
+                    SelectedTerritory += "'" + seleTerritory[k] + "',";
+                    Actual_SelectedTerritory += "'" + seleTerritory[k] + "',";
+                }
+                SelectedTerritory = SelectedTerritory.substring(',', SelectedTerritory.length - 1);//Selected Territories with ' '.
+                Actual_SelectedTerritory = Actual_SelectedTerritory.substring(',', Actual_SelectedTerritory.length - 1);//Selected Territories with ' '.
+                HideLoader();
+            }
+            if ($("#TerriotryArea").val() == null) {
+                var seleState = $('#State').val();
+
+                for (var k = 0; k < seleState.length; k++) {
+                    SelectedState += "'" + seleState[k] + "',";
+                    Actual_SelectedState += "'" + seleState[k] + "',";
+                }
+                SelectedState = SelectedState.substring(',', SelectedState.length - 1);//Selected States with ' '.
+                Actual_SelectedState = Actual_SelectedState.substring(',', Actual_SelectedState.length - 1);//Selected States with ' '.
+
+                var data_value = "{\"State_Code\":\"" + SelectedState + "\"}";
+                HideLoader();
+
+            } else {
+                var data_value = "{\"Territory_Code\":\"" + SelectedTerritory + "\"}";
+                HideLoader();
+
+            }
+            HideLoader();
+        }
+        SelectedTerritory = "";
+        SelectedState = "";
+    });
+
+    function GetTargetsList() {
+        var MonthYear = $("#MonthFilter").val();
+        var ZoneValue = $("#Zone").val();
+        var StateValue = $("#State").val();
+        var TerritoryValue = $("#TerriotryArea").val();
+
+        if (MonthYear == "" || MonthYear == null) {
+            alert("Please select Month and Year");
+            return;
+        }
+
+
+        monthyear = MonthYear;
+        var WhereClause = " where CT.MonthYear in('" + MonthYear + "') ";
+        if ($("#TerriotryArea").val() != null) {
+            WhereClause += " and CTL.EmployeeCode in (select EMPLOYEE_CODE from cms_organization_level where ORG_LEVEL_ID in (" + Actual_SelectedTerritory + ")) ";
+
+        } else if ($("#State").val() != null) {
+            WhereClause += " and CT.StateCode in (" + Actual_SelectedState + ") ";
+        }
+        else if ($("#Zone").val() != null) {
+            WhereClause += " and CT.Zone in (" + $("#Zone").val() + ") ";
+
+        }
+        if (($("#Zone").val() == null) && ($("#State").val() == null) && ($("#TerriotryArea").val() == null) && ($("#CustomerCode").val() == "")) {
+            WhereClause += " ";
+        }
+
+
+        var Data = JSON.stringify({
+            MasterType: "TargetList",
+            ID: "561",
+            UserCode: $("#UserCode").val(),
+            "Type": "Get",
+            ReportName: "TargetList",
+            WhereClause: WhereClause
+        });
+
+
+        $.ajax({
+            url: '../../Home/getReportListColumnNamesData',
+            method: 'POST',
+            data: { Data: Data },
+            success: function (response) {
+                console.log('response', response);
+                var Result = JSON.parse(response.tabledata);
+                console.log('Result', Result);
+                if (Result != "") {
+                    UserDefaultListColumnNames = Result["UserDefaultListColumnNames"];
+                    if (Result.hasOwnProperty('UserListColumnNames')) {
+                        var data1 = JSON.parse(Result["UserListColumnNames"]);
+
+                        var selectedcolumnname = data1["ColumnNames"];
+
+                        CustomColumnID = Result["UserListID"];
+                        $('#undo_redo_to').empty();
+                        var ColArray = new Array();
+                        for (var i = 0; i < selectedcolumnname.length; i++) {
+
+
+                            ColArray.push({
+                                "data": selectedcolumnname[i],
+                                "name": selectedcolumnname[i], "bSortable": true
+                            });
+                            $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                        }
+                        //$scope.UserSelectedColumnName = ColArray;
+                        UserSelectedColumnName = ColArray;
+                    } else {
+
+                        var data1 = JSON.parse(Result["UserDefaultListColumnNames"]);
+
+                        var selectedcolumnname = data1["ColumnNames"];
+
+                        CustomColumnID = "0";
+
+                        $('#undo_redo_to').empty();
+                        var ColArray = new Array();
+                        for (var i = 0; i < selectedcolumnname.length; i++) {
+                            ColArray.push({
+                                "data": selectedcolumnname[i],
+                                "name": selectedcolumnname[i],
+                                "bSortable": "true"
+                            });
+                            $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                        }
+                        //$scope.UserSelectedColumnName = ColArray;
+                        UserSelectedColumnName = ColArray;
+                    }
+
+
+
+                }
+                ShowLoader();
+
+                $.ajax({
+                    url: '../../Home/getReportData', method: 'POST', data: { Data: Data },
+                    success: function (response) {
+                        getLookUpData_Reports_ServerSideBinding("", "EnrollmentNodataLabel", "CreateTargetList", "CreateTargetList", UserSelectedColumnName);
+                        GetTotalsTargetList();
+                    }
+                });
+
+                if (utc == "NSH") {
+                    $("#CreateTargetList tbody").css("cursor", "pointer");
+                } else if (utc == "ZSC") {
+                    $("#CreateTargetList tbody").css("cursor", "pointer");
+                }
+                else { }
+            }
+        });
+
+    };
+
+    function GetTotalsTargetList() {
+        var MonthYear = $("#MonthFilter").val();
+        var ZoneValue = $("#Zone").val();
+        var StateValue = $("#State").val();
+        var TerritoryValue = $("#TerriotryArea").val();       
+        
+        monthyear = MonthYear;
+        var WhereClause = " where CT.MonthYear in('" + MonthYear + "') ";
+        if ($("#TerriotryArea").val() != null) {
+            WhereClause += " and CTL.EmployeeCode in (select EMPLOYEE_CODE from cms_organization_level where ORG_LEVEL_ID in (" + Actual_SelectedTerritory + ")) ";
+
+        } else if ($("#State").val() != null) {
+            WhereClause += " and CT.StateCode in (" + Actual_SelectedState + ") ";
+        }
+        else if ($("#Zone").val() != null) {
+            WhereClause += " and CT.Zone in (" + $("#Zone").val() + ") ";
+
+        }
+        if (($("#Zone").val() == null) && ($("#State").val() == null) && ($("#TerriotryArea").val() == null) && ($("#CustomerCode").val() == "")) {
+            WhereClause += " ";
+        }
+        var Data = JSON.stringify({
+            MasterType: "TargetList",
+            ID: "561",
+            UserCode: $("#UserCode").val(),
+            "Type": "Get",
+            ReportName: "TargetList",
+            WhereClause: WhereClause
+        });
+        $.ajax({
+            url: '../../SFDC/GetTotalsTargetList',
+            method: 'POST',
+            data: { Data: Data },
+            success: function (response) {
+                response = JSON.parse(response);
+                $("#ACSalesTarget").val(response[0]["OverallSalesVolumeTarget"]);
+                $("#KeyStockistVolume").val(response[0]["KeyStockistVolume"]);
+                $("#StockistBilled").val(response[0]["NoofStockistBilled"]);
+                $("#CCSalesTarget").val(response[0]["OverallCCSheetVolume"]);
+            }
+        });
+    }
+
+    if (utc == "ADMIN" || (utc == "ZSC" && UserCode == "50000546")) {
+        $(document).on('click', '#CreateTargetList tbody tr', function () {
+
+            var customerID = $(this).find('td:eq(0)').text();
+            var ID = customerID + "_" + monthyear;
+
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                // $("#MarketMap").DataTable().$('tr.selected').removeClass('selected');
+                //$(this).addClass('selected');
+            }
+
+            if (ID != "") {
+                var scope = angular.element($("#CreateTargetListID")).scope();
+                scope.$apply(function () {
+                    scope.go("CreateTarget/" + ID);
+                })
+            }
+
+        });
+    }
+    else {
+
+    }
+
+    function ResetFilters() {
+        var scope = angular.element($("#CreateTargetListID")).scope();
+        scope.$apply(function () {
+            scope.go("CreateTargetList/");
+        })
+    }
+</script>

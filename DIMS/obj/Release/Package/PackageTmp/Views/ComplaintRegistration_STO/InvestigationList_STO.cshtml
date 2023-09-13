@@ -1,0 +1,82 @@
+﻿@*
+
+    Module              : CMS - DIMS Solution.
+    DocumentName        : RegistrationList_STO.cs
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Description         : This Doc is for used for Complaint Investigation List.
+    Developer Name      : SVPRASADK.
+    Change Log          : NA.
+    Date Started        : 17-07-2020
+
+*@
+
+
+
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode_STO = UP.UserCode;
+    string UserType_STO = UP.UserTypeCode;
+}
+
+<style>
+    table tr {
+        cursor: pointer;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Investigation STO</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">Investigation STO</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="go('Investigation_STO')" style="float: left;" id="CreateNewInvestigation">
+                    <i class="fa fa-file-o fa-4" title="Create New Investigation"></i>
+                </a>
+                <span style="float:left; padding-right:10px;">RECEIVING PLANT </span>
+                <select id="FROM_PLANT_CODE" ng-model="FROM_PLANT_CODE" ng-change="PlantChange()" style="float: left;"></select>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;" id="InvestigationListSection">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-header" style="overflow-x: scroll; width: 98%" id="InvestigationlistDiv_STO">
+
+                        <input type="text" id="UserCode_STO" value="@SessionUserCode_STO" style="display: none;" />
+                        <input type="text" id="UserType_STO" value="@UserType_STO" style="display: none;" />
+                        <table id="InvestigationList_STO" class="table ListTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th></th>UserCode_STO
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <input type="button" value="Advanced" id="AdvancedColumnEditing" style="background-color: #d2401a; display: none;" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+</script>

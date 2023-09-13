@@ -1,0 +1,184 @@
+﻿@*
+
+Module              : CMS - DIMS Solution.
+DocumentName        : SalesAchievement.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Sales Achievement Screen.
+Developer Name      : Harish Kothuri.
+Change Log          : NA.
+
+*@
+
+@{
+    Layout = null;
+}
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Sales Achievement</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>SFDC SCREENS</li>
+        <li class="active">Sales Achievement</li>
+    </ol>
+</section>
+
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-body">
+                    <h3 class="box-title">Sales Achievement</h3>
+                    <div class="pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;color:white">
+                            Reset Filter</button>
+                       @* <button type="button" class="btn btn-info navbar-btn" onclick="GetForm('AddOrder')" style="margin-right: 5px;">
+                            Add Market Map</button>*@
+                    </div>
+                    <form role="form" class="form-horizontal" style="font-size: small;margin-top:36px;" action="">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sales Employee:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select Employee</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Employee ID:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select id</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Zone:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select Zone</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">State:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select State</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Territory/Area:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select Area</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Location:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select Location</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">From Date:</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="FromDate" />
+                            </div>
+                            <label class="col-sm-2 control-label">To Date:</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="ToDate" />
+                            </div>
+                            <label class="col-sm-2 control-label">Stockist Name:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select StockistName</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Stockist Id:</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+                                    <option value="">Select StockistId</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div style="padding:10px;"></div>
+                    <div style="overflow:auto;">
+                    <table id="SalesAchievementView" class="table tablecss" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="background-color:#d2401a;color:white">
+                                <th>Record Id</th>
+                                <th>Date</th>
+                                <th>Days in month</th>
+                                <th>Sales Employee</th>
+                                <th>Location</th>
+                                <th>Territory</th>
+                                <th>State</th>
+                                <th>Zone</th>
+                                <th>Year</th>
+                                <th>Budgeted NSR Target</th>
+                                <th>Budgeted Revenue Target (in Rs. Lacs)</th>
+                                <th>Budgeted Revenue Target MTD (Rs. Lacs)</th>
+                                <th>Budgeted Volume MTD Achieved (%)</th>
+                                <th>Budgeted Volume Target</th>
+                                <th>Budgeted Volume Target MTD</th>
+                                <th>Category</th>
+                                <th>Current Month</th>
+                                <th>NSR Actuals MTD</th>
+                                <th>Revenue Actuals MTD (in Rs. Lacs)</th>
+                                <th>Sales NSR Target</th>
+                                <th>Sales Revenue Target (in Rs. Lacs)</th>
+                                <th>Sales Revenue Target MTD (in Rs. Lacs)</th>
+                                <th>Sales Volume MTD Achieved (%)</th>
+                                <th>Sales Volume Target</th>
+                                <th>Sales Volume Target MTD</th>
+                                <th>Volume Actuals MTD</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Volume Actuals YTD</th>
+                                <th>Sales Volume YTD Achieved (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        $("#FromDate").datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose:true
+        });
+        $("#ToDate").datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true
+        });
+        $("#SalesAchievementView").dataTable({
+            "scrollX": true
+        });
+    });
+</script>
+

@@ -1,0 +1,933 @@
+﻿@using LabelNames = DIMS.Content.Resource_Files.DailyOrderTracking;
+@{
+    Layout = null;
+}
+<style>
+    .dataTables_scroll {
+        max-height: initial !important;
+        overflow: auto !important;
+    }
+
+    .cl {
+        background: cyan;
+        cursor: default;
+    }
+
+    tbody td {
+        cursor: default;
+    }
+
+    .grandcolor {
+        background: #003760;
+        cursor: default;
+        color: white;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Daily Sales Tracker</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Report</li>
+        <li class="active">Daily Sales Tracker</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        @*<div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="go('AddInventoryTrack')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>
+                </div>
+            </div>*@
+    </nav>
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="DailySalesTrackerDiv">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+                <div class="box-body" @*style="overflow-x: scroll; width: 98%"*@ id="container">                    
+                    <table id="DailySalesTable" class="table tablecss" width="100%" cellspacing="0" style="margin-left: 9px; cursor:default">
+                        <thead>
+                            <tr>
+                                @*<th rowspan="2" style="text-align: center;">State</th>
+                                    <th rowspan="2" style="text-align: center;"><span id="1stcolumn">Mar'15</span> <br />Sale</th>
+                                    <th rowspan="2" style="text-align: center;"><span id="2stcolumn">Mar'15</span><br /> MTD</th>
+                                    <th rowspan="2" style="text-align: center;"><span id="3stcolumn">Mar'16</span><br /> TGT</th>
+                                    <th rowspan="2" style="text-align: center;">Balance<br /> To Do</th>
+                                    <th rowspan="2" style="text-align: center;">Run Rate<br /> Required<br /> Per Day</th>
+                                    <th colspan="4" style="text-align: center;"><span id="4stcolumn">1st - 16th Mar</span></th>
+                                    <th rowspan="2" style="text-align: center;">Growth<br />  Over<br /> YAGO</th>
+                                    <th colspan="3" style="text-align: center;">FTD (<span id="5stcolumn">16th Mar</span>)</th>
+                                    <th colspan="1" style="text-align: center;"><span id="6stcolumn">17th Mar</span></th>
+                                    <th rowspan="2" style="text-align:center;">AC<br /> Revenue</th>
+                                    <th colspan="3" style="text-align: center;">CC Sheets</th>*@
+                                <th rowspan="2" style="text-align: center;">State</th>
+                                <th rowspan="2" style="text-align: center;"><span id="1stcolumn"></span> <br />Sale</th>
+                                <th rowspan="2" style="text-align: center;"><span id="2stcolumn"></span><br /> MTD</th>
+                                <th rowspan="2" style="text-align: center;"><span id="3stcolumn"></span><br /> TGT</th>
+                                <th rowspan="2" style="text-align: center;">Balance<br /> To Do</th>
+                                <th rowspan="2" style="text-align: center;">Run Rate<br /> Required<br /> Per Day</th>
+                                <th colspan="4" style="text-align: center;"><span id="4stcolumn"></span> in MT</th>
+                                <th rowspan="2" style="text-align: center;">Growth<br />  Over<br /> YAGO</th>
+                                <th colspan="3" style="text-align: center;">FTD (<span id="5stcolumn"></span>) in MT</th>
+                                <th colspan="1" style="text-align: center;"><span id="6stcolumn"></span></th>
+                                <th rowspan="2" style="text-align:center;">AC Sheets<br /> Revenue <br />Rs. in LACS</th>
+                                <th colspan="3" style="text-align: center;">CC Sheets</th>
+                            </tr>
+                            <tr>
+                                @*<th style="text-align: center;">TGT</th>
+                                    <th style="text-align: center;">Actual</th>
+                                    <th style="text-align: center;">ShortFall</th>
+                                    <th style="text-align: center;">%Ach</th>
+                                    <th style="text-align: center;">TGT</th>
+                                    <th style="text-align: center;">Actual</th>
+                                    <th style="text-align: center;">Short Fall</th>
+                                    <th style="text-align: center;">TGT</th>
+                                    <th style="text-align: center;"><span id="7stcolumn">Mar'16 </span><br />TGT</th>
+                                    <th style="text-align: center;">MTD <br />Sale</th>
+                                    <th style="text-align: center;">Balance <br />To Do</th>*@
+                                <th style="text-align: center;">TGT</th>
+                                <th style="text-align: center;">Actual</th>
+                                <th style="text-align: center;">ShortFall</th>
+                                <th style="text-align: center;">%Ach</th>
+                                <th style="text-align: center;">TGT</th>
+                                <th style="text-align: center;">Actual</th>
+                                <th style="text-align: center;">Short Fall</th>
+                                <th style="text-align: center;">TGT</th>
+                                <th style="text-align: center;"><span id="7stcolumn"></span><br />TGT</th>
+                                <th style="text-align: center;">MTD <br />Sale</th>
+                                <th style="text-align: center;">Balance <br />To Do</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var MAR15SALES = 0;
+    var MAR15MTD = 0;
+    var MAR16THTGT = 0;
+    var BALANCETODO = 0;
+    var RUNRATEREQUIREDPERDAY = 0;
+    var TGT = 0;
+    var ACTUAL = 0;
+    var SHORTFALL = 0;
+    var ACH = 0;
+    var GROWTHOVERYEARAGO = 0;
+    var FTDTGT = 0;
+    var FTDACTUAL = 0;
+    var FTDShortFall = 0;
+    var thMARTGT = 0;
+    var ACrevenue = 0.00;
+    var CcMar16thTarget = 0;
+    var CCMTDSALE = 0;
+    var CCbalancetodo = 0;
+
+    var EastTotal = 0.00;
+    var North1Total = 0.00;
+    var NorthTotal = 0.00;
+    var SouthTotal = 0.00;
+    var South1Total = 0.00;
+    var WestTotal = 0.00;
+    var East1Ttoal = 0.00;
+
+    $(document).ready(function () {
+
+        $("#DailySalesTable").DataTable({
+            "ordering": false,
+            bPaginate: false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+        GetDailySalesTrackerDates();
+        //GetRowsforDailySalesTracker();
+        GetDailySalesTracker();
+    });
+
+    function GetRowsforDailySalesTracker() {
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'POST',
+            url: '../Reports/GetRowsforDailySalesTracker',
+            success: function (response) {
+                if (response == "SUCCESS") {
+                    GetDailySalesTracker();
+                }
+                else {
+                    alert("No Data Availabe to Display the Report");
+                    window.location.href = "../../Home/Homepage";
+                }
+            }
+        });
+    }
+
+    function GetDailySalesTrackerDates() {
+        HideLoader();
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'POST',
+            url: '../Reports/GetDailySalesTrackerDates',
+            success: function (response) {
+                response = JSON.parse(response);
+                $("#1stcolumn").text(response[0]["LASTYEARSALE"]);
+                $("#2stcolumn").text(response[0]["LASTYEARSALE"]);
+                $("#3stcolumn").text(response[0]["TGT"]);
+                $("#4stcolumn").text(response[0]["1STTGT"] + ' - ' + response[0]["2NDTGT"] + ' ' + response[0]["3RDTGT"]);
+                $("#5stcolumn").text(response[0]["1STFTD"] + ' ' + response[0]["2NDFTD"]);
+                $("#6stcolumn").text(response[0]["TODAYTGT"] + ' ' + response[0]["TODAYTGTTXT"]);
+                $("#7stcolumn").text(response[0]["CCTGT"]);
+            }
+        });
+    }
+
+    function GetDailySalesTracker() {
+        ShowLoader();
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'GET',
+            url: '../Reports/GetDailySalesTrackerReport',
+            success: function (response) {
+
+                if (response != '' || response != null || response != undefined) {
+                    response = JSON.parse(response);
+                    var html;
+                    $("#body").empty();
+                    for (var i = 0; i < response.length; i++) {
+                        html = '<tr>';
+
+                        if (response[i]["STATE_DESC"].includes("SBU1")) {
+                            response[i]["STATE_DESC"] = "NORTH 1 TOTAL";
+                            html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td class="cl">' + response[i]["TGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["%ACH"] + '</td>';
+                            html += '<td class="cl">' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td class="cl">' + response[i]["17thMARTGT"] + '</td>';
+                            //html += '<td class="cl">' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td class="cl">' + North1Total.toFixed(2) + '</td>';
+                            html += '<td class="cl">' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCbalancetodo"] + '</td>';
+
+
+                            var loc = response[i]["%ACH"].split('%');
+                            loc = parseInt(loc[0]);
+                            var locc = response[i]["GROWTHOVERYEARAGO"].split('%');
+                            locc = parseInt(locc[0]);
+
+
+                            MAR15SALES += parseInt(response[i]["MAR15SALES"]);
+                            MAR15MTD += parseInt(response[i]["MAR15MTD"]);
+                            MAR16THTGT += parseInt(response[i]["MAR16THTGT"]);
+                            BALANCETODO += parseInt(response[i]["BALANCETODO"]);
+                            RUNRATEREQUIREDPERDAY += parseInt(response[i]["RUNRATEREQUIREDPERDAY"]);
+                            TGT += parseInt(response[i]["TGT"]);
+                            ACTUAL += parseInt(response[i]["ACTUAL"]);
+                            SHORTFALL += parseInt(response[i]["SHORTFALL"]);
+                            ACH += loc;
+                            GROWTHOVERYEARAGO += locc;
+                            FTDTGT += parseInt(response[i]["FTDTGT"]);
+                            FTDACTUAL += parseInt(response[i]["FTDACTUAL"]);
+                            FTDShortFall += parseInt(response[i]["FTDShortFall"]);
+                            thMARTGT += parseInt(response[i]["17thMARTGT"]);
+                            ACrevenue += parseFloat(North1Total);
+                            CcMar16thTarget += parseInt(response[i]["CcMar16thTarget"]);
+                            CCMTDSALE += parseInt(response[i]["CCMTDSALE"]);
+                            CCbalancetodo += parseInt(response[i]["CCbalancetodo"]);
+
+                        }
+                        else {
+
+
+                            North1Total += parseFloat(response[i]["ACrevenue"]);
+
+                            html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td>' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td>' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td>' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td>' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td>' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td>' + response[i]["TGT"] + '</td>';
+                            html += '<td>' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td>' + response[i]["%ACH"] + '</td>';
+                            html += '<td>' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td>' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td>' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td>' + response[i]["17thMARTGT"] + '</td>';
+                            html += '<td>' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td>' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td>' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td>' + response[i]["CCbalancetodo"] + '</td>';
+                        }
+
+                        html += '</tr>';
+                        $("#body").append(html);
+
+                    }
+
+                    GetDailySalesTrackerEast();
+                }
+            }
+        })
+    }
+
+    function GetDailySalesTrackerEast() {
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'GET',
+            url: '../Reports/GetDailySalesTrackerEast',
+            success: function (response) {
+                if (response != '' || response != null || response != undefined) {                  
+                    response = JSON.parse(response);
+                    var html;
+                    //$("#body").empty();
+                    for (var i = 0; i < response.length; i++) {
+                        html = '<tr>';
+
+                        if (response[i]["STATE_DESC"].includes("SBU1")) {
+                            response[i]["STATE_DESC"] = "EAST TOTAL";
+
+                            html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td class="cl">' + response[i]["TGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["%ACH"] + '</td>';
+                            html += '<td class="cl">' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td class="cl">' + response[i]["17thMARTGT"] + '</td>';
+                            //html += '<td class="cl">' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td class="cl">' + EastTotal.toFixed(2) + '</td>';
+                            html += '<td class="cl">' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCbalancetodo"] + '</td>';
+
+
+                            var loc = response[i]["%ACH"].split('%');
+                            loc = parseInt(loc[0]);
+                            var locc = response[i]["GROWTHOVERYEARAGO"].split('%');
+                            locc = parseInt(locc[0]);
+
+                            MAR15SALES += parseInt(response[i]["MAR15SALES"]);
+                            MAR15MTD += parseInt(response[i]["MAR15MTD"]);
+                            MAR16THTGT += parseInt(response[i]["MAR16THTGT"]);
+                            BALANCETODO += parseInt(response[i]["BALANCETODO"]);
+                            RUNRATEREQUIREDPERDAY += parseInt(response[i]["RUNRATEREQUIREDPERDAY"]);
+                            TGT += parseInt(response[i]["TGT"]);
+                            ACTUAL += parseInt(response[i]["ACTUAL"]);
+                            SHORTFALL += parseInt(response[i]["SHORTFALL"]);
+                            ACH += loc;
+                            GROWTHOVERYEARAGO += locc;
+                            FTDTGT += parseInt(response[i]["FTDTGT"]);
+                            FTDACTUAL += parseInt(response[i]["FTDACTUAL"]);
+                            FTDShortFall += parseInt(response[i]["FTDShortFall"]);
+                            thMARTGT += parseInt(response[i]["17thMARTGT"]);
+                            ACrevenue += parseFloat(EastTotal);
+                            CcMar16thTarget += parseInt(response[i]["CcMar16thTarget"]);
+                            CCMTDSALE += parseInt(response[i]["CCMTDSALE"]);
+                            CCbalancetodo += parseInt(response[i]["CCbalancetodo"]);
+                        }
+                        else {
+
+                            EastTotal += parseFloat(response[i]["ACrevenue"]);
+
+                            html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+
+                            html += '<td>' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td>' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td>' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td>' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td>' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td>' + response[i]["TGT"] + '</td>';
+                            html += '<td>' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td>' + response[i]["%ACH"] + '</td>';
+                            html += '<td>' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td>' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td>' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td>' + response[i]["17thMARTGT"] + '</td>';
+                            html += '<td>' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td>' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td>' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td>' + response[i]["CCbalancetodo"] + '</td>';
+                        }
+                        html += '</tr>';
+                        $("#body").append(html);
+                    }
+
+                    GetDailySalesTrackerEast1();
+                }
+            }
+        })
+    }
+
+    function GetDailySalesTrackerEast1() {
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'GET',
+            url: '../Reports/GetDailySalesTrackerEast1',
+            success: function (response) {
+                if (response != '' || response != null || response != undefined) {
+                    response = JSON.parse(response);
+                    var html;
+
+                    for (var i = 0; i < response.length; i++) {
+                        html = '<tr>';
+                        if (response[i]["STATE_DESC"].includes("SBU1")) {
+                            response[i]["STATE_DESC"] = "EAST 1 TOTAL";
+                            html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td class="cl">' + response[i]["TGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["%ACH"] + '</td>';
+                            html += '<td class="cl">' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td class="cl">' + response[i]["17thMARTGT"] + '</td>';
+                            //html += '<td class="cl">' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td class="cl">' + East1Ttoal.toFixed(2) + '</td>';
+                            html += '<td class="cl">' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCbalancetodo"] + '</td>';
+
+                            var loc = response[i]["%ACH"].split('%');
+                            loc = parseInt(loc[0]);
+                            var locc = response[i]["GROWTHOVERYEARAGO"].split('%');
+                            locc = parseInt(locc[0]);
+
+                            MAR15SALES += parseInt(response[i]["MAR15SALES"]);
+                            MAR15MTD += parseInt(response[i]["MAR15MTD"]);
+                            MAR16THTGT += parseInt(response[i]["MAR16THTGT"]);
+                            BALANCETODO += parseInt(response[i]["BALANCETODO"]);
+                            RUNRATEREQUIREDPERDAY += parseInt(response[i]["RUNRATEREQUIREDPERDAY"]);
+                            TGT += parseInt(response[i]["TGT"]);
+                            ACTUAL += parseInt(response[i]["ACTUAL"]);
+                            SHORTFALL += parseInt(response[i]["SHORTFALL"]);
+                            ACH += loc;
+                            GROWTHOVERYEARAGO += locc;
+                            FTDTGT += parseInt(response[i]["FTDTGT"]);
+                            FTDACTUAL += parseInt(response[i]["FTDACTUAL"]);
+                            FTDShortFall += parseInt(response[i]["FTDShortFall"]);
+                            thMARTGT += parseInt(response[i]["17thMARTGT"]);
+                            ACrevenue += parseFloat(East1Ttoal);
+                            CcMar16thTarget += parseInt(response[i]["CcMar16thTarget"]);
+                            CCMTDSALE += parseInt(response[i]["CCMTDSALE"]);
+                            CCbalancetodo += parseInt(response[i]["CCbalancetodo"]);
+                        }
+                        else {
+
+                            East1Ttoal += parseFloat(response[i]["ACrevenue"]);
+
+                            html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td>' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td>' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td>' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td>' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td>' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td>' + response[i]["TGT"] + '</td>';
+                            html += '<td>' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td>' + response[i]["%ACH"] + '</td>';
+                            html += '<td>' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td>' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td>' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td>' + response[i]["17thMARTGT"] + '</td>';
+                            html += '<td>' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td>' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td>' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td>' + response[i]["CCbalancetodo"] + '</td>';
+                        }
+                        html += '</tr>';
+                        $("#body").append(html);
+                    }
+
+                    GetDailySalesTrackerNorth();
+                }
+            }
+        })
+    }
+
+    function GetDailySalesTrackerNorth() {
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'GET',
+            url: '../Reports/GetDailySalesTrackerNorth',
+            success: function (response) {
+                if (response != '' || response != null || response != undefined) {
+                    response = JSON.parse(response);
+                    var html;
+
+                    for (var i = 0; i < response.length; i++) {
+                        html = '<tr>';
+
+                        if (response[i]["STATE_DESC"].includes("Himachal")) {
+                            response[i]["STATE_DESC"] = "HP & JK";
+                        }
+
+                        if (response[i]["MAR15SALES"] == '' || response[i]["STATE_DESC"] == null) {
+                            response[i]["MAR15SALES"] = 0;
+                        }
+
+                        if (response[i]["STATE_DESC"].includes("SBU1")) {
+                            response[i]["STATE_DESC"] = "NORTH TOTAL";
+                            html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td class="cl">' + response[i]["TGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["%ACH"] + '</td>';
+                            html += '<td class="cl">' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td class="cl">' + response[i]["17thMARTGT"] + '</td>';
+                            //html += '<td class="cl">' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td class="cl">' + NorthTotal.toFixed(2) + '</td>';
+
+                            html += '<td class="cl">' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCMTDSALE"] + '</td>';
+                           
+
+                            var value = parseInt(response[i]["CCMTDSALE"]) - parseInt(response[i]["CcMar16thTarget"]);
+                            html += '<td class="cl">' + value + '</td>';
+
+                            var loc = response[i]["%ACH"].split('%');
+                            loc = parseInt(loc[0]);
+                            var locc = response[i]["GROWTHOVERYEARAGO"].split('%');
+                            locc = parseInt(locc[0]);
+
+                            MAR15SALES += parseInt(response[i]["MAR15SALES"]);
+                            MAR15MTD += parseInt(response[i]["MAR15MTD"]);
+                            MAR16THTGT += parseInt(response[i]["MAR16THTGT"]);
+                            BALANCETODO += parseInt(response[i]["BALANCETODO"]);
+                            RUNRATEREQUIREDPERDAY += parseInt(response[i]["RUNRATEREQUIREDPERDAY"]);
+                            TGT += parseInt(response[i]["TGT"]);
+                            ACTUAL += parseInt(response[i]["ACTUAL"]);
+                            SHORTFALL += parseInt(response[i]["SHORTFALL"]);
+                            ACH += loc;
+                            GROWTHOVERYEARAGO += locc;
+                            FTDTGT += parseInt(response[i]["FTDTGT"]);
+                            FTDACTUAL += parseInt(response[i]["FTDACTUAL"]);
+                            FTDShortFall += parseInt(response[i]["FTDShortFall"]);
+                            thMARTGT += parseInt(response[i]["17thMARTGT"]);
+                            ACrevenue += parseFloat(NorthTotal);
+                            CcMar16thTarget += parseInt(response[i]["CcMar16thTarget"]);
+                            CCMTDSALE += parseInt(response[i]["CCMTDSALE"]);
+                            // CCbalancetodo += parseInt(response[i]["CCbalancetodo"]);
+                            CCbalancetodo += value;
+
+                        }
+                        else {
+
+                            NorthTotal += parseFloat(response[i]["ACrevenue"]);
+
+
+                            html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td>' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td>' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td>' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td>' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td>' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td>' + response[i]["TGT"] + '</td>';
+                            html += '<td>' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td>' + response[i]["%ACH"] + '</td>';
+                            html += '<td>' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td>' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td>' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td>' + response[i]["17thMARTGT"] + '</td>';
+                            html += '<td>' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td>' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td>' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td>' + response[i]["CCbalancetodo"] + '</td>';
+                        }
+                        html += '</tr>';
+                        $("#body").append(html);
+
+                    }
+
+                    GetDailySalesTrackerSouth();
+                }
+            }
+        })
+    }
+
+    function GetDailySalesTrackerSouth() {
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'GET',
+            url: '../Reports/GetDailySalesTrackerSouth',
+            success: function (response) {
+                if (response != '' || response != null || response != undefined) {
+                    response = JSON.parse(response);
+                    var html;
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        if (response[i]["MAR15SALES"] == '' || response[i]["STATE_DESC"] == null) {
+                            response[i]["MAR15SALES"] = 0;
+                        }
+
+
+                        html = '<tr>';
+                        if (response[i]["STATE_DESC"].includes("SBU1")) {
+                            response[i]["STATE_DESC"] = "SOUTH TOTAL";
+                            html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td class="cl">' + response[i]["TGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["%ACH"] + '</td>';
+                            html += '<td class="cl">' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td class="cl">' + response[i]["17thMARTGT"] + '</td>';
+                            //html += '<td class="cl">' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td class="cl">' + SouthTotal.toFixed(2) + '</td>';
+
+                            html += '<td class="cl">' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCbalancetodo"] + '</td>';
+
+                            var loc = response[i]["%ACH"].split('%');
+                            loc = parseInt(loc[0]);
+                            var locc = response[i]["GROWTHOVERYEARAGO"].split('%');
+                            locc = parseInt(locc[0]);
+
+                            MAR15SALES += parseInt(response[i]["MAR15SALES"]);
+                            MAR15MTD += parseInt(response[i]["MAR15MTD"]);
+                            MAR16THTGT += parseInt(response[i]["MAR16THTGT"]);
+                            BALANCETODO += parseInt(response[i]["BALANCETODO"]);
+                            RUNRATEREQUIREDPERDAY += parseInt(response[i]["RUNRATEREQUIREDPERDAY"]);
+                            TGT += parseInt(response[i]["TGT"]);
+                            ACTUAL += parseInt(response[i]["ACTUAL"]);
+                            SHORTFALL += parseInt(response[i]["SHORTFALL"]);
+                            ACH += loc;
+                            GROWTHOVERYEARAGO += locc;
+                            FTDTGT += parseInt(response[i]["FTDTGT"]);
+                            FTDACTUAL += parseInt(response[i]["FTDACTUAL"]);
+                            FTDShortFall += parseInt(response[i]["FTDShortFall"]);
+                            thMARTGT += parseInt(response[i]["17thMARTGT"]);
+                            ACrevenue += parseFloat(SouthTotal);
+                            CcMar16thTarget += parseInt(response[i]["CcMar16thTarget"]);
+                            CCMTDSALE += parseInt(response[i]["CCMTDSALE"]);
+                            CCbalancetodo += parseInt(response[i]["CCbalancetodo"]);
+
+                        }
+                        else {
+
+                            SouthTotal += parseFloat(response[i]["ACrevenue"]);
+
+                            html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+
+                            html += '<td>' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td>' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td>' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td>' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td>' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td>' + response[i]["TGT"] + '</td>';
+                            html += '<td>' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td>' + response[i]["%ACH"] + '</td>';
+                            html += '<td>' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td>' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td>' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td>' + response[i]["17thMARTGT"] + '</td>';
+                            html += '<td>' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td>' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td>' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td>' + response[i]["CCbalancetodo"] + '</td>';
+                        }
+                        html += '</tr>';
+                        $("#body").append(html);
+
+                    }
+
+                    GetDailySalesTrackerSouth1();
+                }
+            }
+        })
+    }
+
+    function GetDailySalesTrackerSouth1() {
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'GET',
+            url: '../Reports/GetDailySalesTrackerSouth1',
+            success: function (response) {
+                if (response != '' || response != null || response != undefined) {
+                    response = JSON.parse(response);
+                    var html;
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        if (response[i]["MAR15SALES"] == '' || response[i]["STATE_DESC"] == null) {
+                            response[i]["MAR15SALES"] = 0;
+                        }
+
+
+                        html = '<tr>';
+                        if (response[i]["STATE_DESC"].includes("SBU1")) {
+                            response[i]["STATE_DESC"] = "SOUTH 1 TOTAL";
+                            html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td class="cl">' + response[i]["TGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["%ACH"] + '</td>';
+                            html += '<td class="cl">' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td class="cl">' + response[i]["17thMARTGT"] + '</td>';
+                            //html += '<td class="cl">' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td class="cl">' + South1Total.toFixed(2) + '</td>';
+
+                            html += '<td class="cl">' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCbalancetodo"] + '</td>';
+
+                            var loc = response[i]["%ACH"].split('%');
+                            loc = parseInt(loc[0]);
+                            var locc = response[i]["GROWTHOVERYEARAGO"].split('%');
+                            locc = parseInt(locc[0]);
+
+                            MAR15SALES += parseInt(response[i]["MAR15SALES"]);
+                            MAR15MTD += parseInt(response[i]["MAR15MTD"]);
+                            MAR16THTGT += parseInt(response[i]["MAR16THTGT"]);
+                            BALANCETODO += parseInt(response[i]["BALANCETODO"]);
+                            RUNRATEREQUIREDPERDAY += parseInt(response[i]["RUNRATEREQUIREDPERDAY"]);
+                            TGT += parseInt(response[i]["TGT"]);
+                            ACTUAL += parseInt(response[i]["ACTUAL"]);
+                            SHORTFALL += parseInt(response[i]["SHORTFALL"]);
+                            ACH += loc;
+                            GROWTHOVERYEARAGO += locc;
+                            FTDTGT += parseInt(response[i]["FTDTGT"]);
+                            FTDACTUAL += parseInt(response[i]["FTDACTUAL"]);
+                            FTDShortFall += parseInt(response[i]["FTDShortFall"]);
+                            thMARTGT += parseInt(response[i]["17thMARTGT"]);
+                            ACrevenue += parseFloat(South1Total);
+                            CcMar16thTarget += parseInt(response[i]["CcMar16thTarget"]);
+                            CCMTDSALE += parseInt(response[i]["CCMTDSALE"]);
+                            CCbalancetodo += parseInt(response[i]["CCbalancetodo"]);
+                        }
+                        else {
+
+                            South1Total += parseFloat(response[i]["ACrevenue"]);
+                            html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+
+                            html += '<td>' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td>' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td>' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td>' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td>' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td>' + response[i]["TGT"] + '</td>';
+                            html += '<td>' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td>' + response[i]["%ACH"] + '</td>';
+                            html += '<td>' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td>' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td>' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td>' + response[i]["17thMARTGT"] + '</td>';
+                            html += '<td>' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td>' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td>' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td>' + response[i]["CCbalancetodo"] + '</td>';
+                        }
+                        html += '</tr>';
+                        $("#body").append(html);
+
+                    }
+
+                    GetDailySalesTrackerWest();
+                }
+            }
+        })
+    }
+
+    function GetDailySalesTrackerWest() {
+        $.ajax({
+            async: true,
+            datatype: JSON,
+            type: 'GET',
+            url: '../Reports/GetDailySalesTrackerWest',
+            success: function (response) {
+                if (response != '' || response != null || response != undefined) {
+                    response = JSON.parse(response);
+                    var html;
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        if (response[i]["MAR15SALES"] == '' || response[i]["STATE_DESC"] == null) {
+                            response[i]["MAR15SALES"] = 0;
+                        }
+                        html = '<tr>';
+                        if (response[i]["STATE_DESC"].includes("SBU1")) {
+                            response[i]["STATE_DESC"] = "WEST TOTAL";
+                            html += '<td class="cl">' + response[i]["STATE_DESC"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td class="cl">' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td class="cl">' + response[i]["TGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["%ACH"] + '</td>';
+                            html += '<td class="cl">' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td class="cl">' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td class="cl">' + response[i]["17thMARTGT"] + '</td>';
+                            //html += '<td class="cl">' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td class="cl">' + WestTotal.toFixed(2) + '</td>';
+
+                            html += '<td class="cl">' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td class="cl">' + response[i]["CCbalancetodo"] + '</td>';
+
+                            var loc = response[i]["%ACH"].split('%');
+                            loc = parseInt(loc[0]);
+                            var locc = response[i]["GROWTHOVERYEARAGO"].split('%');
+                            locc = parseInt(locc[0]);
+
+                            MAR15SALES += parseInt(response[i]["MAR15SALES"]);
+                            MAR15MTD += parseInt(response[i]["MAR15MTD"]);
+                            MAR16THTGT += parseInt(response[i]["MAR16THTGT"]);
+                            BALANCETODO += parseInt(response[i]["BALANCETODO"]);
+                            RUNRATEREQUIREDPERDAY += parseInt(response[i]["RUNRATEREQUIREDPERDAY"]);
+                            TGT += parseInt(response[i]["TGT"]);
+                            ACTUAL += parseInt(response[i]["ACTUAL"]);
+                            SHORTFALL += parseInt(response[i]["SHORTFALL"]);
+                            ACH += loc;
+                            GROWTHOVERYEARAGO += locc;
+                            FTDTGT += parseInt(response[i]["FTDTGT"]);
+                            FTDACTUAL += parseInt(response[i]["FTDACTUAL"]);
+                            FTDShortFall += parseInt(response[i]["FTDShortFall"]);
+                            thMARTGT += parseInt(response[i]["17thMARTGT"]);
+                            ACrevenue += parseFloat(WestTotal);
+                            CcMar16thTarget += parseInt(response[i]["CcMar16thTarget"]);
+                            CCMTDSALE += parseInt(response[i]["CCMTDSALE"]);
+                            CCbalancetodo += parseInt(response[i]["CCbalancetodo"]);
+                        }
+                        else {
+
+                            WestTotal += parseFloat(response[i]["ACrevenue"]);
+                            html += '<td>' + response[i]["STATE_DESC"] + '</td>';
+
+                            html += '<td>' + response[i]["MAR15SALES"] + '</td>';
+                            html += '<td>' + response[i]["MAR15MTD"] + '</td>';
+                            html += '<td>' + response[i]["MAR16THTGT"] + '</td>';
+                            html += '<td>' + response[i]["BALANCETODO"] + '</td>';
+                            html += '<td>' + response[i]["RUNRATEREQUIREDPERDAY"] + '</td>';
+                            html += '<td>' + response[i]["TGT"] + '</td>';
+                            html += '<td>' + response[i]["ACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["SHORTFALL"] + '</td>';
+                            html += '<td>' + response[i]["%ACH"] + '</td>';
+                            html += '<td>' + response[i]["GROWTHOVERYEARAGO"] + '</td>';
+                            html += '<td>' + response[i]["FTDTGT"] + '</td>';
+                            html += '<td>' + response[i]["FTDACTUAL"] + '</td>';
+                            html += '<td>' + response[i]["FTDShortFall"] + '</td>';
+                            html += '<td>' + response[i]["17thMARTGT"] + '</td>';
+                            html += '<td>' + response[i]["ACrevenue"] + '</td>';
+                            html += '<td>' + response[i]["CcMar16thTarget"] + '</td>';
+                            html += '<td>' + response[i]["CCMTDSALE"] + '</td>';
+                            html += '<td>' + response[i]["CCbalancetodo"] + '</td>';
+                        }
+                        html += '</tr>';
+                        $("#body").append(html);
+                    }
+
+                    var htm = '<tr>';
+                    htm += '<td class="grandcolor">GRAND TOTAL</td>';
+                    htm += '<td class="grandcolor">' + MAR15SALES + '</td>';
+                    htm += '<td class="grandcolor">' + MAR15MTD + '</td>';
+                    htm += '<td class="grandcolor">' + MAR16THTGT + '</td>';
+                    htm += '<td class="grandcolor">' + BALANCETODO + '</td>';
+                    htm += '<td class="grandcolor">' + RUNRATEREQUIREDPERDAY + '</td>';
+                    htm += '<td class="grandcolor">' + TGT + '</td>';
+                    htm += '<td class="grandcolor">' + ACTUAL + '</td>';
+                    htm += '<td class="grandcolor">' + SHORTFALL + '</td>';
+                    htm += '<td class="grandcolor">' + Math.round((ACTUAL / TGT) * 100) + '%</td>';
+                    htm += '<td class="grandcolor">' + Math.round(((ACTUAL / MAR15MTD) - 1) * 100) + '%</td>';
+                    htm += '<td class="grandcolor">' + FTDTGT + '</td>';
+                    htm += '<td class="grandcolor">' + FTDACTUAL + '</td>';
+                    htm += '<td class="grandcolor">' + FTDShortFall + '</td>';
+                    htm += '<td class="grandcolor">' + thMARTGT + '</td>';
+                    htm += '<td class="grandcolor">' + ACrevenue.toFixed(2) + '</td>';
+                    htm += '<td class="grandcolor">' + CcMar16thTarget + '</td>';
+                    htm += '<td class="grandcolor">' + CCMTDSALE + '</td>';
+                    htm += '<td class="grandcolor">' + CCbalancetodo + '</td>';
+                    htm += '</tr>';
+
+                    $("#body").append(htm);
+                    HideLoader();
+                }
+                HideLoader();
+            }
+        })
+    }
+
+
+</script>

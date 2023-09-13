@@ -1,0 +1,769 @@
+﻿@using LabelName = DIMS.Content.Resource_Files.CustomerMaster;
+@{
+    Layout = null;
+}
+<style>
+    .form-group {
+        margin-bottom: 0px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Invoice Details</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li><a href ng-click="go('InvoiceListView')"><i class="fa fa-dashboard"></i>Invoice List</a></li>
+        <li>Invoice Details</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href onclick="GetPDFFile()">
+                    <i class="fa fa-file-pdf-o fa-4" title="Download Pdf"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+</section>
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+
+    <div style="width: 100%; height: 100%;display:none;" id="Zinv_Plant_View_html">
+        <div id="background" style="position: absolute;
+        display: block;
+        min-width: 100%;
+        opacity: 0.5;
+        text-align: center;
+        background-color: transparent;
+        padding-top: 30%;">
+            <p id="bg-text" style=" color: lightgrey;
+        font-size: 50px;
+        transform: rotate(330deg);
+        -webkit-transform: rotate(330deg);
+        opacity: 0.9;
+        filter: alpha(opacity=50);
+        background-color: transparent;">Not for commercial Purpose</p>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+
+                <div style="width:100%;">
+
+                        <div style="float:left;width:50%;">  
+                                <div><b>HIL LIMITED</b></div>
+                                <div id="lblPlantName_html"></div>                                
+                                <div> Phone no: <span style="text-align: start; padding: 0px !important;" id="lblPhoneNo_html">  </span></div>
+                        </div>
+
+                        <div style="float:left;width:50%;text-align:right;">
+                            <table style="width:100%;text-align:right;">
+                                <tr><td style="width:50%;"><span><b>GSTIN Number :</b></span></td><td style="width:50%; text-align:left;"> <span  id="lblGSTINNo_html" ng-model="lblGSTINNo_html"></span></td></tr>
+                                <tr><td style="width:50%;"><span ><b>PAN Number   :</b></span></td><td style="width:50%;text-align:left;"><span  id="lblPANNo_html" ng-model="lblPANNo_html"></span></td></tr>
+                                <tr><td style="width:50%;"><span><b>CIN Number   :</b></span></td><td style="width:50%;text-align:left;"><span id="CINNo_html" ng-model="CINNo_html"></span></td></tr>
+                                <tr><td style="width:50%;"><span ><b>E-Mail Id    :</b></span></td><td style="width:50%;text-align:left;"><span id="lblplantEmail_html" ng-model="lblplantEmail_html"></span></td></tr>
+                            </table>
+                        </div>
+
+                </div>
+
+                <div class="col-md-10">
+                    <div style="text-align:center;">
+                        <b>TAX INVOICE CUM DELIVERY CHALLAN</b><br />
+                        <label style="font-weight:normal; font-size:12px;">(Under Rule 05 of Sec 23 of GST Act 2017)</label>
+                    </div>
+                </div>
+
+                <div class="box-body pad">
+
+
+
+
+                    <table id="tbl_Inv_Details_html" width="100%" border="1">
+                        <thead>
+                            <tr style="color: black;">
+                                @*<th style="width:280px;" id="ExciseRange" align="left">Excise Range<br /></th>
+                                    <th style="width:280px;" id="ExciseDivison" align="left">Excise Division<br /></th>
+                                    <th style="width:280px;" id="ExciseCommissionerate" align="left">Excise Commissionerate<br /></th>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+
+
+                    <table id="tbl_Inv_Details_GST_html" width="100%" border="1">
+                        <thead>
+                            <tr style="color: black; font-size:12px;">
+                                <th style="width:280px;" id="ExciseRange_html" align="left">GST Range :<br /></th>
+                                <th style="width:280px;" id="ExciseDivison_html" align="left">GST Division<br /></th>
+                                <th style="width:280px;" id="ExciseCommissionerate_html" align="left">GST Commissionerate<br /></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <table id="tbl_Inv_Stockist_html" width="100%" border="1">
+                        <thead>
+                            <tr style="color: black; font-size:12px;">
+                                @*<th style="width:280px;" id="ExciseRange" align="left">Excise Range<br /></th>
+                                    <th style="width:280px;" id="ExciseDivison" align="left">Excise Division<br /></th>
+                                    <th style="width:280px;" id="ExciseCommissionerate" align="left">Excise Commissionerate<br /></th>*@
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:13px;"></tbody>
+                    </table>
+
+
+                    <table id="tbl_Inv_Details1_html" width="100%" border="1">
+                        <thead>
+                            <tr style="color: black;">
+                                <th>Material <br /> Code</th>
+                                <th>Description of Goods/Services & <br /> HSN/SAC Code</th>
+                                <th>Qty</th>
+                                <th>UOM</th>
+                                <th>Material <br /> Group</th>
+                                <th>Wt. <br />in KG</th>
+                                <th>Unit <br /> Rate</th>
+                                <th>Basic<br />Amount</th>
+                                <th>Discount <br />(-)</th>
+                                <th>Taxable<br />Amount<br />in INR</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th colspan="7" style="text-align: right">Gross Amount :</th>
+                                <th style="text-align:right;"></th>
+                                <th style="text-align:right;"></th>
+                                <th style="text-align:right;"></th>
+                            </tr>
+
+                        </tfoot>
+                        <tbody></tbody>
+                    </table>
+
+
+                    <table cellspacing="0" class="datTable" style="width: 100%; margin-left: 0px; border:solid 1px;" cellspacing="0">
+
+                        <thead>
+                            <tr style="color: black;">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cgstsection_html" style="display:none">
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>CGST</b> <b id="cgstp_html"></b>  </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="cgstamt_html"></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>SGST</b> <b id="sgstp_html"></b> </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="sgstamt_html"></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>TCS</b> <b id="tcsp_html"></b> </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="tcsamt_html"></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>Total Amount </b> </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="totAmt_html"></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>Total Amount(Rounded) </b> </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="totAmtrnd_html"></b></td>
+                            </tr>
+                        </tbody>
+                        <tbody id="igstsection_html" style="display:none">
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>IGST </b> <b id="Igstp_html"></b>  </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="Igstamt_html"></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>Total Amount  </b> </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="IgsttotAmt_html"></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" style="text-align: right"><b>Total Amount(Rounded) </b>  </td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"></td>
+                                <td style="text-align:right;"><b id="IgsttotAmtrnd_html"></b></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                    <table width="100%" border="1">
+                        <tbody>
+                            <tr>
+                                <td style="font-size:12px;">
+                                    <b>"HSN/SAC : <label id="lblChapter_Id_html"></label>&nbsp; <label id="lblChapter_Desc_html"></label>"</b>
+                                    <br /><b>Total Amount in words (SGST/CGST/IGST) : <label id="totaltaxamountinwords_html"></label></b>
+                                    <br /><b>Total Amount in Words : &nbsp;<label id="TotalAmtInWords_html"></label></b>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+
+                    @*<table id="tbl_Footer_Table_html" width="100%" border="1">
+
+                        <tbody>
+                            <tr style="color: black;">
+                                <td>
+                                    &nbsp; <b> Lorry Drivers Signature:</b>
+                                </td>
+                                <td>
+                                    &nbsp; <b>  Location Date:</b>
+                                </td>
+                                <td rowspan="2" style="text-align:center">
+                                    <b>
+                                        Signature of Supplier/Authorized Representive<br />
+                                        For HIL LIMITED
+                                    </b><br />
+                                    <br />
+                                    <br />
+                                    Authorised Signatory
+                                </td>
+                            </tr>
+
+                            <tr style="color: black;">
+                                <td colspan="2" style="font-size:9px">
+
+                                    Terms & Conditions:<br />
+                                    1. Our Responsibility ceases once the goods are delivered to the carrier/Customer as applicable.<br />
+                                    2. No claim would be considered for damage or Shortage thereafter.<br />
+                                    3. Materials once dispatched will NOT be taken back. <br />
+                                    4. Other terms and conditions as mentioned overleaf are part and parcel of this sale transaction.<br />
+                                    5. Weight is based on standard testing conditions<br />
+                                    Certified that the particular given above are true and correct and the amount indicated  represents the price actually charged
+                                    and taht there is no<br /> flow of additional considerations directly or indirectly from the buyer.
+
+                                </td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>*@
+
+
+                </div>
+                <br />
+                <br />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" id="Zinv_Plant_View">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+
+
+
+                    <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+
+                        <div class="col-sm-6">
+
+
+                            <div class="col-sm-6">
+                                <label>HIL LIMITED</label>
+                                <div id="lblPlantName"></div>
+                                <div>
+                                    <div class="col-sm-3 control-labl" style="text-align: start; padding: 0px !important;"> Phone no: </div>
+                                    <div class="col-sm-6 " style="text-align: start; padding: 0px !important;" id="lblPhoneNo"> </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label">
+                                GSTIN Number :
+                            </label>
+                            <div class="col-sm-6 ">
+                                <label class="control-label" id="lblGSTINNo" ng-model="lblGSTINNo">
+
+                                </label>
+                            </div>
+                            <label class="col-sm-4 control-label">
+                                PAN Number :
+                            </label>
+                            <div class="col-sm-6  ">
+                                <label class="control-label" id="lblPANNo" ng-model="lblPANNo">
+
+                                </label>
+                            </div>
+                            <label class="col-sm-4 control-label">
+                                CIN Number :
+                            </label>
+                            <div class="col-sm-6 ">
+                                <label class="control-label" id="CINNo" ng-model="CINNo">
+
+                                </label>
+                            </div>
+                            <label class="col-sm-4 control-label">
+                                E-Mail Id :
+                            </label>
+                            <div class="col-sm-6 ">
+                                <label class="control-label" id="lblplantEmail" ng-model="lblplantEmail">
+
+                                </label>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+
+                </div>
+                <div class="col-md-10">
+                    <div style="text-align:center;">
+                        <b>TAX INVOICE CUM DELIVERY CHALLAN</b><br />
+                        <label style="font-weight:normal; font-size:12px;">(Under Rule 05 of Sec 23 of GST Act 2017)</label>
+                    </div>
+                </div>
+
+                <div class="box-body pad">
+
+                    <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                        <input type="hidden" id="customermaster_id" data-ng-model="customermaster_id_Model" />
+
+                        <table id="tbl_Inv_Details" cellspacing="0" class="dataTable" style="width: 85%; margin-left: 0px;border:solid 1px; " role="grid" cellspacing="0">
+                            <thead>
+                                <tr style="color: black;">
+                                    @*<th style="width:280px;" id="ExciseRange" align="left">Excise Range<br /></th>
+                                        <th style="width:280px;" id="ExciseDivison" align="left">Excise Division<br /></th>
+                                        <th style="width:280px;" id="ExciseCommissionerate" align="left">Excise Commissionerate<br /></th>*@
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+
+
+                        <table id="tbl_Inv_Details_GST" cellspacing="0" class="dataTable" style="width: 85%; margin-left: 0px;border:solid 1px;border-top:0px" role="grid" cellspacing="0">
+                            <thead>
+                                <tr style="color: black;">
+                                    <th style="width:280px;" id="ExciseRange" align="left">GST Range :<br /></th>
+                                    <th style="width:280px;" id="ExciseDivison" align="left">GST Division<br /></th>
+                                    <th style="width:280px;" id="ExciseCommissionerate" align="left">GST Commissionerate<br /></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                        <table id="tbl_Inv_Stockist" cellspacing="0" class="dataTable" style="width: 85%; margin-left: 0px;border-top:0px" role="grid" cellspacing="0">
+                            <thead>
+                                <tr style="color: black;">
+                                    @*<th style="width:280px;" id="ExciseRange" align="left">Excise Range<br /></th>
+                                        <th style="width:280px;" id="ExciseDivison" align="left">Excise Division<br /></th>
+                                        <th style="width:280px;" id="ExciseCommissionerate" align="left">Excise Commissionerate<br /></th>*@
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+
+                        <table id="tbl_Inv_Details1" style="width:85%;margin-left:0;border:solid 1px;border-top:0px" role="grid" cellspacing="0">
+                            <thead>
+                                <tr style="color: black;">
+                                    <th>Material <br /> Code</th>
+                                    <th>Description of Goods/Services & <br /> HSN/SAC Code</th>
+                                    <th>Qty</th>
+                                    <th>UOM</th>
+                                    <th>Material <br /> Group</th>
+                                    <th>Wt. <br />in KG</th>
+                                    <th>Unit <br /> Rate</th>
+                                    <th>Basic<br />Amount</th>
+                                    <th>Discount <br />(-)</th>
+                                    <th>Taxable<br />Amount<br />in INR</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="7" style="text-align: right">Gross Amount :</th>
+                                    <th style="text-align:right;"></th>
+                                    <th style="text-align:right;"></th>
+                                    <th style="text-align:right;"></th>
+                                </tr>
+
+                            </tfoot>
+                            <tbody></tbody>
+                        </table>
+
+
+                        <table cellspacing="0" class="datTable" style="width: 85%; margin-left: 0px; border:solid 2px;border-top:0px" role="grid" cellspacing="0">
+
+                            <thead>
+                                <tr style="color: black;">
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cgstsection" style="display:none">
+                                <tr>
+                                    <td colspan="7" style="text-align: right"><b>CGST</b> <b id="cgstp"></b>  </td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"><b id="cgstamt"></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align: right"><b>SGST</b> <b id="sgstp"></b> </td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"><b id="sgstamt"></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align: right"><b>Total Amount </b> </td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"><b id="totAmt"></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align: right"><b>Total Amount(Rounded) </b> </td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"><b id="totAmtrnd"></b></td>
+                                </tr>
+                            </tbody>
+                            <tbody id="igstsection" style="display:none">
+                                <tr>
+                                    <td colspan="7" style="text-align: right"><b>IGST </b> <b id="Igstp"></b>  </td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"><b id="Igstamt"></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align: right"><b>Total Amount  </b> </td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"><b id="IgsttotAmt"></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align: right"><b>Total Amount(Rounded) </b>  </td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"></td>
+                                    <td style="text-align:right;"><b id="IgsttotAmtrnd"></b></td>
+                                </tr>
+
+                            </tbody>
+
+
+
+
+
+
+                            @*<tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td align="right">
+                                            <b align="left">GST</b> : <label align="right">sdfgf</label><br />
+                                            <b>SGST</b> : <label>asdfgg</label>
+                                        </td>
+                                    </tr>
+                                </tbody>*@
+                        </table>
+                        <table cellspacing="0" class="datTable" style="width: 85%; margin-left: 0px; border:solid 2px;border-top:0px" role="grid" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <b>"HSN/SAC : <label id="lblChapter_Id"></label>&nbsp; <label id="lblChapter_Desc"></label>"</b>
+                                        <br /><b>Total Amount in words (SGST/CGST/IGST) : <label id="totaltaxamountinwords"></label></b>
+                                        <br /><b>Total Amount in Words : &nbsp;<label id="TotalAmtInWords"></label></b>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <br />
+
+                        @*<table id="tbl_Footer_Table" role="grid" class="datTable" style="width:85%;margin-left:0;border:solid 2px" cellspacing="0" border="1">
+
+                            <tbody>
+                                <tr style="color: black;">
+                                    <td>
+                                        &nbsp; <b> Lorry Drivers Signature:</b>
+                                    </td>
+                                    <td>
+                                        &nbsp; <b>  Location Date:</b>
+                                    </td>
+                                    <td rowspan="2" style="text-align:center">
+                                        <b>
+                                            Signature of Supplier/Authorized Representive<br />
+                                            For HIL LIMITED
+                                        </b><br />
+                                        <br />
+                                        <br />
+                                        Authorised Signatory
+                                    </td>
+                                </tr>
+
+                                <tr style="color: black;">
+                                    <td colspan="2" style="font-size:9px">
+
+                                        Terms & Conditions:<br />
+                                        1. Our Responsibility ceases once the goods are delivered to the carrier/Customer as applicable.<br />
+                                        2. No claim would be considered for damage or Shortage thereafter.<br />
+                                        3. Materials once dispatched will NOT be taken back. <br />
+                                        4. Other terms and conditions as mentioned overleaf are part and parcel of this sale transaction.<br />
+                                        5. Weight is based on standard testing conditions<br />
+                                        Certified that the particular given above are true and correct and the amount indicated  represents the price actually charged
+                                        and taht there is no<br /> flow of additional considerations directly or indirectly from the buyer.
+
+                                     
+                                    </td>
+                                 
+                                </tr>
+                            </tbody>
+                        </table>*@
+
+                        <br />
+
+                        <label id="testtot" style="display:none"></label>
+                        <label id="BillingDoc_html" style="display:none"></label>
+                        <label id="BillingDoc" style="display:none"></label>
+                    </form>
+                </div>
+                <br />
+                <br />
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<script>
+    var Gross_Weight = "";
+    var userRole;
+
+    $(document).ready(function () {
+        //alert(EditIdd);
+        //$("#tbl_Inv_Details").dataTable({
+        //    "bDestroy": true,
+        //    "bSort": false,
+        //    "bScrollCollapse": true,
+        //    "paging": false,
+        //    "ordering": false,
+        //    "info": false,
+        //    "bFilter": false
+        //    //'scrollX': true
+        //});
+
+        //$("#tbl_Inv_Details_html").dataTable({
+        //    "bDestroy": true,
+        //    "bSort": false,
+        //    "bScrollCollapse": true,
+        //    "paging": false,
+        //    "ordering": false,
+        //    "info": false,
+        //    "bFilter": false
+        //    //'scrollX': true
+        //});
+
+        $("#tbl_Inv_Details1").dataTable({
+            "bDestroy": true,
+            "bSort": false,
+            "bScrollCollapse": true,
+            "paging": false,
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    className: "dt-body-center"
+
+                },
+            {
+                "targets": [2],
+                className: "dt-body-right"
+
+            },
+            {
+                "targets": [3],
+                className: "dt-body-center"
+            },
+            {
+                "targets": [4],
+                className: "dt-body-center"
+            },
+            {
+                "targets": [5],
+                className: "dt-body-right"
+            },
+            {
+                "targets": [6],
+                className: "dt-body-right"
+            },
+            {
+                "targets": [7],
+                className: "dt-body-right"
+            },
+            {
+                "targets": [8],
+                className: "dt-body-right"
+            },
+            {
+                "targets": [9],
+                className: "dt-body-right"
+            }
+            ],
+            "ordering": false,
+            "info": false,
+            "bFilter": false,
+            "footerCallback": function (tfoot, data, start, end, display) {
+                var api = this.api();
+                $(api.column(7).footer()).html(
+                    api.column(7).data().reduce(function (a, b) {
+                        var res = parseFloat(a) + parseFloat(b);
+                        return parseFloat(res).toFixed(2);
+                    }, 0)
+
+
+                );
+                $(api.column(8).footer()).html(
+                   api.column(8).data().reduce(function (a, b) {
+                       var res = parseFloat(a) + parseFloat(b);
+                       return parseFloat(res).toFixed(2);
+                   }, 0)
+                   );
+                $(api.column(9).footer()).html(
+                   api.column(9).data().reduce(function (a, b) {
+                       var res = parseFloat(a) + parseFloat(b);
+                       $("#testtot").text(parseFloat(res).toFixed(2));
+                       return parseFloat(res).toFixed(2);
+                   }, 0)
+                   );
+                //    Gross_Weight = api
+                //                .column(4, { page: 'current' })
+                //                .data()
+                //                .reduce(function (a, b) {
+                //                    return intVal(a) + intVal(b);
+                //                }, 0);
+            },
+
+        });
+
+        //$("#tbl_Inv_Details1_html").dataTable({
+        //    "bDestroy": true,
+        //    "bSort": false,
+        //    "bScrollCollapse": true,
+        //    "paging": false,
+        //    "columnDefs": [
+        //    {
+        //        "targets": [2],
+        //        className: "dt-body-right"
+
+        //    },
+        //    {
+        //        "targets": [5],
+        //        className: "dt-body-right"
+        //    },
+        //    {
+        //        "targets": [6],
+        //        className: "dt-body-right"
+        //    },
+        //    {
+        //        "targets": [7],
+        //        className: "dt-body-right"
+        //    }
+        //    ],
+        //    "ordering": false,
+        //    "info": false,
+        //    "bFilter": false,
+        //    "footerCallback": function (tfoot, data, start, end, display) {
+        //        var api = this.api();
+        //        $(api.column(7).footer()).html(
+        //            api.column(7).data().reduce(function (a, b) {
+        //                var res = parseFloat(a) + parseFloat(b);
+        //                return parseFloat(res).toFixed(2);
+        //            }, 0)
+        //        );
+        //        //    Gross_Weight = api
+        //        //                .column(4, { page: 'current' })
+        //        //                .data()
+        //        //                .reduce(function (a, b) {
+        //        //                    return intVal(a) + intVal(b);
+        //        //                }, 0);
+        //    }
+        //    //'scrollX': true
+        //});
+        userRole = SessionValue;
+    });
+
+
+
+    function GetPDFFile() {
+        $.ajax({
+            url: '/Home/Exportdata',
+            type: 'POST',
+            beforeSend: function () {
+                //ShowLoader();
+            },
+            //data: { QueryVal: $('#Zinv_Plant_View_html').html() },
+            data: { QueryVal: $('#Zinv_Plant_View_html').html() },
+
+            success: function (result) {
+                if (result == "ok") {
+                    if ((userRole == "STOCKIST") || (userRole == "BU3_STK")) {
+                        $.ajax({
+                            type: 'POST',
+                            async: false,
+                            data: { reportname: "InvoiceDetail_" + $("#BillingDoc_html").text() },
+                            //datatype: 'JSON',
+                            url: '../../HOME/GetPDF_STOCKIST',
+                            success: function (data) {
+                                if (data == "MailSentSuccessfully") {
+                                    alert("Mail Sent Successfully");
+                                } else {
+                                    alert(data);
+                                }
+                            },
+                            error: function (e) {
+                                alert("Technical Error Occured");
+                            }
+                        });
+
+                        //   window.location.href = "../../Home/GetPDF_STOCKIST?reportname=CreditNote_" + $("#DocNo").text() + "";
+                    } else {
+                        window.location.href = "../../Home/GetPDF?reportname=InvoiceDetail_" + $("#BillingDoc_html").text();
+                    }
+
+                }
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    }
+</script>

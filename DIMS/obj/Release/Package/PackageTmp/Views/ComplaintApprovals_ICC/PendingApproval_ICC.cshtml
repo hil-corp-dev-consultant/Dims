@@ -1,0 +1,138 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode_ICC = UP.UserCode;
+    string SessionUserType_ICC = UP.UserType;
+    string SessionUserTypID_ICC = UP.UserTypeCode;
+
+}
+
+<style type="text/css">
+    table thead tr th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table.dataTable,
+    table.dataTable th,
+    table.dataTable td {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Pending Approvals ICC</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Approvals</li>
+        <li class="active">Pending Approvals ICC</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <select id="StateFilter_ICC" ng-model="StateFilter_ICC" ng-change="StateChange_ICC()"></select>
+            </div>
+        </div>
+    </nav>
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-header">
+                        @*<div class="row">
+                        
+                    </div>*@
+
+                        <input type="text" id="SessionUserTypID_ICC" value="@SessionUserTypID_ICC" style="display:none;" />
+                        <input type="text" id="SessionUserCode_ICC" value="@SessionUserCode_ICC" style="display:none;" />
+                    </div>
+                    <div class="box-body" id="pendingApprovalsListDiv_ICC">
+                        <table class="table" id="pendingApprovalsList_ICC">
+                            <thead>
+                                <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+                                    <th>Application type</th>
+                                    <th>Document Number</th>
+                                    @*<th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Complaint No</th>*@
+                                    <th>Complaint Tracking No</th>
+                                    <th>State</th>
+                                    <th>Originated On</th>
+                                    <th>Originator by</th>
+
+                                    @*<th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Document Series</th>*@
+                                    @*<th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Originator</th>*@
+
+                                    @*<th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Document Status</th>*@
+                                    @*                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Stage</th>
+                                <th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Version</th>*@
+                                    @*<th style="vertical-align: middle; padding-top: 0px; padding-bottom: 0px;">Complaint Management Id</th>*@
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            @*<tfoot style="display: none;">
+                            <tr>
+                                <th>Application</th>
+                                <th>Document Number</th>
+                                <th>Complaint No</th>
+                                <th>Complaint Tracking No</th>
+                                <th>Document Series</th>
+                                <th>Originator</th>
+                                <th>Originated On</th>
+                                <th>Document Status</th>
+                               
+                                <th>Complaint Management Id</th>
+                            </tr>
+                        </tfoot>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/javascript">
+
+
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+
+        $.ajax({
+            url: '../../Users/GetRightToAccess',
+            type: 'GET',
+            data: { AccessData: JSON.stringify({ UserRole: $("#SessionUserTypID_ICC").val(), FormCode: 'CPA_ICC' }) },
+            success: function (AccessData) {
+                if (AccessData == "") {
+                    $("#pendingApprovalsListDiv_ICC").css('display', 'none');
+                    $("#StateFilter_ICC").css('display', 'none');
+                }
+                else {
+                    AccessData = JSON.parse(AccessData);
+                    if (AccessData[0]["IS_VIEW"] == true) {
+                        $("#pendingApprovalsListDiv_ICC").css('display', 'block');
+                    }
+                    else {
+                        $("#pendingApprovalsListDiv_ICC").css('display', 'none');
+                        $("#StateFilter_ICC").css('display', 'none');
+                    }
+                }
+            }
+        });
+
+
+
+    });
+</script>

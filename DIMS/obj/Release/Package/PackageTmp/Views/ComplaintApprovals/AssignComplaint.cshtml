@@ -1,0 +1,203 @@
+﻿@{
+    //Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeID = UP.UserTypeCode;
+    string USER_PRODUCT_TYPE_CODE = UP.USER_PRODUCT_TYPE_CODE;
+
+}
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Assign Complaint</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Approvals</li>
+        <li class="active">Assign Complaint</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="SaveAssnCompl()" id="CompRegSave">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                <a href ng-click="AssnComplList()" id="CompRegList">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="CreateAssnCompl()" id="CompRegAssign">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+                <select id="StateFilter" ng-model="StateFilter" ng-change="StateChange()"></select>
+                @*svprasadk 17-06-2020 SBU 1 requirement to bulk assign complaints start*@
+                <span id="SBU1BulkAssign" style="display:none">
+                    <input type="text" id="userRoleMaster" readonly onclick="getUserRoleMaster('GetAssnUserRoleData','AssnUserRoleMaster','User Role List')" placeholder="User Role" />
+                    <input type="text" id="usersBasedonRole" readonly onclick="getUsersBasedonRole('GetAssnUserData','AssnUserMaster','User List')" placeholder="User Name" />
+                </span>
+                @*svprasadk 17-06-2020 SBU 1 requirement to bulk assign complaints end*@
+                <input type="text" id="SessionUserTypeID" value="@SessionUserTypeID" style="display:none;" />
+                <input type="text" id="SessionUserCode" value="@SessionUserCode" style="display:none;" />
+                <input type="text" id="USER_PRODUCT_TYPE_CODE" value="@USER_PRODUCT_TYPE_CODE" style="display:none;" />
+                <input type="text" id="userRoleMasterCode" value="" style="display:none;" />
+                <input type="text" id="usersBasedonRoleCode" value="" style="display:none;" />
+            </div>
+        </div>
+    </nav>
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    @*<button type="button" id="Add" class="btn btn-primary" ng-click="SaveAssnCompl()" style="background-color: #3295D6">Save</button>
+    <button type="button" id="List" class="btn btn-primary" ng-click="AssnComplList()" style="background-color: #3295D6">List</button>
+    <button type="button" id="New" class="btn btn-primary" ng-click="CreateAssnCompl()" style="background-color: #3295D6">New</button>*@
+    <div class="row" id="AssignComplaintDiv">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-body">
+                    @*<button id="btnAssncomplList" ng-click="AssnComplList()">List</button>
+                    <button id="btnCreateAssncompl" ng-click="CreateAssnCompl()">Create</button><br />*@
+                    <div class="table-responsive">
+                        <table id="MasterTable" class="table" width="100%" cellspacing="0">
+                            <thead>
+                                <tr style="background-color: #d2401a; color: white;">
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                        @*<table id="MasterTable123" class="table" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="CmplAssnModal" tabindex="-1" role="dialog" aria-labelledby="CmplAssnModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="CmplAssnModalLabel">Update Assigned User</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="CmplAssn_id" data-ng-model="CmplAssn_id_Model" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCmplNo" class="col-sm-5 control-label" style="text-align: right;">
+                                    Complaint No<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCmplNo" data-ng-model="txtCmplNo_Model" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtCmplDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    Complaint Date<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCmplDate" data-ng-model="txtCmplDate_Model" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssToUserRole" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned To(User Role)<span class="Mandatory">*</span></label>
+                                <div class="input-group OpenPopupIconFor3Columns col-sm-7">
+                                    <input type="text" class="form-control" id="txtAssToUserRole" data-ng-model="txtAssToUserRole_Model" readonly="readonly" />
+                                    <span class="input-group-addon AddonButton" ng-click="GetFieldData('GetAssnUserRoleLookupData','AssnUserRoleMaster','User Role List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssToUser" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned To(User)<span class="Mandatory">*</span></label>
+                                <div class="input-group OpenPopupIconFor3Columns col-sm-7">
+                                    <input type="text" class="form-control" id="txtAssToUser" data-ng-model="txtAssToUser_Model" readonly="readonly" />
+                                    <span class="input-group-addon AddonButton" ng-click="GetFieldData('GetAssnUserLookupData','AssnUserMaster','User List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssBy" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned By<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtAssBy" data-ng-model="txtAssBy_Model" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtAssOn" class="col-sm-5 control-label" style="text-align: right;">
+                                    Assigned On<span class="Mandatory">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtAssOn" data-ng-model="txtAssOn_Model" readonly="readonly" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CmplAssign_Save" class="btn btn-info" ng-click="SaveCmplAssignData()">Save</button>
+                <button type="button" id="CmplAssign_Close" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        debugger
+        //svprasadk 18-06-2020 SBU 1 requirement to bulk assign complaints start
+        if ($("#USER_PRODUCT_TYPE_CODE").val() == "SBU1") {
+            $("#SBU1BulkAssign").show();
+        } else {
+            $("#SBU1BulkAssign").hide();
+            $("#userRoleMaster").val("");
+            $("#usersBasedonRole").val("");
+        }
+        //svprasadk 18-06-2020 SBU 1 requirement to bulk assign complaints end
+        $.ajax({
+            url: '../../Users/GetRightToAccess',
+            type: 'GET',
+            data: { AccessData: JSON.stringify({ UserRole: $("#SessionUserTypeID").val(), FormCode: 'AC' }) },
+            success: function (AccessData) {
+                debugger
+                if (AccessData == "") {
+                    $("#AssignComplaintDiv").css('display', 'none');
+                    $("#IconsNavBar").css('display', 'none');
+                }
+                else {
+                    AccessData = JSON.parse(AccessData);
+                    if (AccessData[0]["IS_VIEW"] == true) {
+                        $("#AssignComplaintDiv").css('display', 'block');
+                    }
+                    else {
+                        $("#AssignComplaintDiv").css('display', 'none');
+                    }
+                }
+            }
+        });
+
+    });
+
+
+</script>

@@ -1,0 +1,238 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserTypeCode = UP.UserTypeCode;
+    string SessionUserType = UP.UserType;
+}
+
+
+<style type="text/css">
+
+    table tbody tr {
+    
+    cursor:default;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+
+    <h2>Transactions Summary Report  </h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href ng-click="go('UnnatiDashBoard')">UNNATI</a></li>
+        <li class="active">Transactions Summary Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+                <a href ng-click="DownloadFile('TEXT')">
+                    <i class="fa fa-file-text-o fa-4" title="Download Text"></i>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body" style="overflow-x: scroll; width: 98%">
+                <form role="form" class="form-horizontal" name="UnnatiTransactionSummaryForm">
+                    <input type="text" id="USERNAME_UnnatiTransactionSummary" style="display: none;" value="@SessionUserName" />
+                    <input type="text" id="USERCODE_UnnatiTransactionSummary" style="display: none;" value="@SessionUserCode" />
+                    <input type="text" id="USERTYPE_UnnatiTransactionSummary" style="display: none;" value="@SessionUserTypeCode" />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">From Date<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="TransactionSummaryFromDate" ng-model="TransactionSummaryFromDate" readonly required  placeholder="Select Date"/>
+                        </div>
+                        <label class="col-sm-2 control-label">To Date<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="TransactionSummaryToDate" ng-model="TransactionSummaryToDate" readonly required placeholder="Select Date" />
+                        </div>
+                        <label class="col-sm-2 control-label">Member Type</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="TransactionSummaryMemberType" ng-model="TransactionSummaryMemberType">
+                                <option value="ALL">ALL</option>
+                                <option value="Stockist">Stockist</option>
+                                <option value="Retailer">Retailer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Zone</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="TransactionSummaryZone" onchange="GetStateMasterSummary()">
+@*                                <option value="ALL">ALL</option>
+                                <option ng-repeat="sel in TransSummaryZoneArray" value="{{sel.ZONE_CODE}}">{{sel.ZONE_NAME}}</option>*@
+
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">State</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="TransactionSummaryState" onchange="GetDistrictMasterSummary()">
+                                @*<option value="ALL">ALL</option>
+                                <option ng-repeat="sel in TransactionSummaryStateArray" value="{{sel.STATE_CODE}}">{{sel.STATE_NAME}}</option>*@
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">District</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="TransactionSummaryDistrict">
+@*                                <option value="ALL">ALL</option>
+                                <option ng-repeat="sel in TransactionSummaryDistrictArray" value="{{sel.DISTRICT}}">{{sel.DISTRICT}}</option>*@
+                            </select>
+                        </div>
+                    </div>
+                    @* <div class="form-group">
+                        <label class="col-sm-2 control-label">Taluk:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="TransactionSummaryTaluk" ng-model="TransactionSummaryTaluk"  ng-change="GetVillageMaster()">
+                               <option value="ALL">ALL</option>
+                                <option ng-repeat="sel in TransactionSummaryTalukArray" value="{{sel.TALUK}}">{{sel.TALUK}}</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Village:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="TransactionSummaryVillage" ng-model="TransactionSummaryVillage">
+                                 <option value="ALL">ALL</option>
+                                <option ng-repeat="sel in TransactionSummaryVillageArray" value="{{sel.VILLAGE}}">{{sel.VILLAGE}}</option>
+                            </select>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Transaction Type</label>
+                        <div class="col-sm-3" style="top: 7px;">
+                            <input type="radio" id="TransactionSummarySKUWise" ng-model="TransactionSummaryReportWise" name="Transaction" value="SKU Wise" />
+                            SKU Wise
+                                <input type="radio" id="TransactionSummaryMemberWise" ng-model="TransactionSummaryReportWise" name="Transaction" value="Member Wise" />
+                            Member Wise
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-3">
+                            <input type="button" class="btn btn-success" value="Submit" style="background-color: #d2401a;border:1px solid #d2401a;" name="Submit" ng-click="GetTransactionSummary()">
+                        </div>
+                    </div>
+                    <input type="button" value="Advanced" data-toggle="tooltip" data-placement="right" ng-disabled="UnnatiTransactionSummaryForm.$invalid" id="AdvancedColumnEditing" style="background-color: #d2401a;border:1px solid #d2401a;" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />
+                </form>
+                <label class="control-label-Nodata " id="TransactionSummaryNodataLabel" style="display: none;">No data available....</label>
+                <div style="padding:10px;"></div>                
+                <div class="text-center" id="ReportWiseLabel"><b>Report SKU Wise</b></div>
+                <div style="padding:10px;"></div>
+                <table id="TransactionSummaryReport_Table" class="table" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div style="padding:10px;"></div>
+
+                <!- --------------------------- ->
+                <form role="form" class="form-horizontal">
+
+                <div class="row SKUWiseTotals">
+                    <div class="col-sm-6">
+                    <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;">TOTAL Purchase Quantity (Mtr) </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control gray" style="font-weight: bold;" disabled="disabled" id="Total_Purchase_Quantity_Mtr_TOTAL" />
+                    </div>
+                    </div>
+                    <div class="col-sm-6">
+                    <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;"> TOTAL No of Members Purchased </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control gray" style="font-weight: bold" disabled="disabled" id="No_of_Member_Purchased_TOTAL" />
+                    </div>
+                    </div>
+                </div>
+
+                <div style="padding:10px;"></div>               
+                <div class="row SKUWiseTotals">
+                    <div class="col-sm-6">
+                    <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;">TOTAL Points Earned </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control gray" style="font-weight: bold;" disabled="disabled" id="Total_Points_Earned_TOTAL" />
+                    </div>
+                    </div>
+                </div>
+                <div style="padding:10px;"></div>
+                <div class="row MemberWiseTotals">
+                    <div class="col-sm-6">
+                    <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;">TOTAL No of Times Purchased </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control gray" style="font-weight: bold;" disabled="disabled" id="No_of_Times_Purchased_TOTAL" />
+                    </div>
+                    </div>
+                    <div class="col-sm-6">
+                    <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;">TOTAL Volume Purchased (Mtr) </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control gray" style="font-weight: bold;" disabled="disabled" id="Total_Volume_Purchased_Mtr_TOTAL" />
+                    </div>
+                    </div>
+                </div>
+                <div style="padding:10px;"></div>
+                <div class="row MemberWiseTotals">
+                    <div class="col-sm-6">
+                    <label class="col-sm-6 control-label" style="font-weight: bold; text-align: right;">TOTAL Earned Points </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control gray" style="font-weight: bold;" disabled="disabled" id="Total_Earned_Points_TOTAL" />
+                    </div>
+                    </div>
+                </div>
+               <div style="padding:10px;"></div>
+            </form>
+             <!- --------------------------- ->
+
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        $("#AdvancedColumnEditing").attr("title", ToolTipvalue);
+        $("#TransactionSummaryFromDate").datepicker(
+            {
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                endDate: SERVER_DATE
+
+            });
+        $("#TransactionSummaryToDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $('#TransactionSummaryReport_Table').parents('div.dataTables_wrapper').first().hide();
+
+        $(".SKUWiseTotals").css('display', 'none');
+        $(".MemberWiseTotals").css('display', 'none');
+
+    });
+
+
+
+
+</script>
+

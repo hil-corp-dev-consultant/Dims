@@ -1,0 +1,244 @@
+﻿@*
+
+Module              : CMS - DIMS Solution.
+DocumentName        : AddMarketMap.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Add Order Screen.
+Developer Name      : Harish Kothuri.
+Change Log          : NA.
+
+*@
+<style>
+    .content {
+        min-height: 440px;
+    }
+</style>
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    //string SessionUserUserState = UP.State;
+    
+    
+}
+
+<section class="content-header" style="padding: 1px 15px 0;" id="ScopeAddMM">
+    <h2 id="AddMarket">Create Market Map</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Add Market Map</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('MarketMap')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SaveMarketMap()">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+               @* <a href ng-click="go('AddMarketMap')" id="logohide">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 9px;">
+            <div class="box-body">
+            <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small;" action="">
+                <div class="form-group">
+                    <label id="UserId" hidden>@SessionUserCode</label>
+                    <label id="UserName" hidden>@SessionUserName</label>
+                    <label id="UserSalesRegion" hidden></label>
+                    <label class="col-sm-2 control-label" id="lblCustomerCode">Customer Code<span class="Mandatory">*</span></label>
+                    <div class="col-sm-3" id="divcustcode">
+                        @*<div class="input-group add-on">*@
+                        <input class="form-control" id="CustomerCode" type="text" disabled="disabled" data-ng-model="CustomerCode">
+                        @*<div class="input-group-btn">
+                                <button class="btn btn-default" ng-click="Getdata('GetCustomerDetails','CustomerDetails','Customer Details')"><i class="glyphicon glyphicon-new-window"></i></button>
+                            </div>*@
+                        @*</div>*@
+                    </div>
+                    <label class="col-sm-3 control-label">Sales District</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="SalesDistrict" type="text" data-ng-model="SalesDistrict">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Name</label>
+                    <div class="col-sm-3">
+                        @*<div class="input-group add-on">*@
+                            <input class="form-control" id="CustomerName" type="text" disabled="disabled" data-ng-model="CustomerName">
+                           @* <div class="input-group-btn">
+                                <button class="btn btn-default"><i class="glyphicon glyphicon-new-window"></i></button>
+                            </div>
+                        </div>*@
+                    </div>
+                    <label class="col-sm-3 control-label">Customer State</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="CustomerState" type="text" data-ng-model="CustomerState">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Type</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CustomerType" type="text" disabled="disabled" data-ng-model="CustomerType">
+                        <input class="form-control gray" id="CustomerTypeCode" type="hidden" disabled="disabled" data-ng-model="CustomerTypeCode">
+                    </div>
+                     <label class="col-sm-3 control-label">Customer City/ Location</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="CustomerCityLocation" type="text" data-ng-model="CustomerCityLocation">
+                    </div>
+                </div>                     
+                <div class="form-group">
+                     <label class="col-sm-2 control-label">Customer Address</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" id="CustomerAddress" data-ng-model="CustomerAddress"></textarea>
+                    </div>                   
+                   <label class="col-sm-3 control-label" id="lblexpected">Expected Volume Target (MT)</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="ExpectedVolumeTargetMT" type="text" data-ng-model="ExpectedVolumeTargetMT">
+                    </div>
+                   @*  <label class="col-sm-3 control-label" id="lblSapCode">Sap Code</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="txtSapCode" type="text" data-ng-model="txtSapCode">
+                    </div>*@
+                </div>
+                <div class="form-group">
+                     <label class="col-sm-2 control-label">Pin Code</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="PinCode" type="text" data-ng-model="PinCode">
+                    </div>
+                    <label class="col-sm-3 control-label">Contact Person Name</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="ContactPersonName" type="text" data-ng-model="ContactPersonName">
+                    </div>
+                </div>
+                <div class="form-group">
+                     <label class="col-sm-2 control-label">PAN Number</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="PanNumber" type="text" data-ng-model="PanNumber">
+                    </div>                  
+                   <label class="col-sm-3 control-label">Contact Person Number</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="ContactPersonNumber" type="text" data-ng-model="ContactPersonNumber">
+                    </div>
+                </div>
+                <div class="form-group">
+                     <label class="col-sm-2 control-label">TIN Number</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="TinNumber" type="text" data-ng-model="TinNumber">
+                    </div>                    
+                    <label class="col-sm-3 control-label">Customer Email ID</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="CustomerEmailID" type="text" data-ng-model="CustomerEmailID">
+                    </div>                    
+                </div>
+                <div class="form-group">
+                     <label class="col-sm-2 control-label" id="lblnumber">HIL Stock in Hand (No. of Days)</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" id="NoofdaysofStockHILAvg" type="text" data-ng-model="NoofdaysofStockHILAvg">
+                    </div>                   
+                    @*<label class="col-sm-3 control-label">Counter Type</label>*@
+                    <div class="col-sm-4">
+                      <button id="EditCounter" class="btn btn-info navbar-btn" type="button" ng-click="EditCounter()" style="background-color: rgb(210, 64, 26); color: white; display: inline-block none;"> Edit Counter Details</button>
+                      <span style="width:5%;margin-left:15px"></span>
+                        <button id="SendMail" title=" Send for SAP Code Creation" class="btn btn-info navbar-btn hidden" type="button" style="background-color: rgb(210, 64, 26); color: white; display: inline-block none;">Code Creation</button>
+
+                       @* <select id="CounterType" class="form-control">
+                            <option value="Select">--Select--</option>
+                            <option value="Competitor Retailer">Competitor Retailer</option>
+                            <option value="Competitor Stockist">Competitor Stockist</option>
+                            <option value="New Retailer">New Retailer</option>
+                            <option value="New Stockist">New Stockist</option>
+                        </select>*@
+                    </div>  
+                </div>         
+                <div class="form-group">
+                    <div class="col-sm-12 tabdiv">
+                        <div class="col-sm-12 CloseOpen">
+                            <a class="Expand">Average Monthly Sales (MT)</a>
+                        </div>
+                        <div class="row" style="padding-top: 30px;">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Charminar</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" id="HIL_AMS" type="text" data-ng-model="HIL_AMS">
+                                    </div>
+                                    <label class="col-sm-3 control-label">RAMCO</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="Ramko" data-ng-model="Ramko" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Everest</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" id="Everest" type="text" data-ng-model="Everest">
+                                    </div>
+                                    <label class="col-sm-3 control-label">Swastik</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="Swastik" data-ng-model="Swastik" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Konark</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" id="Konark" type="text" data-ng-model="Konark">
+                                    </div>
+                                    <label class="col-sm-3 control-label">Uppal</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="Uppal" data-ng-model="Uppal" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Visaka</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" id="Visaka" type="text" data-ng-model="Visaka">
+                                    </div>
+                                    <label class="col-sm-3 control-label">Others</label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" id="Others" data-ng-model="Others" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+        //$("#logohide").hide();
+    })
+
+
+</script>

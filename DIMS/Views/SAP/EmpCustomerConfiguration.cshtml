@@ -1,0 +1,114 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string UserType = UP.UserTypeCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Customer - FSO Role Mapping</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Customer - FSO Role Mapping</li>
+    </ol>
+
+        <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+
+
+            </div>
+        </div>
+    </nav>
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-body">                    
+                    <form role="form" name="UnnatiTransactionStatusForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Type</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Type">
+                                <option value="All">All</option>
+                                <option value="unmapped">Unmapped</option>
+                                <option value="Mapped">Mapped</option>
+                            </select>                          
+                        </div>
+                        <label class="col-sm-2 control-label">Sales organization</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Sales_organization">
+                                <option value="All">All</option>
+                                <option value="1000">SBU1</option>
+                                <option value="2000">SBU2</option>
+                                <option value="3000">SBU3</option>
+                                <option value="4000">SBU4</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2 control-label">Zone</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Sales_Zone">
+                                <option value="All">All</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Sheet Type</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Sheet_Type">
+                                <option value="All">ALL</option>
+                                <option value="11">AC Sheet</option>
+                                <option value="14">CC Scheet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-2 text-center">
+                            <input type="button" class="btn btn-success" value="Submit" style="background-color: #d2401a;border:1px solid #d2401a;" name="Submit" ng-click="GetEmpCustomerConfig()">
+                        </div>
+                    </div>
+                </form>       
+
+                <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                <div style="overflow:auto;">
+                <table id="EmpCustomerConfig" class="table ListTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script>
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+</script>

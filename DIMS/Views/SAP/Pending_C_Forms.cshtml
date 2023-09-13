@@ -1,0 +1,673 @@
+﻿@* Module              : DIMS Client Application.
+        DocumentName        : Payment_By_stockist.cshtml
+        Project Name        : Dealer Information Management System (DIMS).
+        Client Name         : HIL :: CK BIRLA GROUP.
+        Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+        Team                : ASD.
+        Description         : This Doc is used for get Payment by Stockist.
+        Developer Name      : Rajanna Bhanothu.
+        Change Log          : NA.*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+    string Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+
+    .filestyle {
+        border: 1px solid;
+        border-radius: 6px;
+    }
+
+     /*#StockistID ~ .SlectBox {
+        padding: 5px 8px;
+        width: 250px;
+    }*/
+</style>
+<div id="HidenData" hidden="hidden" style="display:none;">
+   
+</div>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>C-Forms</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li class="active">C-Forms</li>
+    </ol>
+    @if ((@Role.Trim() != "STOCKIST") && (@Role.Trim() != "BU3_STK"))
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+    @*<nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>*@
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row" id="">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="navbar-header pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="GetData()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Reset Filter</button>
+                    </div>
+                </div>
+
+
+                <div class="box-body">
+@if (@Role.Trim() == "ADMIN" || @Role.Trim() == "FIN_CONTROLLER/CS" || @Role.Trim() == "BU_FIN_HEAD")
+    {
+                <form id="FileUploadForm" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" id="CFormFile" name="CFormFile" class="filestyle" onchange="FileUploaded()" />
+                        <input type="submit" class="btn btn-info navbar-btn" value="Upload" />
+                    </div>
+                </form>
+}
+
+
+                @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small" action="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            From Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderFromDate" placeholder="From Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtBatchNo">
+                            To Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderToDate" placeholder="To Date" readonly />
+                        </div>
+                        <label class="col-sm-1 control-label" for="SalesEmapName" id="lblZone">
+                            Zone
+                        </label>
+                        <div class="col-sm-1" id="divZone">
+                            <select id="Zone" multiple="multiple" class="form-control"></select>
+                        </div>                        
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="SalesEmapName" id="lblState">
+                            State
+                        </label>
+                        <div class="col-sm-2" id="divState">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="TerriotryArea" id="lblTet">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2" id="divTet">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+                        @*<label class="col-sm-2 control-label" for="StockistName">
+            Customer Name
+        </label>
+        <div class="col-sm-2">
+            <select id="StockistName" multiple="multiple" class="form-control"></select>
+        </div>*@
+
+                        @*VIKAS G, 14-07-2022*@
+                        <label class="col-sm-1 control-label" id="lblSheetsS">
+                            Division
+                        </label>
+                        <div class="col-sm-2" id="divSheetsS">
+                            <select class="form-control" id="DivisionFilter" multiple="multiple"></select>
+                        </div>
+                       </div>
+                    <div class="form-group">
+                        
+                        <label class="col-sm-2 control-label" for="StockistID">
+                            Customer Code/Name
+                        </label>
+                        @*<div class="col-sm-4">
+                <select id="StockistID" multiple="multiple" class="form-control"></select>
+            </div>*@
+                        <div class="col-sm-3">
+                            <input id="CustomerCode" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div class="table-responsive">
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                    <input type="text" id="LoggedUserRole" value="@Role" style="display: none;" />
+                    <table id="tbl_PendingCForms" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;"></div>
+                <div class="form-group">
+                    <label class="col-sm-2" for="TotalRe">
+                        TOTAL Amount Received (INR in Lakhs)
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="Text" @*class="btn btn-info navbar-btn"*@  id="TotalReceived" disabled/>
+                        
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <label class="col-sm-5 col-sm-offset-1 control-label" for="TotalRe">
+                            TOTAL Amount Pending/Not Received (INR in Lakhs)
+                        </label>
+                        <input type="Text" @*class="form-control ng-pristine ng-valid ng-touched"*@ id="TotalNotReceived" disabled/>
+                        
+                    </div>
+                </div>
+                <div style="padding:10px;"></div>
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<script>
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        debugger
+        $('#DivisionFilter').SumoSelect({ selectAll: true });
+       //VIKAS G, 06-07-2022 START FOR SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+        var Role = $("#LoggedUserRole").val();
+        //if (Role == "BU3_STK") {
+        //    $("#lblZone").css("display", "none");
+        //    $("#divZone").css("display", "none");
+        //    $("#lblState").css("display", "none");
+        //    $("#divState").css("display", "none");
+        //    $("#lblSheetsSbu1").css("display", "none");
+        //    $("#divSheetsSbu1").css("display", "none");
+        //    $("#lblTet").css("display", "none");
+        //    $("#divTet").css("display", "none");
+        //    $("#lblStockist").css("display", "none");
+        //    $("#divStockist").css("display", "none");
+        //    $("#lblSheetsS").css("display", "none");
+        //    $("#divSheetsS").css("display", "none");
+        //    $("#lblSheets").css("display", "block");
+        //    $("#divSheets").css("display", "block");
+        //}
+        //else if (Role != "BU3_STK") {
+        //    $("#lblSheets").css("display", "none");
+        //    $("#divSheets").css("display", "none");
+        //    $("#lblSheetsS").css("display", "block");
+        //    $("#divSheetsS").css("display", "block");
+        //}
+       //VIKAS G, 06-07-2022 END FOR SBU3 EXTENSION of Finance Transactions Req. by Joseph.
+        $('#StockistName').SumoSelect({ placeholder: 'Customer Name' });
+        $('#StockistID').SumoSelect({ placeholder: 'Customer Code' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'TerritoryArea' });
+        $('#DivisionFilter').SumoSelect({ placeholder: 'Division' });
+        $('#Business').SumoSelect({ placeholder: 'Business' });
+        $('#SourceLocation').SumoSelect({ placeholder: 'Source Location' });
+
+        $('#OrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+
+        //LoadCFormFromDB();
+        //GetTotalTaxableIncome();
+        
+    });
+
+    
+
+
+    var table = $('#tbl_PendingCForms').dataTable();
+    function ResetFilters() {
+
+        var StockistName = $('#StockistName option').length;
+        var StockistID = $('#StockistID option').length;
+        var Zone = $('#Zone option').length;
+        var State = $('#State option').length;
+        var TerriotryArea = $('#TerriotryArea option').length;
+        var DivisionFilter = $('#DivisionFilter option').length;
+        var Business = $('#Business option').length;
+        var SourceLocation = $('#SourceLocation option').length;
+
+        var PostingType = $('#PostingType option').length;
+        var Location = $('#Location option').length;
+
+        for (var i = 0; i < StockistID; i++) {
+            $('#StockistID')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < StockistName; i++) {
+            $('#StockistName')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Zone; i++) {
+            $('#Zone')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < State; i++) {
+            $('#State')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < TerriotryArea; i++) {
+            $('#TerriotryArea')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < DivisionFilter; i++) {
+            $('#DivisionFilter')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Business; i++) {
+            $('#Business')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < SourceLocation; i++) {
+            $('#SourceLocation')[0].sumo.unSelectItem(i);
+        }
+
+
+        for (var i = 0; i < Location; i++) {
+            $('#Location')[0].sumo.unSelectItem(i);
+        }
+
+        $("#OrderFromDate").val("");
+        $("#OrderToDate").val("");
+
+        fnResetAllFilters(table);
+
+    }
+
+
+    function FileUploaded() {
+        var filename = $("#CFormFile").val();
+        var extension = filename.replace(/^.*\./, '');
+
+        if (extension == "xlsx" || extension == "xls") {
+
+        }
+        else {
+            alert("Invalid File");
+            $("#CFormFile").val("");
+        }
+    }
+
+
+    $("form#FileUploadForm").submit(function () {
+        ShowLoader();
+        var value = $("#CFormFile").val();
+        if(value=="No file selected."|| value=="" || value==undefined || value==null){
+            alert("Please select the file to upload");
+            HideLoader();
+            return false;
+          
+        }
+       
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            url: '../../SAP/UploadFile',
+            type: 'POST',
+            data: formData,
+            async: true,
+            success: function (Resp) {
+               
+                if (Resp == "FALSE")
+                {
+                    HideLoader();
+                    alert("Upload Fail due to technical error");
+                    window.location.reload();
+
+                }
+                else {
+
+                    HideLoader();
+                    $("#CFormFile").val("");                   
+                    alert(Resp +" Records Uploaded Successfully");
+
+                    
+                }               
+                
+                //LoadCFormFromDB();
+               
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+       //HideLoader();
+
+        return false;
+        
+    });
+
+
+
+    function LoadCFormFromDB() {
+
+        try {
+           // console.clear();
+            $("#CFormFile").val("");
+            $.ajax({
+                url: '../../SAP/LoadCFormFormDB',
+                type: 'POST',
+                async: false,
+                success: function (Resp) {
+                    // $("#tbl_PendingCForms").DataTable().fnDestroy();
+                    $("#tbl_PendingCForms tbody").empty();
+
+                    if (Resp == "") { }
+                    else {
+                        Resp = JSON.parse(Resp);
+                        var HtmlCode = "";
+
+                        var Role = $("#LoggedUserRole").val();
+
+                        for (var i = 0; i < Resp.length; i++) {
+
+                            HtmlCode = HtmlCode + "<tr>";
+
+                            HtmlCode = HtmlCode + "<td align='right'>" + Resp[i]["CUSTOMER_CODE"] + "</td>";
+                            //HtmlCode = HtmlCode + "<td align='right'>" + Resp[i]["SAP_CODE"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["CUSTOMER_NAME"] + "</td>";
+
+
+                            var StockistID = Resp[i]["CUSTOMER_CODE"];
+                            var StockistIDexists = $('#StockistID option').filter(function () {
+                                return $(this).text() == StockistID;
+                            }).length;
+                            if ((Resp[i]["CUSTOMER_CODE"] != "" || Resp[i]["CUSTOMER_CODE"] != "") && (StockistIDexists == 0)) {
+                                $('#StockistID')[0].sumo.add(Resp[i]["CUSTOMER_CODE"], Resp[i]["CUSTOMER_CODE"]);
+                            }
+
+                            var StockistName = Resp[i]["CUSTOMER_NAME"];
+                            var StockistNameexists = $('#StockistName option').filter(function () {
+                                return $(this).text() == StockistName;
+                            }).length;
+                            if ((Resp[i]["CUSTOMER_NAME"] != "" || Resp[i]["CUSTOMER_NAME"] != "") && (StockistNameexists == 0)) {
+                                $('#StockistName')[0].sumo.add(Resp[i]["CUSTOMER_NAME"], Resp[i]["CUSTOMER_NAME"]);
+                            }
+
+
+                            if (Role == "ADMIN" || Role == "NCC") {
+                                HtmlCode = HtmlCode + "<td>" + Resp[i]["ZONE"] + "</td>";
+                                HtmlCode = HtmlCode + "<td>" + Resp[i]["STATE"] + "</td>";
+
+                                var ZONE_NAME = Resp[i]["ZONE"];
+                                var ZONE_NAMEexists = $('#Zone option').filter(function () {
+                                    return $(this).text() == ZONE_NAME;
+                                }).length;
+                                if ((Resp[i]["ZONE"] != "" || Resp[i]["ZONE"] != "") && (ZONE_NAMEexists == 0)) {
+                                    $('#Zone')[0].sumo.add(Resp[i]["ZONE"], Resp[i]["ZONE"]);
+                                }
+
+                                var STATE_NAME = Resp[i]["STATE"];
+                                var STATE_NAMEexists = $('#State option').filter(function () {
+                                    return $(this).text() == STATE_NAME;
+                                }).length;
+                                if ((Resp[i]["STATE"] != "" || Resp[i]["STATE"] != "") && (STATE_NAMEexists == 0)) {
+                                    $('#State')[0].sumo.add(Resp[i]["STATE"], Resp[i]["STATE"]);
+                                }
+
+                            }
+                            else if (Role == "ZH" || Role == "RCC") {
+                                HtmlCode = HtmlCode + "<td>" + Resp[i]["STATE"] + "</td>";
+
+                                var STATE_NAME = Resp[i]["STATE"];
+                                var STATE_NAMEexists = $('#State option').filter(function () {
+                                    return $(this).text() == STATE_NAME;
+                                }).length;
+                                if ((Resp[i]["STATE"] != "" || Resp[i]["STATE"] != "") && (STATE_NAMEexists == 0)) {
+                                    $('#State')[0].sumo.add(Resp[i]["STATE"], Resp[i]["STATE"]);
+                                }
+                            }
+                            if (Role == "SH") {
+                            }
+                            if (Role == "FSO" || Role == "FSO_BU2" || Role == "STOCKIST") {
+                            }
+
+                            var BUSINESS = Resp[i]["BUSINESS"];
+                            var BUSINESSexists = $('#Business option').filter(function () {
+                                return $(this).text() == BUSINESS;
+                            }).length;
+                            if ((Resp[i]["BUSINESS"] != "" || Resp[i]["BUSINESS"] != "") && (BUSINESSexists == 0)) {
+                                $('#Business')[0].sumo.add(Resp[i]["BUSINESS"], Resp[i]["BUSINESS"]);
+                            }
+
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["BUSINESS"] + "</td>";
+                            HtmlCode = HtmlCode + "<td align='right'>" + Resp[i]["DOC_NO"] + "</td>";
+
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["FINANCIAL_YEAR"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["BILL_DATE"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["MONTH"] + "</td>";
+
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["QUARTER"] + "</td>";
+                            HtmlCode = HtmlCode + "<td align='right'>" + Resp[i]["TAXABLE_TURNOVER"] + "</td>";
+
+                            SourceLocation
+                            var SOURCE_LOCATION = Resp[i]["SOURCE_LOCATION"];
+                            var SOURCE_LOCATIONexists = $('#SourceLocation option').filter(function () {
+                                return $(this).text() == SOURCE_LOCATION;
+                            }).length;
+                            if ((Resp[i]["SOURCE_LOCATION"] != "" || Resp[i]["SOURCE_LOCATION"] != "") && (SOURCE_LOCATIONexists == 0)) {
+                                $('#SourceLocation')[0].sumo.add(Resp[i]["SOURCE_LOCATION"], Resp[i]["SOURCE_LOCATION"]);
+                            }
+
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["SOURCE_LOCATION"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["STATUS"] + "</td>";
+
+                            HtmlCode = HtmlCode + "</tr>";
+                        }
+
+
+
+                        $("#tbl_PendingCForms tbody").remove();
+                        $("#tbl_PendingCForms").append("<tbody>" + HtmlCode + "</tbody>");
+                        $("#tbl_PendingCForms").dataTable({
+                            dom: 'Bfrtip',
+                            buttons: [
+                                {
+                                    extend: 'pdfHtml5',
+                                    orientation: 'landscape',
+                                    pageSize: 'A3'
+                                },
+                                'copy', 'csv', 'excel', 'print'
+                            ],
+                            "footerCallback": function (tfoot, data, start, end, display) {
+                                var api = this.api();
+                                $(api.column(10).footer()).html(
+                                api.column(10, { page: 'current' }).data().reduce(function (a, b) {
+                                    var res = parseInt(a) + parseInt(b);
+                                    return parseFloat(res).toFixed(2);
+                                }, 0)
+                            );
+                            }
+                        });
+                        $("#CFormFile").val("");
+                    }
+
+                }
+            });
+        }
+        catch (e) {
+            alert("Error : LoadCFormFromDB : \n" + e.message + "\n" + e.description + "\n" + e.valueOf());
+        }
+
+    }
+
+
+
+
+    $('#StockistID').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            //var choosedFname = selectedFName.join("|");
+            $("#tbl_PendingCForms").dataTable().fnFilter(selectedFName, 0, true, false);
+        }
+        else {
+            $("#tbl_PendingCForms").dataTable().fnFilter("", 0, true, false);
+        }
+    });
+
+
+    $('#StockistName').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            //var choosedFname = selectedFName.join("|");
+            $("#tbl_PendingCForms").dataTable().fnFilter(selectedFName, 1, true, false);
+        }
+        else {
+            $("#tbl_PendingCForms").dataTable().fnFilter("", 1, true, false);
+        }
+    });
+
+
+    $('#Zone').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            //var choosedFname = selectedFName.join("|");
+            $("#tbl_PendingCForms").dataTable().fnFilter(selectedFName, 2, true, false);
+        }
+        else {
+            $("#tbl_PendingCForms").dataTable().fnFilter("", 2, true, false);
+        }
+    });
+
+
+    $('#State').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            //var choosedFname = selectedFName.join("|");
+            $("#tbl_PendingCForms").dataTable().fnFilter(selectedFName, 3, true, false);
+        }
+        else {
+            $("#tbl_PendingCForms").dataTable().fnFilter("", 3, true, false);
+        }
+    });
+
+    $('#TerriotryArea').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            //var choosedFname = selectedFName.join("|");
+            $("#tbl_PendingCForms").dataTable().fnFilter(selectedFName, 3, true, false);
+        }
+        else {
+            $("#tbl_PendingCForms").dataTable().fnFilter("", 3, true, false);
+        }
+    });
+
+
+    $('#Business').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            //var choosedFname = selectedFName.join("|");
+            $("#tbl_PendingCForms").dataTable().fnFilter(selectedFName, 4, true, false);
+        }
+        else {
+            $("#tbl_PendingCForms").dataTable().fnFilter("", 4, true, false);
+        }
+    });
+
+
+    $('#SourceLocation').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            //var choosedFname = selectedFName.join("|");
+            $("#tbl_PendingCForms").dataTable().fnFilter(selectedFName, 11, true, false);
+        }
+        else {
+            $("#tbl_PendingCForms").dataTable().fnFilter("", 11, true, false);
+        }
+    });
+
+
+    $('#OrderFromDate').datepicker().on('changeDate', function (ev) {
+        $("#OrderToDate").val("");
+        table.fnDraw();
+    });
+    $('#OrderToDate').datepicker().on('changeDate', function (ev) {
+        table.fnDraw();
+    });
+
+
+
+    $.fn.dataTableExt.afnFiltering.push(
+ function (oSettings, aData, iDataIndex) {
+     var iFini = document.getElementById('OrderFromDate').value;
+
+     var iFfin = document.getElementById('OrderToDate').value;
+     var iStartDateCol = 7;
+     var iEndDateCol = 7;
+
+     iFini = iFini.substring(6, 10) + iFini.substring(3, 5) + iFini.substring(0, 2);
+     iFfin = iFfin.substring(6, 10) + iFfin.substring(3, 5) + iFfin.substring(0, 2);
+
+     // alert(aData[iEndDateCol].substring(6, 10));
+     var datofini = aData[iStartDateCol].substring(6, 10) + aData[iStartDateCol].substring(3, 5) + aData[iStartDateCol].substring(0, 2);
+     var datoffin = aData[iEndDateCol].substring(6, 10) + aData[iEndDateCol].substring(3, 5) + aData[iEndDateCol].substring(0, 2);
+
+     if (iFini === "" && iFfin === "") {
+         return true;
+     }
+     else if (iFini <= datofini && iFfin === "") {
+         return true;
+     }
+     else if (iFfin >= datoffin && iFini === "") {
+         return true;
+     }
+     else if (iFini <= datofini && iFfin >= datoffin) {
+         return true;
+     }
+     return false;
+ }
+);
+
+</script>

@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SessionExpire</title>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+    <div>
+        
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        alert("Your Session has been expired.Please Login again");
+        window.location.reload();
+        window.location.href = "../../LogOn/LogOn";
+
+    });
+
+
+</script>

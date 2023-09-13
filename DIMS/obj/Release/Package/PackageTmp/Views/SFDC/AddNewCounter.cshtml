@@ -1,0 +1,192 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    //string SessionUserUserState = UP.State;
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 id="addcounter">Add New Counter</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Add New Counter</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @*<a href ng-click="go('CounterList')">
+                        <i class="fa fa-list fa-4" title="List"></i>
+                    </a>*@
+                <a href ng-click="SaveCounterDetails()">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                <a href ng-click="go('AddNewCounter')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="AddOrdersDiv">
+    <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 9px; height: auto;">
+        <div class="box-header">
+            <h3 class="box-title"></h3>
+        </div>
+        <div class="box-body">
+        <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small;">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" id="SapCodelbl" style="display: none;">SAP Code</label>
+                <div class="col-sm-3">
+                    <input class="form-control" id="SapCode" data-ng-model="SapCode" type="text" style="display: none;" onkeypress="return isNumberKey(event)" maxlength="10" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Employee Code</label>
+                <div class="col-sm-3">
+                    <input type="hidden" class="form-control gray" id="EditId" data-ng-model="EditId" />
+                    <input type="text" class="form-control gray" id="EmployeeCode" data-ng-model="EmployeeCode" disabled="disabled" />
+                </div>
+                <label class="col-sm-2 control-label">Sales Region</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control gray" id="SalesRegion" data-ng-model="SalesRegion" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Employee Name</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control gray" id="EmployeeName" data-ng-model="EmployeeName" disabled="disabled" />
+                    <label id="UserId" hidden>@SessionUserCode</label>
+                    <label id="UserName" hidden>@SessionUserName</label>
+                    <label id="UserSalesRegion" hidden></label>
+                    @*remove aboce line*@
+                    <label id="UserType" hidden>@SessionUserType</label>
+                </div>
+                <label class="col-sm-2 control-label">Customer Type<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <div class="input-group add-on">
+                        <input class="form-control" id="CustomerType" type="text" disabled="disabled" data-ng-model="CustomerType">
+                        <input class="form-control" id="CustomerTypeCode" type="hidden" disabled="disabled" data-ng-model="CustomerTypeCode">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" ng-click="Getdata('GetCustomertype','CustomerMasterType','Customer Type')"><i class="glyphicon glyphicon-new-window"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Customer Name<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="CustomerName" data-ng-model="CustomerName" />
+                </div>
+                <label class="col-sm-2 control-label">Expected Volume Target<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" id="ExpectedVolumeTarget" data-ng-model="ExpectedVolumeTarget" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">PAN Number<span class='Mandatory'>*</span></label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="PanNumber" data-ng-model="PanNumber" />
+                </div>
+                <label class="col-sm-2 control-label">Contact Person Name<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" id="ContactPersonName" data-ng-model="ContactPersonName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">TIN Number<span class='Mandatory'>*</span></label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="TinNumber" data-ng-model="TinNumber" />
+                </div>
+                <label class="col-sm-2 control-label">Contact Person Number<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="ContactPersonNumber" data-ng-model="ContactPersonNumber" onkeypress="return isNumberKey(event)" maxlength="15" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Customer Address<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <textarea class="form-control" id="CustomerAddress" data-ng-model="CustomerAddress" />
+                </div>
+                <label class="col-sm-2 control-label">Customer Email ID</label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" id="CustomerEmailID" data-ng-model="CustomerEmailID" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Pin Code</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="PinCode" data-ng-model="PinCode" onkeypress="return isNumberKey(event)" maxlength="6" />
+                </div>
+                <label class="col-sm-2 control-label">Customer City/ Location<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    @* <div class="input-group add-on">*@
+                    <input class="form-control" id="CustomerCityLocation" type="text" data-ng-model="CustomerCityLocation">
+                    @* <div class="input-group-btn">
+                            <button class="btn btn-default" ng-click="Getdata('GetCityLocationValue','CityMasterList','Customer City')"><i class="glyphicon glyphicon-new-window"></i></button>
+                        </div>*@
+                    @* </div>*@
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Customer State<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <div class="input-group add-on">
+                        <input class="form-control" id="CustomerState" type="text" disabled="disabled" data-ng-model="CustomerState">
+                        <input class="form-control" id="CustomerStateCode" type="hidden" disabled="disabled" data-ng-model="CustomerStateCode">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" ng-click="Getdata('GetStateMasterListValue','StateMasterListCounter','Customer State')"><i class="glyphicon glyphicon-new-window"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label">Customer District<span class="Mandatory">*</span></label>
+                <div class="col-sm-3">
+                    <div class="input-group add-on">
+                        <input class="form-control" id="CustomerDistrict" type="text" disabled="disabled" data-ng-model="CustomerDistrict">
+                        <input class="form-control" id="CustomerDistrictCode" type="hidden" disabled="disabled" data-ng-model="CustomerDistrictCode">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" ng-click="Getdata('GetDistrictMasterListValue','DistrictMasterList','Customer District')"><i class="glyphicon glyphicon-new-window"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        GetSalesRegion();
+    });
+
+    function GetSalesRegion() {
+
+        $.ajax({
+            url: '../../SFDC/GetSalesRegion',
+            type: 'POST',
+            async: true,
+            data: { userid: $("#UserId").text() },
+            success: function (Response) {
+                Response = JSON.parse(Response);
+                $("#SalesRegion").val(Response[0]["STATE_DESC"]);
+            }
+        });
+    }
+
+</script>

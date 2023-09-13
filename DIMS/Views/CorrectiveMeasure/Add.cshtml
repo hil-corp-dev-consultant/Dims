@@ -1,0 +1,2823 @@
+﻿@using LabelName = DIMS.Content.Resource_Files.CorrectiveMeasures;
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Corrective Measure</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">Corrective Measure</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="go('CorrectiveMeasureList')" style="float: left;" id="CORM_List">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+
+                <a href ng-click="SaveCorrectiveMeasure()" style="float: left;" id="CORM_Save">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+
+                <a href ng-click="go('CorrectiveMeasure')" id="CORM_AddNew" style="float: left; display: none;">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+
+                <a href ng-click="SendForApproval()" style="display: none; float: left;" id="CORM_SendForApproval">
+                    <i class=" fa fa-forward" title="Send for Reviews"></i>
+                </a>
+
+                <a href ng-click="MakeApproved()" id="MakeApproved" style="display: none; float: left;">
+                    <i class="fa fa-check" title="Approve"></i>
+                </a>
+
+                <select id="StateFilter" ng-model="StateFilter" disabled="disabled" ng-change="StateChange()" style="float: left;"></select>
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-body pad">
+                    <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                        <div class="col-sm-12">
+
+
+                            <input type="text" id="SITEDETAIL_CODE_CorrectiveMeasure" style="display: none;" value="@SessionSITEDETAIL_CODE" />
+                            <input type="text" id="COMPANYDETAIL_CODE_CorrectiveMeasure" style="display: none;" value="@SessionCOMPANYDETAIL_CODE" />
+                            <input type="text" id="USERNAME_CorrectiveMeasure" style="display: none;" value="@SessionUserName" />
+                            <input type="text" id="USERCODE_CorrectiveMeasure" style="display: none;" value="@SessionUserCode" />
+
+                            <input type="text" id="USERollCODE_CorrectiveMeasureForm" style="display:none;" value="@SessionUserType" />
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">@LabelName.InvestigationNum<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtInvestigationNum" ng-model="InvestigationNum_Model" disabled="disabled" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" id="InvNumPopUp" ng-click="Getdata('getInvestigationData','InvestigationMaster','Pending Complaints For Corrective Measures')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 control-label">Complaint RegisteredDate<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="txtComplaintRegisteredDate" ng-model="ComplaintRegisteredDate_Model" disabled="disabled" />
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.CorrectiveMeasureId</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtCorrectiveMeasureId" ng-model="CorrectiveMeasureId_Model" disabled="disabled" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">@LabelName.Plant<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtPlant" ng-model="Plant_Model" disabled="disabled" />
+                                        <input type="text" class="form-control" id="txtPlantCode" ng-model="Plant_Model" style="display: none;" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" id="PlantPopUp" ng-click="Getdata('GetPlantData','PlantMaster','Plant List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.InvestigationDate<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="txtInvestigationDate" ng-model="InvestigationDate_Model" disabled="disabled" />
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.CMSeriesCode<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMSeriesCode" ng-model="CMSeriesCode_Model" disabled="disabled" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" ng-click="Getdata('getCRSeriesData','CRSeriesCode','Document Series')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @*<label class="col-sm-1 control-label">@LabelName.ComplaintTrackingNo</label>*@
+                                <label class="col-sm-1 control-label">Complaint TrackingNo</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtComplaintTrackingNo" ng-model="ComplaintTrackingNo" disabled="disabled" />
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.InvestigationDoneBy</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtInvestigationDoneByCode" ng-model="txtInvestigationDoneByCode_Model" style="display: none;" />
+                                    <input type="text" class="form-control gray" id="txtInvestigationDoneBy" ng-model="InvestigationDoneBy_Model" disabled="disabled" />
+                                </div>
+                                @*<label class="col-sm-1 control-label">CorrectiveMeasureDate</label>*@
+                                <label class="col-sm-1 control-label">Corrective MeasureDate</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtCorrectiveMeasureDate" ng-model="CorrectiveMeasureDate_Model" disabled="disabled" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">@LabelName.CustomerCode</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtCustomerCode" ng-model="CustomerCode_Model" disabled="disabled" />
+                                </div>
+                                @*<label class="col-sm-1 control-label">@LabelName.ProductType</label>*@
+                                <label class="col-sm-1 control-label">Business Unit</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtProductTypeCode" ng-model="txtProductTypeCode_Model" style="display: none;" />
+                                    <input type="text" class="form-control gray" id="txtProductType" ng-model="ProductType_Model" disabled="disabled" />
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.CMDocStatus</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtCMDocStatus" ng-model="CMDocStatus_Model" disabled="disabled" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">@LabelName.CustomerName</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtCustomerName" ng-model="CustomerName_Model" onkeypress="return AllowOnlyChars(event)" disabled="disabled" />
+                                </div>
+                                @*<label class="col-sm-1 control-label">@LabelName.ProductCategory</label>*@
+                                <label class="col-sm-1 control-label">Product Type</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtProductCategoryCode" ng-model="txtProductCategoryCode_Model" style="display: none;" />
+                                    <input type="text" class="form-control gray" id="txtProductCategory" ng-model="ProductCategory_Model" disabled="disabled" />
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.ApprovedDate</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtApprovedDate" ng-model="ApprovedDate_Model" disabled="disabled" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">@LabelName.Location</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtLocation" ng-model="Location_Model" disabled="disabled" />
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.ComplaintType<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtComplaintTypeCode" ng-model="txtComplaintTypeCode" style="display: none;" />
+                                        <input type="text" class="form-control" id="txtComplaintType" ng-model="ComplaintType_Model" disabled="disabled" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" id="ComplaintTypePopUp" ng-click="Getdata('getComplaintTypeData','ComplaintTypeMaster','Complaint Type List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 control-label">Corrective MeasureStatus</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtCorrectiveMeasureStatus" ng-model="CorrectiveMeasureStatus_Model" disabled="disabled" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">@LabelName.ComplaintDesc</label>
+                                <div class="col-sm-3">
+                                    <textarea class="form-control custom-control" rows="2" maxlength="300" style="resize: none" id="txtComplaintDesc" ng-model="ComplaintDesc_Model"></textarea>
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.ComplaintCategory<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtComplaintCategoryCode" ng-model="txtComplaintCategoryCode_Model" style="display: none;" />
+                                        <input type="text" class="form-control" id="txtComplaintCategory" ng-model="ComplaintCategory_Model" disabled="disabled" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" id="ComplaintCategoryPopUp" ng-click="Getdata('getComplaintCategoryData','ComplaintCategoryMaster','Complaint Category Type List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 control-label">@LabelName.NoticeType<span style="color: #FF0000">*</span></label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="txtNoticeType" ng-model="NoticeType_Model" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12  tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CommuncationNoteDetails')">
+                                <img src="~/Images/en_next.png" id="CommuncationNoteDetails_Img" />
+                                <a class="Expand">@LabelName.CommunicationNoteDetails</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CommuncationNoteDetails_Form">
+                                <div class="col-sm-12">
+
+
+                                    <div class="form-group">
+                                        @*<label class="col-sm-1 control-label">@LabelName.IssueCommunicationNote</label>*@
+                                        <label class="col-sm-1 control-label">Issue Commun.Note</label>
+                                        <div class="col-sm-3">
+                                            <input type="checkbox" class="" id="chbIssueCommunicationNote" ng-model="IssueComNote_Model" />
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelName.Product<span style="color: #FF0000">*</span></label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="txtProduct_Code" ng-model="Product_Code_Model" style="display: none;" />
+                                                <input type="text" class="form-control" id="txtProduct_Name" ng-model="Product_Name_Model" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" id="ProductPopUp" ng-click="Getdata('getProductData','ProductMaster','Product Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelName.InvoiceNo<span style="color: #FF0000">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtInvoiceNo" ng-model="InvoiceNo_Model" maxlength="10" />
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">@LabelName.CommunicationNoteID</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control gray" id="txtCommunicationNoteID" ng-model="CommunicationNoteID_Model" disabled="disabled" />
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelName.Defect<span style="color: #FF0000">*</span></label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group add-on">
+                                                <input type="text" class="form-control" id="txtDefectCode" ng-model="Defect_Code_Model" style="display: none;" />
+                                                <input type="text" class="form-control" id="txtDefectName" ng-model="Defect_Name_Model" disabled="disabled" />
+                                                <div class="input-group-btn">
+                                                    <span class="btn btn-default" id="DefectTypePopUp" ng-click="Getdata('getDefectTypeData','DefectTypeMaster','Defect Type')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelName.InvoiceDate<span style="color: #FF0000">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtInvoiceDate" ng-model="InvoiceDate_Model" readonly />
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        @*<label class="col-sm-1 control-label">@LabelName.NoticeIssuedDate<span style="color: #FF0000">*</span></label>*@
+                                        <label class="col-sm-1 control-label">Notice Iss.Date<span style="color: #FF0000">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtNoticeIssuedDate" ng-model="NoticeIssuedDate_Model" readonly />
+                                        </div>
+                                        <label class="col-sm-1 control-label">@LabelName.BatchNo<span style="color: #FF0000">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtBatchNo" maxlength="150" ng-model="BatchNo_Model" onkeyup="return upperCase(this, event)" />
+                                        </div>
+                                        @*<label class="col-sm-1 control-label">@LabelName.NoofDefectiveSheets<span style="color: #FF0000">*</span></label>*@
+                                        <label class="col-sm-1 control-label">Defective Sheets(Nos)<span style="color: #FF0000">*</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="txtNoOfDefectiveSheets" ng-model="NoOfDefectiveSheets_Model" onkeypress="return onlyNos(event,this);" maxlength="15" onchange="MakeThisNumbertoInteger('txtNoOfDefectiveSheets')" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @*<label class="col-sm-1 control-label">@LabelName.NoticeRemarksAdditionalinformation</label>*@
+                                        <label class="col-sm-1 control-label">NoticeRemarks/ Additional Information</label>
+                                        <div class="col-sm-3">
+                                            <textarea class="form-control custom-control" rows="2" maxlength="30" style="resize: none" id="txtNoticeRemAdditional" ng-model="NoticeRemAdditional_Model" />
+                                        </div>
+                                        <label class="col-sm-1 control-label" style="display: none;"></label>
+                                        <div class="col-sm-3" style="display: none;">
+                                        </div>
+                                        <label class="col-sm-1 control-label" style="display: none;"></label>
+                                        <div class="col-sm-3" style="display: none;">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12  tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CorrectiveMeasureRemarksDetails')">
+                                <img src="~/Images/en_next.png" id="CorrectiveMeasureRemarksDetails_Img" />
+                                <a class="Expand">@LabelName.CorrectiveMeasureRemarks</a>
+                            </div>
+                            <div class="row" style="padding-top: 30px; display: none;" id="CorrectiveMeasureRemarksDetails_Form">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">@LabelName.Symptoms</label>
+                                        <div class="col-sm-3">
+                                            <textarea class="form-control custom-control" rows="2" maxlength="300" style="resize: none" id="txtSymptoms" ng-model="Symptoms_Model" />
+                                        </div>
+                                        <label class="col-sm-2 control-label">@LabelName.ProblemImpact</label>
+                                        <div class="col-sm-3">
+                                            <textarea class="form-control custom-control" rows="2" maxlength="300" style="resize: none" id="txtProblemImpact" ng-model="ProblemImpact_Model" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 form-group">
+                                        <label class="col-sm-3 control-label">@LabelName.ProblemDescription</label>
+                                        <div class="col-sm-3">
+                                            <textarea class="form-control custom-control" rows="2" maxlength="300" style="resize: none" id="txtProblemDescription" ng-model="ProblemDescription_Model" />
+                                        </div>
+                                        <label class="col-sm-2 control-label">@LabelName.Conclusion</label>
+                                        <div class="col-sm-3">
+                                            <textarea class="form-control custom-control" rows="2" maxlength="300" style="resize: none" id="txtConclusion" ng-model="Conclusion_Model" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('ObservationsByInvestigatorDetails')">
+                                <img src="~/Images/en_next.png" id="ObservationsByInvestigatorDetails_Img" />
+                                <a class="Expand">@LabelName.ObservationsByInvestigator</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="ObservationsByInvestigatorDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="ObservationsByInvestigatorDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.ObservationByInvestigationSNo </th>
+                                                <th>@LabelName.ObservationName</th>
+                                                <th style="display: none;">ObservationCode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                    @*<input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="ObservationsByInvestigator_Add" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenObeservationInvestigation_Model()" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('EmergencyResponseActionsDetails')">
+                                <img src="~/Images/en_next.png" id="EmergencyResponseActionsDetails_Img" />
+                                <a class="Expand">@LabelName.EmergencyResponseActions</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="EmergencyResponseActionsDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="EmergencyResponseActionsDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.EmergencyResponseSNo</th>
+                                                <th>@LabelName.EmergencyResponseActionName</th>
+                                                <th>@LabelName.EmergencyResponseDescription</th>
+                                                <th>@LabelName.EmergencyResponseTargetDate</th>
+                                                <th>@LabelName.EmergencyResponseActualDate</th>
+                                                <th>@LabelName.EmergencyResponseRemarks</th>
+                                                <th style="display: none;">ActionCode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr style="display: none;">
+                                                <th>S No</th>
+                                                <th>Action Name</th>
+                                                <th>Description</th>
+                                                <th>Target Date</th>
+                                                <th>Actual Date</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    @*<input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="EmergencyResponseActionsDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenEmergencyResponseModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMTeamInvolvedDetails')">
+                                <img src="~/Images/en_next.png" id="CMTeamInvolvedDetails_Img" />
+                                <a class="Expand">@LabelName.TeamInvolved</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMTeamInvolvedDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMTeamInvolvedDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.TeamInvolvedSNo</th>
+                                                <th>@LabelName.TeamInvolvedName</th>
+                                                <th>@LabelName.TeamInvolvedRole</th>
+                                                <th>@LabelName.TeamInvolvedTeamMembers</th>
+                                                <th>@LabelName.TeamInvolvedRemarks</th>
+                                                <th style="display: none;">LineID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr style="display: none;">
+                                                <th>S No</th>
+                                                <th>Name</th>
+                                                <th>Role</th>
+                                                <th>Team Members</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    @*<input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMTeamInvolvedDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenTeamInvolvedModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMInterimContainmentActionsDetails')">
+                                <img src="~/Images/en_next.png" id="CMInterimContainmentActionsDetails_Img" />
+                                <a class="Expand">@LabelName.InterimContainmentActions</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMInterimContainmentActionsDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMInterimContainmentActionsDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.InterimContainmentSNo</th>
+                                                <th>@LabelName.InterimContainmentActionName</th>
+                                                <th>@LabelName.InterimContainmentDescription</th>
+                                                <th>@LabelName.InterimContainmentTargetDate</th>
+                                                <th>@LabelName.InterimContainmentActualDate</th>
+                                                <th>@LabelName.InterimContainmentRelatedTo</th>
+                                                <th>@LabelName.InterimContainmentRemarks</th>
+                                                <th style="display: none;">ActionCode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                    @*<input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMInterimContainmentActionsDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenCMIntermLinesModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMRootCauseEscapePointDetails')">
+                                <img src="~/Images/en_next.png" id="CMRootCauseEscapePointDetails_Img" />
+                                <a class="Expand">@LabelName.RootCauseEscapePoint</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMRootCauseEscapePointDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMRootCauseEscapePointDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.RootCauseEscapePointSNo</th>
+                                                <th>@LabelName.RootCauseEscapePointCauseName</th>
+                                                <th>@LabelName.RootCauseEscapePointDescription</th>
+                                                <th>@LabelName.RootCauseEscapePointFindings</th>
+                                                <th>@LabelName.RootCauseEscapePointRelatedTo</th>
+                                                <th>@LabelName.RootCauseEscapePointRemarks</th>
+                                                <th style="display: none;">CauseCode</th>
+                                                <th style="display: none;">RelatedToCode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                    @*<input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMRootCauseEscapePointDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenRootCauseLinesModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMChosenPermanentCorrectiveActionDetails')">
+                                <img src="~/Images/en_next.png" id="CMChosenPermanentCorrectiveActionDetails_Img" />
+                                <a class="Expand">@LabelName.ChosenPermanentCorrectiveAction</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMChosenPermanentCorrectiveActionDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMChosenPermanentCorrectiveActionDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.ChosenPermanentSNo</th>
+                                                <th>@LabelName.ChosenPermanentActionName</th>
+                                                <th>@LabelName.ChosenPermanentDescription</th>
+                                                <th>@LabelName.ChosenPermanentTargetDate</th>
+                                                <th>@LabelName.ChosenPermanentActualDate</th>
+                                                <th>@LabelName.ChosenPermanentRelatedTo</th>
+                                                <th>@LabelName.ChosenPermanentRemarks</th>
+                                                <th style="display: none;">ActionCode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                    @*<input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMChosenPermanentCorrectiveActionDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenChosenLinesModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMImplementedCorrectiveActionDetails')">
+                                <img src="~/Images/en_next.png" id="CMImplementedCorrectiveActionDetails_Img" />
+                                <a class="Expand">@LabelName.ImplementedCorrectiveActionDetails</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMImplementedCorrectiveActionDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMImplementedCorrectiveActionDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.ImplementedCorrectiveSNo</th>
+                                                <th>@LabelName.ImplementedCorrectiveChosenActionName</th>
+                                                <th>@LabelName.ImplementedCorrectiveDescription</th>
+                                                <th>@LabelName.ImplementedCorrectiveTargetDate</th>
+                                                <th>@LabelName.ImplementedCorrectiveActualDate</th>
+                                                <th>@LabelName.ImplementedCorrectiveRelatedTo</th>
+                                                <th>@LabelName.ImplementedCorrectiveRemarks</th>
+
+                                                <th style="display: none;">ActionCode</th>
+                                                <th style="display: none;">ActionID</th>
+                                                <th style="display: none;">ChosenLineID</th>
+                                                <th style="display: none;">LineID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr style="display: none;">
+                                                <th>S No</th>
+                                                <th>Chosen Action Name</th>
+                                                <th>Description</th>
+                                                <th>Target Date</th>
+                                                <th>Actual Date</th>
+                                                <th>Related To</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    @*<input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMImplementedCorrectiveActionDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenImplementLinesModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMVerificationofCorrectiveActionsDetails')">
+                                <img src="~/Images/en_next.png" id="CMVerificationofCorrectiveActionsDetails_Img" />
+                                <a class="Expand">@LabelName.VerificationofCorrectiveActions</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMVerificationofCorrectiveActionsDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMVerificationofCorrectiveActionsDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.VerificationofCorrectiveSNo</th>
+                                                <th>@LabelName.VerificationofCorrectiveImplementLineId</th>
+                                                <th>@LabelName.VerificationofCorrectiveImplementActionName</th>
+                                                <th>@LabelName.VerificationofCorrectiveValidation</th>
+                                                <th>@LabelName.VerificationofCorrectiveEffectivePercent</th>
+                                                <th>@LabelName.VerificationofCorrectiveTargetDate</th>
+                                                <th>@LabelName.VerificationofCorrectiveActualDate</th>
+                                                <th>@LabelName.VerificationofCorrectiveRemarks</th>
+                                                <th style="display: none;">ActionCode</th>
+                                                <th style="display: none;">ActionID</th>
+                                                <th style="display: none;">LineID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr style="display: none;">
+                                                <th>S No</th>
+                                                <th>ImplementLine Id</th>
+                                                <th>Implement Action Name</th>
+                                                <th>Validation</th>
+                                                <th>Effective Percent</th>
+                                                <th>Target Date</th>
+                                                <th>Actual Date</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    @*                                        <input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMVerificationofCorrectiveActionsDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenVerificationLinesModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMPreventiveActionsDetails')">
+                                <img src="~/Images/en_next.png" id="CMPreventiveActionsDetails_Img" />
+                                <a class="Expand">@LabelName.PreventiveActionsDetails</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMPreventiveActionsDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMPreventiveActionsDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.PreventiveSNo</th>
+                                                <th>@LabelName.PreventiveActionName</th>
+                                                <th>@LabelName.PreventiveDescription</th>
+                                                <th>@LabelName.PreventiveName</th>
+                                                <th>@LabelName.PreventiveTargetDate</th>
+                                                <th>@LabelName.PreventiveActualDate</th>
+                                                <th>@LabelName.PreventiveRelatedTo</th>
+                                                <th>@LabelName.PreventiveRemarks</th>
+                                                <th style="display: none;">ActionCode</th>
+                                                <th style="display: none;">ActionID</th>
+                                                <th style="display: none;">LineID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr style="display: none;">
+                                                <th>S No</th>
+                                                <th>Action Name</th>
+                                                <th>Description</th>
+                                                <th>Name</th>
+                                                <th>Target Date</th>
+                                                <th>Actual Date</th>
+                                                <th>Related To</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    @*                                        <input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMPreventiveActionsDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenPreventiveLinesModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 tabdiv">
+                            <div class="col-sm-12 CloseOpen" onclick="FormToggle('CMVerificationofPreventiveActionsDetails')">
+                                <img src="~/Images/en_next.png" id="CMVerificationofPreventiveActionsDetails_Img" />
+                                <a class="Expand">@LabelName.VerificationofPreventiveActions</a>
+                            </div>
+
+                            <div class="row" style="padding-top: 30px; display: none;" id="CMVerificationofPreventiveActionsDetails_Form">
+                                <div class="col-sm-12">
+                                    <table class="table innertable" id="CMVerificationofPreventiveActionsDetails_Table">
+                                        <thead>
+                                            <tr>
+                                                <th>@LabelName.VerificationofPreventiveSNo</th>
+                                                <th>@LabelName.VerificationofPreventivePreventiveLineId</th>
+                                                <th>@LabelName.VerificationofPreventivePreventiveActionName</th>
+                                                <th>@LabelName.VerificationofPreventiveValidation</th>
+                                                <th>@LabelName.VerificationofPreventiveEffectivePercent</th>
+                                                <th>@LabelName.VerificationofPreventiveTargetDate</th>
+                                                <th>@LabelName.VerificationofPreventiveActualDate</th>
+                                                <th>@LabelName.VerificationofPreventiveRemarks</th>
+
+                                                <th style="display: none;">ActionCode</th>
+                                                <th style="display: none;">ActionID</th>
+                                                <th style="display: none;">LineID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr style="display: none;">
+                                                <th>S No</th>
+                                                <th>PreventiveLine Id</th>
+                                                <th>Preventive Action Name</th>
+                                                <th>Validation</th>
+                                                <th>Effective Percent</th>
+                                                <th>Target Date</th>
+                                                <th>Actual Date</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    @*                                        <input type="button" value="Add" id="Receipt_Details_Sheeting_Add" style="background-color: #3295D6" class="smallbutton" data-toggle="modal" data-target="#ReceiptDetailsForSheetingModal" />*@
+                                    <input type="button" value="Add" id="CMVerificationofPreventiveActionsDetails_Add" class="smallbutton" data-toggle="modal" data-target="#" onclick="OpenPreventiveVerificationLinesModel()" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="ObservationsByInvestigatorDetailModal" tabindex="-1" role="dialog" aria-labelledby="MSDModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="MSDModalLabel">@LabelName.CorrectiveObservationLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="ObservationInv_id" data-ng-model="ObservationInv_id_Model" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCMObservationID" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveObservationLinesObservationName<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMObservationName" data-ng-model="txtCMObservationName_Model" maxlength="100" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMObservationInves_Save" class="btn btn-danger" ng-click="SaveCMObservationInvesData()">Save</button>
+                <button type="button" id="CMObservationInves_Delete" class="btn btn-danger" ng-click="DeleteCMObservationInves()">Delete</button>
+                <button type="button" id="CMObservationInves_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EmergencyResponseActionDetailModal" tabindex="-1" role="dialog" aria-labelledby="EmergencyResponseActionModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="EmergencyResponseActionModalLabel">@LabelName.CorrectiveEmergencyLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="text" id="EmergencyResponseAction_id" data-ng-model="EmergencyResponseAction_id_Model" style="display: none;" />
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="txtCMEmergencyActionName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.EmergencyModelActionName<span class="Mandatory">*</span>
+                                </label>
+
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMEmergencyActionID" data-ng-model="CMEmergencyActionID_Model" readonly style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMEmergencyActionCode" data-ng-model="CMEmergencyActionCode_Model" readonly style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMEmergencyActionName" data-ng-model="CMEmergencyActionname_Model" readonly onkeypress="return AllowOnlyChars(event)" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" ng-click="Getdata('getEmergencyActionData','ResponseActionMaster','Response Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*<div class="input-group OpenPopupIcon col-sm-6">
+                                        <input type="text" class="form-control" id="txtCMEmergencyActionID" data-ng-model="CMEmergencyActionID_Model" readonly style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMEmergencyActionCode" data-ng-model="CMEmergencyActionCode_Model" readonly style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMEmergencyActionName" data-ng-model="CMEmergencyActionname_Model" readonly onkeypress="return AllowOnlyChars(event)" />
+                                        <span class="input-group-addon AddonButton" ng-click="Getdata('getEmergencyActionData','ResponseActionMaster','Response Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>*@
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMEmergencyDescription" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.EmergencyModelDescription
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMEmergencyDescription" data-ng-model="CMEmergencyDescription_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMEmergencyTargetDate2" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.EmergencyModelTargetDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMEmergencyTargetDate" data-ng-model="CMEmergencyTargetDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMEmergencyActualDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.EmergencyModelActualDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMEmergencyActualDate" data-ng-model="CMEmergencyActualDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMEmergencyRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.EmergencyModelRemarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMEmergencyRemarks" data-ng-model="CMEmergencyRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMEmergencyResponseAction_Save" class="btn btn-danger" ng-click="SaveCMEmergencyResponseActionData()">Save</button>
+                <button type="button" id="CMEmergencyResponseAction_Delete" class="btn btn-danger" ng-click="DeleteCMEmergencyResponseAction()">Delete</button>
+                <button type="button" id="CMEmergencyResponseAction_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="TeamLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="TeamLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="TeamLinesModalLabel">@LabelName.CorrectiveTeamLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="text" id="TeamLines_id" data-ng-model="TeamLines_id_Model" style="display: none;" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCMTeamLinesName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveTeamLinesName<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMTeamLinesName" data-ng-model="CMTeamLinesnname_Model" maxlength="150" onkeypress="return AllowOnlyChars(event)" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMTeamLinesRole" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveTeamLinesRole<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMTeamLinesRole" data-ng-model="CMTeamLinesRole_Model" onkeypress="return AllowOnlyChars(event)" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMTeamLinesTeamMembers" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveTeamLinesTeamMembers<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMTeamLinesTeamMembers" data-ng-model="CMTeamLinesTeamMembers_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtCMTeamLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveTeamLinesRemarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMTeamLinesRemarks" data-ng-model="CMTeamLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" id="CMTeamLines_Save" class="btn btn-danger" ng-click="SaveCMTeamLinesData()">Save</button>*@
+                <button type="button" id="CMTeamLines_Save" class="btn btn-danger" onclick="SaveCMTeamLinesData()">Save</button>
+                <button type="button" id="CMTeamLines_Delete" class="btn btn-danger" onclick="DeleteCMTeamLines()">Delete</button>
+                <button type="button" id="CMTeamLines_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="IntermLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="IntermLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="IntermLinesModalLabel">@LabelName.CorrectiveIntermLines</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="text" id="IntermLines_id" data-ng-model="IntermLines_id_Model" style="display: none;" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCMIntermLinesActionName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveIntermLineActionName<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMIntermLinesActionID" data-ng-model="txtCMIntermLinesActionID_Model" style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMIntermLinesActionCode" data-ng-model="CMIntermLinesActionCode_Model" style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMIntermLinesActionName" data-ng-model="CMIntermLinesActionName_Model" readonly="readonly" onkeypress="return AllowOnlyChars(event)" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" ng-click="Getdata('getInterimActionData','ControlActionMaster','Control Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMIntermLinesDescription" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveIntermLineDescription
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMIntermLinesDescription" data-ng-model="CMIntermLinesDescription_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMIntermLinesTargetDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveIntermLineTargetDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMIntermLinesTargetDate" data-ng-model="CMIntermLinesTargetDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMIntermLinesActualDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveIntermLineActualDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMIntermLinesActualDate" data-ng-model="CMIntermLinesActualDate_Model" readonly />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtCMIntermLinesRelatedTo" class="col-sm-5 control-label" style="text-align: right;" maxlength="150">
+                                    @LabelName.CorrectiveIntermLineRelatedTo
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMIntermLinesRelatedTo" data-ng-model="CMIntermLinesRelatedTo_Model" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMIntermLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectiveIntermLineRemarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMIntermLinesRemarks" data-ng-model="CMIntermLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMIntermLines_Save" class="btn btn-danger" onclick="SaveCMIntermLinesData()">Save</button>
+                <button type="button" id="CMIntermLines_Delete" class="btn btn-danger" onclick="DeleteCMIntermLines()">Delete</button>
+                <button type="button" id="CMIntermLines_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="RootCauseLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="RootCauseLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="RootCauseLinesModalLabel">@LabelName.RootCauseLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="RootCauseLines_id" data-ng-model="RootCauseLines_id_Model" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCMRootCauseLinesCauseName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.RootCauseLinesCauseName<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMRootCauseRelatedToID" data-ng-model="CMRootCauseRelatedToID_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMRootCauseRelatedToCode" data-ng-model="CMRootCauseRelatedToCode_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMRootCauseLinesCauseID" data-ng-model="CMRootCauseLinesID_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMRootCauseLinesCauseCode" data-ng-model="CMRootCauseLinesCode_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMRootCauseLinesCauseName" data-ng-model="CMRootCauseLinesCauseName_Model" onkeypress="return AllowOnlyChars(event)" disabled="disabled" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" ng-click="Getdata('getRootCauseActionData','CauseActionMaster','Cause Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="input-group OpenPopupIcon col-sm-6">
+                                        <input type="text" class="form-control" id="txtCMRootCauseRelatedToID" data-ng-model="CMRootCauseRelatedToID_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMRootCauseRelatedToCode" data-ng-model="CMRootCauseRelatedToCode_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+
+                                        <input type="text" class="form-control" id="txtCMRootCauseLinesCauseID" data-ng-model="CMRootCauseLinesID_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMRootCauseLinesCauseCode" data-ng-model="CMRootCauseLinesCode_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMRootCauseLinesCauseName" data-ng-model="CMRootCauseLinesCauseName_Model" onkeypress="return AllowOnlyChars(event)" />
+                                        <span class="input-group-addon AddonButton" ng-click="Getdata('getRootCauseActionData','CauseActionMaster','Cause Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>*@
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMRootCauseLinesDescription" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.RootCauseLinesDescription
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMRootCauseLinesDescription" data-ng-model="CMRootCauseLinesDescription_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMRootCauseLinesFindings" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.RootCauseLinesFindings
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMRootCauseLinesFindings" data-ng-model="CMRootCauseLinesFindings_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="txtCMRootCauseLinesRelatedTo" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.RootCauseLinesRelatedTo
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMRootCauseLinesRelatedTo" data-ng-model="CMRootCauseLinesRelatedTo_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMRootCauseLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.RootCauseLinesRemarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMRootCauseLinesRemarks" data-ng-model="CMRootCauseLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMRootCauseLines_Save" class="btn btn-danger" onclick="SaveCMRootCauseLinesData()">Save</button>
+                <button type="button" id="CMRootCauseLines_Delete" class="btn btn-danger" onclick="DeleteCMRootCauseLines()">Delete</button>
+                <button type="button" id="CMRootCauseLines_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ChosenLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="ChosenLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="ChosenLinesModalLabel">@LabelName.ChosenPermanentLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="ChosenLines_id" data-ng-model="ChosenLines_id_Model" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCMChosenLinesActionName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ChosenPermanentModel_ActionName<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMChosenLinesActionID" data-ng-model="CMChosenLinesActionID_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMChosenLinesActionCode" data-ng-model="CMChosenLinesActionCode_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMChosenLinesActionName" data-ng-model="CMChosenLinesActionName_Model" onkeypress="return AllowOnlyChars(event)" disabled="disabled" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" ng-click="Getdata('getChosenPermanentData','CorrectiveActionMaster','Corrective Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="input-group OpenPopupIcon col-sm-6">
+                                        <input type="text" class="form-control" id="txtCMChosenLinesActionID" data-ng-model="CMChosenLinesActionID_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMChosenLinesActionCode" data-ng-model="CMChosenLinesActionCode_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMChosenLinesActionName" data-ng-model="CMChosenLinesActionName_Model" onkeypress="return AllowOnlyChars(event)" />
+                                        <span class="input-group-addon AddonButton" ng-click="Getdata('getChosenPermanentData','CorrectiveActionMaster','Corrective Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>*@
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMChosenLinesDescription" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ChosenPermanentModel_Description
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMChosenLinesDescription" data-ng-model="CMChosenLinesDescription_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMChosenLinesTargetDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ChosenPermanentModel_TargetDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMChosenLinesTargetDate" data-ng-model="txtCMChosenLinesTargetDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMChosenLinesActualDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ChosenPermanentModel_ActualDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMChosenLinesActualDate" data-ng-model="txtCMChosenLinesActualDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMChosenLinesRelatedTo" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ChosenPermanentModel_RelatedTo
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMChosenLinesRelatedTo" data-ng-model="txtCMChosenLinesRelatedTo_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMChosenLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ChosenPermanentModel_Remarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMChosenLinesRemarks" data-ng-model="txtCMChosenLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMChosenLinesAction_Save" class="btn btn-danger" onclick="SaveCMChosenLinesActionData()">Save</button>
+                <button type="button" id="CMChosenLinesAction_Delete" class="btn btn-danger" onclick="DeleteCMChosenLinesAction()">Delete</button>
+                <button type="button" id="CMChosenLinesAction_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ImplementLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="ImplementLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="ImplementLinesModalLabel">@LabelName.ImplementLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="ImplementLines_id" data-ng-model="ImplementLines_id_Model" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCMImplementLinesActionName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ImplementModel_ChosenActionName<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMImplementLinesChosenLineID" data-ng-model="txtCMImplementLinesChosenLineID_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMImplementLinesActionCode" data-ng-model="txtCMImplementLinesActionCode_Model" style="display: none;" onkeypress="return AllowOnlyChars(event)" />
+                                        <input type="text" class="form-control" id="txtCMImplementLinesActionName" data-ng-model="txtCMImplementLinesActionName_Model" onkeypress="return AllowOnlyChars(event)" disabled="disabled" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" onclick="GetTopDataToBottom('CPCA','ICAD')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                            @*<span class="btn btn-default" ng-click="Getdata('getImplementedPermanentData','CorrectiveChosenPermanentActionMaster','Corrective Chosen Permanent Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMImplementLinesDescription" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ImplementModel_Description
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMImplementLinesDescription" data-ng-model="txtCMImplementLinesDescription_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMImplementLinesTargetDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ImplementModel_TargetDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMImplementLinesTargetDate" data-ng-model="txtCMImplementLinesTargetDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMImplementLinesActualDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ImplementModel_ActualDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMImplementLinesActualDate" data-ng-model="txtCMImplementLinesActualDate_Model" readonly />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtCMImplementLinesRelatedTo" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ImplementModel_RelatedTo
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMImplementLinesRelatedTo" data-ng-model="txtCMImplementLinesRelatedTo_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMImplementLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.ImplementModel_Remarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMImplementLinesRemarks" data-ng-model="txtCMImplementLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMImplementLines_Save" class="btn btn-danger" onclick="SaveCMImplementLinesData()">Save</button>
+                <button type="button" id="CMImplementCauseLines_Delete" class="btn btn-danger" onclick="DeleteCMImplementLines()">Delete</button>
+                <button type="button" id="CMImplementCauseLines_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="VerificationLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="VerificationLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="VerificationLinesModalLabel">@LabelName.VerificationLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="VerificationLines_id" data-ng-model="VerificationLines_id_Model" />
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label" style="text-align: right;">
+                                    Action Name<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMVerificationImplementedLineId" style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMVerificationLinesImplimentedActionCode" style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMVerificationLinesImplimentedActionName" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" onclick="GetTopDataToBottom('ICAD','VCA')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMVerificationLinesValidation" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.VerificationModel_Validation<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMVerificationLinesValidation" data-ng-model="txtCMVerificationLinesValidation_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMVerificationLinesEffectivePercent" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.VerificationModel_EffectivePercent<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMVerificationLinesEffectivePercent" data-ng-model="txtCMVerificationLinesEffectivePercent_Model" onkeypress="return onlyNos(event,this);" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMVerificationLinesTargetDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.VerificationModel_TargetDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMVerificationLinesTargetDate" data-ng-model="txtCMVerificationLinesTargetDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMVerificationLinesActualDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.VerificationModel_ActualDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMVerificationLinesActualDate" data-ng-model="txtCMVerificationLinesActualDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMVerificationLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.VerificationModel_Remarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMVerificationLinesRemarks" data-ng-model="txtCMVerificationLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMVerificationLines_Save" class="btn btn-danger" onclick="SaveCMVerificationLinesData()">Save</button>
+                <button type="button" id="CMVerificationLines_Delete" class="btn btn-danger" onclick="DeleteCMVerificationLines()">Delete</button>
+                <button type="button" id="CMVerificationLines_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PreventiveLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="PreventiveLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="PreventiveLinesModalLabel">@LabelName.CorrectivePreventiveLinesHeading</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="PreventiveLines_id" data-ng-model="PreventiveLines_id_Model" />
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="txtCMIPreventiveLinesActionName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectivePreventiveModel_ActionName<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMIPreventiveLinesActionID" style="display: none;" data-ng-model="txtCMIPreventiveLinesActionID_Model" />
+                                        <input type="text" class="form-control" id="txtCMIPreventiveLinesActionCode" style="display: none;" data-ng-model="txtCMIPreventiveLinesActionCode_Model" />
+                                        <input type="text" class="form-control" id="txtCMIPreventiveLinesActionName" data-ng-model="txtCMIPreventiveLinesActionName_Model" onkeypress="return AllowOnlyChars(event)" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" ng-click="Getdata('getPreventiveLinesData','CorrectivePreventiveActionMaster','Preventive Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="input-group OpenPopupIcon col-sm-6">
+                                        <input type="text" class="form-control" id="txtCMIPreventiveLinesActionID" style="display: none;" data-ng-model="txtCMIPreventiveLinesActionID_Model" />
+                                        <input type="text" class="form-control" id="txtCMIPreventiveLinesActionCode" style="display: none;" data-ng-model="txtCMIPreventiveLinesActionCode_Model" />
+                                        <input type="text" class="form-control" id="txtCMIPreventiveLinesActionName" data-ng-model="txtCMIPreventiveLinesActionName_Model" onkeypress="return AllowOnlyChars(event)" />
+                                        <span class="input-group-addon AddonButton" ng-click="Getdata('getPreventiveLinesData','CorrectivePreventiveActionMaster','Preventive Action Details')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>*@
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveLinesDescription" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectivePreventiveModel_Description
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveLinesDescription" data-ng-model="txtCMPreventiveLinesDescription_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMIPreventiveLinesName" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectivePreventiveModel_Name
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMIPreventiveLinesName" data-ng-model="txtCMIPreventiveLinesName_Model" onkeypress="return AllowOnlyChars(event)" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveLinesTargetDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectivePreventiveModel_TargetDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveLinesTargetDate" data-ng-model="txtCMPreventiveLinesTargetDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveLinesActualDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectivePreventiveModel_ActualDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveLinesActualDate" data-ng-model="txtCMPreventiveLinesActualDate_Model" readonly />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtCMPreventiveLinesRelatedTo" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectivePreventiveModel_RelatedTo
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveLinesRelatedTo" data-ng-model="txtCMPreventiveLinesRelatedTo_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.CorrectivePreventiveModel_Remarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveLinesRemarks" data-ng-model="txtCMPreventiveLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMPreventiveLines_Save" class="btn btn-danger" onclick="SaveCMPreventiveLinesData()">Save</button>
+                <button type="button" id="CMPreventiveLines_Delete" class="btn btn-danger" onclick="DeleteCMPreventiveLines()">Delete</button>
+                <button type="button" id="CMPreventiveLines_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PreventiveVerificationLinesDetailModal" tabindex="-1" role="dialog" aria-labelledby="PreventiveVerificationLinesModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="PreventiveVerificationLinesModalLabel">@LabelName.PreventiveVerificationLines</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="PreventiveVerificationLines_id" data-ng-model="PreventiveVerificationLines_id_Model" />
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="txtCMPreventiveVerificationLinesLineId" class="col-sm-5 control-label" style="text-align: right;">
+                                    Action Name<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group add-on">
+                                        <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesPreventiveActionLineId" data-ng-model="txtCMPreventiveVerificationLinesLineId_Model" style="display: none;" />
+                                        <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesPreventiveActionCode" style="display: none;" data-ng-model="txtCMPreventiveVerificationLinesPreventiveActionCode_Model" />
+                                        <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesPreventiveActionName" data-ng-model="txtCMPreventiveVerificationLinesPreventiveActionName_Model" />
+                                        <div class="input-group-btn">
+                                            <span class="btn btn-default" onclick="GetTopDataToBottom('PAD','VPA')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveVerificationLinesValidation" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.PreventiveVerificationModel_Validation<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesValidation" data-ng-model="txtCMPreventiveVerificationLinesValidation_Model" maxlength="150" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveVerificationLinesEffectivePercent" class="col-sm-5 control-label" style="text-align: right;" onchange="ValidatePercentage('txtCMPreventiveVerificationLinesEffectivePercent')">
+                                    @LabelName.PreventiveVerificationModel_EffectivePercent<span class="Mandatory">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesEffectivePercent" data-ng-model="txtCMPreventiveVerificationLinesEffectivePercent_Model" onkeypress="return onlyNos(event,this);" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveVerificationLinesTargetDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.PreventiveVerificationModel_TargetDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesTargetDate" data-ng-model="txtCMPreventiveVerificationLinesTargetDate_Model" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCMPreventiveVerificationLinesActualDate" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.PreventiveVerificationModel_ActualDate
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesActualDate" data-ng-model="txtCMPreventiveVerificationLinesActualDate_Model" readonly />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="txtCMPreventiveVerificationLinesRemarks" class="col-sm-5 control-label" style="text-align: right;">
+                                    @LabelName.PreventiveVerificationModel_Remarks
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtCMPreventiveVerificationLinesRemarks" data-ng-model="txtCMPreventiveVerificationLinesRemarks_Model" maxlength="150" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="CMPreventiveVerificationLines_Save" class="btn btn-danger" onclick="SaveCMPreventiveVerificationLinesData()">Save</button>
+                <button type="button" id="CMPreventiveVerificationLines_Delete" class="btn btn-danger" onclick="DeleteCMPreventiveVerificationLines()">Delete</button>
+                <button type="button" id="CMPreventiveVerificationLines_Close" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="GhostPopUp" tabindex="-1" role="dialog" aria-labelledby="GhostPopUpHeader">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="GhostPopUpHeader"></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="text" id="GhostPopUpInput" style="display: none;" />
+                        <div class="col-sm-12">
+                            <table id="GhostTable" class="ListTable"></table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(function () {
+
+        //var date;
+
+        //if (SERVER_DATE != "") {
+        //    date = new Date(parseInt(SERVER_DATE.getFullYear()), parseInt(SERVER_DATE.getMonth()) - 1, parseInt(SERVER_DATE.getDate()), parseInt(SERVER_DATE.getHours()), parseInt(SERVER_DATE.getMinutes()), parseInt(SERVER_DATE.getSeconds()));
+        //} else {
+        //    date = new Date();
+        //}
+
+        $("#txtInvoiceDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtCMEmergencyActualDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtCMEmergencyTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $("#txtCMIntermLinesTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+
+
+        $("#txtCMIntermLinesActualDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $("#txtCMIntermLinesTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+
+        $("#txtCMChosenLinesTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+
+
+        $("#txtCMChosenLinesActualDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtCMImplementLinesTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $("#txtCMImplementLinesActualDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtCMVerificationLinesTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+
+
+
+        $("#txtCMVerificationLinesActualDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtCMPreventiveLinesTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $("#txtCMPreventiveLinesActualDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtCMPreventiveVerificationLinesTargetDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+
+        $("#txtCMPreventiveVerificationLinesActualDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+
+        $("#txtComplaintRegisteredDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#txtInvestigationDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+
+        $("#txtNoticeIssuedDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+
+
+        //Receipt_Details_Sheeting_Table
+
+    });
+
+
+
+
+    function ValidatePercentage(Identity) {
+
+        var Value = $("#" + Identity).val();
+
+        if (isNaN(Value)) {
+            $("#" + Identity).val("");
+        }
+        else {
+
+            if (Value > 100) {
+                $("#" + Identity).val("");
+            }
+            else {
+                Value = Math.round(Value * 100) / 100;
+                $("#" + Identity).val(Value);
+            }
+        }
+    }
+
+
+    function EditCMEmergencyLines(LineId) {
+
+        $("#EmergencyResponseAction_id").val(LineId);
+        $("#txtCMEmergencyActionName").val($("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML);
+        $("#txtCMEmergencyActionCode").val($("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML);
+        $("#txtCMEmergencyDescription").val($("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML);
+        $("#txtCMEmergencyTargetDate").val($("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML);
+        $("#txtCMEmergencyActualDate").val($("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML);
+        $("#txtCMEmergencyRemarks").val($("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML);
+
+        $("#txtCMEmergencyTargetDate").datepicker("setDate", ($("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+        $("#txtCMEmergencyActualDate").datepicker("setDate", $("#EmergencyResponseActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML);
+
+        $("#EmergencyResponseActionDetailModal").modal('show');
+        $("#CMEmergencyResponseAction_Delete").show();
+        $("#CMEmergencyResponseAction_Save").text("Update");
+
+    }
+
+
+    function SaveCMTeamLinesData() {
+        var Flag = 0;
+
+        var LineId = $("#TeamLines_id").val();
+        var TeamLinesName = $("#txtCMTeamLinesName").val();
+        var TeamLinesRole = $("#txtCMTeamLinesRole").val();
+        var TeamLinesTeamMembers = $("#txtCMTeamLinesTeamMembers").val();
+        var TeamLinesRemarks = $("#txtCMTeamLinesRemarks").val();
+
+
+        if (TeamLinesName == "") {
+            Flag = Flag + 1;
+            $("#txtCMTeamLinesName").css("border-color", "red");
+
+        }
+        else {
+            $("#txtCMTeamLinesName").css("border-color", "#d2d6de");
+        }
+
+        if (TeamLinesRole == "") {
+            Flag = Flag + 1;
+            $("#txtCMTeamLinesRole").css("border-color", "red");
+
+        }
+        else {
+            $("#txtCMTeamLinesRole").css("border-color", "#d2d6de");
+        }
+
+        if (TeamLinesTeamMembers == "") {
+            Flag = Flag + 1;
+            $("#txtCMTeamLinesTeamMembers").css("border-color", "red");
+
+        }
+        else {
+            $("#txtCMTeamLinesTeamMembers").css("border-color", "#d2d6de");
+        }
+
+        if (Flag > 0) {
+            return;
+        }
+        else {
+            if (LineId == "") {
+                var TRCode = "";
+
+                TRCode = TRCode + "<td>" + TeamLinesName + "</td>";
+                TRCode = TRCode + "<td>" + TeamLinesRole + "</td>";
+                TRCode = TRCode + "<td>" + TeamLinesTeamMembers + "</td>";
+                TRCode = TRCode + "<td>" + TeamLinesRemarks + "</td>";
+
+                LineId = $("#CMTeamInvolvedDetails_Table tbody tr").length + 1;
+                TRCode = "<tr class='MousePointer' id='TL_" + LineId + "' onclick='EditCMTeamLines(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+                $("#CMTeamInvolvedDetails_Table tbody").append(TRCode);
+
+                $("#TeamLinesDetailModal").modal('hide');
+            }
+            else {
+
+                $("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[1].innerHTML = TeamLinesName;
+                $("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[2].innerHTML = TeamLinesRole;
+                $("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[3].innerHTML = TeamLinesTeamMembers;
+                $("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[4].innerHTML = TeamLinesRemarks;
+
+                $("#TeamLinesDetailModal").modal('hide');
+            }
+        }
+    }
+
+    function EditCMTeamLines(LineId) {
+
+        $("#TeamLines_id").val(LineId);
+
+        $("#txtCMTeamLinesName").val($("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[1].innerHTML);
+        $("#txtCMTeamLinesRole").val(($("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+        $("#txtCMTeamLinesTeamMembers").val(($("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+        $("#txtCMTeamLinesRemarks").val(($("#CMTeamInvolvedDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+
+        $("#TeamLinesDetailModal").modal('show');
+        $("#CMTeamLines_Delete").show();
+        $("#CMTeamLines_Save").text("Update");
+    }
+
+    function OpenTeamInvolvedModel() {
+        if ($("#txtInvestigationNum").val() == "") {
+            alert("Please select Investigation Number");
+            return;
+        }
+
+        $("#txtCMTeamLinesName").css("border-color", "#d2d6de");
+        $("#txtCMTeamLinesRole").css("border-color", "#d2d6de");
+        $("#txtCMTeamLinesTeamMembers").css("border-color", "#d2d6de");
+
+        $("#TeamLines_id").val("");
+        $("#txtCMTeamLinesName").val("");
+        $("#txtCMTeamLinesRole").val("");
+        $("#txtCMTeamLinesTeamMembers").val("");
+        $("#txtCMTeamLinesRemarks").val("");
+
+        $("#CMTeamLines_Delete").hide();
+        $("#CMTeamLines_Save").text("Save");
+        $("#TeamLinesDetailModal").modal('show');
+
+        $("#txtCMTeamLinesName").focus();
+
+    }
+
+    function DeleteCMTeamLines() {
+
+        var LineId = $("#TeamLines_id").val();
+        $("#CMTeamInvolvedDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMTeamInvolvedDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "TL_" + i);
+            $("#CMTeamInvolvedDetails_Table tbody #TL_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+        $("#TeamLinesDetailModal").modal('hide');
+
+    }
+
+
+
+
+    function OpenCMIntermLinesModel() {
+        if ($("#txtInvestigationNum").val() == "") {
+            alert("Please select Investigation Number");
+            return;
+        }
+
+        $("#IntermLines_id").val("");
+
+        $("#txtCMIntermLinesActionID").val("");
+        $("#txtCMIntermLinesActionCode").val("");
+        $("#txtCMIntermLinesActionName").val("");
+        $("#txtCMIntermLinesDescription").val("");
+        $("#txtCMIntermLinesTargetDate").val("");
+        $("#txtCMIntermLinesActualDate").val("");
+        $("#txtCMIntermLinesRelatedTo").val("");
+        $("#txtCMIntermLinesRemarks").val("");
+
+        $("#txtCMIntermLinesTargetDate").datepicker("setDate", null);
+        $("#txtCMIntermLinesActualDate").datepicker("setDate", null);
+
+        $("#txtCMIntermLinesActionName").css("border-color", "#d2d6de");
+        $("#CMIntermLines_Delete").hide();
+        $("#CMIntermLines_Save").text("Save");
+
+        $("#IntermLinesDetailModal").modal('show');
+
+    }
+
+    function SaveCMIntermLinesData() {
+
+        var LineId = $("#IntermLines_id").val();
+        var ActionCode = $("#txtCMIntermLinesActionCode").val();
+        var ActionName = $("#txtCMIntermLinesActionName").val();
+
+        var Description = $("#txtCMIntermLinesDescription").val();
+        var TargetDate = $("#txtCMIntermLinesTargetDate").val();
+        var ActualDate = $("#txtCMIntermLinesActualDate").val();
+        var RelatedTo = $("#txtCMIntermLinesRelatedTo").val();
+        var Remarks = $("#txtCMIntermLinesRemarks").val();
+
+        if (ActionName == "") {
+            $("#txtCMIntermLinesActionName").css("border-color", "red");
+            return;
+        }
+        else {
+            $("#txtCMIntermLinesActionName").css("border-color", "#d2d6de");
+        }
+
+        if (LineId == "") {
+            var TRCode = "";
+
+            TRCode = TRCode + "<td>" + ActionName + "</td>";
+            TRCode = TRCode + "<td>" + Description + "</td>";
+            TRCode = TRCode + "<td>" + TargetDate + "</td>";
+            TRCode = TRCode + "<td>" + ActualDate + "</td>";
+
+            TRCode = TRCode + "<td>" + RelatedTo + "</td>";
+            TRCode = TRCode + "<td>" + Remarks + "</td>";
+            TRCode = TRCode + "<td style='display:none;'>" + ActionCode + "</td>";
+
+            LineId = $("#CMInterimContainmentActionsDetails_Table tbody tr").length + 1;
+            TRCode = "<tr class='MousePointer' id='ICAD_" + LineId + "' onclick='EditCMInterimLines(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+            $("#CMInterimContainmentActionsDetails_Table tbody").append(TRCode);
+
+            $("#IntermLinesDetailModal").modal('hide');
+        }
+        else {
+
+            $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML = ActionName;
+            $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML = Description;
+            $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML = TargetDate;
+
+            $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML = ActualDate;
+            $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML = RelatedTo;
+            $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML = Remarks;
+
+            $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML = ActionCode;
+
+            $("#IntermLinesDetailModal").modal('hide');
+        }
+
+    }
+
+    function EditCMInterimLines(LineId) {
+
+        try {
+
+            $("#IntermLines_id").val(LineId);
+            $("#txtCMIntermLinesActionCode").val(($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML));
+            $("#txtCMIntermLinesActionName").val(($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML));
+            $("#txtCMIntermLinesDescription").val(($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+            $("#txtCMIntermLinesTargetDate").val(($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+            $("#txtCMIntermLinesTargetDate").datepicker("setDate", ($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+            $("#txtCMIntermLinesActualDate").val(($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+            $("#txtCMIntermLinesActualDate").datepicker("setDate", ($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+            $("#txtCMIntermLinesRelatedTo").val(($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+            $("#txtCMIntermLinesRemarks").val(($("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+
+            //$("#ComplaintRegistrationDate_CRT").datepicker("setDate", TodayDateTime);
+
+            $("#IntermLinesDetailModal").modal('show');
+            $("#CMIntermLines_Delete").show();
+            $("#CMIntermLines_Save").text("Update");
+        }
+        catch (e) {
+            alert(e);
+        }
+
+
+
+    }
+
+    function DeleteCMIntermLines() {
+        var LineId = $("#IntermLines_id").val();
+        $("#CMInterimContainmentActionsDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMInterimContainmentActionsDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "ICAD_" + i);
+            $("#CMInterimContainmentActionsDetails_Table tbody #ICAD_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+        $("#IntermLinesDetailModal").modal('hide');
+    }
+
+
+
+
+
+    function OpenRootCauseLinesModel() {
+        if ($("#txtInvestigationNum").val() == "") {
+            alert("Please select Investigation Number");
+            return;
+        }
+
+
+        $("#txtCMRootCauseRelatedToID").val("");
+        $("#txtCMRootCauseRelatedToCode").val("");
+        $("#txtCMRootCauseLinesCauseID").val("");
+        $("#txtCMRootCauseLinesCauseCode").val("");
+        $("#txtCMRootCauseLinesCauseName").val("");
+
+        $("#txtCMRootCauseLinesDescription").val("");
+        $("#txtCMRootCauseLinesFindings").val("");
+        $("#txtCMRootCauseLinesRelatedTo").val("");
+        $("#txtCMRootCauseLinesRemarks").val("");
+
+        $("#RootCauseLines_id").val("");
+
+        $("#txtCMRootCauseLinesCauseName").css("border-color", "#d2d6de");
+        $("#CMRootCauseLines_Delete").hide();
+        $("#CMRootCauseLines_Save").text("Save");
+        $("#RootCauseLinesDetailModal").modal('show');
+
+    }
+
+
+    function SaveCMRootCauseLinesData() {
+        var LineId = $("#RootCauseLines_id").val();
+
+        var CauseCode = $("#txtCMRootCauseLinesCauseCode").val();
+        var CauseName = $("#txtCMRootCauseLinesCauseName").val();
+
+        var RelatedCode = $("#txtCMRootCauseRelatedToCode").val();
+        var RelatedName = $("#txtCMRootCauseLinesRelatedTo").val();
+
+        var Description = $("#txtCMRootCauseLinesDescription").val();
+        var Finding = $("#txtCMRootCauseLinesFindings").val();
+
+        var Remarks = $("#txtCMRootCauseLinesRemarks").val();
+
+        if (CauseName == "") {
+            $("#txtCMRootCauseLinesCauseName").css("border-color", "red");
+            return;
+        }
+        else {
+            $("#txtCMRootCauseLinesCauseName").css("border-color", "#d2d6de");
+        }
+
+
+        if (LineId == "") {
+            var TRCode = "";
+
+            TRCode = TRCode + "<td>" + CauseName + "</td>";
+            TRCode = TRCode + "<td>" + Description + "</td>";
+            TRCode = TRCode + "<td>" + Finding + "</td>";
+
+            TRCode = TRCode + "<td>" + RelatedName + "</td>";
+            TRCode = TRCode + "<td>" + Remarks + "</td>";
+            TRCode = TRCode + "<td style='display:none;'>" + CauseCode + "</td>";
+
+            TRCode = TRCode + "<td style='display:none;'>" + RelatedCode + "</td>";
+
+            LineId = $("#CMRootCauseEscapePointDetails_Table tbody tr").length + 1;
+            TRCode = "<tr class='MousePointer' id='RCEPD_" + LineId + "' onclick='EditCMRootCauseLines(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+            $("#CMRootCauseEscapePointDetails_Table tbody").append(TRCode);
+
+            $("#RootCauseLinesDetailModal").modal('hide');
+
+        }
+        else {
+            $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[1].innerHTML = CauseName;
+            $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[2].innerHTML = Description;
+            $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[3].innerHTML = Finding;
+
+            $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[4].innerHTML = RelatedName;
+            $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[5].innerHTML = Remarks;
+            $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[6].innerHTML = CauseCode;
+
+            $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[7].innerHTML = RelatedCode;
+
+
+            $("#RootCauseLinesDetailModal").modal('hide');
+        }
+
+    }
+
+
+    function EditCMRootCauseLines(LineId) {
+        $("#RootCauseLines_id").val(LineId);
+
+        $("#txtCMRootCauseLinesCauseName").val(($("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[1].innerHTML));
+        $("#txtCMRootCauseLinesRelatedTo").val(($("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+
+        $("#txtCMRootCauseLinesDescription").val(($("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+        $("#txtCMRootCauseLinesFindings").val(($("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+        $("#txtCMRootCauseLinesRemarks").val(($("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+
+        $("#txtCMRootCauseLinesCauseCode").val(($("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+        $("#txtCMRootCauseRelatedToCode").val(($("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + " td")[7].innerHTML));
+
+        $("#RootCauseLinesDetailModal").modal('show');
+        $("#CMRootCauseLines_Delete").show();
+        $("#CMRootCauseLines_Save").text("Update");
+
+    }
+
+
+    function DeleteCMRootCauseLines() {
+
+        var LineId = $("#RootCauseLines_id").val();
+        $("#CMRootCauseEscapePointDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMRootCauseEscapePointDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "RCEPD_" + i);
+            $("#CMRootCauseEscapePointDetails_Table tbody #RCEPD_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+        $("#RootCauseLinesDetailModal").modal('hide');
+
+
+    }
+
+
+
+
+
+
+
+
+
+    function OpenChosenLinesModel() {
+
+        $("#ChosenLines_id").val();
+
+        $("#txtCMChosenLinesActionCode").val("");
+        $("#txtCMChosenLinesActionName").val("");
+
+        $("#txtCMChosenLinesDescription").val("");
+        $("#txtCMChosenLinesTargetDate").val("");
+        $("#txtCMChosenLinesActualDate").val("");
+        $("#txtCMChosenLinesRelatedTo").val("");
+        $("#txtCMChosenLinesRemarks").val("");
+
+        $("#txtCMChosenLinesTargetDate").datepicker("setDate", null);
+        $("#txtCMChosenLinesActualDate").datepicker("setDate", null);
+
+        $("#txtCMChosenLinesActionName").css("border-color", "#d2d6de");
+        $("#CMChosenLinesAction_Delete").hide();
+        $("#CMChosenLinesAction_Save").text("Save");
+        $("#ChosenLinesDetailModal").modal('show');
+    }
+
+
+    function SaveCMChosenLinesActionData() {
+
+        var LineId = $("#ChosenLines_id").val();
+
+        var ActionCode = $("#txtCMChosenLinesActionCode").val();
+        var ActionName = $("#txtCMChosenLinesActionName").val();
+
+        var Description = $("#txtCMChosenLinesDescription").val();
+        var TargetDate = $("#txtCMChosenLinesTargetDate").val();
+        var ActualDate = $("#txtCMChosenLinesActualDate").val();
+        var RelatedTo = $("#txtCMChosenLinesRelatedTo").val();
+        var Remarks = $("#txtCMChosenLinesRemarks").val();
+
+
+        if (ActionName == "") {
+            $("#txtCMChosenLinesActionName").css("border-color", "red");
+            return;
+        }
+        else {
+            $("#txtCMChosenLinesActionName").css("border-color", "#d2d6de");
+        }
+
+
+        if (LineId == "") {
+            var TRCode = "";
+
+            TRCode = TRCode + "<td>" + ActionName + "</td>";
+            TRCode = TRCode + "<td>" + Description + "</td>";
+            TRCode = TRCode + "<td>" + TargetDate + "</td>";
+
+            TRCode = TRCode + "<td>" + ActualDate + "</td>";
+            TRCode = TRCode + "<td>" + RelatedTo + "</td>";
+            TRCode = TRCode + "<td>" + Remarks + "</td>";
+
+            TRCode = TRCode + "<td style='display:none;'>" + ActionCode + "</td>";
+
+            LineId = $("#CMChosenPermanentCorrectiveActionDetails_Table tbody tr").length + 1;
+            TRCode = "<tr class='MousePointer' id='CPCAD_" + LineId + "' onclick='EditChoosenLine(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody").append(TRCode);
+
+            $("#ChosenLinesDetailModal").modal("hide");
+        }
+        else {
+
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[1].innerHTML = ActionName;
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[2].innerHTML = Description;
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[3].innerHTML = TargetDate;
+
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[4].innerHTML = ActualDate;
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[5].innerHTML = RelatedTo;
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[6].innerHTML = Remarks;
+
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[7].innerHTML = ActionCode;
+
+            $("#ChosenLinesDetailModal").modal("hide");
+        }
+    }
+
+
+    function EditChoosenLine(LineId) {
+
+        $("#ChosenLines_id").val(LineId);
+
+        $("#txtCMChosenLinesActionName").val(($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[1].innerHTML));
+
+        $("#txtCMChosenLinesDescription").val(($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+        $("#txtCMChosenLinesTargetDate").val(($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+        $("#txtCMChosenLinesActualDate").val(($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+        $("#txtCMChosenLinesRelatedTo").val(($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+        $("#txtCMChosenLinesRemarks").val(($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+        $("#txtCMChosenLinesActionCode").val(($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[7].innerHTML));
+
+        $("#txtCMChosenLinesTargetDate").datepicker("setDate", ($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+        $("#txtCMChosenLinesActualDate").datepicker("setDate", ($("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+
+
+        $("#ChosenLinesDetailModal").modal('show');
+        $("#CMChosenLinesAction_Delete").show();
+        $("#CMChosenLinesAction_Save").text("Update");
+
+    }
+
+
+    function DeleteCMChosenLinesAction() {
+
+        var LineId = $("#ChosenLines_id").val();
+        $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMChosenPermanentCorrectiveActionDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "CPCAD_" + i);
+            $("#CMChosenPermanentCorrectiveActionDetails_Table tbody #CPCAD_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+        $("#ChosenLinesDetailModal").modal('hide');
+
+    }
+
+
+
+
+
+
+
+    function OpenImplementLinesModel() {
+
+        $("#ImplementLines_id").val("");
+        $("#txtCMImplementLinesChosenLineID").val("");
+        $("#txtCMImplementLinesActionCode").val("");
+        $("#txtCMImplementLinesActionName").val("");
+
+        $("#txtCMImplementLinesDescription").val("");
+        $("#txtCMImplementLinesTargetDate").val("");
+        $("#txtCMImplementLinesActualDate").val("");
+        $("#txtCMImplementLinesRelatedTo").val("");
+        $("#txtCMImplementLinesRemarks").val("");
+
+        $("#txtCMImplementLinesTargetDate").datepicker("setDate", null);
+        $("#txtCMImplementLinesActualDate").datepicker("setDate", null);
+
+        $("#txtCMImplementLinesActionName").css("border-color", "#d2d6de");
+        $("#CMImplementCauseLines_Delete").hide();
+        $("#CMImplementLines_Save").text("Save");
+        $("#ImplementLinesDetailModal").modal('show');
+
+    }
+
+
+    function SaveCMImplementLinesData() {
+
+        var LineId = $("#ImplementLines_id").val();
+        var ActionCode = $("#txtCMImplementLinesActionCode").val();
+        var ActionName = $("#txtCMImplementLinesActionName").val();
+
+        var Description = $("#txtCMImplementLinesDescription").val();
+        var TargetDate = $("#txtCMImplementLinesTargetDate").val();
+        var ActualDate = $("#txtCMImplementLinesActualDate").val();
+        var RelatedTo = $("#txtCMImplementLinesRelatedTo").val();
+        var Remarks = $("#txtCMImplementLinesRemarks").val();
+
+        if (ActionCode == "") {
+            $("#txtCMImplementLinesActionCode").css("border-color", "red");
+            return;
+        }
+        else {
+            $("#txtCMImplementLinesActionCode").css("border-color", "#d2d6de");
+        }
+
+
+        if (LineId == "") {
+            var TRCode = "";
+
+            TRCode = TRCode + "<td>" + ActionName + "</td>";
+            TRCode = TRCode + "<td>" + Description + "</td>";
+            TRCode = TRCode + "<td>" + TargetDate + "</td>";
+
+            TRCode = TRCode + "<td>" + ActualDate + "</td>";
+            TRCode = TRCode + "<td>" + RelatedTo + "</td>";
+            TRCode = TRCode + "<td>" + Remarks + "</td>";
+
+            TRCode = TRCode + "<td style='display:none;'>" + ActionCode + "</td>";
+
+
+            LineId = $("#CMImplementedCorrectiveActionDetails_Table tbody tr").length + 1;
+            TRCode = "<tr class='MousePointer' id='ICAD_" + LineId + "' onclick='EditCorrectiveActionDetails(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+            $("#CMImplementedCorrectiveActionDetails_Table tbody").append(TRCode);
+
+
+            $("#ImplementLinesDetailModal").modal('hide');
+        }
+        else {
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[1].innerHTML = ActionName;
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[2].innerHTML = Description;
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[3].innerHTML = TargetDate;
+
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[4].innerHTML = ActualDate;
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[5].innerHTML = RelatedTo;
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[6].innerHTML = Remarks;
+
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[7].innerHTML = ActionCode;
+
+            $("#ImplementLinesDetailModal").modal('hide');
+        }
+
+    }
+
+
+    function EditCorrectiveActionDetails(LineId) {
+        $("#ImplementLines_id").val(LineId);
+
+        $("#txtCMImplementLinesActionName").val(($("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[1].innerHTML));
+        $("#txtCMImplementLinesDescription").val(($("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+        $("#txtCMImplementLinesTargetDate").val(($("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+
+        $("#txtCMImplementLinesActualDate").val(($("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+        $("#txtCMImplementLinesRelatedTo").val(($("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+        $("#txtCMImplementLinesRemarks").val(($("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+
+        $("#txtCMImplementLinesActionCode").val(($("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + " td")[7].innerHTML));
+
+
+        $("#txtCMImplementLinesActionName").css("border-color", "#d2d6de");
+        $("#CMImplementCauseLines_Delete").show();
+        $("#CMImplementLines_Save").text("Update");
+
+        $("#ImplementLinesDetailModal").modal('show');
+    }
+
+
+    function DeleteCMImplementLines() {
+
+        var LineId = $("#ImplementLines_id").val();
+        $("#CMImplementedCorrectiveActionDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMImplementedCorrectiveActionDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "ICAD_" + i);
+            $("#CMImplementedCorrectiveActionDetails_Table tbody #ICAD_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+        $("#ImplementLinesDetailModal").modal('hide');
+
+    }
+
+
+
+
+
+
+
+
+
+    function OpenVerificationLinesModel() {
+
+        if ($("#txtInvestigationNum").val() == "") {
+            alert("Please select Investigation Number");
+            return;
+        }
+
+        $("#VerificationLines_id").val("");
+
+        $("#txtCMVerificationImplementedLineId").val("");
+        $("#txtCMVerificationLinesImplimentedActionCode").val("");
+        $("#txtCMVerificationLinesImplimentedActionName").val("");
+
+        $("#txtCMVerificationLinesValidation").val("");
+        $("#txtCMVerificationLinesEffectivePercent").val("");
+
+        $("#txtCMVerificationLinesTargetDate").val("");
+        $("#txtCMVerificationLinesActualDate").val("");
+        $("#txtCMVerificationLinesRemarks").val("");
+
+        $("#txtCMVerificationLinesTargetDate").datepicker("setDate", null);
+        $("#txtCMVerificationLinesActualDate").datepicker("setDate", null);
+
+        $("#CMVerificationLines_Delete").hide();
+        $("#CMVerificationLines_Save").text("Save");
+        $("#VerificationLinesDetailModal").modal('show');
+
+    }
+
+
+    function SaveCMVerificationLinesData() {
+
+        var LineId = $("#VerificationLines_id").val();
+
+        var ImplementedLineId = $("#txtCMVerificationImplementedLineId").val();
+        var ActionCode = $("#txtCMVerificationLinesImplimentedActionCode").val();
+        var ActionName = $("#txtCMVerificationLinesImplimentedActionName").val();
+
+        var Validation = $("#txtCMVerificationLinesValidation").val();
+        var EffectivePercent = $("#txtCMVerificationLinesEffectivePercent").val();
+        var TargetDate = $("#txtCMVerificationLinesTargetDate").val();
+        var ActualDate = $("#txtCMVerificationLinesActualDate").val();
+        var Remarks = $("#txtCMVerificationLinesRemarks").val();
+
+        var Flag = 0;
+
+        if (ActionName == "") {
+            $("#txtCMVerificationLinesImplimentedActionName").css("border-color", "red");
+            Flag = Flag + 1;
+        }
+        else {
+            $("#txtCMVerificationLinesImplimentedActionName").css("border-color", "#d2d6de");
+        }
+
+        if (Validation == "") {
+            $("#txtCMVerificationLinesValidation").css("border-color", "red");
+            Flag = Flag + 1;
+        }
+        else {
+            $("#txtCMVerificationLinesValidation").css("border-color", "#d2d6de");
+        }
+
+        if (EffectivePercent == "") {
+            $("#txtCMVerificationLinesEffectivePercent").css("border-color", "red");
+            Flag = Flag + 1;
+        }
+        else {
+            $("#txtCMVerificationLinesEffectivePercent").css("border-color", "#d2d6de");
+        }
+
+        if (Flag > 0) {
+            return;
+        }
+        else {
+
+            if (LineId == "") {
+
+                var TRCode = "";
+
+                TRCode = TRCode + "<td>" + ImplementedLineId + "</td>";
+                TRCode = TRCode + "<td>" + ActionName + "</td>";
+                TRCode = TRCode + "<td>" + Validation + "</td>";
+
+                TRCode = TRCode + "<td>" + EffectivePercent + "</td>";
+                TRCode = TRCode + "<td>" + TargetDate + "</td>";
+                TRCode = TRCode + "<td>" + ActualDate + "</td>";
+                TRCode = TRCode + "<td>" + Remarks + "</td>";
+
+                TRCode = TRCode + "<td style='display:none;'>" + ActionCode + "</td>";
+
+                LineId = $("#CMVerificationofCorrectiveActionsDetails_Table tbody tr").length + 1;
+                TRCode = "<tr class='MousePointer' id='VCA_" + LineId + "' onclick='EditCorrectiveActionsDetails(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody").append(TRCode);
+
+                $("#VerificationLinesDetailModal").modal('hide');
+            }
+            else {
+
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML = ImplementedLineId;
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML = ActionName;
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML = Validation;
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML = EffectivePercent;
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML = TargetDate;
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML = ActualDate;
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML = Remarks;
+                $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[8].innerHTML = ActionCode;
+
+                $("#VerificationLinesDetailModal").modal('hide');
+            }
+
+        }
+    }
+
+
+    function EditCorrectiveActionsDetails(LineId) {
+
+        $("#VerificationLines_id").val(LineId);
+
+        $("#txtCMVerificationImplementedLineId").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML));
+        $("#txtCMVerificationLinesImplimentedActionCode").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[8].innerHTML));
+        $("#txtCMVerificationLinesImplimentedActionName").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+        $("#txtCMVerificationLinesValidation").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+
+        $("#txtCMVerificationLinesEffectivePercent").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+        $("#txtCMVerificationLinesTargetDate").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+        $("#txtCMVerificationLinesActualDate").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+        $("#txtCMVerificationLinesRemarks").val(($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML));
+
+
+        $("#txtCMVerificationLinesTargetDate").datepicker("setDate", ($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+        $("#txtCMVerificationLinesActualDate").datepicker("setDate", ($("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+
+
+        $("#txtCMVerificationLinesImplimentedActionName").css("border-color", "#d2d6de");
+        $("#txtCMVerificationLinesValidation").css("border-color", "#d2d6de");
+        $("#txtCMVerificationLinesEffectivePercent").css("border-color", "#d2d6de");
+
+
+        $("#txtCMVerificationLinesImplimentedActionName").css("border-color", "#d2d6de");
+        $("#txtCMVerificationLinesValidation").css("border-color", "#d2d6de");
+        $("#txtCMVerificationLinesEffectivePercent").css("border-color", "#d2d6de");
+
+
+        $("#CMVerificationLines_Delete").show();
+        $("#CMVerificationLines_Save").text("Update");
+
+        $("#VerificationLinesDetailModal").modal('show');
+    }
+
+
+
+    function DeleteCMVerificationLines() {
+        var LineId = $("#VerificationLines_id").val();
+        $("#CMVerificationofCorrectiveActionsDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMVerificationofCorrectiveActionsDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "VCA_" + i);
+            $("#CMVerificationofCorrectiveActionsDetails_Table tbody #VCA_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+        $("#VerificationLinesDetailModal").modal('hide');
+    }
+
+
+
+
+
+
+
+    function OpenPreventiveLinesModel() {
+
+        if ($("#txtInvestigationNum").val() == "") {
+            alert("Please select Investigation Number");
+            return;
+        }
+
+        $("#PreventiveLines_id").val("");
+        $("#txtCMIPreventiveLinesActionCode").val("");
+        $("#txtCMIPreventiveLinesActionName").val("");
+        $("#txtCMPreventiveLinesDescription").val("");
+        $("#txtCMIPreventiveLinesName").val("");
+        $("#txtCMPreventiveLinesTargetDate").val("");
+        $("#txtCMPreventiveLinesActualDate").val("");
+        $("#txtCMPreventiveLinesRelatedTo").val("");
+        $("#txtCMPreventiveLinesRemarks").val("");
+
+        $("#txtCMPreventiveLinesTargetDate").datepicker("setDate", null);
+        $("#txtCMPreventiveLinesActualDate").datepicker("setDate", null);
+
+        $("#txtCMIPreventiveLinesActionName").css("border-color", "#d2d6de");
+        $("#CMPreventiveLines_Delete").hide();
+        $("#CMPreventiveLines_Save").text("Save");
+        $("#PreventiveLinesDetailModal").modal('show');
+
+    }
+
+
+    function SaveCMPreventiveLinesData() {
+
+        var LineId = $("#PreventiveLines_id").val();
+
+        var ActionCode = $("#txtCMIPreventiveLinesActionCode").val();
+        var ActionName = $("#txtCMIPreventiveLinesActionName").val();
+        var Description = $("#txtCMPreventiveLinesDescription").val();
+        var Name = $("#txtCMIPreventiveLinesName").val();
+        var TargetDate = $("#txtCMPreventiveLinesTargetDate").val();
+        var ActualDate = $("#txtCMPreventiveLinesActualDate").val();
+        var RelatedTo = $("#txtCMPreventiveLinesRelatedTo").val();
+        var Remarks = $("#txtCMPreventiveLinesRemarks").val();
+
+
+        if (ActionName == "") {
+            $("#txtCMIPreventiveLinesActionName").css("border-color", "red");
+            return;
+        }
+        else {
+            $("#txtCMIPreventiveLinesActionName").css("border-color", "#d2d6de");
+        }
+
+
+        if (LineId == "") {
+            var TRCode = "";
+
+            TRCode = TRCode + "<td>" + ActionName + "</td>";
+            TRCode = TRCode + "<td>" + Description + "</td>";
+
+            TRCode = TRCode + "<td>" + Name + "</td>";
+            TRCode = TRCode + "<td>" + TargetDate + "</td>";
+            TRCode = TRCode + "<td>" + ActualDate + "</td>";
+            TRCode = TRCode + "<td>" + RelatedTo + "</td>";
+            TRCode = TRCode + "<td>" + Remarks + "</td>";
+
+            TRCode = TRCode + "<td style='display:none;'>" + ActionCode + "</td>";
+
+            LineId = $("#CMPreventiveActionsDetails_Table tbody tr").length + 1;
+            TRCode = "<tr class='MousePointer' id='PAD_" + LineId + "' onclick='EditCMPreventiveLinesData(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+            $("#CMPreventiveActionsDetails_Table tbody").append(TRCode);
+
+            $("#PreventiveLinesDetailModal").modal('hide');
+        }
+        else {
+
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML = ActionName;
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML = Description;
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML = Name;
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML = TargetDate;
+
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML = ActualDate;
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML = RelatedTo;
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML = Remarks;
+            $("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[8].innerHTML = ActionCode;
+
+            $("#PreventiveLinesDetailModal").modal('hide');
+        }
+
+    }
+
+
+    function EditCMPreventiveLinesData(LineId) {
+
+        $("#PreventiveLines_id").val(LineId);
+
+        $("#txtCMIPreventiveLinesActionName").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML));
+        $("#txtCMPreventiveLinesDescription").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+        $("#txtCMIPreventiveLinesName").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+        $("#txtCMPreventiveLinesTargetDate").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+        $("#txtCMPreventiveLinesActualDate").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+        $("#txtCMPreventiveLinesRelatedTo").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+        $("#txtCMPreventiveLinesRemarks").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML));
+        $("#txtCMIPreventiveLinesActionCode").val(($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[8].innerHTML));
+
+        $("#txtCMPreventiveLinesTargetDate").datepicker("setDate", ($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+        $("#txtCMPreventiveLinesActualDate").datepicker("setDate", ($("#CMPreventiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+
+        $("#txtCMIPreventiveLinesActionName").css("border-color", "#d2d6de");
+        $("#CMPreventiveLines_Delete").show();
+        $("#CMPreventiveLines_Save").text("Update");
+        $("#PreventiveLinesDetailModal").modal('show');
+
+    }
+
+
+    function DeleteCMPreventiveLines() {
+        var LineId = $("#PreventiveLines_id").val();
+        $("#CMPreventiveActionsDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMPreventiveActionsDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "PAD_" + i);
+            $("#CMPreventiveActionsDetails_Table tbody #PAD_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+        $("#PreventiveLinesDetailModal").modal('hide');
+    }
+
+
+
+
+
+
+
+
+    function OpenPreventiveVerificationLinesModel() {
+
+        $("#PreventiveVerificationLines_id").val("");
+
+        $("#txtCMPreventiveVerificationLinesPreventiveActionLineId").val("");
+        $("#txtCMPreventiveVerificationLinesPreventiveActionCode").val("");
+        $("#txtCMPreventiveVerificationLinesPreventiveActionName").val("");
+
+        $("#txtCMPreventiveVerificationLinesValidation").val("");
+        $("#txtCMPreventiveVerificationLinesEffectivePercent").val("");
+        $("#txtCMPreventiveVerificationLinesTargetDate").val("");
+        $("#txtCMPreventiveVerificationLinesActualDate").val("");
+        $("#txtCMPreventiveVerificationLinesRemarks").val("");
+
+        $("#txtCMPreventiveVerificationLinesTargetDate").datepicker("setDate", null);
+        $("#txtCMPreventiveVerificationLinesActualDate").datepicker("setDate", null);
+
+        $("#txtCMPreventiveVerificationLinesPreventiveActionName").css("border-color", "#d2d6de");
+        $("#txtCMPreventiveVerificationLinesValidation").css("border-color", "#d2d6de");
+        $("#txtCMPreventiveVerificationLinesEffectivePercent").css("border-color", "#d2d6de");
+
+        $("#CMPreventiveVerificationLines_Delete").hide();
+        $("#CMPreventiveVerificationLines_Save").text("Save");
+
+        $("#PreventiveVerificationLinesDetailModal").modal('show');
+
+    }
+
+
+    function SaveCMPreventiveVerificationLinesData() {
+
+        var LineId = $("#PreventiveVerificationLines_id").val();
+
+        var ActionLine = $("#txtCMPreventiveVerificationLinesPreventiveActionLineId").val();
+        var ActionCode = $("#txtCMPreventiveVerificationLinesPreventiveActionCode").val();
+        var ActionName = $("#txtCMPreventiveVerificationLinesPreventiveActionName").val();
+
+        var Validation = $("#txtCMPreventiveVerificationLinesValidation").val();
+        var EffectivePercent = $("#txtCMPreventiveVerificationLinesEffectivePercent").val();
+        var TargetDate = $("#txtCMPreventiveVerificationLinesTargetDate").val();
+        var ActualDate = $("#txtCMPreventiveVerificationLinesActualDate").val();
+        var Remarks = $("#txtCMPreventiveVerificationLinesRemarks").val();
+
+        var Flag = 0;
+
+        if (ActionName == "") {
+            $("#txtCMPreventiveVerificationLinesPreventiveActionName").css("border-color", "red");
+            Flag = Flag + 1;
+        }
+        else {
+            $("#txtCMPreventiveVerificationLinesPreventiveActionName").css("border-color", "#d2d6de");
+        }
+
+        if (Validation == "") {
+            $("#txtCMPreventiveVerificationLinesValidation").css("border-color", "red");
+            Flag = Flag + 1;
+        }
+        else {
+            $("#txtCMPreventiveVerificationLinesValidation").css("border-color", "#d2d6de");
+        }
+
+        if (EffectivePercent == "") {
+            $("#txtCMPreventiveVerificationLinesEffectivePercent").css("border-color", "red");
+            Flag = Flag + 1;
+        }
+        else {
+            $("#txtCMPreventiveVerificationLinesEffectivePercent").css("border-color", "#d2d6de");
+        }
+
+        if (Flag > 0) {
+            return;
+        }
+
+
+        if (LineId == "") {
+
+            var TRCode = "";
+
+            TRCode = TRCode + "<td>" + ActionLine + "</td>";
+            TRCode = TRCode + "<td>" + ActionName + "</td>";
+            TRCode = TRCode + "<td>" + Validation + "</td>";
+
+            TRCode = TRCode + "<td>" + EffectivePercent + "</td>";
+            TRCode = TRCode + "<td>" + TargetDate + "</td>";
+            TRCode = TRCode + "<td>" + ActualDate + "</td>";
+            TRCode = TRCode + "<td>" + Remarks + "</td>";
+
+            TRCode = TRCode + "<td style='display:none;'>" + ActionCode + "</td>";
+
+
+
+            LineId = $("#CMVerificationofPreventiveActionsDetails_Table tbody tr").length + 1;
+            TRCode = "<tr class='MousePointer' id='VPA_" + LineId + "' onclick='EditVerificationPreventiveLinesData(this.id)'><td>" + LineId + "</td>" + TRCode + "</tr>";
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody").append(TRCode);
+            $("#PreventiveVerificationLinesDetailModal").modal('hide');
+        }
+        else {
+
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML = ActionLine;
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML = ActionName;
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML = Validation;
+
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML = EffectivePercent;
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML = TargetDate;
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML = ActualDate;
+
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML = Remarks;
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[8].innerHTML = ActionCode;
+
+            $("#PreventiveVerificationLinesDetailModal").modal('hide');
+        }
+
+
+    }
+
+
+    function EditVerificationPreventiveLinesData(LineId) {
+
+        $("#PreventiveVerificationLines_id").val(LineId);
+
+        $("#txtCMPreventiveVerificationLinesPreventiveActionLineId").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[1].innerHTML));
+        $("#txtCMPreventiveVerificationLinesPreventiveActionCode").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[8].innerHTML));
+        $("#txtCMPreventiveVerificationLinesPreventiveActionName").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[2].innerHTML));
+
+        $("#txtCMPreventiveVerificationLinesValidation").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[3].innerHTML));
+        $("#txtCMPreventiveVerificationLinesEffectivePercent").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[4].innerHTML));
+        $("#txtCMPreventiveVerificationLinesTargetDate").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML));
+        $("#txtCMPreventiveVerificationLinesActualDate").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML));
+        $("#txtCMPreventiveVerificationLinesRemarks").val(($("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[7].innerHTML));
+
+        $("#txtCMPreventiveVerificationLinesTargetDate").datepicker("setDate", $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[5].innerHTML);
+        $("#txtCMPreventiveVerificationLinesActualDate").datepicker("setDate", $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + " td")[6].innerHTML);
+
+        $("#txtCMPreventiveVerificationLinesPreventiveActionName").css("border-color", "#d2d6de");
+        $("#txtCMPreventiveVerificationLinesValidation").css("border-color", "#d2d6de");
+        $("#txtCMPreventiveVerificationLinesEffectivePercent").css("border-color", "#d2d6de");
+
+        $("#CMPreventiveVerificationLines_Delete").show();
+        $("#CMPreventiveVerificationLines_Save").text("Update");
+
+        $("#PreventiveVerificationLinesDetailModal").modal('show');
+
+    }
+
+
+    function DeleteCMPreventiveVerificationLines() {
+        var LineId = $("#PreventiveVerificationLines_id").val();
+        $("#CMVerificationofPreventiveActionsDetails_Table tbody #" + LineId + "").remove();
+
+        var i = 1;
+
+        $("#CMVerificationofPreventiveActionsDetails_Table tbody tr").each(function () {
+            $(this).attr("id", "VPA_" + i);
+            $("#CMVerificationofPreventiveActionsDetails_Table tbody #VPA_" + i + " td")[0].innerHTML = i;
+            i = i + 1;
+        });
+
+        $("#PreventiveVerificationLinesDetailModal").modal('hide');
+
+    }
+
+
+</script>

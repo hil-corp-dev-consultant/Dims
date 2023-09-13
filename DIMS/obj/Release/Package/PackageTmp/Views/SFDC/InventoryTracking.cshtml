@@ -1,0 +1,202 @@
+﻿@using LabelNames = DIMS.Content.Resource_Files.DailyOrderTracking;
+@{
+    Layout = null;
+    //  string Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string Role = UP.UserTypeCode;
+   
+}
+
+
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Inventory Tracker</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Inventory Tracker</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        @*<div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('AddInventoryTrack')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+            </div>
+        </div>*@
+    </nav>
+</section>
+<input type="text" id="SessionRoleCode" hidden="hidden" value="@SessionUserCode" />
+<input type="text" id="SessionUserCode" hidden="hidden" value="@Role" />
+ <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="AddInventoryDiv">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;">                
+                <div class="box-body">
+                    @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small">
+                    <div class="form-group">
+@*                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            From Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="InventoryFromDate" placeholder="From Date" readonly onchange="DateValidation('InventoryFromDate', 'InventoryToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtBatchNo">
+                            To Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="InventoryToDate" placeholder="To Date" readonly />
+                        </div>*@
+                        <label class="col-sm-2 control-label" for="SalesEmapName">
+                            Zone
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="Zone" multiple="multiple" class="form-control"></select>
+                        </div>
+                         <label class="col-sm-2 control-label" for="SalesEmapName">
+                            State
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="TerriotryArea">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+                    </div>
+@*                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="SalesEmapName">
+                            State
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="TerriotryArea">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="StockistID">
+                            Customer Code/Name
+                        </label>
+                        <div class="col-sm-3">
+                            <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                            @*<select id="StockistID" multiple="multiple" class="form-control"></select>*@
+                        </div>
+                        <div class="col-sm-7">
+                        <div class="pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="GetInventoryDetails()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" id="Reset" ng-click="Reset()" class="btn btn-info navbar-btn" style="background-color: #d2401a;border:1px solid #d2401a; color: white;">
+                            Reset Filter
+                        </button>
+                        </div>
+                        </div>
+                    </div>                    
+                </form>
+                <div style="padding:10px;"></div>
+                <div id="InventoryTrackingDiv" @*class="hidden"*@>
+                    
+                    <table class="table Listtable" width="100%"  id="InventoryTracking">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'Terriotry/Area' });
+
+        GetServerDateTime();
+
+        $('#InventoryFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#InventoryFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#InventoryToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#InventoryToDate').bind('keypress', function (e) {
+            return false;
+        });
+    });
+
+    $("#InventoryFromDate").datepicker().on("changeDate", function (e) {
+        $("#InventoryToDate").datepicker('setStartDate', $("#InventoryFromDate").val());
+        //$("#OrderToDate").data("datepicker").setStartDate((moment(e.date).add(0, 'days')));
+        $("#InventoryToDate").val("");
+    });
+
+    $("#InventoryToDate").datepicker().on("changeDate", function (e) {
+        if ($("#InventoryFromDate").val() == "") {
+            $("#InventoryToDate").val("");
+        } else {
+            $("#InventoryFromDate").datepicker('setEndDate', $("#InventoryToDate").val());
+        }
+    });
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+
+                if (result == "") {
+                }
+                else {
+                    $("#InventoryFromDate").datepicker('setEndDate', result);
+                    $("#InventoryToDate").datepicker('setEndDate', result);
+                }
+
+            }
+
+        });
+    }
+
+    //$('#InventoryTracking').DataTable();
+</script>

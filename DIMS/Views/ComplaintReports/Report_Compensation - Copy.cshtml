@@ -1,0 +1,1219 @@
+﻿@{
+    Layout = null;
+    string CTN = Request.QueryString["CTN"].ToString();
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionUserType = UP.UserTypeCode;
+    
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>DIMS CMS Compensation Report</title>
+</head>
+<body style="font-family: Calibri; font-size: 12px;">
+
+    <div style="width: 100%; height: 100%; font-family: Calibri; font-size: 12px;" id="Report_Compensation">
+
+        <input type="text" id="CTN" value="@CTN" style="display:none;" />
+
+        <input type="text" style="display:none;" id="SessionUserCode" value="@SessionUserCode" />
+        <input type="text" style="display:none;" id="SessionUserType" value="@SessionUserType" />
+
+        <table style="width: 98%" align="center" border="0">
+            <tr>
+                <td>
+                    <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+                        <label style="font-size: 18px; color: #0165C4">
+                            <b>HIL Limited</b></label><br />
+                        <label style="font-size: 18px; color: #0026ff" id="HeadingLabel">
+                            <b>CUSTOMER COMPLAINT BREAKAGE COMPENSATION REPORT</b></label><br />
+                        <label style="font-size: 18px; color: #0026ff" id="HeadingLabelWallPutty">
+                            <b>CUSTOMER COMPLAINT WALL PUTTY COMPENSATION REPORT</b></label><br />
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <div style="width: 98%;">
+            <table style="width: 98%" align="center" border="0">
+                <tr>
+                    <td>
+                        <div style="text-align: left; vertical-align: top; width: 49%; float: left;">
+                            <label style="display: none;">
+                                Complaint Tracking
+                                <br />
+                                Number:@CTN</label>
+                        </div>
+                        <div style="text-align: right; vertical-align: top; width: 49%; float: right;">
+                            Dated:<label id="Dated"></label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br />
+
+        <div style="width: 98%;" id="SBU1Report">
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" align="center">
+                <tr style="background-color: #00FFFF">
+                    <th colspan="5" style="text-align: left; border: 1px solid Black !important;">Complaint Details:</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Sales Representative:</td>
+                    <td style='border: 1px solid Black !important;'>
+                        <label id="Complaint_Registered_By"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Compensation
+                        <br />
+                        Number:
+                        <label id="Compensation_No"></label>
+                    </td>
+
+                    <td colspan="2" style="border: 1px solid Black !important;">Complaint Tracking
+                        <br />
+                        Number :<label id="ComplaintTrackingNo"></label></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Complaint Registered Date:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="ComplaintReceivedDate"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Complaint Attended Date:</td>
+                    <td colspan="2" style='border: 1px solid Black !important;'>
+                        <label id="ComplaintAttended"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Party Name:</td>
+                    <td colspan="2" style='border: 1px solid Black !important;'>
+                        <label id="PartyName"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">SAPCODE:</td>
+                    <td style='border: 1px solid Black !important;'>
+                        <label id="SAPCODE"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Location:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Location"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">State:</td>
+                    <td colspan="2" style='border: 1px solid Black !important;'>
+                        <label id="State_Name"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Invoice Number and Date:(Note:Period of supplies to be mentioned for accumulated breakages):</td>
+                    <td colspan="3" style="border: 1px solid Black !important;">
+                        <label id="InvoiceNumberDate"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Product:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Product"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Plant:</td>
+                    <td colspan="2" style="border: 1px solid Black !important;">
+                        <label id="Plant"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Product Details:</td>
+                    <td colspan="4" style="border: 1px solid Black !important;">
+                        <label id="ProductDetails"></label>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" align="center">
+                <tr style="background-color: #00FFFF">
+                    <th colspan="5" style="text-align: left; border: 1px solid Black !important;">Breakage Investigation Details:</th>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid Black !important; text-align: left;"></th>
+                    <th style="border: 1px solid Black !important; text-align: left;">Supplied Quantity</th>
+                    <th style="border: 1px solid Black !important; text-align: left;">Breakage Quantity</th>
+                    <th style="border: 1px solid Black !important; text-align: left;">Net Loss Quantity</th>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid Black !important;">Tons</th>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Supplied_Tons"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Breakage_Tons"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Net_Loss_Tons"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid Black !important;">
+                        <label id="SBU1Units"></label>
+                    </th>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Supplied_Meters"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Breakage_Meters"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="Net_Loss_Meters"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="border: 1px solid Black !important;">Remarks For Any Special Approvals:<label id="RemarksForAnySpecialApprovals"></label></td>
+                </tr>
+            </table>
+            <br />
+
+
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" align="center">
+                <tr style="background-color: #00FFFF; border: 1px solid Black !important;">
+                    <th colspan="2" style="text-align: left; border: 1px solid Black !important;">Breakage Compensation:</th>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">(a)Breakage quantity considered based on
+                        <label id="CompensationBasis"></label>
+                        (    
+                        <label id="CompensationInRMTS"></label>
+                        )
+                        <label id="SBU1LabelUnit"></label>
+                        OR (    
+                        <label id="CompensationInTons"></label>
+                        )Tons,
+                        <br />
+                        <label id="SBU1LabelUnitWords"></label>
+                        (in words):    
+                        <label id="RMTSInWords"></label>
+                        <br />
+                        <br />
+                        <div id="CottonBusiness">
+                            (b) Size Recommendations : (     
+                        <label id="SizeRecommendations"></label>
+                            ) RMTS of 3.6M and (    
+                        <label id="OtherSize"></label>
+                            ) RMTS of other sizes
+                        </div>
+                        <div id="CottonBuss">
+
+                            <table id="CCSheetsRecomm" style="width: 98%; border-collapse: collapse;" align="center">
+                                <tr>
+                                    <th style="border: 1px solid Black !important; text-align: left;">Recommended Size</th>
+                                    <th style="border: 1px solid Black !important; text-align: left;">Recommended Qty (Nos)</th>
+                                </tr>
+                            </table>
+                            <br />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Inspection Done By:
+                        <label id="InspectionDoneBy"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important; width: 49%;">Reviewed By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/Aftab.png"*@ id="CSM_North_SBU1" style="display: none;" />
+                        <img @*src="~/Images/DigitalSigns/Akbar.png"*@ id="CMS_South_SBU1" style="display: none;" />
+                        <br />
+                        <label id="CSM_NAME"></label>
+                        <br />
+                        QUALITY ASSURANCE<br />
+                        Reviewed Date:
+                        <label id="ReviewedDate"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important; width: 49%;">Approved By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/IKPandit.png"*@ id="QHSBU1" style="display: none;" />
+                        <br />
+                        I K PANDIT<br />
+                        HEAD-QUALITY ASSURANCE<br />
+                        Approved Date:
+                        <label id="ApprovedDate"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Any special Remarks:<label id="AnySpecialRemarksMani"></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">In case of Credit Note,Signature from VP,Sales-Sheeting:</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">This document is valid for 90 days only</td>
+                    <td style="border: 1px solid Black !important;">Version 3 Dated :10.02.12</td>
+                </tr>
+
+            </table>
+
+
+
+            <br />
+            <table style="width: 98%; border-collapse: collapse;" align="center" border="0">
+                <tr>
+                    <td colspan="10" style="border: 1px solid Black !important;">NOTE:This is computer generated document,no signature is required
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+        <div style="width: 98%" id="SBU23Report">
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;">
+                <tr style="background-color: #00FFFF; border: 1px solid Black !important;">
+                    <th colspan="5" style="text-align: left; border: 1px solid Black !important;">Complaint Details:</th>
+                </tr>
+                <tr>
+                    @*<td style="border: 1px solid Black !important;">Complaint Registered By:</td>*@
+                    <td style="border: 1px solid Black !important;">Sales Representative:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23ComplaintRegisteredBy"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Compensation
+                        <br />
+                        Number:<label id="SBU23Compensation_No"></label></td>
+                    <td style="border: 1px solid Black !important;">Complaint Tracking
+                        <br />
+                        Number :<label id="SBU23ComplaintTrackingNo"></label></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Complaint Registered Date:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23ComplaintReceivedDate"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Complaint Attended Date:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23ComplaintAttended"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Party Name:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23PartyName"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Location:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23Location"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Material Supplied From:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23MaterialSuppliedForm"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Product:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU2Product"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Invoice Number and Date:</td>
+                    <td colspan="3" style='border: 1px solid Black !important;'>
+                        <label id="SBU23InvoiceNumberandDate"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Product Details:</td>
+                    <td colspan="3" style='border: 1px solid Black !important;'>
+                        <label id="SBU23ProductDetails"></label>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" id="Breakage_Investigation_Details_Table">
+                <thead>
+                    <tr style="background-color: #00FFFF">
+                        <th colspan="7" style="text-align: left; border: 1px solid Black !important;">Breakage Investigation Details:</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid Black !important; text-align: left;">Supplied Quantity (No's)</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Total Breakage Quantity (No's)</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Transporter</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Total Breakages %</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Allowed Breakage%(as per agreement with the party)</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Actual Breakage Quantity In No's (after excluding 3% Breakage Qty)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+
+            </table>
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;page-break-inside:auto" id="Breakage_Investigation_Details_Table_SBU2">
+                <thead style="display: table-header-group">
+                    <tr style="background-color: #00FFFF">
+                        <th colspan="9" style="text-align: left; border: 1px solid Black !important;">Breakage Investigation Details:</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid Black !important; text-align: left;">Invoice No</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Invoice Date</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Product Details</th>                        
+                        <th style="border: 1px solid Black !important; text-align: left;">Supplied Quantity</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Breakage Quantity</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Transporter</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Breakage %</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">AllowedBreakage%(as per agreement with the party)</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Actual Breakage Quantity In No's (after excluding 3% Breakage Qty)</th>                                                
+                    </tr>
+                </thead>
+                <tbody></tbody>
+
+            </table>
+            <br />
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" id="Compensation_Recommendation">
+                <tr style="background-color: #00FFFF">
+                    <th colspan="2" style="text-align: left; border: 1px solid Black !important;">Compensation Recommendation:</th>
+                </tr>
+                <tr id="Recomendation_Lines">
+                    <td colspan="2" style="border: 1px solid Black !important;">Based on the above inspection details,please supply to the above party (
+                        <label id="ProductCategory"></label>
+                        ) (<label id="CompensationNos"></label>) numbers (in words): (<label id="CompensationWords"></label>) or (<label id="CompensationUnits"></label>)
+                        <label id="COMPENSATION_IN_METER_OTHER"></label>
+                        of following size
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">or issue the credit note for the above mentioned quantity of material based on the above invoice price and considering below mentioned sales recommendations.</td>
+                </tr>
+
+            </table>
+            <br />
+
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;page-break-inside:avoid; page-break-after:auto">
+                <tr>
+                    <td style="border: 1px solid Black !important;">Reviewed By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/Avinash.png"*@ id="CSM__SBU2" style="display: none;" />
+                        <br />
+                        <br />
+                        Avinash KHATRE<br>
+                        QUALITY ASSURANCE<br />
+                        Dated:<label id="SBU23ReviewedDate"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Approved By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/IKPandit.png"*@ id="QHSBU2" style="display: none;" />
+                        <br />
+                        I K PANDIT<br />
+                        HEAD-QUALITY ASSURANCE<br />
+                        Dated:<label id="SBU23ApprovedDate"></label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Comments/Approval from Sales:</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Based on the above, credit amount of
+                        <label id="Credit_Amount_Final"></label>
+                        to be issued to the above customer.</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Name of the person:
+                        <br />
+                        Head Sales - Panels/Blocks/Hysil/Drymix Products:
+                        <br />
+                        Signature:
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Any Special Remarks:<label id="AnySpecialRemarksManiS"></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right; border: 1px solid Black !important;">version 3 dated 14.01.12</td>
+                </tr>
+            </table>
+
+
+        </div>
+
+        <!-- SVPRASADK 17-03-2020 WallPutty Compensation Report -->
+        <div style="width: 98%" id="SBU23WallPuttyReport">
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;">
+                <tr style="background-color: #00FFFF; border: 1px solid Black !important;">
+                    <th colspan="5" style="text-align: left; border: 1px solid Black !important;">Complaint Details:</th>
+                </tr>
+                <tr>
+                    @*<td style="border: 1px solid Black !important;">Complaint Registered By:</td>*@
+                    <td style="border: 1px solid Black !important;">Sales Representative:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23ComplaintRegisteredByWallPutty"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Compensation
+                        <br />
+                        Number:<label id="SBU23Compensation_NoWallPutty"></label></td>
+                    <td style="border: 1px solid Black !important;">Complaint Tracking
+                        <br />
+                        Number :<label id="SBU23ComplaintTrackingNoWallPutty"></label></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Complaint Registered Date:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23ComplaintReceivedDateWallPutty"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Complaint Attended Date:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23ComplaintAttendedWallPutty"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Party Name:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23PartyNameWallPutty"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Location:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23LocationWallPutty"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Material Supplied From:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU23MaterialSuppliedFormWallPutty"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Product:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU2ProductWallPutty"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Invoice Number and Date:</td>
+                    <td colspan="3" style='border: 1px solid Black !important;'>
+                        <label id="SBU23InvoiceNumberandDateWallPutty"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Product Details:</td>
+                    <td colspan="3" style='border: 1px solid Black !important;'>
+                        <label id="SBU23ProductDetailsWallPutty"></label>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" id="Breakage_Investigation_Details_TableWallPutty">
+                <thead>
+                    <tr style="background-color: #00FFFF">
+                        <th colspan="7" style="text-align: left; border: 1px solid Black !important;">Breakage Investigation Details:</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid Black !important; text-align: left;">Supplied Quantity (No's)</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Total Breakage Quantity (No's)</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Transporter</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Total Breakages %</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Allowed Breakage%(as per agreement with the party)</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Actual Breakage Quantity In No's (after excluding 3% Breakage Qty)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+
+            </table>
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;page-break-inside:auto" id="Breakage_Investigation_Details_Table_SBU2WallPutty">
+                <thead style="display: table-header-group">
+                    <tr style="background-color: #00FFFF">
+                        <th colspan="9" style="text-align: left; border: 1px solid Black !important;">Breakage Investigation Details:</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid Black !important; text-align: left;">Invoice No</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Invoice Date</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Product Details</th>                        
+                        <th style="border: 1px solid Black !important; text-align: left;">Supplied Quantity</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Defect Quantity</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Transporter</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Defect %</th>                        
+                        <th style="border: 1px solid Black !important; text-align: left;">Actual Breakage Quantity In No's (after excluding 3% Breakage Qty)</th>                                                
+                    </tr>
+                </thead>
+                <tbody></tbody>
+
+            </table>
+            <br />
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" id="Compensation_RecommendationWallPutty">
+                <tr style="background-color: #00FFFF">
+                    <th colspan="2" style="text-align: left; border: 1px solid Black !important;">Compensation Recommendation:</th>
+                </tr>
+                <tr id="Recomendation_LinesWallPutty">
+                    <td colspan="2" style="border: 1px solid Black !important;">Based on the above inspection details,please supply to the above party (
+                        <label id="ProductCategoryWallPutty"></label>
+                        ) (<label id="CompensationNosWallPutty"></label>) numbers (in words): (<label id="CompensationWordsWallPutty"></label>) or (<label id="CompensationUnitsWallPutty"></label>)
+                        <label id="COMPENSATION_IN_METER_OTHERWallPutty"></label>
+                        of following size
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">or issue the credit note for the above mentioned quantity of material based on the above invoice price and considering below mentioned sales recommendations.</td>
+                </tr>
+
+            </table>
+            <br />
+
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;page-break-inside:avoid; page-break-after:auto">
+                <tr>
+                    <td style="border: 1px solid Black !important;">Reviewed By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/Avinash.png"*@ id="CSM__SBU2WallPutty" style="display: none;" />
+                        <br />
+                        <br />
+                        Avinash KHATRE<br>
+                        QUALITY ASSURANCE<br />
+                        Dated:<label id="SBU23ReviewedDateWallPutty"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Approved By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/IKPandit.png"*@ id="QHSBU2WallPutty" style="display: none;" />
+                        <br />
+                        I K PANDIT<br />
+                        HEAD-QUALITY ASSURANCE<br />
+                        Dated:<label id="SBU23ApprovedDateWallPutty"></label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Comments/Approval from Sales:</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Based on the above, credit amount of
+                        <label id="Credit_Amount_FinalWallPutty"></label>
+                        to be issued to the above customer.</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Name of the person:
+                        <br />
+                        Head Sales:
+                        <br />
+                        Signature:
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Any Special Remarks:<label id="AnySpecialRemarksManiSWallPutty"></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right; border: 1px solid Black !important;">version 3 dated 14.01.12</td>
+                </tr>
+            </table>
+
+
+        </div>
+        <div style="width: 98%" id="SBU3Report">
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;">
+                <tr style="background-color: #00FFFF; border: 1px solid Black !important;">
+                    <th colspan="5" style="text-align: left; border: 1px solid Black !important;">Complaint Details:</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Sales Representative:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3SalesRepresentative"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Compensation
+                        <br />
+                        Number:<label id="SBU3Compensation_No"></label></td>
+                    <td style="border: 1px solid Black !important;">Complaint Tracking
+                        <br />
+                        Number :<label id="SBU3ComplaintTrackingNo"></label></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Complaint Registered Date:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3ComplaintReceivedDate"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Complaint Attended Date:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3ComplaintAttended"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Customer Name:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3PartyName"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Location:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3Location"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">State:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3StateName"></label>
+                    </td>                    
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Material Supplied From:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3MaterialSuppliedForm"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Product:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3ProductCategory"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid Black !important;">Compensation Mode:</td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="SBU3CompensationMode"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;"></td>
+                    <td style="border: 1px solid Black !important;">
+                        
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" id="SBU3Breakage_Investigation_Details_Table">
+                <thead>
+                    <tr style="background-color: #00FFFF">
+                        <th colspan="8" style="text-align: left; border: 1px solid Black !important;">Investigation Details:</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid Black !important; text-align: left;">Product Code</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Product Description</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Invoice No</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Invoice Date</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Supply Qty</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Defect Qty</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Actual Defect Qty</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Defect Type</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+
+            </table>
+            <br />
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;" id="SBU3Compensation_Recommendation">
+            </table>
+            <br />
+
+
+            <table class="ChildTable" style="width: 98%; border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid Black !important;">Reviewed By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/CSM_BU3.png"*@ id="CSM__SBU3" style="display:none;" />
+                        <br />
+                        <br />
+                        <label id="CSM_SBU3Name" ></label><br>
+                        QUALITY ASSURANCE<br />
+                        Dated:<label id="SBU3ReviewedDate"></label>
+                    </td>
+                    <td style="border: 1px solid Black !important;">Approved By
+                        <br />
+                        <img @*src="~/Images/DigitalSigns/IKPandit.png"*@ id="QHSBU3" style="display:none;" />
+                        <br />
+                        I K PANDIT<br />
+                        HEAD-QUALITY ASSURANCE<br />
+                        Dated:<label id="SBU3ApprovedDate"></label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border: 1px solid Black !important;">Any Special Remarks:<label id="SBU3AnySpecialRemarksManiS"></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right; border: 1px solid Black !important;">version 3 dated 14.01.12</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        var CTN = $("#CTN").val();
+
+        $("#Report_Compensation").css('display', 'none');
+        $("#QHSBU1").prop('src', window.location.origin + '/Images/DigitalSigns/IKPandit.png' + '?' + Math.random());
+        $("#QHSBU2").prop('src', window.location.origin + '/Images/DigitalSigns/IKPandit.png' + '?' + Math.random());
+        $("#QHSBU3").prop('src', window.location.origin + '/Images/DigitalSigns/IKPandit.png' + '?' + Math.random());
+        if (CTN == "") {
+            $("#Report_Compensation").empty();
+        }
+        else {
+
+            var UserCode = $("#SessionUserCode").val();
+            var UserType = $("#SessionUserType").val();
+
+            var Data = JSON.stringify({
+                CTN: CTN,
+                Report: "CompensationReport",
+                UserCode: UserCode,
+                UserType: UserType
+            });
+
+            $.ajax({
+                method: 'POST',
+                url: '../../ComplaintReports/GetReportData',
+                data: { Data: Data },
+            }).then(function successCallback(response) {
+                if (response == "") {
+                    alert("No Data Available");
+                    window.close();
+                }
+                else {
+                    //alert(response);
+                    var Data = JSON.parse(response);
+                    var Header = Data["COMP"];
+
+                    if (UserType == "CSM" || UserType == "QH" || UserType == "QAM_SBU3" || UserType == "CSM_BU3" || UserType == "QAM_SBU2" || UserType == "CSM_BU2") {
+
+                    }
+                    else if (Header[0]["DOC_STATUS"] == "Approved" || Header[0]["DOC_STATUS"] == "Compensation Approved and sent") {
+
+                    }
+                    else {
+                        alert("Complaint not yet Approved");
+                        window.close();
+                    }
+
+                    $("#Report_Compensation").css('display', 'block');
+
+                    if (Header[0]["PRODUCT_TYPE_NAME"] == "SBU1" || Header[0]["PRODUCT_TYPE_NAME"] == "SBU2" || (Header[0]["PRODUCT_TYPE_NAME"] == "SBU3" && Header[0]["PRODUCT_CATEGORY"] == "36")) {                        
+                        $("#SBU3Report").css("display", "none");
+
+                        var Breakage = Data["Breakage"];
+
+                        $("#Dated").text(Data["ToDay"]);
+
+                        if (Header[0]["PRODUCT_TYPE_NAME"] == "SBU1") {
+
+                            if (Header[0]["PRODUCT_CATEGORY_CODE"] == "AC Sheets" || Header[0]["PRODUCT_CATEGORY_CODE"] == "AC Sheets-Non asbestos") {
+                                $("#SBU1Units").text("Meters");
+                                $("#SBU1LabelUnit").text("Running Meters");
+                                $("#SBU1LabelUnitWords").text("Running Meters");
+
+                                $("#CottonBuss").css('display', 'none');
+                                $("#CottonBusiness").css('display', 'block');
+
+
+                            }
+                            else if (Header[0]["PRODUCT_CATEGORY_CODE"] == "CC Iron Sheets") {
+                                $("#SBU1Units").text("Feet");
+                                $("#SBU1LabelUnit").text("Feets");
+                                $("#SBU1LabelUnitWords").text("Feets");
+
+                                var CCSheets = Data["CCSheets"];
+                                if (CCSheets.length > 0) {
+                                    var TRC = "";
+                                    for (var i = 0; i < CCSheets.length; i++) {
+                                        TRC = TRC + "<tr>";
+
+                                        TRC = TRC + "<td style='border: 1px solid Black !important;'>" + CCSheets[i]["ProductName"] + "</td>";
+                                        TRC = TRC + "<td style='border: 1px solid Black !important;'>" + CCSheets[i]["Nos"] + "</td>";
+
+                                        TRC = TRC + "</tr>";
+                                    }
+
+                                    $("#CCSheetsRecomm").append(TRC);
+
+                                }
+                                else {
+
+                                }
+
+                                $("#CottonBuss").css('display', 'block');
+                                $("#CottonBusiness").css('display', 'none');
+
+                            }
+
+                            $("#SBU1Report").css('display', 'block');
+                            $("#SBU23Report").css('display', 'none');
+
+                            if (Header[0]["DIGITAL_SIGN"] == "True" && (Header[0]["DOC_STATUS"] == "Approved" || Header[0]["DOC_STATUS"] == "Compensation Approved and sent")) {
+                                if (Header[0]["CSM_NAME"] == "SYED AFTABUDDIN") {
+                                    $("#CSM_North_SBU1").prop('src', window.location.origin + '/Images/DigitalSigns/Aftab.png' + '?' + Math.random());
+                                    $("#CSM_North_SBU1").css('display', 'block');
+                                    $("#QHSBU1").css('display', 'block');
+                                }
+                                else if (Header[0]["CSM_NAME"] == "MOHAMMAD AKBAR") {
+                                    $("#CMS_South_SBU1").prop('src', window.location.origin + '/Images/DigitalSigns/Akbar.png' + '?' + Math.random());
+                                    $("#CMS_South_SBU1").css('display', 'block');
+                                    $("#QHSBU1").css('display', 'block');
+                                }
+                            }
+                            else {
+                                $("#CSM_North_SBU1").css('display', 'none');
+                                $("#CMS_South_SBU1").css('display', 'none');
+                                $("#QHSBU1").css('display', 'none');
+                            }
+                        }
+                        else if (Header[0]["PRODUCT_TYPE_NAME"] == "SBU2" || (Header[0]["PRODUCT_TYPE_NAME"] == "SBU3" && Header[0]["PRODUCT_CATEGORY"] == "36")) {
+                            $("#SBU1Report").css('display', 'none');
+                            $("#SBU23Report").css('display', 'block');
+
+                            if (Header[0]["DIGITAL_SIGN"] == "True") {
+                                if (Header[0]["DOC_STATUS"] == "Approved" || Header[0]["DOC_STATUS"] == "Compensation Approved and sent") {
+                                    $("#CSM__SBU2").prop('src', window.location.origin + '/Images/DigitalSigns/Avinash.png' + '?' + Math.random());
+                                    $("#CSM__SBU2").css('display', 'block');
+                                    $("#QHSBU2").css('display', 'block');
+                                }
+                                else {
+                                    $("#CSM__SBU2").css('display', 'none');
+                                    $("#QHSBU2").css('display', 'none');
+                                }
+                            }
+                            else {
+                                $("#CSM__SBU2").css('display', 'none');
+                                $("#QHSBU2").css('display', 'none');
+                            }
+                        }
+
+                        $("#Complaint_Registered_By").text(Header[0]["SALES_REPRESENTATIVE_NAME"] + "(" + Header[0]["SALES_REPRESENTATIVE_CODE"] + ")");
+                        $("#SBU23ComplaintRegisteredBy").text(Header[0]["SALES_REPRESENTATIVE_NAME"] + "(" + Header[0]["SALES_REPRESENTATIVE_CODE"] + ")");
+
+                        $("#Compensation_No").text(Header[0]["ID"]);
+                        $("#SBU23Compensation_No").text(Header[0]["ID"]);
+
+                        $("#ComplaintTrackingNo").text(CTN);
+                        $("#SBU23ComplaintTrackingNo").text(CTN);
+
+                        $("#SBU23ComplaintReceivedDate").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+                        $("#ComplaintReceivedDate").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+
+                        $("#ComplaintAttended").text(Header[0]["COMPLAINT_ATTENDENT_DATE"]);
+
+                        $("#AnySpecialRemarksMani").text(Header[0]["COMMENTS_APPROVALS_SALES_OTHERS"]);
+                        $("#AnySpecialRemarksManiS").text(Header[0]["COMMENTS_APPROVALS_SALES_OTHERS"]);
+
+                        $("#SBU23ComplaintAttended").text(Header[0]["COMPLAINT_ATTENDENT_DATE"]);
+                        if (Header[0]["AMOUNT_CREDITED"] == "" || Header[0]["AMOUNT_CREDITED"] == null || Header[0]["AMOUNT_CREDITED"] == undefined) {
+                            $("#Credit_Amount_Final").text("....");
+                        }
+                        else {
+                            $("#Credit_Amount_Final").text(" Rs " + Header[0]["AMOUNT_CREDITED"] + " /-");
+                        }
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#PartyName").text(Header[0]["CUSTOMER_NAME"]);
+                        }
+                        else {
+                            $("#PartyName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"]);
+                        }
+                        $("#SAPCODE").text(Header[0]["Customer_Code"]);
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#SBU23PartyName").text(Header[0]["CUSTOMER_NAME"] + "(" + Header[0]["Customer_Code"] + ")");
+                        }
+                        else {
+                            $("#SBU23PartyName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"] + "(" + Header[0]["Customer_Code"] + ")");
+
+                        }
+
+                        $("#Location").text(Header[0]["CITY_CODE"]);
+                        $("#SBU23Location").text(Header[0]["CITY_CODE"] + "  " + Header[0]["STATE_NAME"]);
+
+                        $("#COMPENSATION_IN_METER_OTHER").text(Header[0]["COMPENSATION_IN_METER_OTHER"]);
+
+                        $("#SBU23MaterialSuppliedForm").text(Data["SupplyName"]);
+                        $("#Plant").text(Data["PlantName"]);
+
+                        $("#State_Name").text(Header[0]["STATE_NAME"]);
+
+
+                        $("#Supplied_Tons").text(Header[0]["SUPPLY_QTY_TONS"]);
+                        $("#Breakage_Tons").text(Header[0]["BREAKAGE_QTY_TONS"]);
+                        $("#Net_Loss_Tons").text(Header[0]["NET_LOSS_QTY_TONS"].toFixed(3));
+
+                        $("#Supplied_Meters").text(Header[0]["SUPPLY_QTY_MTRS"]);
+                        $("#Breakage_Meters").text(Header[0]["BREAKAGE_QTY_MTRS"]);
+                        $("#Net_Loss_Meters").text(Header[0]["NET_LOSS_QTY_MTRS"].toFixed(3));
+
+                        $("#InvoiceNumberDate").text(Header[0]["ALL_INVOICE_NO"]);
+                        $("#SBU23InvoiceNumberandDate").text(Header[0]["ALL_INVOICE_NO"]);
+
+                        $("#ProductDetails").text(Header[0]["ALL_INVOICE_DATE"]);
+                        $("#SBU23ProductDetails").text(Header[0]["ALL_INVOICE_DATE"]);
+
+                        $("#InspectionDoneBy").text(Header[0]["INVESTIGATION_DONE_BY"]);
+
+                        $("#Product").text(Header[0]["PRODUCT_CATEGORY_CODE"]);
+
+                        $("#CompensationBasis").text(Header[0]["COMPENSATION_MODE_NAME"]);
+
+
+                        $("#CompensationInRMTS").text(Header[0]["COMPENSATION_IN_RUNNING_METERS"]);
+                        $("#CompensationInTons").text(Header[0]["COMPENSATION_IN_TONS"]);
+                        $("#RMTSInWords").text(Header[0]["COMPENSATION_IN_RUNNING_METERS_WORDS"]);
+
+                        if (Header[0]["RECOMMENDED_SIZE"] == "" || Header[0]["RECOMMENDED_SIZE"] == null || Header[0]["RECOMMENDED_SIZE"] == "0") {
+                            $("#SizeRecommendations").text("0");
+                        }
+                        else {
+                            $("#SizeRecommendations").text(Header[0]["RECOMMENDED_SIZE"]);
+                        }
+                        $("#OtherSize").text(Header[0]["OTHER_SIZE"]);
+
+                        $("#CompensationNos").text(Header[0]["COMPENSATION_IN_NO"]);
+                        $("#CompensationWords").text(Header[0]["COMPENSATION_IN_WORD"]);
+                        $("#CompensationUnits").text(Header[0]["COMPENSATION_IN_CUBIC_METER"]);
+
+                        $("#RemarksForAnySpecialApprovals").text(Header[0]["COMMENTS_APPROVALS_SALES_OTHERS"]);
+
+                        $("#CSM_NAME").text(Header[0]["CSM_NAME"]);
+                        $("#CSM_NAMEA").text(Header[0]["CSM_NAME"]);
+
+                        $("#SBU23ReviewedDate").text(Header[0]["APPROVED_DATE"]);
+                        $("#SBU23ApprovedDate").text(Header[0]["APPROVED_DATE"]);
+
+                        $("#ReviewedDate").text(Header[0]["APPROVED_DATE"]);
+                        $("#ApprovedDate").text(Header[0]["APPROVED_DATE"]);
+
+                        var IsOldCompensationReport = Data["OldCompensationReport"];
+                        var TRCode = "";
+                        if ((Header[0]["PRODUCT_TYPE_NAME"] == "SBU2" || (Header[0]["PRODUCT_TYPE_NAME"] == "SBU3" && Header[0]["PRODUCT_CATEGORY"] == "36")) && IsOldCompensationReport != true) {
+                            for (var i = 0; i < Breakage.length; i++) {
+                                TRCode = TRCode + "<tr style='page-break-inside:avoid; page-break-after:auto'>";
+
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["INVOICE_NO"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["INVOICE_DATE"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["PRODUCT_DETAILS"] + "</td>"                                
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["SUPPLIED_QTY"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["BREAKAGE_QTY"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["TRANSPORTER"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["BREAKAGE_PERSENT"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["ALLOWED_BREAKAGE_PERSENT"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["ACTUAL_BREAKAGE_QTY"] + "</td>"
+
+                                TRCode = TRCode + "</tr>";
+
+                            }
+                            TRCode = TRCode + "<tr style='page-break-inside:avoid; page-break-after:auto'><td colspan='9' style='border: 1px solid Black !important;'>Remarks For Any Special Approvals:<label id='SBU23RemarksForAnySpecialApprovals'>" + Header[0]["COMMENTS_APPROVALS_SALES_OTHERS"] + "</label></td></tr>";
+                            $("#Breakage_Investigation_Details_Table").css('display', 'none');
+                            $("#Breakage_Investigation_Details_Table_SBU2").css('display', 'block');
+                            $("#Breakage_Investigation_Details_Table_SBU2 tbody").append(TRCode);
+                        } else {
+                            for (var i = 0; i < Breakage.length; i++) {
+                                TRCode = TRCode + "<tr style='page-break-inside:avoid; page-break-after:auto'>";
+
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["SUPPLIED_QTY"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["TOTAL_BREAKAGE_QTY"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["TRANSPORTER"] + "</td>"
+
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["TOTAL_BREAKAGE_PERSENT"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["ALLOWED_BREAKAGE_PERSENT"] + "</td>"
+                                TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["ACTUAL_BREAKAGE_QTY"] + "</td>"
+
+                                TRCode = TRCode + "</tr>";
+
+                            }
+                            TRCode = TRCode + "<tr style='page-break-inside:avoid; page-break-after:auto'><td colspan='7' style='border: 1px solid Black !important;'>Remarks For Any Special Approvals:<label id='SBU23RemarksForAnySpecialApprovals'>" + Header[0]["COMMENTS_APPROVALS_SALES_OTHERS"] + "</label></td></tr>";
+                            $("#Breakage_Investigation_Details_Table").css('display', 'block');
+                            $("#Breakage_Investigation_Details_Table_SBU2").css('display', 'none');
+                            $("#Breakage_Investigation_Details_Table tbody").append(TRCode);
+                        }                        
+
+                        var Recommendation_Lines = Data["Recommendation_Lines"];
+
+                        var Recommended = "<tr style='border:1px solid black'><th style='text-align:center;font-weight:bolder;font-size:18px;border:1px solid black'>Recommended Size</th><th style='text-align:center;font-weight:bolder;font-size:18px;border:1px solid black'>Recommended Quantity(No's)</th></tr>";
+
+                        var IfTraded = "";
+
+                        for (var i = 0; i < Recommendation_Lines.length; i++) {
+                            Recommended += "<tr style='border:1px solid black'>";
+                            Recommended += '<td style="text-align:center;border:1px solid black">' + Recommendation_Lines[i]["RECOMMENDED_SIZE"] + '</td>';
+                            Recommended += '<td style="text-align:center;border:1px solid black">' + Recommendation_Lines[i]["NOS"] + '</td>';
+                            Recommended += "</tr>";
+                            IfTraded = IfTraded + Recommendation_Lines[i]["RECOMMENDED_SIZE"] + ",";
+                        }
+
+                        IfTraded = IfTraded.substring(0, IfTraded.length - 1);
+
+                        $("#Compensation_Recommendation").find("#Recomendation_Lines").after(Recommended);
+
+
+                        if (Header[0]["PRODUCT_CATEGORY_CODE"] == "Traded material") {
+                            $("#ProductCategory").text(IfTraded);
+                        }
+                        else {
+                            $("#ProductCategory").text(Header[0]["PRODUCT_CATEGORY_CODE"]);
+                        }
+
+                        if (Header[0]["PRODUCT_CATEGORY_CODE"] == "Traded material") {
+                            $("#SBU2Product").text(IfTraded);
+                        }
+                        else {
+                            $("#SBU2Product").text(Header[0]["PRODUCT_CATEGORY_CODE"]);
+                        }
+
+                        $.ajax({
+                            url: '/Home/Exportdata',
+                            type: 'POST',
+                            data: { QueryVal: $('#Report_Compensation').html() },
+                            success: function (result) {
+                                if (result == "ok") {
+                                    window.location.href = "../../Home/GetPDF?reportname=Compensation_" + $("#CTN").val() + "";
+                                    window.onfocus = function () {
+                                        window.close();
+                                    }
+                                }
+                            },
+                            error: function (e) {
+                                console.log(e);
+                                alert(e);
+                            }
+                        });
+
+                    }
+
+                    else if (Header[0]["PRODUCT_TYPE_NAME"] == "SBU3") {
+
+                        $("#HeadingLabel").text("CUSTOMER COMPLAINT COMPENSATION REPORT PIPES & FITTINGS");
+
+                        if (Header[0]["DIGITAL_SIGN"] == "True" && (Header[0]["DOC_STATUS"] == "Approved" || Header[0]["DOC_STATUS"] == "Compensation Approved and sent")) {
+                            //$("#CSM_SBU3Name").val("Suman Khuntia");
+                            $("#CSM__SBU3").prop('src', window.location.origin + '/Images/DigitalSigns/CSM_BU3.png' + '?' + Math.random());
+                            $("#CSM__SBU3").css("display", "block");
+                            $("#QHSBU3").css("display", "block");
+                        }
+                        else {
+                            $("#CSM__SBU3").css("display", "none");
+                            $("#QHSBU3").css("display", "none");
+                        }
+
+
+                        $("#SBU1Report").css("display", "none");
+                        $("#SBU23Report").css("display", "none");
+                        $("#SBU3Report").css("display", "block");
+
+                        $("#Dated").text(Data["ToDay"]);
+
+                        $("#SBU3CompensationMode").text(Header[0]["COMPENSATION_MODE_NAME"]);
+                        $("#SBU3SalesRepresentative").text(Header[0]["SALES_REPRESENTATIVE_NAME"] + "(" + Header[0]["SALES_REPRESENTATIVE_CODE"] + ")");
+                        $("#SBU3Compensation_No").text(Header[0]["ID"]);
+                        $("#SBU3ComplaintTrackingNo").text(CTN);
+                        $("#SBU3ComplaintReceivedDate").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+                        $("#SBU3ComplaintAttended").text(Header[0]["COMPLAINT_ATTENDENT_DATE"]);
+
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#SBU3PartyName").text(Header[0]["CUSTOMER_NAME"] + "  " + "(" + Header[0]["Customer_Code"] + ")");
+                        }
+                        else {
+                            $("#SBU3PartyName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"] + "  " + "(" + Header[0]["Customer_Code"] + ")");
+                        }
+
+                        $("#SBU3AnySpecialRemarksManiS").text(Header[0]["COMMENTS_APPROVALS_SALES_OTHERS"]);
+
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#SBU23PartyName").text(Header[0]["CUSTOMER_NAME"] + "(" + Header[0]["Customer_Code"] + ")");
+                        }
+                        else {
+                            $("#SBU23PartyName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"] + "(" + Header[0]["Customer_Code"] + ")");
+                        }
+
+                        $("#SBU3Location").text(Header[0]["CITY_CODE"]);
+                        $("#SBU3StateName").text(Header[0]["STATE_NAME"]);
+
+                        $("#SBU3ReviewedDate").text(Header[0]["APPROVED_DATE"]);
+                        $("#SBU3ApprovedDate").text(Header[0]["APPROVED_DATE"]);
+
+                        $("#SBU3MaterialSuppliedForm").text(Data["SupplyName"]);
+                        $("#SBU3ProductCategory").text(Header[0]["PRODUCT_CATEGORY_CODE"]);
+
+                        var TRCode = "";
+                        var Breakage = Data["Brk_Otr_Lines"];
+
+                        for (var i = 0; i < Breakage.length; i++) {
+                            TRCode = TRCode + "<tr>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["PRODUCT_CODE"] + "</td>"
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["PRODUCT_NAME"] + "</td>"
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["INVOICE_NO"] + "</td>"
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["INVOICE_DATE"] + "</td>"
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["SUPPLIED_QTY"] + "</td>"
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["BREAKAGE_QTY"] + "</td>"
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["ActualDefectQty"] + "</td>"
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + Breakage[i]["DEFECT_TYPE_NAME"] + "</td>"
+
+                            TRCode = TRCode + "</tr>";
+
+                        }
+
+                        $("#SBU3Breakage_Investigation_Details_Table tbody").append(TRCode);
+
+                        var Recommendation_Lines = Data["RCommLines"];
+                        TRCode = "<tr style='background-color: #00FFFF'><th colspan='3' style='text-align: left; border: 1px solid Black !important;'>Compensation Recommendation:</th></tr><tr><td colspan='3' style='border: 1px solid Black !important;'>Based on the above inspection details, the following size's recommended for compensation </td></tr>";
+                        TRCode = TRCode + "<tr style='border:1px solid black'><th style='text-align:center;font-weight:bolder;font-size:18px;border:1px solid black'>Product Code</th><th style='text-align:center;font-weight:bolder;font-size:18px;border:1px solid black'>Product Name</th><th style='text-align:center;font-weight:bolder;font-size:18px;border:1px solid black'>Recommended Quantity(No's)</th></tr>";
+
+                        for (var i = 0; i < Recommendation_Lines.length; i++) {
+                            TRCode += "<tr style='border:1px solid black'>";
+                            TRCode += '<td style="text-align:center;border:1px solid black">' + Recommendation_Lines[i]["ProdCode"] + '</td>';
+                            TRCode += '<td style="text-align:center;border:1px solid black">' + Recommendation_Lines[i]["ProdName"] + '</td>';
+                            TRCode += '<td style="text-align:center;border:1px solid black">' + Recommendation_Lines[i]["Nos"] + '</td>';
+                            TRCode += "</tr>";
+                        }
+
+                        $("#SBU3Compensation_Recommendation").append(TRCode);
+
+                        /****************************************/
+
+                        $.ajax({
+                            url: '/ComplaintRegistration/GetCMSBUHeadDataClient',
+                            type: 'GET',
+                            success: function (CSMData) {
+                                CSMData = JSON.parse(CSMData);
+                                $("#CSM_SBU3Name").text(CSMData[0]["CSM_SBU3_NAME"]);
+
+
+                                $.ajax({
+                                    url: '/Home/Exportdata',
+                                    type: 'POST',
+                                    data: { QueryVal: $('#Report_Compensation').html() },
+                                    success: function (result) {
+                                        //alert(result);
+                                        if (result == "ok") {
+                                            window.location.href = "../../Home/GetPDF?reportname=Compensation_" + $("#CTN").val() + "";
+                                            //window.onfocus = function () {
+                                            //    window.close();
+                                            //}
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert(e);
+                                    }
+                                });
+
+
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+
+                        /****************************************/
+                    }
+
+                }
+            },
+            function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+        }
+    });
+
+</script>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Master>
+  <TableName>TBL_COUNTRY</TableName>
+  <Field>
+    <FN>COUNTRY_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COUNTRY_NAME</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+</Master>

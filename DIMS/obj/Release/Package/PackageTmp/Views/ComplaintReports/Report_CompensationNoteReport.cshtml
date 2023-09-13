@@ -1,0 +1,221 @@
+﻿@{
+    Layout = null;
+    string CTN = Request.QueryString["CTN"].ToString();
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionUserType = UP.UserTypeCode;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Compensation Note Report</title>
+</head>
+<body style="font-family: Calibri; font-size: 12px;">
+
+    <div style="width: 100%; height: 100%;font-family: Calibri; font-size: 12px;" id="Comp_Note">
+        <input type="text" id="CTN" value="@CTN" style="display:none;" />
+
+        <input type="text" style="display:none;" id="SessionUserCode" value="@SessionUserCode" />
+        <input type="text" style="display:none;" id="SessionUserType" value="@SessionUserType" />
+
+        <table border="0" align="center" style="width: 98%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="text-align: right; vertical-align: top; width: 99%; margin-right: 8px;">
+                            Tel:23313475(3 lines)<br>
+                            FAX:011-23313702<br>
+                            CABLE:HYBESTOS<br>
+                            E-mail:deloff@hil.in<br>
+                            WebSite:www.hil.in
+                        </div>
+                        <div align="center" style="width: 100%; margin-bottom: 15px;" class="row">
+                            <label style="font-size: 18px; color: #0165C4">
+                                <b>HIL Limited</b></label><br>
+                            <label style="font-size: 18px; color: #0026ff">
+                                <b>COMPENSATION NOTE</b></label><br>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table align="center" style="width: 98%">
+            <tbody>
+                <tr>
+                    <td>Complaint Tracking No:<label id="ComplaintTrackingNo"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dated:<label id="CompensationDate"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="CustomerCode"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Dear Sir/Madam,</td>
+                </tr>
+                <tr>
+                    <td>This has reference to your Stacking Complaints dated
+                        <label id="CompalintDate"></label>
+                        ComplaintDate regarding
+                        <label id="ProductDivision"></label>
+                        and supplied and 
+                    subsequent visit of our QCD person Mohd Akbar for inspection of said material on .
+                    In view of our good business relations we are agreeable to replace the following quantity of  <label id="ProductDivision2"></label></td>
+                </tr>
+                <tr style="display:none;">
+                    <td><b>Compensation Details</b></td>
+                </tr>
+                <tr style="display:none;">
+                    <td>Compensation in Running Meters :
+                        <label id="CompensationinRunningMeters"></label>
+                    </td>
+                </tr>
+                <tr style="display:none;">
+                    <td>Compensation in Tons :
+                        <label id="CompensationinTons"></label>
+                    </td>
+                </tr>
+                <tr style="display:none;">
+                    <td>Compensation In Running Meter (Words)  :
+                        <label id="CompensationinRunningMetersWords"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Thanking you,</td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Yours Faithfully,<br>
+                        @*for HYDERABAD INDUSTRIES LTD.<br>*@
+                        for HIL LTD.<br />
+                        Mohd Akbar<br>
+                        DY.GEN.MANAGER(MKT)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    @*<input type="button" id="PrintReport" onclick="PrintPDF()" value="Save As PDF" />*@
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+
+    //function PrintPDF() {
+    //    $("#PrintReport").css("display", "none");
+    //    $.ajax({
+    //        url: '/Home/Exportdata',
+    //        type: 'POST',
+    //        beforeSend: function () {
+    //            //ShowLoader();
+    //        },
+    //        data: { QueryVal: $('#Comp_Note').html() },
+    //        success: function (result) {
+    //            if (result == "ok") {
+    //                $("#PrintReport").css("display", "block");
+    //                window.location.href = "../../Home/GetPDF?reportname=CompensationNote_" + $("#CTN").val() + "";
+    //            }
+    //        },
+    //        error: function (e) {
+    //            alert(e);
+    //        }
+    //    });
+    //}
+
+    $(document).ready(function () {
+
+        var CTN = $("#CTN").val();
+
+        if (CTN == "") {
+            $("#Report_Compensation").empty();
+        }
+        else {
+
+
+            var UserCode = $("#SessionUserCode").val();
+            var UserType = $("#SessionUserType").val();
+
+            
+            var Data = JSON.stringify({
+                CTN: CTN,
+                Report: "CompensationNoteReport",
+                UserCode: UserCode,
+                UserType: UserType
+            });
+
+
+            $.ajax({
+                method: 'POST',
+                url: '../../ComplaintReports/GetReportData',
+                data: { Data: Data },
+            }).then(function successCallback(response) {
+    debugger
+    console.log("Response of sbu3 : " + response);
+                if (response == "") {
+                    alert("No Data Available");
+                    window.close();
+                }
+                else {
+
+                    var Data = JSON.parse(response);
+                    var Header = Data["COMP"];
+
+                    $("#ComplaintTrackingNo").text(CTN);
+                    $("#CompensationDate").text(Header[0]["DOC_DATE"]);
+                    $("#CustomerCode").text(Header[0]["CUSTOMER_NAME"]);
+
+                    $("#CompensationinRunningMeters").text(Header[0]["COMPENSATION_IN_RUNNING_METERS"]);
+                    $("#CompensationinTons").text(Header[0]["COMPENSATION_IN_TONS"]);
+                    $("#CompensationinRunningMetersWords").text(Header[0]["COMPENSATION_IN_RUNNING_METERS_WORDS"]);
+
+                    $("#CompalintDate").text(Header[0]["COMPLAINT_RECEIVED_DATE"]);
+
+                    $("#ProductDivision").text(Header[0]["PRODUCT_CATEGORY_CODE"]);
+                    $("#ProductDivision2").text(Header[0]["PRODUCT_CATEGORY_CODE"]);
+                    
+
+                    $.ajax({
+                        url: '/Home/Exportdata',
+                        type: 'POST',
+                        beforeSend: function () {
+                            //ShowLoader();
+                        },
+                        data: { QueryVal: $('#Comp_Note').html() },
+                        success: function (result) {
+                            if (result == "ok") {
+                                $("#PrintReport").css("display", "block");
+                                window.location.href = "../../Home/GetPDF?reportname=CompensationNote_" + $("#CTN").val() + "";
+                                window.onfocus = function () {
+                                    window.close();
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+
+                }
+            },
+            function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+        }
+    });
+
+
+</script>

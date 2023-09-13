@@ -1,0 +1,289 @@
+﻿@*
+
+Module              : CMS - DIMS Solution.
+DocumentName        : SalesHurdleApproval.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Creating Target.
+Developer Name      : Manikanta
+Change Log          : NA.
+
+*@
+
+@*@using LabelNames = DIMS.Content.Resource_Files.CreateTargetFC;*@
+@{
+    Layout = null;
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserType;
+    string SessionUserTypeID = UP.UserTypeCode;    
+    
+    
+}
+
+
+<style>
+    /*.my-input-class {
+            padding: 3px 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .my-confirm-class {
+            padding: 3px 6px;
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 4px;
+            background-color: #337ab7;
+            text-decoration: none;
+        }
+
+        .my-cancel-class {
+            padding: 3px 6px;
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 4px;
+            background-color: #a94442;
+            text-decoration: none;
+        }
+
+        .error {
+            border: solid 1px;
+            border-color: #a94442;
+        }*/
+    button {
+        cursor: pointer;
+    }
+
+    .green {
+        color: darkgreen;
+        font-weight: bold;
+        font-size: medium;
+    }
+
+    .red {
+        color: darkred;
+        font-weight: bold;
+        font-size: medium;
+    }
+
+    .blue {
+        color: #320d8e;
+        font-weight: bold;
+        font-size: medium;
+    }
+
+    .purple {
+        color: #bc16c7;
+        font-weight: bold;
+        font-size: medium;
+    }
+
+    #SalesHurdlesApproval {
+        cursor: default;
+    }
+
+    .Holiday {
+        background-color: #e5e7e9;
+    }
+</style>
+
+<input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Sales Hurdles Approval</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Sales Hurdles Approval</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('SalesHurdleList')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SaveSalesApprovalData()">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                @*                <a href ng-click="go('')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-header">
+                <h3 class="box-title"></h3>
+                <div class="pull-right" style="margin-left: 15px;">
+                    <button type="button" class="btn btn-info navbar-btn" ng-click="GetSalesHuddles()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                        Submit
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+            <form role="form" class="form-horizontal">
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">Select Month<span class="Mandatory">*</span></label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control Date" id="Month" readonly="readonly" placeholder="Select Month" />
+                    </div>
+                    <label class="col-sm-2 control-label">Zone</label>
+                    <div class="col-sm-2">
+                        <select id="Zone" class="form-control">
+                            <option value="select">select</option>
+                        </select>
+                        @* <input type="text" class="form-control gray" id="ZonalName" disabled="disabled" />
+                            <input type="text" class="form-control gray" id="ZonalCode" disabled="disabled" style="display: none;" />*@
+                    </div>
+                    <label class="col-sm-2 control-label">State</label>
+                    <div class="col-sm-2">
+                        <select id="State" class="form-control">
+                            <option value="select">select</option>
+                        </select>
+                    </div>
+                </div>
+
+            </form>
+            <div style="padding:10px;"></div>
+            <div style="overflow:auto;">
+            <table id="SalesHurdlesApproval" class="table tablecss ListTable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        @*                                    <th>Employee Code</th>
+                                    <th>StateHeadCode</th>
+                                    <th>EmployeeName</th>*@
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role / Designation</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+
+                        <th>21</th>
+                        <th>22</th>
+                        <th>23</th>
+                        <th>24</th>
+                        <th>25</th>
+
+                        <th>26</th>
+                        <th>27</th>
+                        <th>28</th>
+                        <th>29</th>
+                        <th>30</th>
+                        <th>31</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot style="display: none;">
+                    <tr>
+                        @*                                    <th>Employee Code</th>
+                                    <th>StateHeadCode</th>
+                                    <th>EmployeeName</th>*@
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role/Designation</th>
+
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+
+                        <th>21</th>
+                        <th>22</th>
+                        <th>23</th>
+                        <th>24</th>
+                        <th>25</th>
+
+                        <th>26</th>
+                        <th>27</th>
+                        <th>28</th>
+                        <th>29</th>
+                        <th>30</th>
+                        <th>31</th>
+                    </tr>
+                </tfoot>
+            </table>
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        // bindZones();
+        $("#Month").datepicker({
+            format: "MM-yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            autoclose: true
+        });
+
+    });
+
+</script>

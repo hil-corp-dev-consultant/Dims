@@ -1,0 +1,530 @@
+﻿@*Module            : SFDC.
+DocumentName        : ScoreCards.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Score Cards.
+Developer Name      : Harish Kothuri.
+Change Log          : NA.*@
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string Now = DateTime.Now.ToString("MMM-yyyy");
+
+    string UserCode = UP.UserCode;
+    string UserName = UP.UserName;
+    string UserTypeName = UP.UserType;
+    string UserTypeCode = UP.UserTypeCode;
+    
+}
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    #ScoreCardsDetailsTable tbody tr td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    #ScoreCardsDetailsTable thead tr td {
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Balance Score Card</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Score Cards</li>
+        <li class="active">Score Card Details</li>
+    </ol>
+</section>
+
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-body">
+                <form class="form-horizontal ng-pristine ng-valid ng-valid-maxlength" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal">
+                    <input type="text" id="LoggedUserCode" style="display:none;" value="@UserCode" />
+                    <input type="text" id="LoggedUserName" style="display:none;" value="@UserName" />
+                    <input type="text" id="LoggedUserTypeCode" style="display:none;" value="@UserTypeCode" />
+                    <input type="text" id="LoggedUserTypeName" style="display:none;" value="@UserTypeName" />
+                    <input type="text"  value="@Now" id="SomeId" style="display:none;" />
+                    <div class="col-sm-12 form-group">
+                        <label class="col-sm-3 control-label">Select Month: </label>
+                        <div class="col-sm-3">
+                            @*<input type="text" class="form-control" id="SCD_MonthYear" readonly="readonly" onchange="GetScoreCardDetails()" />*@
+                            <input type="text" class="form-control" id="SCD_MonthYearFilter" readonly="readonly" />
+                        </div>
+                        <label class="col-sm-3 control-label">Date: </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray ng-pristine ng-untouched ng-valid" id="SCD_CurrentDate" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label class="col-sm-3 control-label">Employee Code: </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control ng-pristine gray ng-untouched ng-valid" id="SCD_Employee_Code" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">Employee Name: </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control ng-pristine gray ng-untouched ng-valid" id="SCD_Employee_Name" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label class="col-sm-3 control-label">Designation: </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control ng-pristine gray ng-untouched ng-valid" id="SCD_Designation" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">Total Score: </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control ng-pristine gray ng-untouched ng-valid" id="SCD_Total_Score" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <div style="overflow:auto;">
+                        <table id="ScoreCardsDetailsTable" class="table tablecss dataTable">
+
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Metric</th>
+                                    <th>Weightage (%)</th>
+                                    <th>Target</th>
+                                    <th>MTD Target</th>
+                                    <th>Actual</th>
+                                    <th>% Achieved</th>
+                                    <th>Final Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot style="display: none;">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Metric</th>
+                                    <th>Weightage (%)</th>
+                                    <th>Target</th>
+                                    <th>MTD Target</th>
+                                    <th>Actual</th>
+                                    <th>% Achieved</th>
+                                    <th>Final Score</th>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                        </div>
+                    </div>
+                </form>  
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var _Temp = 0;
+
+    var ForeignDate = TodayDateTime;
+    ForeignDate = ForeignDate.split('/')[1] + "/" + ForeignDate.split('/')[0] + "/" + ForeignDate.split('/')[2];
+
+
+    $("#SCD_MonthYearFilter").datepicker({
+        format: "MM-yyyy",
+        startView: "months",
+        autoclose: "true",
+        minViewMode: "months",
+        endDate: new Date(ForeignDate)
+    });
+
+
+    $("#SCD_MonthYearFilter").change(function (event) {
+        if (_Temp == 0) {
+            GetTheScoreCardDetails();
+            _Temp = _Temp + 1;
+        }
+    });
+
+
+
+    function GetTheScoreCardDetails() {
+
+        var UserCode = $("#SCD_Employee_Code").val();
+        var MonthYear = $("#SCD_MonthYearFilter").val();
+
+        if (UserCode == "" || UserCode == undefined || UserCode == null) {
+            return;
+        }
+        else if (MonthYear == "" || MonthYear == undefined || MonthYear == null) {
+            return;
+        }
+        else {
+
+            var UserType = $("#LoggedUserTypeCode").val();
+
+
+            var IPData = JSON.stringify({
+                UserCode: UserCode,
+                MonthYear: MonthYear,
+                UserType: UserType
+            });
+
+
+            ShowLoader();
+
+            $.ajax({
+                url: '../SFDC/GetScoreCard',
+                type: 'POST',
+                crossDomain: true,
+                data: { IPData: IPData },
+                success: function (Resp) {
+
+                    if (Resp == "") {
+                        alert("No Data Available");
+                    }
+                    else {
+                        var TableDefinition = "";
+
+                        Resp = JSON.parse(Resp);
+
+                        if (Resp["Designation"] == "FSO" || Resp["Designation"] == "FSO_BU2") {
+                            $("#ScoreCardsDetailsTable tbody").empty();
+                            TableDefinition = "<tr><td rowspan=3>Sales Volume<td>Over All Sales Volume<td><label id=OASV></label><td><label id=OSV_TGT></label><td><label id=OSV_MTD_TGT></label><td><label id=OSV_ACT></label><td><label id=OSV_ACHV></label><td><label id=OSV_FS></label><tr><td>Key Stockist Volume<td><label id=KSV></label><td><label id=KSV_TGT></label><td><label id=KSV_MTD_TGT></label><td><label id=KSV_ACT></label><td><label id=KSV_ACHV></label><td><label id=KSV_FS></label><tr><td>No. of Stockist Billed<td><label id=NSB></label><td><label id=NSB_TGT></label><td><label id=NSB_MTD_TGT></label><td><label id=NSB_ACT></label><td><label id=NSB_ACHV></label><td><label id=NSB_FS></label><tr><td>CC Sheet Volume<td>Overall CC Sheet Volume<td><label id=OCCSV></label><td><label id=OCCSV_TGT></label><td><label id=OCCSV_MTD_TGT></label><td><label id=OCCSV_ACT></label><td><label id=OCCSV_ACHV></label><td><label id=OCCSV_FS></label><tr><td rowspan=4>Network Expansion<td>New Stockist Volume<td><label id=NSV_WT></label><td><label id=NSV_TGT></label><td><label id=NSV_MTD_TGT></label><td><label id=NSV_ACT></label><td><label id=NSV_ACHV></label><td><label id=NSV_FS></label><tr><td>#New Stockists Appointed<td><label id=NSA_WT></label><td><label id=NSA_TGT></label><td><label id=NSA_MTD_TGT></label><td><label id=NSA_ACT></label><td><label id=NSA_ACHV></label><td><label id=NSA_FS></label><tr><td>#New Sub-Stockists Appointed<td><label id=NSSA_WT></label><td><label id=NSSA_TGT></label><td><label id=NSSA_MTD_TGT></label><td><label id=NSSA_ACT></label><td><label id=NSSA_ACHV></label><td><label id=NSSA_FS></label><tr><td>New Sub-Stockist Volume<td><label id=NSSV_WT></label><td><label id=NSSV_TGT></label><td><label id=NSSV_MTD_TGT></label><td><label id=NSSV_ACT></label><td><label id=NSSV_ACHV></label><td><label id=NSSV_FS></label><tr><td>Monthly Planning Process<td>Journey Plan<td><label id=JP_WT></label><td><label id=JP_TGT></label><td><label id=JP_MTD_TGT></label><td><label id=JP_ACT></label><td><label id=JP_ACHV></label><td><label id=JP_FS></label><tr><td rowspan=2>Journey Plan Compliance<td>Visits Planned vs Actual<td><label id=VPA_WT></label><td><label id=VPA_TGT></label><td><label id=VPA_MTD_TGT></label><td><label id=VPA_ACT></label><td><label id=VPA_ACHV></label><td><label id=VPA_FS></label><tr><td>Adherence to PJP<td><label id=APJP_WT></label><td><label id=APJP_TGT></label><td><label id=APJP_MTD_TGT></label><td><label id=APJP_ACT></label><td><label id=APJP_ACHV></label><td><label id=APJP_FS></label><tr><td rowspan=2>Commercial Compliance<td>No of Stockists Tracking Inventory<td><label id=STI_WT></label><td><label id=STI_TGT></label><td><label id=STI_MTD_TGT></label><td><label id=STI_ACT></label><td><label id=STI_ACHV></label><td><label id=STI_FS></label><tr><td>Counter's Inventory Tracked by FSO<td><label id=CITF_WT></label><td><label id=CITF_TGT></label><td><label id=CITF_MTD_TGT></label><td><label id=CITF_ACT></label><td><label id=CITF_ACHV></label><td><label id=CITF_FS></label><tr><td rowspan=3>Performance Dialogue<td>Daily Sales Huddle<td><label id=DSH_WT></label><td><label id=DSH_TGT></label><td><label id=DSH_MTD_TGT></label><td><label id=DSH_ACT></label><td><label id=DSH_ACHV></label><td><label id=DSH_FS></label><tr><td>Weekly Sales Review<td><label id=WSR_WT></label><td><label id=WSR_TGT></label><td><label id=WSR_MTD_TGT></label><td><label id=WSR_ACT></label><td><label id=WSR_ACHV></label><td><label id=WSR_FS></label><tr><td>Monthly Sales Review<td><label id=MSR_WT></label><td><label id=MSR_TGT></label><td><label id=MSR_MTD_TGT></label><td><label id=MSR_ACT></label><td><label id=MSR_ACHV></label><td><label id=MSR_FS></label>";
+                            $("#ScoreCardsDetailsTable tbody").append(TableDefinition);
+
+                            $("#SCD_Designation").val(Resp["Designation"]);
+                            $("#SCD_Total_Score").val(Resp["TotalScoreAchieved"]);
+
+                            $("#SCD_Employee_Name").val(Resp["UserName"]);
+
+                            Resp = Resp["ScoreCard"];
+
+                            $("#OASV").text(Resp[0]["Weightage"] + "%");
+                            $("#KSV").text(Resp[1]["Weightage"] + "%");
+                            $("#NSB").text(Resp[2]["Weightage"] + "%");
+                            $("#OCCSV").text(Resp[3]["Weightage"] + "%");
+                            $("#NSV_WT").text(Resp[4]["Weightage"] + "%");
+                            $("#NSA_WT").text(Resp[5]["Weightage"] + "%");
+                            $("#NSSA_WT").text(Resp[6]["Weightage"] + "%");
+                            $("#NSSV_WT").text(Resp[7]["Weightage"] + "%");
+                            $("#JP_WT").text(Resp[8]["Weightage"] + "%");
+                            $("#VPA_WT").text(Resp[9]["Weightage"] + "%");
+                            $("#APJP_WT").text(Resp[10]["Weightage"] + "%");
+                            $("#STI_WT").text(Resp[11]["Weightage"] + "%");
+                            $("#CITF_WT").text(Resp[12]["Weightage"] + "%");
+                            $("#DSH_WT").text(Resp[13]["Weightage"] + "%");
+                            $("#WSR_WT").text(Resp[14]["Weightage"] + "%");
+                            $("#MSR_WT").text(Resp[15]["Weightage"] + "%");
+
+
+
+                            $("#OSV_TGT").text(Resp[0]["Target"]);
+                            $("#KSV_TGT").text(Resp[1]["Target"]);
+                            $("#NSB_TGT").text(Resp[2]["Target"]);
+                            $("#OCCSV_TGT").text(Resp[3]["Target"]);
+                            $("#NSV_TGT").text(Resp[4]["Target"]);
+                            $("#NSA_TGT").text(Resp[5]["Target"]);
+                            $("#NSSA_TGT").text(Resp[6]["Target"]);
+                            $("#NSSV_TGT").text(Resp[7]["Target"]);
+                            $("#JP_TGT").text(Resp[8]["Target"]);
+                            $("#VPA_TGT").text(Resp[9]["Target"]);
+                            $("#APJP_TGT").text(Resp[10]["Target"]);
+                            $("#STI_TGT").text(Resp[11]["Target"]);
+                            $("#CITF_TGT").text(Resp[12]["Target"]);
+                            $("#DSH_TGT").text(Resp[13]["Target"]);
+                            $("#WSR_TGT").text(Resp[14]["Target"]);
+                            $("#MSR_TGT").text(Resp[15]["Target"]);
+
+
+
+                            $("#OSV_MTD_TGT").text(Resp[0]["MTDTarget"]);
+                            $("#KSV_MTD_TGT").text(Resp[1]["MTDTarget"]);
+                            $("#NSB_MTD_TGT").text(Resp[2]["MTDTarget"]);
+                            $("#OCCSV_MTD_TGT").text(Resp[3]["MTDTarget"]);
+                            $("#NSV_MTD_TGT").text(Resp[4]["MTDTarget"]);
+                            $("#NSA_MTD_TGT").text(Resp[5]["MTDTarget"]);
+                            $("#NSSA_MTD_TGT").text(Resp[6]["MTDTarget"]);
+                            $("#NSSV_MTD_TGT").text(Resp[7]["MTDTarget"]);
+                            $("#JP_MTD_TGT").text(Resp[8]["MTDTarget"]);
+                            $("#VPA_MTD_TGT").text(Resp[9]["MTDTarget"]);
+                            $("#APJP_MTD_TGT").text(Resp[10]["MTDTarget"]);
+                            $("#STI_MTD_TGT").text(Resp[11]["MTDTarget"]);
+                            $("#CITF_MTD_TGT").text(Resp[12]["MTDTarget"]);
+                            $("#DSH_MTD_TGT").text(Resp[13]["MTDTarget"]);
+                            $("#WSR_MTD_TGT").text(Resp[14]["MTDTarget"]);
+                            $("#MSR_MTD_TGT").text(Resp[15]["MTDTarget"]);
+
+
+
+                            $("#OSV_ACT").text(Resp[0]["Actual"]);
+                            $("#KSV_ACT").text(Resp[1]["Actual"]);
+                            $("#NSB_ACT").text(Resp[2]["Actual"]);
+                            $("#OCCSV_ACT").text(Resp[3]["Actual"]);
+                            $("#NSV_ACT").text(Resp[4]["Actual"]);
+                            $("#NSA_ACT").text(Resp[5]["Actual"]);
+                            $("#NSSA_ACT").text(Resp[6]["Actual"]);
+                            $("#NSSV_ACT").text(Resp[7]["Actual"]);
+                            $("#JP_ACT").text(Resp[8]["Actual"]);
+                            $("#VPA_ACT").text(Resp[9]["Actual"]);
+                            $("#APJP_ACT").text(Resp[10]["Actual"]);
+                            $("#STI_ACT").text(Resp[11]["Actual"]);
+                            $("#CITF_ACT").text(Resp[12]["Actual"]);
+                            $("#DSH_ACT").text(Resp[13]["Actual"]);
+                            $("#WSR_ACT").text(Resp[14]["Actual"]);
+                            $("#MSR_ACT").text(Resp[15]["Actual"]);
+
+
+
+                            $("#OSV_ACHV").text(Resp[0]["Achieved"]);
+                            $("#KSV_ACHV").text(Resp[1]["Achieved"]);
+                            $("#NSB_ACHV").text(Resp[2]["Achieved"]);
+                            $("#OCCSV_ACHV").text(Resp[3]["Achieved"]);
+                            $("#NSV_ACHV").text(Resp[4]["Achieved"]);
+                            $("#NSA_ACHV").text(Resp[5]["Achieved"]);
+                            $("#NSSA_ACHV").text(Resp[6]["Achieved"]);
+                            $("#NSSV_ACHV").text(Resp[7]["Achieved"]);
+                            $("#JP_ACHV").text(Resp[8]["Achieved"]);
+                            $("#VPA_ACHV").text(Resp[9]["Achieved"]);
+                            $("#APJP_ACHV").text(Resp[10]["Achieved"]);
+                            $("#STI_ACHV").text(Resp[11]["Achieved"]);
+                            $("#CITF_ACHV").text(Resp[12]["Achieved"]);
+                            $("#DSH_ACHV").text(Resp[13]["Achieved"]);
+                            $("#WSR_ACHV").text(Resp[14]["Achieved"]);
+                            $("#MSR_ACHV").text(Resp[15]["Achieved"]);
+
+
+
+                            $("#OSV_FS").text(Resp[0]["FinalScore"]);
+                            $("#KSV_FS").text(Resp[1]["FinalScore"]);
+                            $("#NSB_FS").text(Resp[2]["FinalScore"]);
+                            $("#OCCSV_FS").text(Resp[3]["FinalScore"]);
+                            $("#NSV_FS").text(Resp[4]["FinalScore"]);
+                            $("#NSA_FS").text(Resp[5]["FinalScore"]);
+                            $("#NSSA_FS").text(Resp[6]["FinalScore"]);
+                            $("#NSSV_FS").text(Resp[7]["FinalScore"]);
+                            $("#JP_FS").text(Resp[8]["FinalScore"]);
+                            $("#VPA_FS").text(Resp[9]["FinalScore"]);
+                            $("#APJP_FS").text(Resp[10]["FinalScore"]);
+                            $("#STI_FS").text(Resp[11]["FinalScore"]);
+                            $("#CITF_FS").text(Resp[12]["FinalScore"]);
+                            $("#DSH_FS").text(Resp[13]["FinalScore"]);
+                            $("#WSR_FS").text(Resp[14]["FinalScore"]);
+                            $("#MSR_FS").text(Resp[15]["FinalScore"]);
+                        }
+                        else {
+
+                            $("#ScoreCardsDetailsTable tbody").empty();
+                            TableDefinition = " <tr> <td rowspan='3'>Sales Volume</td><td>Over All Sales Volume</td><td> <label id='OASV'></label> </td><td> <label id='OSV_TGT'></label> </td><td> <label id='OSV_MTD_TGT'></label> </td><td> <label id='OSV_ACT'></label> </td><td> <label id='OSV_ACHV'></label> </td><td> <label id='OSV_FS'></label> </td></tr><tr> <td>Key Stockist Volume</td><td> <label id='KSV'></label> </td><td> <label id='KSV_TGT'></label> </td><td> <label id='KSV_MTD_TGT'></label> </td><td> <label id='KSV_ACT'></label> </td><td> <label id='KSV_ACHV'></label> </td><td> <label id='KSV_FS'></label> </td></tr><tr> <td>No. of Stockist Billed</td><td> <label id='NSB'></label> </td><td> <label id='NSB_TGT'></label> </td><td> <label id='NSB_MTD_TGT'></label> </td><td> <label id='NSB_ACT'></label> </td><td> <label id='NSB_ACHV'></label> </td><td> <label id='NSB_FS'></label> </td></tr><tr> <td>CC Sheet Volume</td><td>Overall CC Sheet Volume</td><td> <label id='OCCSV'></label> </td><td> <label id='OCCSV_TGT'></label> </td><td> <label id='OCCSV_MTD_TGT'></label> </td><td> <label id='OCCSV_ACT'></label> </td><td> <label id='OCCSV_ACHV'></label> </td><td> <label id='OCCSV_FS'></label> </td></tr><tr> <td rowspan='4'>Network Expansion</td><td>New Stockist Volume</td><td> <label id='NSV_WT'></label> </td><td> <label id='NSV_TGT'></label> </td><td> <label id='NSV_MTD_TGT'></label> </td><td> <label id='NSV_ACT'></label> </td><td> <label id='NSV_ACHV'></label> </td><td> <label id='NSV_FS'></label> </td></tr><tr> <td>#New Stockists Appointed</td><td> <label id='NSA_WT'></label> </td><td> <label id='NSA_TGT'></label> </td><td> <label id='NSA_MTD_TGT'></label> </td><td> <label id='NSA_ACT'></label> </td><td> <label id='NSA_ACHV'></label> </td><td> <label id='NSA_FS'></label> </td></tr><tr> <td>#New Sub-Stockists Appointed</td><td> <label id='NSSA_WT'></label> </td><td> <label id='NSSA_TGT'></label> </td><td> <label id='NSSA_MTD_TGT'></label> </td><td> <label id='NSSA_ACT'></label> </td><td> <label id='NSSA_ACHV'></label> </td><td> <label id='NSSA_FS'></label> </td></tr><tr> <td>New Sub-Stockist Volume</td><td> <label id='NSSV_WT'></label> </td><td> <label id='NSSV_TGT'></label> </td><td> <label id='NSSV_MTD_TGT'></label> </td><td> <label id='NSSV_ACT'></label> </td><td> <label id='NSSV_ACHV'></label> </td><td> <label id='NSSV_FS'></label> </td></tr><tr> <td>Monthly Planning Process</td><td>Journey Plan</td><td> <label id='JP_WT'></label> </td><td> <label id='JP_TGT'></label> </td><td> <label id='JP_MTD_TGT'></label> </td><td> <label id='JP_ACT'></label> </td><td> <label id='JP_ACHV'></label> </td><td> <label id='JP_FS'></label> </td></tr><tr> <td>Journey Plan Compliance</td><td>Adherence to PJP</td><td> <label id='APJP_WT'></label> </td><td> <label id='APJP_TGT'></label> </td><td> <label id='APJP_MTD_TGT'></label> </td><td> <label id='APJP_ACT'></label> </td><td> <label id='APJP_ACHV'></label> </td><td> <label id='APJP_FS'></label> </td></tr><tr> <td>Revenue Target</td><td>Net Revenue (In Rs Lacs)</td><td> <label id='NR_WT'></label> </td><td> <label id='NR_TGT'></label> </td><td> <label id='NR_MTD_TGT'></label> </td><td> <label id='NR_ACT'></label> </td><td> <label id='NR_ACHV'></label> </td><td> <label id='NR_FS'></label> </td></tr><tr> <td rowspan='3'>Commercial Compliance</td><td>Outstanding > 120 days</td><td> <label id='OUT_120_WT'></label> </td><td> <label id='OUT_120_TGT'></label> </td><td> <label id='OUT_120_MTD_TGT'></label> </td><td> <label id='OUT_120_ACT'></label> </td><td> <label id='OUT_120_ACHV'></label> </td><td> <label id='OUT_120_FS'></label> </td></tr><tr> <td>Outstanding 90-120 Days</td><td> <label id='OUT_90_120_WT'></label> </td><td> <label id='OUT_90_120_TGT'></label> </td><td> <label id='OUT_90_120_MTD_TGT'></label> </td><td> <label id='OUT_90_120_ACT'></label> </td><td> <label id='OUT_90_120_ACHV'></label> </td><td> <label id='OUT_90_120_FS'></label> </td></tr><tr> <td>Credit Limit Exception</td><td> <label id='CLE_WT'></label> </td><td> <label id='CLE_TGT'></label> </td><td> <label id='CLE_MTD_TGT'></label> </td><td> <label id='CLE_ACT'></label> </td><td> <label id='CLE_ACHV'></label> </td><td> <label id='CLE_FS'></label> </td></tr><tr> <td rowspan='3'>Performance Dialogue</td><td>Daily Sales Huddle</td><td> <label id='DSH_WT'></label> </td><td> <label id='DSH_TGT'></label> </td><td> <label id='DSH_MTD_TGT'></label> </td><td> <label id='DSH_ACT'></label> </td><td> <label id='DSH_ACHV'></label> </td><td> <label id='DSH_FS'></label> </td></tr><tr> <td>Weekly Sales Review</td><td> <label id='WSR_WT'></label> </td><td> <label id='WSR_TGT'></label> </td><td> <label id='WSR_MTD_TGT'></label> </td><td> <label id='WSR_ACT'></label> </td><td> <label id='WSR_ACHV'></label> </td><td> <label id='WSR_FS'></label> </td></tr><tr> <td>Monthly Sales Review</td><td> <label id='MSR_WT'></label> </td><td> <label id='MSR_TGT'></label> </td><td> <label id='MSR_MTD_TGT'></label> </td><td> <label id='MSR_ACT'></label> </td><td> <label id='MSR_ACHV'></label> </td><td> <label id='MSR_FS'></label> </td></tr>";
+                            $("#ScoreCardsDetailsTable tbody").append(TableDefinition);
+
+                            $("#SCD_Designation").val(Resp["Designation"]);
+                            $("#SCD_Total_Score").val(Resp["TotalScoreAchieved"]);
+
+                            $("#SCD_Employee_Name").val(Resp["UserName"]);
+
+                            Resp = Resp["ScoreCard"];
+                            
+                            try {
+                                $("#OASV").text(Resp[0]["Weightage"] + "%");
+                                $("#KSV").text(Resp[1]["Weightage"] + "%");
+                                $("#NSB").text(Resp[2]["Weightage"] + "%");
+                                $("#OCCSV").text(Resp[3]["Weightage"] + "%");
+                                $("#NSV_WT").text(Resp[4]["Weightage"] + "%");
+                                $("#NSA_WT").text(Resp[5]["Weightage"] + "%");
+                                $("#NSSA_WT").text(Resp[6]["Weightage"] + "%");
+                                $("#NSSV_WT").text(Resp[7]["Weightage"] + "%");
+                                $("#JP_WT").text(Resp[8]["Weightage"] + "%");
+                                $("#VPA_WT").text(Resp[9]["Weightage"] + "%");
+                                $("#APJP_WT").text(Resp[10]["Weightage"] + "%");
+                                $("#STI_WT").text(Resp[11]["Weightage"] + "%");
+                                $("#CITF_WT").text(Resp[12]["Weightage"] + "%");
+
+                                $("#NR_WT").text(Resp[11]["Weightage"] + "%");
+                                $("#OUT_120_WT").text(Resp[12]["Weightage"] + "%");
+                                $("#OUT_90_120_WT").text(Resp[13]["Weightage"] + "%");
+                                $("#CLE_WT").text(Resp[14]["Weightage"] + "%");
+
+                                $("#DSH_WT").text(Resp[15]["Weightage"] + "%");
+                                $("#WSR_WT").text(Resp[16]["Weightage"] + "%");
+                                $("#MSR_WT").text(Resp[17]["Weightage"] + "%");
+
+
+
+                                $("#OSV_TGT").text(Resp[0]["Target"]);
+                                $("#KSV_TGT").text(Resp[1]["Target"]);
+                                $("#NSB_TGT").text(Resp[2]["Target"]);
+                                $("#OCCSV_TGT").text(Resp[3]["Target"]);
+                                $("#NSV_TGT").text(Resp[4]["Target"]);
+                                $("#NSA_TGT").text(Resp[5]["Target"]);
+                                $("#NSSA_TGT").text(Resp[6]["Target"]);
+                                $("#NSSV_TGT").text(Resp[7]["Target"]);
+                                $("#JP_TGT").text(Resp[8]["Target"]);
+                                $("#VPA_TGT").text(Resp[9]["Target"]);
+                                $("#APJP_TGT").text(Resp[10]["Target"]);
+                                $("#STI_TGT").text(Resp[11]["Target"]);
+                                $("#CITF_TGT").text(Resp[12]["Target"]);
+
+                                $("#NR_TGT").text(Resp[11]["Target"]);
+                                $("#OUT_120_TGT").text(Resp[12]["Target"]);
+                                $("#OUT_90_120_TGT").text(Resp[13]["Target"]);
+                                $("#CLE_TGT").text(Resp[14]["Target"]);
+
+                                $("#DSH_TGT").text(Resp[15]["Target"]);
+                                $("#WSR_TGT").text(Resp[16]["Target"]);
+                                $("#MSR_TGT").text(Resp[17]["Target"]);
+
+
+
+                                $("#OSV_MTD_TGT").text(Resp[0]["MTDTarget"]);
+                                $("#KSV_MTD_TGT").text(Resp[1]["MTDTarget"]);
+                                $("#NSB_MTD_TGT").text(Resp[2]["MTDTarget"]);
+                                $("#OCCSV_MTD_TGT").text(Resp[3]["MTDTarget"]);
+                                $("#NSV_MTD_TGT").text(Resp[4]["MTDTarget"]);
+                                $("#NSA_MTD_TGT").text(Resp[5]["MTDTarget"]);
+                                $("#NSSA_MTD_TGT").text(Resp[6]["MTDTarget"]);
+                                $("#NSSV_MTD_TGT").text(Resp[7]["MTDTarget"]);
+                                $("#JP_MTD_TGT").text(Resp[8]["MTDTarget"]);
+                                $("#VPA_MTD_TGT").text(Resp[9]["MTDTarget"]);
+                                $("#APJP_MTD_TGT").text(Resp[10]["MTDTarget"]);
+                                $("#STI_MTD_TGT").text(Resp[11]["MTDTarget"]);
+                                $("#CITF_MTD_TGT").text(Resp[12]["MTDTarget"]);
+
+                                $("#NR_MTD_TGT").text(Resp[11]["Target"]);
+                                $("#OUT_120_MTD_TGT").text(Resp[12]["Target"]);
+                                $("#OUT_90_120_MTD_TGT").text(Resp[13]["Target"]);
+                                $("#CLE_MTD_TGT").text(Resp[14]["Target"]);
+
+                                $("#DSH_MTD_TGT").text(Resp[15]["MTDTarget"]);
+                                $("#WSR_MTD_TGT").text(Resp[16]["MTDTarget"]);
+                                $("#MSR_MTD_TGT").text(Resp[17]["MTDTarget"]);
+
+
+
+                                $("#OSV_ACT").text(Resp[0]["Actual"]);
+                                $("#KSV_ACT").text(Resp[1]["Actual"]);
+                                $("#NSB_ACT").text(Resp[2]["Actual"]);
+                                $("#OCCSV_ACT").text(Resp[3]["Actual"]);
+                                $("#NSV_ACT").text(Resp[4]["Actual"]);
+                                $("#NSA_ACT").text(Resp[5]["Actual"]);
+                                $("#NSSA_ACT").text(Resp[6]["Actual"]);
+                                $("#NSSV_ACT").text(Resp[7]["Actual"]);
+                                $("#JP_ACT").text(Resp[8]["Actual"]);
+                                $("#VPA_ACT").text(Resp[9]["Actual"]);
+                                $("#APJP_ACT").text(Resp[10]["Actual"]);
+                                $("#STI_ACT").text(Resp[11]["Actual"]);
+                                $("#CITF_ACT").text(Resp[12]["Actual"]);
+
+                                $("#NR_ACT").text(Resp[11]["Actual"]);
+                                $("#OUT_120_ACT").text(Resp[12]["Actual"]);
+                                $("#OUT_90_120_ACT").text(Resp[13]["Actual"]);
+                                $("#CLE_ACT").text(Resp[14]["Actual"]);
+
+
+                                $("#DSH_ACT").text(Resp[15]["Actual"]);
+                                $("#WSR_ACT").text(Resp[16]["Actual"]);
+                                $("#MSR_ACT").text(Resp[17]["Actual"]);
+
+
+
+                                $("#OSV_ACHV").text(Resp[0]["Achieved"]);
+                                $("#KSV_ACHV").text(Resp[1]["Achieved"]);
+                                $("#NSB_ACHV").text(Resp[2]["Achieved"]);
+                                $("#OCCSV_ACHV").text(Resp[3]["Achieved"]);
+                                $("#NSV_ACHV").text(Resp[4]["Achieved"]);
+                                $("#NSA_ACHV").text(Resp[5]["Achieved"]);
+                                $("#NSSA_ACHV").text(Resp[6]["Achieved"]);
+                                $("#NSSV_ACHV").text(Resp[7]["Achieved"]);
+                                $("#JP_ACHV").text(Resp[8]["Achieved"]);
+                                $("#VPA_ACHV").text(Resp[9]["Achieved"]);
+                                $("#APJP_ACHV").text(Resp[10]["Achieved"]);
+                                $("#STI_ACHV").text(Resp[11]["Achieved"]);
+                                $("#CITF_ACHV").text(Resp[12]["Achieved"]);
+
+                                $("#NR_ACHV").text(Resp[11]["Achieved"]);
+                                $("#OUT_120_ACHV").text(Resp[12]["Achieved"]);
+                                $("#OUT_90_120_ACHV").text(Resp[13]["Achieved"]);
+                                $("#CLE_ACHV").text(Resp[14]["Achieved"]);
+
+                                $("#DSH_ACHV").text(Resp[15]["Achieved"]);
+                                $("#WSR_ACHV").text(Resp[16]["Achieved"]);
+                                $("#MSR_ACHV").text(Resp[17]["Achieved"]);
+
+
+
+                                $("#OSV_FS").text(Resp[0]["FinalScore"]);
+                                $("#KSV_FS").text(Resp[1]["FinalScore"]);
+                                $("#NSB_FS").text(Resp[2]["FinalScore"]);
+                                $("#OCCSV_FS").text(Resp[3]["FinalScore"]);
+                                $("#NSV_FS").text(Resp[4]["FinalScore"]);
+                                $("#NSA_FS").text(Resp[5]["FinalScore"]);
+                                $("#NSSA_FS").text(Resp[6]["FinalScore"]);
+                                $("#NSSV_FS").text(Resp[7]["FinalScore"]);
+                                $("#JP_FS").text(Resp[8]["FinalScore"]);
+                                $("#VPA_FS").text(Resp[9]["FinalScore"]);
+                                $("#APJP_FS").text(Resp[10]["FinalScore"]);
+                                $("#STI_FS").text(Resp[11]["FinalScore"]);
+                                $("#CITF_FS").text(Resp[12]["FinalScore"]);
+
+                                $("#NR_FS").text(Resp[11]["FinalScore"]);
+                                $("#OUT_120_FS").text(Resp[12]["FinalScore"]);
+                                $("#OUT_90_120_FS").text(Resp[13]["FinalScore"]);
+                                $("#CLE_FS").text(Resp[14]["FinalScore"]);
+
+                                $("#DSH_FS").text(Resp[15]["FinalScore"]);
+                                $("#WSR_FS").text(Resp[16]["FinalScore"]);
+                                $("#MSR_FS").text(Resp[17]["FinalScore"]);
+
+                            }
+                            catch (e) {
+                                alert("Error at Mani : " + e);
+                            }
+
+                           
+
+
+                        }
+
+                    }
+
+                    HideLoader();
+                    _Temp = 0;
+
+                },
+                error: function (ex) {
+                    _Temp = 0;
+                }
+            });
+
+
+        }
+    }
+
+
+</script>

@@ -1,0 +1,264 @@
+﻿@*@using LabelName = DIMS.Content.Resource_Files.AdminChangePassword;*@
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string USRCode = UP.UserCode;
+    string UserToken = UP.Token;
+    
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 style="font-family: Calibri;font-size:18px;font-weight:500;">Change Password</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li>Setup</li>
+        <li class="active">Change Password</li>
+    </ol>
+</section>
+
+<div class="CustomHeight_Section" style="overflow:auto;">
+<section style="padding:0 15px 70px;">
+    <div class="row">        
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal">
+                    <div class="col-sm-12">
+                        <!--OTP FORM START -->
+                        <div id="ChangePasswordOTPDiv">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="txtOTP">
+                                    OTP</label>   
+                                <div class="col-sm-3">                            
+                                    <input type="text" class="form-control" id="txtOTP"/>
+                                </div>                                
+                            </div>
+                             <div class="form-group">
+                                 <div class="col-sm-2"></div>
+                                 <div class="col-sm-10">
+                                    <button onclick="OTPfunction()" class="btn btn-primary" id="ResendOTPCP" style="background: #d2401a;border:1px solid #d2401a;" type="button">Resend OTP</button>
+                                    <button onclick="ValidateCPOTP()" class="btn btn-primary" id="CPOTPContinue" style="background: #d2401a;border:1px solid #d2401a;" type="button">Continue</button>
+                                  </div>
+                             </div>
+                        </div>
+                        <!--OTP FROM END -->
+                        <!--CHANGE PSW FORM START -->
+                        <div class="col-sm-6" id="ChangePasswordDiv">
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">
+                                    Current Password<span style="color: #FF0000">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="txtCurrentPassword" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">
+                                    New Password<span style="color: #FF0000">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="txtNewPassword" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">
+                                    Confirm New Password<span style="color: #FF0000">*</span>
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="txtConfirmNewPassword" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-6">
+                                <input type="button" value="Change Password" class="btn btn-primary" style="background: #d2401a;border:1px solid #d2401a;" onclick="ChangePassword()" />
+                                </div>
+                            </div>
+                            <input type="text" id="otphidetext" style="display: none;" />
+                            <input type="text" id="CPUserCode" value="@USRCode" style="display:none;" />
+                            <input type="text" id="UserToken" value="@UserToken" style="display:none;" />
+                        </div>
+                        <!--CHANGE PSW FORM END -->
+                    </div>
+                </form>
+            </div>
+        </div>    
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+    var CountOTP = 0;
+    $(document).ready(function () {
+        CheckUserSession();
+        $("#ChangePasswordDiv").hide();
+        $("#ChangePasswordOTPDiv").show();
+        OTPfunction();
+
+        var UserToken = $("#UserToken").val();
+        if (UserToken == "EXPIRED") {
+            $(".sidebar-menu").remove();
+        }
+
+        var CPUserCode = $("#CPUserCode").val();
+
+    });
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    function OTPfunction() {
+        CountOTP = CountOTP + 1;
+        if (CountOTP == 3)
+        {
+            $("#ResendOTPCP").hide();
+        }
+
+        var CPUserCode = $("#CPUserCode").val();
+
+        var SpecialUsers = new Array();
+
+        SpecialUsers.push("2013");
+        SpecialUsers.push("2010");
+        SpecialUsers.push("2022");
+        SpecialUsers.push("2008");
+        SpecialUsers.push("2021");
+        SpecialUsers.push("2006");
+        SpecialUsers.push("2002");
+        SpecialUsers.push("2017");
+        SpecialUsers.push("2019");
+        SpecialUsers.push("2018");
+
+        if (CPUserCode == "KAM") {
+            ValidateCPOTP();
+        }
+        else if (SpecialUsers.indexOf(CPUserCode) > -1) {
+            ValidateCPOTP();
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                async: false,
+                datatype: 'json',
+                data: { UID: CPUserCode },
+                url: '/LogOn/GetOtpToChangePassword',
+                success: function (response) {
+    debugger
+      //VIKAS G, 24-2-2022 requirement of decryption of encrypted OTP from services, Multiple Vulnerability in DIMS.HIL.IN by Sujith
+    //response = JSON.parse(response);
+    var encryptedOTP =response;
+    encryptedOTP = encryptedOTP.toString();
+    var key = "4512631236589784";
+key = CryptoJS.enc.Utf8.parse(key);
+
+var iv = "4512631236589784";
+iv = CryptoJS.enc.Utf8.parse(iv);
+
+var decryptedOTP = CryptoJS.AES.decrypt(encryptedOTP, key, { iv: iv });
+ decryptedOTP = decryptedOTP.toString(CryptoJS.enc.Utf8);
+                    $("#otphidetext").val(decryptedOTP);
+                    $("#txtOTP").val("");
+                }
+            });
+        }
+    }
+
+    function ValidateCPOTP() {
+    //debugger
+
+        var CPUserCode = $("#CPUserCode").val();
+
+        if (CPUserCode == "KAM") {
+            $("#ChangePasswordDiv").show();
+            $("#ChangePasswordOTPDiv").hide();
+        }
+        else {
+            if ($("#otphidetext").val() == $("#txtOTP").val()) {
+                $("#ChangePasswordDiv").show();
+                $("#ChangePasswordOTPDiv").hide();
+            }
+            else {
+                alert("Entered OTP is Invalid");
+                $("#ChangePasswordDiv").hide();
+            }
+        }
+
+    }
+
+    function ChangePassword() {
+        var CPUserCode = $("#CPUserCode").val();
+        var CurrentPassword = $("#txtCurrentPassword").val();
+
+        var NewPassword = $("#txtNewPassword").val();
+        var ConfirmNewPassword = $("#txtConfirmNewPassword").val();
+        if (CurrentPassword == "") {
+            alert("Please Enter Current Password");
+            $("#txtCurrentPassword").css("border-color", "red");
+            return;
+        }
+        else if (NewPassword == "") {
+            alert("Please Enter New Password");
+            return;
+        }
+        else if (ConfirmNewPassword == "") {
+            alert("Please Enter Confirm Password");
+            return;
+        }
+        else if (NewPassword != ConfirmNewPassword) {
+            alert("NewPassword and Confirm Password does not match");
+            return;
+        }
+        else if (NewPassword.length < 8 || NewPassword.length > 16) {
+            alert("Password should 8 to 16 characters in length");
+            return;
+        }
+        else {
+            var Data = JSON.stringify({
+                CurrentPwrd: CurrentPassword,
+                NewPwrd: NewPassword,
+                Usercode: CPUserCode
+            });
+
+            $.ajax({
+                type: 'POST',
+                async: false,
+                datatype: 'json',
+                data: { result: Data },
+                url: '/LogOn/ChangePassword',
+                success: function (response) {
+                    if (response == "Save") {
+                        alert("Password has been updated successfully.");
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("UserSignOut", "LogOn")',
+                            async: true,
+                            success: function (response) {
+                                window.location.href = "../../LogOn/LogOut";
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                            }
+                        });
+                    }
+                    if (response == "WP") {
+                        alert("Current Password is wrong");
+                    }
+                    else if (response == "Not Saved" || response == "FALSE") {
+                        alert("Technical error has been occured.Please try again later");
+                    }
+                },
+                error: function () {
+                    alert("Technical error has been occured.Please try again later");
+                }
+            });
+
+        }
+}
+
+
+</script>

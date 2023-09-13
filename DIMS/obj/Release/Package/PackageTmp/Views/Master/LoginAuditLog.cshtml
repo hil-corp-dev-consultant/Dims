@@ -1,0 +1,496 @@
+﻿@using LabelNames = DIMS.Content.Resource_Files.Compensation;
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+<style>
+
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Login Audit Log</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Login Audit Log</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a style="cursor:pointer" onclick="DownloadExcelFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-header">
+                        <form name="test" class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" data-ng-init="GetEditData(39)">
+                            <div class="row">
+                                <div class="navbar-header pull-right" style="margin-left: 15px;">
+                                    <button type="button" class="btn btn-info navbar-btn" onclick="GetUsersList()" style="background-color: #d2401a">
+                                        Submit
+                                    </button>
+                                    <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color: #d2401a">
+                                        Reset Filter
+                                    </button>
+
+                                </div>
+                                <div class="col-sm-12">
+                                    <input id="UserCode" value="@SessionUserCode" hidden />
+
+
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label">From Date<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control Date" id="FromDate" readonly="readonly" placeholder="From Date" />
+                                        </div>
+                                        <label class="col-sm-2 control-label">To Date<span class="Mandatory">*</span></label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control Date" id="ToDate" readonly="readonly" placeholder="To Date" />
+                                        </div>
+                                        <br />
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Zone</label>
+                                        <div class="col-sm-2">
+                                            <select id="Zone" class="form-control">
+                                                <option value="select">select</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">State</label>
+                                        <div class="col-sm-2">
+                                            <select id="State" class="form-control">
+                                                <option value="select">select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="tblParent" style="display:none;">
+                                        <table id="tblLoginAuditLog" class="table ListTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+
+        //$("#Month").datepicker({
+        //    format: "MM-yyyy",
+        //    viewMode: "months",
+        //    minViewMode: "months",
+        //    autoclose: true
+        //});
+
+        $('#FromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#FromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#ToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#ToDate').bind('keypress', function (e) {
+            return false;
+        });
+
+        //$("#FromDate").datepicker({
+        //    format: 'dd-mm-yyyy',
+        //    autoclose: true
+        //});
+        //$("#ToDate").datepicker({
+        //    format: 'dd-mm-yyyy',
+        //    autoclose: true
+        //});
+      
+            GetLoginAuditLogDetails();
+       
+
+        GetFilters();
+
+    });
+
+    $("#FromDate").datepicker().on("changeDate", function (e) {
+        $("#ToDate").datepicker('setStartDate', $("#FromDate").val());
+        //$("#OrderToDate").data("datepicker").setStartDate((moment(e.date).add(0, 'days')));
+        $("#ToDate").val("");
+    });
+
+    function GetLoginAuditLogDetails() {
+        var WherelaClause = "";
+        var masterType = JSON.stringify({
+            MasterType: "LoginAuditLog",
+            ID: "561",
+            UserCode: $("#UserCode").val(),
+            "Type": "Get",
+            ReportName: "LoginAuditLog",
+            WhereClause: WherelaClause + " order by al.LOGIN_DATETIME desc"
+        });
+
+        $.ajax({
+            url: '../../Home/getReportListColumnNamesData',
+            method: 'POST',
+            data: { Data: masterType },
+            success: function (response) {
+                var Result = JSON.parse(response.tabledata);
+
+                if (Result != "") {
+                    UserDefaultListColumnNames = Result["UserDefaultListColumnNames"];
+                    if (Result.hasOwnProperty('UserListColumnNames')) {
+                        var data1 = JSON.parse(Result["UserListColumnNames"]);
+
+                        var selectedcolumnname = data1["ColumnNames"];
+
+                        CustomColumnID = Result["UserListID"];
+                        $('#undo_redo_to').empty();
+                        var ColArray = new Array();
+                        for (var i = 0; i < selectedcolumnname.length; i++) {
+
+
+                            ColArray.push({
+                                "data": selectedcolumnname[i],
+                                "name": selectedcolumnname[i], "bSortable": true
+                            });
+                            $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                        }
+                        //$scope.UserSelectedColumnName = ColArray;
+                        UserSelectedColumnName = ColArray;
+                    } else {
+
+                        var data1 = JSON.parse(Result["UserDefaultListColumnNames"]);
+
+                        var selectedcolumnname = data1["ColumnNames"];
+
+                        CustomColumnID = "0";
+
+                        $('#undo_redo_to').empty();
+                        var ColArray = new Array();
+                        for (var i = 0; i < selectedcolumnname.length; i++) {
+                            ColArray.push({
+                                "data": selectedcolumnname[i],
+                                "name": selectedcolumnname[i],
+                                "bSortable": "true"
+                            });
+                            $("#undo_redo_to").append($("<option></option>").val(selectedcolumnname[i]).html(selectedcolumnname[i]));
+                        }
+                        //$scope.UserSelectedColumnName = ColArray;
+                        UserSelectedColumnName = ColArray;
+                    }
+
+
+
+                }
+                if ('@SessionUserType' == "ADMIN") {
+                    ShowLoader();
+                    $('#tblParent').css("display", "block");
+                    $.ajax({
+                        url: '../../Home/getReportData', method: 'POST', data: { Data: masterType },
+                        success: function (response) {
+                            getLookUpData_Reports_ServerSideBinding("", "EnrollmentNodataLabel", "", "tblLoginAuditLog", UserSelectedColumnName);
+                        }
+                    });
+                }
+            }
+        });
+
+    };
+
+
+    function DownloadExcelFile(filetype) {
+        var state = $("#State").val();
+        var zone = $("#Zone").val();
+        var fromdate = $("#FromDate").val();
+        var todate = $("#ToDate").val();
+        var WherelaClause = "";
+        var FileName = "LoginAuditLog";
+
+        var frmdate = fromdate.split("/");
+        var tdate = todate.split("/");
+        frmdate = frmdate[2] + "/" + frmdate[1] + "/" + frmdate[0];
+        tdate = tdate[2] + "/" + tdate[1] + "/" + tdate[0];
+
+        if (!$('#tblLoginAuditLog').DataTable().data().count()) {
+            alert("No Data Available");
+            return;
+        }
+        WherelaClause = " left join cms_employeemaster em on em.EMPLOYEE_CODE = AL.USER_CODE left join CUSTOMER_SALES_VIEW csv on csv.cust_code = AL.USER_CODE ";
+        if (fromdate != "" && todate != "") {
+            WherelaClause += " where AL.LOGIN_DATETIME between convert(datetime,'" + frmdate + "') and convert(datetime,'" + tdate + "') ";
+        }
+
+        if (state != "select") {
+            WherelaClause += " and (csv.STATE = '" + state + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where STATE='" + state + "')) ";
+        } else if (zone != "select") {
+            WherelaClause += " And (csv.ZONE = '" + zone + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where ZONE='" + zone + "')) ";
+        } else {
+
+        }
+
+        //if (state == "select") {
+
+        //}
+        //else {
+        //  //  WherelaClause += " and (csv.STATE = '" + state + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where STATE='" + state + "')) ";
+
+        //    WherelaClause += " And (csv.ZONE = '" + zone + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where ZONE='" + zone + "')) ";
+        //}
+        //if (zone == "select") {
+        //}
+        //else {
+        //    WherelaClause += " and (csv.STATE = '" + state + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where STATE='" + state + "')) ";
+        //}
+
+        var masterType = JSON.stringify({
+            MasterType: "LoginAuditLog",
+            ID: "561",
+            UserCode: $("#UserCode").val(),
+            "Type": "Get",
+            ReportName: "LoginAuditLog",
+            WhereClause: WherelaClause + " order by al.LOGIN_DATETIME desc"
+        });
+        $.ajax({
+            url: '../../Home/SetInputData',
+            type: "POST",
+            datatype: "JSON",
+            data: { InputData: masterType, ReportType: filetype, FileName: FileName },
+            async: false,
+            cache: false,
+            beforeSend: function () {
+                ShowLoader();
+            },
+            success: function (response) {
+                window.location.href = '../../Home/GenerateReport';
+            },
+            complete: function () {
+                HideLoader();
+            },
+            error: function () {
+                alert("Technical error has been occured.Please try again later");
+                HideLoader();
+
+            }
+        });
+    };
+
+    function GetFilters() {
+
+        $("#Zone").attr("disabled", false); $("#State").attr("disabled", false);
+        data_value = "{\"Role\":\"" + SessionValue + "\",\"UserCode\":\"" + $("#UserCode").val() + "\"}";
+        $.ajax({
+            url: '../../Home/GetFilters_SFDC_Sales_Huddles',
+            type: 'POST',
+            data: { Data: data_value },
+            async: false,
+            success: function (res) {
+                var FilterList = JSON.parse(res);
+                all_zones = "";
+                for (var i = 0; i < FilterList.dtZone.length; i++) {
+                    $("#Zone").append($("<option></option>").val(FilterList.dtZone[i]["ZONE_CODE"]).html(FilterList.dtZone[i]["ZONE_NAME"]));
+                    if (FilterList.dtZone.length == 0) {
+                        all_zones = "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else if (i == FilterList.dtZone.length - 1) {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'";
+                    } else {
+                        all_zones += "'" + FilterList.dtZone[i]["ZONE_CODE"] + "'" + ',';
+                    }
+                }
+                // $scope.GetSalesHuddles();
+
+            }
+
+        });
+
+        $('#Zone').on('change', function () {
+
+            ShowLoader();
+            var data_value = "{\"Zone_Code\":\"" + $("#Zone").val() + "\"}";
+            $.ajax({
+                url: '../../Home/GetStatesforZone',
+                type: 'POST',
+                data: { Data: data_value },
+                async: false,
+                success: function (res) {
+                    if (res != "") {
+                        var dtState = JSON.parse(res);
+                        $("#State").empty();
+                        $("#State").append($("<option></option>").val("select").html("select"));
+
+                        for (var i = 0; i < dtState.length; i++) {
+                            $("#State").append($("<option></option>").val(dtState[i]["STATE_CODE"]).html(dtState[i]["STATE_NAME"]));
+                        }
+                        HideLoader();
+                    }
+                    else {
+                        HideLoader();
+                    }
+                }
+            });
+
+        });
+    }
+
+    function GetUsersList() {
+        var state = $("#State").val();
+        var zone = $("#Zone").val();
+        var fromdate = $("#FromDate").val();
+        var todate = $("#ToDate").val();
+        var WherelaClause = "";
+
+
+        var frmdate = fromdate.split("/");
+        var tdate = todate.split("/");
+        frmdate = frmdate[2] + "/" + frmdate[1] + "/" + frmdate[0] + " 00:00:00";
+        tdate = tdate[2] + "/" + tdate[1] + "/" + tdate[0] + " 23:59:59";
+
+        WherelaClause = " left join cms_employeemaster em on em.EMPLOYEE_CODE = AL.USER_CODE left join CUSTOMER_SALES_VIEW csv on csv.cust_code = AL.USER_CODE where ";
+        WherelaClause += " AL.LOGIN_DATETIME between convert(datetime,'" + frmdate + "') and convert(datetime,'" + tdate + "') ";
+
+        if (fromdate == "" || fromdate == undefined) {
+            alert("Please select From date");
+        } else if (todate == "" || todate == undefined) {
+            alert("please select To date");
+        }else if('@SessionUserType'=="ZH"&&zone=="select"){
+            alert("Please select Zone");
+        }
+        else if (state != "select") {
+            WherelaClause += " and (csv.STATE = '" + state + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where STATE='" + state + "')) ";
+
+            // WherelaClause += " And (csv.ZONE = '" + zone + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where ZONE='" + zone + "')) ";
+
+            var masterType = JSON.stringify({
+                MasterType: "LoginAuditLog",
+                ID: "561",
+                UserCode: $("#UserCode").val(),
+                "Type": "Get",
+                ReportName: "LoginAuditLog",
+                WhereClause: WherelaClause + " order by al.LOGIN_DATETIME desc"
+            });
+            $('#tblParent').css("display", "block");
+            $.ajax({
+                url: '../../Home/getReportData', method: 'POST', data: { Data: masterType },
+                success: function (response) {
+                    getLookUpData_Reports_ServerSideBinding("", "EnrollmentNodataLabel", "", "tblLoginAuditLog", UserSelectedColumnName);
+                }
+            });
+        } else if (zone != "select") {
+            WherelaClause += " And (csv.ZONE = '" + zone + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where ZONE='" + zone + "')) ";
+
+            // WherelaClause += " and (csv.STATE = '" + state + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where STATE='" + state + "')) ";
+
+            var masterType = JSON.stringify({
+                MasterType: "LoginAuditLog",
+                ID: "561",
+                UserCode: $("#UserCode").val(),
+                "Type": "Get",
+                ReportName: "LoginAuditLog",
+                WhereClause: WherelaClause + " order by al.LOGIN_DATETIME desc"
+            });
+            $('#tblParent').css("display", "block");
+            $.ajax({
+                url: '../../Home/getReportData', method: 'POST', data: { Data: masterType },
+                success: function (response) {
+                    getLookUpData_Reports_ServerSideBinding("", "EnrollmentNodataLabel", "", "tblLoginAuditLog", UserSelectedColumnName);
+                }
+            });
+
+        } else {
+
+            // }
+            //   alert(WherelaClause);
+            //if (fromdate == "" || fromdate == undefined) {
+            //    alert("Please select From date");
+            //    return;
+            //}
+
+            //if (todate == "" || todate == undefined) {
+            //    alert("please select To date");
+            //    return;
+            //}
+
+            //if (todate < fromdate) {
+            //    alert("To date is less than From date")
+            //    return;
+            //}
+
+            //WherelaClause = " left join cms_employeemaster em on em.EMPLOYEE_CODE = AL.USER_CODE left join CUSTOMER_SALES_VIEW csv on csv.cust_code = AL.USER_CODE where ";
+
+            //WherelaClause += " AL.LOGIN_DATETIME between convert(datetime,'" + frmdate + "') and convert(datetime,'" + tdate + "') ";
+
+
+            //if (state == "select")
+            //{
+
+            //}
+            //else {
+            //    WherelaClause += " And (csv.ZONE = '" + zone + "' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where ZONE='" + zone + "')) ";
+            //}
+            //if (zone == "select") {
+            //}
+            //else {
+            //    WherelaClause += " and (csv.STATE = '"+state+"' or AL.USER_CODE in (select EMPLOYEE_CODE from cms_employee_role_configuration where STATE='"+state+"')) ";
+            //}
+
+            var masterType = JSON.stringify({
+                MasterType: "LoginAuditLog",
+                ID: "561",
+                UserCode: $("#UserCode").val(),
+                "Type": "Get",
+                ReportName: "LoginAuditLog",
+                WhereClause: WherelaClause + " order by al.LOGIN_DATETIME desc"
+            });
+            $('#tblParent').css("display", "block");
+            $.ajax({
+                url: '../../Home/getReportData', method: 'POST', data: { Data: masterType },
+                success: function (response) {
+                    getLookUpData_Reports_ServerSideBinding("", "EnrollmentNodataLabel", "", "tblLoginAuditLog", UserSelectedColumnName);
+                }
+            });
+        }
+    }
+
+    function ResetFilters() {
+        window.location.reload();
+    }
+</script>

@@ -1,0 +1,266 @@
+﻿@*Module            : SFDC.
+    DocumentName        : JourneyPlanList.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for User Authentication,Password change, User Login and Logout.
+    Developer Name      : Harish Kothuri.
+    Change Log          : NA.*@
+
+@using LabelNames = DIMS.Content.Resource_Files.JourneyPlanList;
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Journey Plan List</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Journey Plan List</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @if ((@SessionUserType.Trim() == "FSO") || (@SessionUserType.Trim() == "FSO_BU2") || (@SessionUserType.Trim() == "TM") || (@SessionUserType.Trim() == "SH"))
+                {
+                    <a href ng-click="go('JourneyPlanDetails')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>
+                }
+                @if (@SessionUserType.Trim() == "ZH")
+                {
+                    <a href ng-click="go('ZHJourneyPlanDetails')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>
+                }
+                <a href ng-click="go('DeviationSummeryReport')">
+                    <i class="fa fa-dashboard" title="Deviation Summary report"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+<input type="text" id="UserCode" style="display:none;" value="@SessionUserCode" />
+<input type="text" id="UserName" style="display:none;" value="@SessionUserName" />
+<input type="text" id="UserRole" style="display:none;" value="@SessionUserType" />
+
+<input type="text" id="UserZone" style="display:none;" value="@SessionZone_Code" />
+<input type="text" id="UserState" style="display:none;" value="@SessionStateCode" />
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;" id="AddjpDiv">
+                <div class="box-body">
+                    @*Filters Zone*@
+                    <form class="form-horizontal" role="form" style="font-size: small;">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="Zone">
+                                @LabelNames.Zone
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="Zone" multiple="multiple" class="form-control"></select>
+                            </div>
+                            <label class="col-sm-2 control-label" for="State">
+                                @LabelNames.State
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="State" multiple="multiple" class="form-control"></select>
+                            </div>
+                            <label class="col-sm-2 control-label" for="TerritoryArea">
+                                @LabelNames.Territory_Area
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="txtOrderNo">
+                                Month & Year
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="PlanFromDate" placeholder="Month & Year" readonly="readonly" />
+                            </div>
+                            <label class="col-sm-2 control-label" for="Status">
+                                @LabelNames.Status
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="Status" multiple="multiple" class="form-control">
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Waiting for Approval">Waiting for Approval</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Reject">Reject</option>
+                                </select>
+                            </div>
+                            @*<label class="col-sm-2 control-label" for="StockistID">
+                                    Customer Code/Name
+                                </label>
+                                <div class="col-sm-3">
+                                    <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                                </div>*@
+                        </div>
+                        <div class="form-group">
+                            @*<label class="col-sm-2 control-label" for="SalesEmployee">
+                                    Employee Code/Name
+                                </label>
+                                <div class="col-sm-3">
+                                    <input id="EmployeeCode" class="form-control" placeholder="Employee Code/Name" />
+                                </div>*@                           
+                        </div>
+                        <div class="form-group">
+                         <div class="col-sm-12">
+                        <div class="pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="GetJourneyPlanList()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" @*style="background-color:#d2401a;color:white"*@>
+                            Reset Filter
+                        </button>
+                        </div>
+                        </div>
+                        </div>
+                    </form>                   
+                    <div style="padding:10px;"></div>
+                    <div class="table-responsive" id="JourneyPlanTableId">
+                        <table id="JourneyPlanList" class="table ListTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+
+        $('#Status').SumoSelect({ placeholder: 'Status' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'Territory/area' });
+
+
+
+
+
+        $('#PlanFromDate').datepicker({
+            format: "MM-yyyy",
+            startView: "months",
+            autoclose: "true",
+            minViewMode: "months"
+        });
+        $('#PlanFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#PlanToDate').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true
+        });
+        $('#PlanToDate').bind('keypress', function (e) {
+            return false;
+        });
+        //$("#JourneyPlanList").DataTable({
+        //    "scrollX": true
+        //});
+
+    });
+    function ResetFilters() {
+        // $('#ddlOrderBattery').SumoSelect.un
+        var SalesEmployee = $('#SalesEmployee option').length;
+        var Status = $('#Status option').length;
+        var Zone = $('#Zone option').length;
+        var State = $('#State option').length;
+
+        var TerritoryArea = $('#TerritoryArea option').length;
+
+        var EmpName = $('#EmapName option').length;
+        var StockistName = $('#StockistName option').length;
+
+        var EmpId = $('#EmpId option').length;
+        var StickistID = $('#StickistID option').length;
+
+        $('#PlanFromDate').val("");
+        $('#PlanToDate').val("");
+
+        for (var i = 0; i < Status; i++) {
+            $('#Status')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < SalesEmployee; i++) {
+            $('#SalesEmployee')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Zone; i++) {
+            $('#Zone')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < State; i++) {
+            $('#State')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < TerritoryArea; i++) {
+            $('#TerritoryArea')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < EmpName; i++) {
+            $('#EmapName')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < EmpId; i++) {
+            $('#EmpId')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < StockistName; i++) {
+            $('#StockistName')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < StickistID; i++) {
+            $('#StickistID')[0].sumo.unSelectItem(i);
+        }
+        $("#DailyOrder").dataTable().fnFilter("", 2, true, false);
+        $("#DailyOrder").dataTable().fnFilter("", 7, true, false);
+        $("#DailyOrder").dataTable().fnFilter("", 5, true, false);
+        $("#DailyOrder").dataTable().fnFilter("", 10, true, false);
+        $("#DailyOrder").dataTable().fnFilter("", 6, true, false);
+    }
+</script>
+

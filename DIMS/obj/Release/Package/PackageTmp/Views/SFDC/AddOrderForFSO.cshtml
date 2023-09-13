@@ -1,0 +1,1739 @@
+﻿@*
+
+    Module              : Sales Process Management.
+    DocumentName        : AddOrder.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for Add Order Screen.
+    Developer Name      : Harish Kothuri.
+    Change Log          : NA.
+
+*@
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Create Order for Stockist</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Create Order</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('DailyOrderTracking')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                @* <a>
+                        <i class="fa fa-paperclip fa-4" title="Attachements"></i>
+                    </a>
+                    <a href ng-click="SendForApproval()">
+                        <i class=" fa fa-thumbs-o-up" title="Send for Reviews"></i>
+                    </a>
+                    <a href ng-click="go('AddOrder')">
+                        <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                    </a>*@
+                <a href ng-click="SaveStockistOrderData()" id="SaveStockistOrderData">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                <input type="text" id="SessionUserCode" style="display:none;" value="@SessionUserCode" />
+                <input type="text" id="SessionUserName" style="display:none;" value="@SessionUserName" />
+                <input type="text" id="SessionUserRole" style="display:none;" value="@SessionUserType" />
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div style="width: 100%; height: 100%;display:none;" id="addOrderview_HTML">
+        <table style="width: 100%" border="0">
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;">DIMS Order No :&nbsp;</span> <label id="DIMSOrderId_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;">DIMS Order Date :&nbsp;</span><label id="OrderDate_html"></label></td>
+            </tr>
+
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;">Employee Code :&nbsp;</span> <label id="Sales_Employee_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;">Customer Code :&nbsp;</span> <label id="CustomerCode_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;">Employee Name :&nbsp;</span> <label id="Sales_Employee_Name_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;">Customer Name :&nbsp;</span> <label id="StockistName_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;">Delivery Source :&nbsp;</span> <label id="DeliverySource_html"></label></td>
+                <td style="text-align:right;" rowspan="2"><span style="font-weight: bold;">Bill To Address :&nbsp;</span><label id="BillingToAddress_Html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;"> Plant/Depot :&nbsp;</span><label id="Plant_DepoName_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;">Retailer Code :&nbsp;</span> <label id="RetailerCode_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;">Location :&nbsp;</span> <label id="Location_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;">Retailer Name :&nbsp;</span> <label id="RetailerName_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;">District :&nbsp;</span> <label id="TerritoryArea_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td rowspan='2'><span style="font-weight: bold;"> Ship To :&nbsp;</span><label id="ShipTo_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;"> State :&nbsp;</span><label id="State_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td style="text-align:right;"><span style="font-weight: bold;"> Zone :&nbsp;</span><label id="SourceZone_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td></td>
+                <td style="text-align:right;">
+                    <span style="font-weight: bold;">Pin Code :&nbsp;</span><label id="PinCode_html"></label>
+                </td>
+            </tr>
+
+
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;"> Credit Limit (INR):&nbsp;</span><label id="CreditLimit_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;"> CForm Required :&nbsp;</span> <label id="CFormRequired_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td><span style="font-weight: bold;"> Current Outstanding (INR):&nbsp;</span> <label id="OutStandingLimit_html"></label></td>
+                <td style="text-align:right;"><span style="font-weight: bold;"> Project Customer :&nbsp; </span><label id="ProjectCustomer_html"></label></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td></td>
+                <td style="text-align:right;">
+                    <span style="font-weight: bold;">  Delivery Type :&nbsp;</span> <label id="DeliveryType_html"></label>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 15px;">
+            <div class="box-body">
+                @*<h3 class="box-title">Add Order</h3>*@
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            DIMS Order No
+                        </label>
+                        <div class="col-sm-3">
+                            <input class="form-control gray" id="DIMSOrderId" type="text" disabled="disabled" data-ng-model="DIMSOrderId">
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            DIMS Order Date
+                        </label>
+                        <div class="col-sm-3">
+                            <input class="form-control gray" id="OrderDate" type="text" data-ng-model="OrderDate" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            SAP Order No
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="SalesOrderNumber" data-ng-model="SalesOrderNumber" disabled="disabled" />
+                            <input type="text" id="ZSCEmailId" hidden="hidden" />
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            SAP Order Date
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="SODate" data-ng-model="SODate" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            FSO Incharge
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="FSOIncharge" data-ng-model="FSOIncharge" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Retailer Code
+                            <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="RetailerCode" data-ng-model="RetailerCode" />
+                            @*<div class="input-group add-on">
+                                    <input class="form-control" id="RetailerCode" type="text" disabled="disabled" data-ng-model="RetailerCode">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="GetdataForCustomer('GetStockistRetailerList','CustomerMasterList','Retailers List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Customer Name</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="CustomerName" data-ng-model="CustomerName" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Retailer Name
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="RetailerName" data-ng-model="RetailerName" disabled="disabled" />
+                            @*<div class="input-group add-on">
+                                    <input class="form-control" id="RetailerName" type="text" disabled="disabled" data-ng-model="RetailerName">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="GetdataForCustomer('GetStockistRetailerList','CustomerMasterList','Retailers List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*<label class="col-sm-2 control-label">Zone</label>
+                            <div class="col-sm-3">
+                                <input class="form-control gray" id="SourceZone" type="text" disabled="disabled" data-ng-model="SourceZone">
+                            </div>*@
+                        <label class="col-sm-2 control-label">
+                            Bill To Address
+                        </label>
+                        <div class="col-sm-3">
+                            <textarea class="form-control gray" disabled="disabled" rows="4" id="BillingToAddress" data-ng-model="BillingToAddress"></textarea>
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Ship To
+                        </label>
+                        <div class="col-sm-3">
+                            <textarea class="form-control gray" disabled="disabled" rows="4" id="ShipTo" data-ng-model="ShipTo"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Location
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="Location" data-ng-model="Location" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Delivery Type <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline">
+                                <input class="ng-pristine ng-untouched ng-valid" type="radio" data-ng-value="'FOR'" data-ng-model="DeliveryType" name="optradio" value="FOR">
+                                FOR
+                            </label>
+                            <label class="radio-inline">
+                                <input class="ng-pristine ng-untouched ng-valid" type="radio" data-ng-value="'EXWORKS'" data-ng-model="DeliveryType" name="optradio" value="EXWORKS">
+                                EXWORKS
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            District
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="TerritoryArea" data-ng-model="TerritoryArea" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Credit Limit (INR)
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="CreditLimit" data-ng-model="CreditLimit" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            State
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="State" data-ng-model="State" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Current Outstanding (INR)
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="OutStandingLimit" data-ng-model="OutStandingLimit" disabled="disabled" />
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Delivery Type <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="radio-inline">
+                                    <input class="ng-pristine ng-untouched ng-valid" type="radio" data-ng-value="'FOR'" data-ng-model="DeliveryType" name="optradio" value="FOR">
+                                    FOR
+                                </label>
+                                <label class="radio-inline">
+                                    <input class="ng-pristine ng-untouched ng-valid" type="radio" data-ng-value="'EXWORKS'" data-ng-model="DeliveryType" name="optradio" value="EXWORKS">
+                                    EXWORKS
+                                </label>
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Pin Code
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="PinCode" data-ng-model="PinCode" disabled="disabled" />
+                        </div>
+                        <label class="col-sm-3 control-label"> Outstanding above 45 Days (INR) </label>
+                        <div class="col-sm-3 control-label">
+                            <input id="Above45Days_CreditLimit" class="form-control gray ng-pristine ng-untouched ng-valid" type="text" disabled="disabled" data-ng-model="Above45Days_CreditLimit">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    @*<div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Employee Code
+                            </label>
+                            <div class="col-sm-3">
+                                <input class="form-control gray" id="Sales_Employee" type="text" data-ng-model="Sales_Employee" disabled="disabled">
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                Customer Code
+                                <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="CustomerCode" type="text" disabled="disabled" data-ng-model="CustomerCode">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="Getdata('GetCustomerList','CustomerMasterList','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Employee Name
+                            </label>
+                            <div class="col-sm-3">
+                                <input class="form-control gray" id="Sales_Employee_Name" type="text" disabled="disabled" data-ng-model="Sales_Employee_Name">
+                            </div>
+                            <label class="col-sm-3 control-label">Customer Name</label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="StockistName" type="text" disabled="disabled" data-ng-model="StockistName">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="Getdata('GetCustomerList','CustomerMasterList','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Delivery Source <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" data-ng-model="DeliverySource" data-ng-value="'Plant'">Plant
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" data-ng-model="DeliverySource" data-ng-value="'Depot'">Depot
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Sales Coordinator Code<span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="SalesCoorinator" type="text" data-ng-model="SalesCoorinator">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Sales Coordinator Name
+                            </label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="SalesCoorinatorName" type="text" data-ng-model="SalesCoorinatorName">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Bill to Address
+                            </label>
+                            <div class="col-sm-3">
+                                <textarea class="form-control gray" disabled="disabled" rows="4" id="BillingToAddress" data-ng-model="BillingToAddress"></textarea>
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                Retailer Code
+                                <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="RetailerCode" type="text" disabled="disabled" data-ng-model="RetailerCode">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="Getdata('GetRetailerList','RetailerMasterList','Retailers List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-3 control-label">
+                                Retailer Name
+                            </label>
+                            <div class="col-sm-3">
+                                <div class="input-group add-on">
+                                    <input class="form-control" id="RetailerName" type="text" disabled="disabled" data-ng-model="RetailerName">
+                                    <div class="input-group-btn">
+                                        <span class="btn btn-default" ng-click="Getdata('GetRetailerList','RetailerMasterList','Retailers List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Credit Limit
+                            </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control gray" id="CreditLimit" data-ng-model="CreditLimit" disabled="disabled" />
+                            </div>
+                            <label class="checkbox-inline control-label col-sm-offset-3">
+                                <input type="checkbox" value="" data-ng-model="CFormRequired">CForm Required
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Current Outstanding
+                            </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control gray" id="OutStandingLimit" data-ng-model="OutStandingLimit" disabled="disabled" />
+                            </div>
+                            <label class="checkbox-inline control-label col-sm-offset-3">
+                                <input type="checkbox" value="" data-ng-model="ProjectCustomer">Project Customer
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3 col-sm-offset-5">
+                                Delivery Type
+                                <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="radio-inline">
+                                    <input class="ng-pristine ng-untouched ng-valid" type="radio" data-ng-value="'FOR'" data-ng-model="DeliveryType" name="optradio" value="FOR">
+                                    FOR
+                                </label>
+                                <label class="radio-inline">
+                                    <input class="ng-pristine ng-untouched ng-valid" type="radio" data-ng-value="'EXWORKS'" data-ng-model="DeliveryType" name="optradio" value="EXWORKS">
+                                    EXWORKS
+                                </label>
+                            </div>
+                        </div>*@
+                    <br />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Product Category
+                        </label>
+                        <div class="col-sm-3">
+                            <select id="Product" class="form-control" onchange="ProductChange()">
+                                <option value="">Select</option>
+                                <option value="ACSheet">AC Sheet</option>
+                                <option value="CCSheet">CC Sheet</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Product Type
+                        </label>
+                        <div class="col-sm-3">
+                            <select id="ProductType" class="form-control" onchange="ProductTypeChange()">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="CC_SheetColor_Thick">
+                        <label class="col-sm-2 control-label">
+                            Colour
+                        </label>
+                        <div class="col-sm-3">
+                            <select id="CC_SheetColour" class="form-control" onchange="CC_ColorChange()">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            Thickness
+                        </label>
+                        <div class="col-sm-3">
+                            <select id="CC_SheetThickness" class="form-control" onchange="CC_ThicknessChange()">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="CC_Sheet_SKUSize">
+                        <label class="col-sm-2 control-label">
+                            SKU/Size (Feet)
+                        </label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="SKUSizeFeet">
+                                <option value="">Select</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 control-label">
+                            SKU/Size (Inches)
+                        </label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="SKUSizeInches">
+                                <option value="">Select</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="CC_Sheet_Qty">
+                        <label class="col-sm-2 control-label">Qty No.of Sheet<span class="Mandatory">*</span> </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="Quantity_CC" data-ng-model="Quantity_CC" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="AC_Sheet_SkuSize">
+                        <label class="col-sm-2 control-label" id="ACSKU">
+                            SKU/Size (Mtr)
+                        </label>
+                        <div class="col-sm-3">
+                            <select id="SKUSIZE" class="form-control">
+                                <option value="">Select</option>
+                                <option value="ACSheet">AC Sheet</option>
+                                <option value="CCSheet">CC Sheet</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 control-label" id="lblQty">Qty No.of Sheet<span class="Mandatory">*</span> </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="Quantity" data-ng-model="Quantity" />
+                        </div>
+                    </div>
+                    @*  <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="col-sm-4 control-label">Product Code<span class="Mandatory">*</span></label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group add-on">
+                                            <input class="form-control" id="Product" type="text" disabled="disabled" data-ng-model="Product">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default"><i class="glyphicon glyphicon-new-window"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-sm-4 control-label">Product Name</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group add-on">
+                                            <input class="form-control" id="ProductName" type="text" disabled="disabled" data-ng-model="ProductName">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default"><i class="glyphicon glyphicon-new-window"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-sm-4 control-label">SKU/Size </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="SKUSize" data-ng-model="SKUSize" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="col-sm-4 control-label">UOM </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control gray" id="UOM" data-ng-model="UOM" disabled="disabled" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="label-2-2" class="col-sm-4 control-label">
+                                        Qty No.of Sheet<span class="Mandatory">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="Quantity" data-ng-model="Quantity" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="form-group" id="ActionControls">
+                        <div class="col-sm-offset-6">
+                            <button type="button" id="AddData" class="btn btn-info">Add</button>
+                            <button type="button" id="EditData" class="btn btn-info">Update</button>
+                        </div>
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div style="overflow:auto;">
+                <table class="table tablecss" id="AddOrder">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU/Size</th>
+                            <th>UOM</th>
+                            <th>Quantity</th>
+                            <th>Quantity in Running Meter</th>
+                            <th>Quantity in MT</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3" style="text-align:right">Total:</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @*<tr>
+                                <td>AC Sheet</td>
+                                <td>3.60</td>
+                                <td>Meter</td>
+                                <td>300</td>
+                                <td>1080.00</td>
+                                <td>13.71</td>
+                                <td><a href='#' style='padding: 0px 0px;' onclick='DeleteExperience($(this));return false'><i class='glyphicon glyphicon-trash'></i></a></td>
+                            </tr>*@
+                    </tbody>
+                </table>
+                </div>
+                <div style="padding:10px;"></div>
+                <div style="overflow:auto;">
+                <table class="table tablecss" id="AddCCSheetOrder">
+                    <thead>
+                        <tr>
+                            <th>Product Category</th>
+                            <th>Colour</th>
+                            <th>Thickness</th>
+                            <th>SKU/Size (Feet)</th>
+                            <th>SKU/Size (Inches)</th>
+                            <th>UOM</th>
+                            <th>Quantity (No of Sheets)</th>
+                            <th>Quantity in KGs</th>
+                            <th>Quantity in MT</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6" style="text-align:right;">Total:</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @*<tr>
+                                <td>CC Sheet</td>
+                                <td>Blue</td>
+                                <td>0.40mm</td>
+                                <td>3</td>
+                                <td>2</td>
+                                <td>Feet</td>
+                                <td>3</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>*@
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var SelectedTrIndex;
+    $(document).ready(function () {
+        $('#AddOrder').DataTable({
+            paging: false,
+            "columnDefs": [
+          { className: "dt-right", "targets": [1, 3, 4, 5] }
+            ],
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+                for (var i = 3; i <= 5; i++) {
+                    total = api
+                   .column(i)
+                   .data()
+                   .reduce(function (a, b) {
+                       return intVal(a) + intVal(b);
+                   }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(i, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    if (i != 3) {
+                        pageTotal = parseFloat(pageTotal).toFixed(2);
+                    }
+                    // Update footer
+                    $(api.column(i).footer()).html(
+                        pageTotal
+                        );
+                }
+                // Total over all pages
+
+            }
+            // responsive: "true"
+        });
+        var table = $('#AddCCSheetOrder').DataTable({
+            paging: false,
+            "columnDefs": [
+         { className: "dt-right", "targets": [2, 3, 4, 6, 7, 8] }
+            ],
+            fixedColumns: {
+                leftColumns: 0
+            },
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+                for (var i = 6; i <= 8; i++) {
+                    total = api
+                   .column(i)
+                   .data()
+                   .reduce(function (a, b) {
+                       return intVal(a) + intVal(b);
+                   }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(i, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    if (i != 6) {
+                        pageTotal = parseFloat(pageTotal).toFixed(4);
+                    }
+                    // Update footer
+                    $(api.column(i).footer()).html(
+                        pageTotal
+                        );
+                }
+                // Total over all pages
+
+            }
+        });
+        jQuery('.dataTable').wrap('<div class="dataTables_scroll" />');
+        //$('#OrderDate').datepicker({
+        //    format: 'dd/mm/yyyy',
+        //    autoclose: 'true'
+        //});
+        $('#CreatedDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#DeliveryDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+
+        $('#AddOrder_wrapper').hide();
+        $('#AddCCSheetOrder_wrapper').hide();
+        $('#ActionControls').hide();
+
+
+        $('#AC_Sheet_SkuSize').hide();
+
+        $('#CC_SheetColor_Thick').hide();
+        $('#CC_Sheet_SKUSize').hide();
+        $('#CC_Sheet_Qty').hide();
+        //$('input[type="text"]').removeAttr("readonly");
+        //$('#DeliveryDate').attr("readonly", "readonly");
+        //$('#OrderDate').attr("readonly", "readonly");
+        //$('#CreatedDate').attr("readonly", "readonly");
+    });
+    $('#AddData').click(function () {
+        var ProductCategory = $('#Product').val();
+
+        if (ProductCategory == "ACSheet") {
+            var ProductCat = $("#ProductType option:selected").text();
+            var SelectedProductValue = $("#ProductType").val();
+            var SKUSize = $('#SKUSIZE option:selected').text();
+            var SKUSizeVal = $('#SKUSIZE').val();
+            var UOM = $("#ProductType").find(':selected').attr('data-uom');
+            var Quantity = $('#Quantity').val();
+            var WeightOfUOM = $("#ProductType").find(':selected').attr('data-weight');
+            //ProductCat = "AC Sheet";
+            //SKUSize = "3.60";
+            //UOM = "MM";
+            //Quantity = "300";
+            if (ProductCategory == "") {
+                alert("Please Select Product Category");
+            }
+            else if (SelectedProductValue == "" || SelectedProductValue == null) {
+                alert("Please select Product Type");
+            }
+            else if (SKUSizeVal == "" && parseInt(SelectedProductValue) < 7) {
+                alert("Please Select SKU Size");
+            }
+                //else if (UOM == "" || UOM == null) {
+                //    alert("Please Enter UOM");
+                //}
+            else if (Quantity == "" || Quantity == null) {
+                alert("Please Enter Quantity");
+                $('#Quantity').focus();
+            } else {
+                if (SKUSize == "Select") {
+                    SKUSize = 1;
+                }
+                var QuantityinRunningMet = (Quantity * SKUSize).toFixed(2);
+
+                var QuantityinMT = "";
+                if (SelectedProductValue < "7") {
+                    QuantityinMT = ((QuantityinRunningMet * WeightOfUOM) / 1000).toFixed(2);
+                } else {
+                    QuantityinMT = ((Quantity * WeightOfUOM) / 1000).toFixed(2);
+                    SKUSize = "";
+                    QuantityinRunningMet = "";
+                }
+
+                if ($('#SKUSIZE option:selected').text() == "Select") {
+                    SKUSize = "";
+                }
+                $('#AddOrder').dataTable().fnAddData([
+    ProductCat,
+    SKUSize,
+    UOM,
+    Quantity,
+    QuantityinRunningMet,
+    QuantityinMT,
+    "<a href='#' style='padding: 0px 0px;' onclick='DeleteExperience($(this));return false'><i class='glyphicon glyphicon-trash'></i></a>"
+                ]
+    );
+                $('#ProductType').val("");
+                $('#SKUSIZE').val("");
+                $('#Quantity').val("");
+                //  $('#AddOrder tr').removeAttr('selected');
+            }
+        } else {
+            var ProductCat = $("#ProductType option:selected").text();
+            var SelectedProductValue = $("#ProductType").val();
+            var Color = $('#CC_SheetColour option:selected').text();
+            var ColourValue = $('#CC_SheetColour').val();
+
+            var Thickness = $('#CC_SheetThickness option:selected').text();
+            var ThicknessValue = $('#CC_SheetThickness').val();
+
+            var SKUSizeFeet = $('#SKUSizeFeet option:selected').text();
+            var SKUSizeFeetValue = $('#SKUSizeFeet').val();
+
+            var SKUSizeInches = $('#SKUSizeInches option:selected').text();
+            var SKUSizeInchesValue = $('#SKUSizeInches').val();
+
+            var Quantity_CC = $('#Quantity_CC').val();
+
+            if (ProductCategory == "") {
+                alert("Please Select Product Category");
+            } else if (SelectedProductValue == "") {
+                alert("Please select Product Type");
+            } else if (ColourValue == "") {
+                alert("Please select color");
+            }
+            else if (ThicknessValue == "") {
+                alert("Please select Thickness");
+            }
+            else if (SKUSizeFeetValue == "") {
+                alert("Please select SKU Size Feet");
+            }
+            else if (SKUSizeInchesValue == "") {
+                alert("Please select SKU Size Inches");
+            } else if (Quantity_CC == "") {
+                alert("Please Enter Quantity");
+            } else {
+                var OneFeetThirtyMM = 0.9754;
+                var OneFeetFortyMM = 1.1369;
+                var OneFeetFortyFiveMM = 1.2527;
+                var OneFeetFiftyMM = 1.3990;
+                var OneSixtyMM = 1.6002;
+                var QuantityInKgs = 0;
+                var ThicknessValue = Thickness.split('mm');
+                if (ProductCat == "CC Sheet") {
+                    if (Thickness == "0.40mm") {
+                        QuantityInKgs = (SKUSizeFeet * OneFeetFortyMM) + ((OneFeetFortyMM / 12) * SKUSizeInches);
+                    }
+                    else if (Thickness == "0.45mm") {
+                        QuantityInKgs = (SKUSizeFeet * OneFeetFortyFiveMM) + ((OneFeetFortyFiveMM / 12) * SKUSizeInches);
+                    }
+                    else if (Thickness == "0.50mm") {
+                        QuantityInKgs = (SKUSizeFeet * OneFeetFiftyMM) + ((OneFeetFiftyMM / 12) * SKUSizeInches);
+                    } else if (Thickness == "0.60mm") {
+                        QuantityInKgs = (SKUSizeFeet * OneSixtyMM) + ((OneSixtyMM / 12) * SKUSizeInches);
+                    } else {
+                        QuantityInKgs = (SKUSizeFeet * OneFeetThirtyMM) + ((OneFeetThirtyMM / 12) * SKUSizeInches);
+                    }
+                }
+                else if (ProductCat == "Valley") {
+                    // QuantityInKgs = 5.52;
+                    if (Thickness == "0.35mm") {
+                        QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.40mm") {
+                        QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.45mm") {
+                        QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.50mm") {
+                        QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.60mm") {
+                        QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                    } else {
+                        QuantityInKgs = 0;
+                    }
+                } else if (ProductCat == "Crimped ridges") {
+                    //  QuantityInKgs = 5.596;
+                    if (Thickness == "0.35mm") {
+                        QuantityInKgs = (0.3048 * 3.2 * SKUSizeFeet);
+                    } else if (Thickness == "0.40mm") {
+                        QuantityInKgs = (0.3048 * 3.73 * SKUSizeFeet);
+                    } else if (Thickness == "0.45mm") {
+                        QuantityInKgs = (0.3048 * 4.11 * SKUSizeFeet);
+                    } else if (Thickness == "0.50mm") {
+                        QuantityInKgs = (0.3048 * 4.59 * SKUSizeFeet);
+                    } else if (Thickness == "0.60mm") {
+                        QuantityInKgs = (0.3048 * 5.25 * SKUSizeFeet);
+                    } else {
+                        QuantityInKgs = 0;
+                    }
+                  //  QuantityInKgs = (0.3048 * 3.2 * SKUSizeFeet);
+                } else if (ProductCat == "Corner pieces") {
+                    if (Thickness == "0.35mm") {
+                        QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.40mm") {
+                        QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.45mm") {
+                        QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.50mm") {
+                        QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.60mm") {
+                        QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                    } else {
+                        QuantityInKgs = 0;
+                    }
+                    //if (SKUSizeFeet == "10") {
+                    //    QuantityInKgs = 7;
+                    //} else if (SKUSizeFeet == "8") {
+                    //    QuantityInKgs = 5.53;
+                    //} else {
+                    //    QuantityInKgs = 0;
+                    //}
+                } else if (ProductCat == "Ridge") {
+                    if (Thickness == "0.35mm") {
+                        QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.40mm") {
+                        QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.45mm") {
+                        QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.50mm") {
+                        QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.60mm") {
+                        QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                    } else {
+                        QuantityInKgs = 0;
+                    }
+                    //if (SKUSizeFeet == "8") {
+                    //    QuantityInKgs = 5.53;
+                    //} else if (SKUSizeFeet == "10") {
+                    //    QuantityInKgs = 7;
+                    //} else {
+                    //    QuantityInKgs = 0;
+                    //}
+                } else if (ProductCat == "Gutter") {
+                    if (Thickness == "0.35mm") {
+                        QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.40mm") {
+                        QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.45mm") {
+                        QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.50mm") {
+                        QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                    } else if (Thickness == "0.60mm") {
+                        QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                    } else {
+                        QuantityInKgs = 0;
+                    }
+                    //if (SKUSizeFeet == "8") {
+                    //    QuantityInKgs = 4.16;
+                    //} else if (SKUSizeFeet == "10") {
+                    //    QuantityInKgs = 11;
+                    //} else {
+                    //    QuantityInKgs = 0;
+                    //}
+                } else if (ProductCat == "Long Line Crimps") {
+
+                    if (Thickness == "0.35mm") {
+                        QuantityInKgs = (0.3048 * 3.2 * SKUSizeFeet);
+                    } else if (Thickness == "0.40mm") {
+                        QuantityInKgs = (0.3048 * 3.73 * SKUSizeFeet);
+                    } else if (Thickness == "0.45mm") {
+                        QuantityInKgs = (0.3048 * 4.11 * SKUSizeFeet);
+                    } else if (Thickness == "0.50mm") {
+                        QuantityInKgs = (0.3048 * 4.59 * SKUSizeFeet);
+                    } else if (Thickness == "0.60mm") {
+                        QuantityInKgs = (0.3048 * 5.25 * SKUSizeFeet);
+                    } else {
+                        QuantityInKgs = 0;
+                    }
+                  //  QuantityInKgs = 0.3048 * 3.2 * SKUSizeFeet;
+                } else { }
+
+
+                $('#AddCCSheetOrder').dataTable().fnAddData([
+   ProductCat,
+   Color,
+   Thickness,
+   SKUSizeFeet,
+   SKUSizeInches,
+   "Feet",
+   Quantity_CC,
+   parseFloat(QuantityInKgs * Quantity_CC).toFixed(4),
+   ((QuantityInKgs * Quantity_CC) / 1000).toFixed(4),
+   "<a href='#' style='padding: 0px 0px;' onclick='DeleteExperience($(this));return false'><i class='glyphicon glyphicon-trash'></i></a>"
+                ]
+   );
+            }
+
+            $('#ProductType').val("");
+            $('#CC_SheetColour').val("");
+            $('#CC_SheetThickness').val("");
+            $('#SKUSizeFeet').val("");
+            $('#SKUSizeInches').val("").attr('disabled', false);
+            $('#Quantity_CC').val("");
+        }
+    });
+
+    var table = $('#AddOrder').DataTable();
+    var table1 = $('#AddCCSheetOrder').DataTable();
+    var SelectedTableName = "";
+    $('#AddOrder tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+        var rowData = table.row(this).data();
+        SelectedTrIndex = table.row(this).index();
+        SelectedTableName = "ACSHEET";
+        var ProductVal = "";
+        var SKUValue = "";
+        $('#ProductType option').map(function () {
+            if ($(this).text() == rowData[0]) {
+                ProductVal = $(this).val();
+            }
+        });
+        $("#ProductType").val(ProductVal);
+        $('#SKUSIZE option').map(function () {
+            if ($(this).text() == rowData[1]) {
+                SKUValue = $(this).val();
+            }
+        });
+        $("#SKUSIZE").val(SKUValue);
+        $('#Quantity').val(rowData[3]);
+        //SelectedTrIndex = "";
+    });
+
+    $('#AddCCSheetOrder tbody').on('click', 'tr', function () {
+        ShowLoader();
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table1.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+        var rowData = table1.row(this).data();
+        SelectedTrIndex = table1.row(this).index();
+        var ProductVal = "";
+        var ColorValue = "";
+        var ThicknessValue = "";
+        var SKUFeet = "";
+        var SKUInches = "";
+        SelectedTableName = "CCSHEET";
+        $('#ProductType option').map(function () {
+            if ($(this).text() == rowData[0]) {
+                ProductVal = $(this).val();
+            }
+        });
+        $("#ProductType").val(ProductVal);
+
+        ProductTypeChange();
+        //$('#ProductType').trigger('change');
+
+        $('#CC_SheetColour option').map(function () {
+            if ($(this).text() == rowData[1]) {
+                ColorValue = $(this).val();
+            }
+        });
+        $("#CC_SheetColour").val(ColorValue);
+        CC_ColorChange();
+        //debugger;
+        $('#CC_SheetThickness option').map(function () {
+            if ($(this).text() == rowData[2]) {
+                ThicknessValue = $(this).val();
+            }
+        });
+        $("#CC_SheetThickness").val(ThicknessValue);
+        CC_ThicknessChange();
+        $('#SKUSizeFeet option').map(function () {
+            if ($(this).text() == rowData[3]) {
+                SKUFeet = $(this).val();
+            }
+        });
+        $("#SKUSizeFeet").val(SKUFeet);
+
+        $('#SKUSizeInches option').map(function () {
+            if ($(this).text() == rowData[4]) {
+                SKUInches = $(this).val();
+            }
+        });
+        $("#SKUSizeInches").val(SKUInches);
+
+
+        $('#Quantity_CC').val(rowData[6]);
+        HideLoader();
+        //SelectedTrIndex = "";
+    });
+
+    $('#EditData').click(function () {
+        var ProductCategory = $('#Product').val();
+        if (typeof (SelectedTrIndex) == "number") {
+            if (SelectedTableName == "ACSHEET") {
+                table.$('tr.selected').removeClass('selected');
+                var ProductCat = $("#ProductType option:selected").text();
+                var SelectedProductValue = $("#ProductType").val();
+                var SKUSize = $('#SKUSIZE option:selected').text();
+                var SKUSizeVal = $('#SKUSIZE').val();
+                var UOM = $("#ProductType").find(':selected').attr('data-uom');
+                var Quantity = $('#Quantity').val();
+                var WeightOfUOM = $("#ProductType").find(':selected').attr('data-weight');
+
+                if (SelectedProductValue == "" || SelectedProductValue == null) {
+                    alert("Please select Product Type");
+                }
+                else if (SKUSizeVal == "" || SKUSizeVal == null) {
+                    alert("Please Select SKU Size");
+                }
+                else if (Quantity == "" || Quantity == null) {
+                    alert("Please Enter Quantity");
+                } else {
+                    var QuantityinRunningMet = (Quantity * SKUSize).toFixed(2);
+                    var QuantityinMT = "";
+                    if (SelectedProductValue < "7") {
+                        QuantityinMT = ((QuantityinRunningMet * WeightOfUOM) / 1000).toFixed(2);
+                    } else {
+                        QuantityinMT = ((Quantity * WeightOfUOM) / 1000).toFixed(2);
+                        SKUSize = "";
+                        QuantityinRunningMet = "";
+                    }
+
+                    $('#AddOrder').dataTable().fnUpdate([
+                        ProductCat,
+                        SKUSize,
+                        UOM,
+                        Quantity,
+                        QuantityinRunningMet,
+                        QuantityinMT,
+                         "<a href='#' style='padding: 0px 0px;' onclick='DeleteExperience($(this));return false'><i class='glyphicon glyphicon-trash'></i></a>"
+                    ], SelectedTrIndex);
+                    //$('#AddOrder').find('.selected').each(function () {
+                    //    $(this).removeClass("selected");
+                    //});
+                    $('#ProductType').val("");
+                    $('#SKUSIZE').val("");
+                    $('#Quantity').val("");
+                    // $('#AddOrder tr').removeAttr('selected');
+                    SelectedTrIndex = "";
+                }
+            } else {
+                table1.$('tr.selected').removeClass('selected');
+                var ProductCat = $("#ProductType option:selected").text();
+                var SelectedProductValue = $("#ProductType").val();
+                var Color = $('#CC_SheetColour option:selected').text();
+                var ColourValue = $('#CC_SheetColour').val();
+
+                var Thickness = $('#CC_SheetThickness option:selected').text();
+                var ThicknessValue = $('#CC_SheetThickness').val();
+
+                var SKUSizeFeet = $('#SKUSizeFeet option:selected').text();
+                var SKUSizeFeetValue = $('#SKUSizeFeet').val();
+
+                var SKUSizeInches = $('#SKUSizeInches option:selected').text();
+                var SKUSizeInchesValue = $('#SKUSizeInches').val();
+                var Quantity_CC = $('#Quantity_CC').val();
+
+                if (ProductCategory == "") {
+                    alert("Please Select Product Category");
+                } else if (SelectedProductValue == "") {
+                    alert("Please select Product Type");
+                } else if (ColourValue == "") {
+                    alert("Please select color");
+                }
+                else if (ThicknessValue == "") {
+                    alert("Please select Thickness");
+                }
+                else if (SKUSizeFeetValue == "") {
+                    alert("Please select SKU Size Feet");
+                }
+                else if (SKUSizeInchesValue == "") {
+                    alert("Please select SKU Size Inches");
+                } else if (Quantity_CC == "") {
+                    alert("Please Enter Quantity");
+                } else {
+                    var OneFeetThirtyMM = 0.9754;
+                    var OneFeetFortyMM = 1.1369;
+                    var OneFeetFortyFiveMM = 1.2527;
+                    var OneFeetFiftyMM = 1.3990;
+                    var OneSixtyMM = 1.6002;
+                    var QuantityInKgs = 0;
+                    var ThicknessValue = Thickness.split('mm');
+                    if (ProductCat == "CC Sheet") {
+                        if (Thickness == "0.40mm") {
+                            QuantityInKgs = (SKUSizeFeet * OneFeetFortyMM) + ((OneFeetFortyMM / 12) * SKUSizeInches);
+                        }
+                        else if (Thickness == "0.45mm") {
+                            QuantityInKgs = (SKUSizeFeet * OneFeetFortyFiveMM) + ((OneFeetFortyFiveMM / 12) * SKUSizeInches);
+                        }
+                        else if (Thickness == "0.50mm") {
+                            QuantityInKgs = (SKUSizeFeet * OneFeetFiftyMM) + ((OneFeetFiftyMM / 12) * SKUSizeInches);
+                        } else if (Thickness == "0.60mm") {
+                            QuantityInKgs = (SKUSizeFeet * OneSixtyMM) + ((OneSixtyMM / 12) * SKUSizeInches);
+                        } else {
+                            QuantityInKgs = (SKUSizeFeet * OneFeetThirtyMM) + ((OneFeetThirtyMM / 12) * SKUSizeInches);
+                        }
+                    }
+                    else if (ProductCat == "Valley") {
+                        // QuantityInKgs = 5.52;
+                        if (Thickness == "0.35mm") {
+                            QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.40mm") {
+                            QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.45mm") {
+                            QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.50mm") {
+                            QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.60mm") {
+                            QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                        } else {
+                            QuantityInKgs = 0;
+                        }
+                    } else if (ProductCat == "Crimped ridges") {
+                        //  QuantityInKgs = 5.596;
+                        //  QuantityInKgs = (0.3048 * 3.2 * SKUSizeFeet);
+                        if (Thickness == "0.35mm") {
+                            QuantityInKgs = (0.3048 * 3.2 * SKUSizeFeet);
+                        } else if (Thickness == "0.40mm") {
+                            QuantityInKgs = (0.3048 * 3.73 * SKUSizeFeet);
+                        } else if (Thickness == "0.45mm") {
+                            QuantityInKgs = (0.3048 * 4.11 * SKUSizeFeet);
+                        } else if (Thickness == "0.50mm") {
+                            QuantityInKgs = (0.3048 * 4.59 * SKUSizeFeet);
+                        } else if (Thickness == "0.60mm") {
+                            QuantityInKgs = (0.3048 * 5.25 * SKUSizeFeet);
+                        } else {
+                            QuantityInKgs = 0;
+                        }
+                    } else if (ProductCat == "Corner pieces") {
+                        if (Thickness == "0.35mm") {
+                            QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.40mm") {
+                            QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.45mm") {
+                            QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.50mm") {
+                            QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.60mm") {
+                            QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                        } else {
+                            QuantityInKgs = 0;
+                        }
+                        //if (SKUSizeFeet == "10") {
+                        //    QuantityInKgs = 7;
+                        //} else if (SKUSizeFeet == "8") {
+                        //    QuantityInKgs = 5.53;
+                        //} else {
+                        //    QuantityInKgs = 0;
+                        //}
+                    } else if (ProductCat == "Ridge") {
+                        if (Thickness == "0.35mm") {
+                            QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.40mm") {
+                            QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.45mm") {
+                            QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.50mm") {
+                            QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.60mm") {
+                            QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                        } else {
+                            QuantityInKgs = 0;
+                        }
+                        //if (SKUSizeFeet == "8") {
+                        //    QuantityInKgs = 5.53;
+                        //} else if (SKUSizeFeet == "10") {
+                        //    QuantityInKgs = 7;
+                        //} else {
+                        //    QuantityInKgs = 0;
+                        //}
+                    } else if (ProductCat == "Gutter") {
+                        if (Thickness == "0.35mm") {
+                            QuantityInKgs = ((0.3048 * 3.2 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.40mm") {
+                            QuantityInKgs = ((0.3048 * 3.73 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.45mm") {
+                            QuantityInKgs = ((0.3048 * 4.11 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.50mm") {
+                            QuantityInKgs = ((0.3048 * 4.59 * SKUSizeFeet) / 2);
+                        } else if (Thickness == "0.60mm") {
+                            QuantityInKgs = ((0.3048 * 5.25 * SKUSizeFeet) / 2);
+                        } else {
+                            QuantityInKgs = 0;
+                        }
+                        //if (SKUSizeFeet == "8") {
+                        //    QuantityInKgs = 4.16;
+                        //} else if (SKUSizeFeet == "10") {
+                        //    QuantityInKgs = 11;
+                        //} else {
+                        //    QuantityInKgs = 0;
+                        //}
+                    } else if (ProductCat == "Long Line Crimps") {
+                        if (Thickness == "0.35mm") {
+                            QuantityInKgs = (0.3048 * 3.2 * SKUSizeFeet);
+                        } else if (Thickness == "0.40mm") {
+                            QuantityInKgs = (0.3048 * 3.73 * SKUSizeFeet);
+                        } else if (Thickness == "0.45mm") {
+                            QuantityInKgs = (0.3048 * 4.11 * SKUSizeFeet);
+                        } else if (Thickness == "0.50mm") {
+                            QuantityInKgs = (0.3048 * 4.59 * SKUSizeFeet);
+                        } else if (Thickness == "0.60mm") {
+                            QuantityInKgs = (0.3048 * 5.25 * SKUSizeFeet);
+                        } else {
+                            QuantityInKgs = 0;
+                        }
+                        //QuantityInKgs = 0.3048 * 3.2 * SKUSizeFeet;
+                    } else { }
+
+
+
+
+                    $('#AddCCSheetOrder').dataTable().fnUpdate([
+  ProductCat,
+  Color,
+  Thickness,
+  SKUSizeFeet,
+  SKUSizeInches,
+  "Feet",
+  Quantity_CC,
+  parseFloat(QuantityInKgs * Quantity_CC).toFixed(4),
+   ((QuantityInKgs * Quantity_CC) / 1000).toFixed(4),
+  "<a href='#' style='padding: 0px 0px;' onclick='DeleteExperience($(this));return false'><i class='glyphicon glyphicon-trash'></i></a>"], SelectedTrIndex);
+                }
+                $('#ProductType').val("");
+                $('#CC_SheetColour').val("");
+                $('#CC_SheetThickness').val("");
+                $('#SKUSizeFeet').val("");
+                $('#SKUSizeInches').val("").attr('disabled', false);
+                $('#Quantity_CC').val("");
+            }
+        } else {
+            alert("Please Select a Record to Update");
+        }
+    });
+
+    function DeleteExperience(obj) {
+        $('#ProductType').val("");
+        $('#SKUSIZE').val("");
+        $('#Quantity').val("");
+        var ProductCategory = $('#Product').val();
+        if (confirm("Do you really want to Delete this Record?")) {
+            var row = $(obj).closest("tr").get(0);
+            if (ProductCategory == "ACSheet") {
+                var ExperienceDetails = $('#AddOrder').dataTable();
+                ExperienceDetails.fnDeleteRow(ExperienceDetails.fnGetPosition(row));
+            } else {
+                var ExpeDetails = $('#AddCCSheetOrder').dataTable();
+                ExpeDetails.fnDeleteRow(ExpeDetails.fnGetPosition(row));
+            }
+
+        }
+    }
+
+    function ProductChange() {
+        var SelectedProduct = $('#Product').val();
+        if (SelectedProduct == "ACSheet") {
+            $('#AddCCSheetOrder_wrapper').hide();
+            $('#AddOrder_wrapper').show();
+            $('#ActionControls').show();
+
+            $("#CC_SheetColour").empty();
+            $("#CC_SheetColour").append($("<option></option>").val("").html("Select"));
+
+
+            $('#SKUSizeFeet').val("");
+            $('#SKUSizeInches').val("");
+
+            $("#CC_SheetThickness").empty();
+            $("#CC_SheetThickness").append($("<option></option>").val("").html("Select"));
+
+            $('#CC_SheetColor_Thick').hide();
+            $('#CC_Sheet_SKUSize').hide();
+            $('#AC_Sheet_SkuSize').show();
+
+
+            $('#CC_Sheet_Qty').hide();
+            $('#AddCCSheetOrder').DataTable().rows().remove().draw();
+
+            GetAcCCSheetData(SelectedProduct);
+        }
+        else if (SelectedProduct == "CCSheet") {
+            $('#AddOrder_wrapper').hide();
+            $('#AddCCSheetOrder_wrapper').show();
+            $('#ActionControls').show();
+            $('#CC_SheetColor_Thick').show();
+            $('#CC_Sheet_SKUSize').show();
+            $('#CC_Sheet_Qty').show();
+            $('#AC_Sheet_SkuSize').hide();
+            $('#AddOrder').DataTable().rows().remove().draw();
+            GetAcCCSheetData(SelectedProduct);
+        } else {
+            $('#AddOrder_wrapper').hide();
+            $('#AddCCSheetOrder_wrapper').hide();
+            $('#ActionControls').hide();
+            $('#CC_SheetColor_Thick').hide();
+            $('#CC_Sheet_SKUSize').hide();
+
+            $("#ProductType").empty();
+            $("#ProductType").append($("<option></option>").val("").html("Select"));
+
+            $("#CC_SheetColour").empty();
+            $("#CC_SheetColour").append($("<option></option>").val("").html("Select"));
+
+            $("#CC_SheetThickness").empty();
+            $("#CC_SheetThickness").append($("<option></option>").val("").html("Select"));
+
+            $('#CC_Sheet_Qty').hide();
+            $('#SKUSizeFeet').val("");
+            $('#SKUSizeInches').val("");
+
+            $('#AC_Sheet_SkuSize').hide();
+
+        }
+    }
+
+    function GetCoordinatorList(obj) {
+        if ($('input[name=optradio]:checked').val() == 'Plant') {
+            $('#Plant_DepoName').val($(obj).children().eq(1).html());
+        } else {
+            $('#Plant_DepoName').val($(obj).children().eq(2).html());
+        }
+        $('#Email').val($(obj).children().eq(3).html());
+        $('#LookUpModal').modal('hide');
+    }
+
+    function ProductTypeChange() {
+        var SelectedProduct = $('#Product').val();
+        var ProductType = $('#ProductType').val();
+        var ProductTypeText = $('#ProductType option:selected').text().trim();
+        var CCSheetColorText = $('#CC_SheetColour option:selected').text().trim();
+
+        if (SelectedProduct == "CCSheet" && ProductType != "") {
+            var Data = JSON.stringify({
+                "ProductCategory": SelectedProduct,
+                "ProductType": ProductType
+            });
+            $.ajax({
+                type: 'get',
+                async: false,
+                datatype: 'JSON',
+                data: { data: Data },
+                url: '../../SFDC/GetAcCCSheetColorData',
+                success: function (data) {
+                    var Res = JSON.parse(data);
+                    $("#CC_SheetColour").empty();
+                    $("#CC_SheetColour").append($("<option></option>").val("").html("Select"));
+
+                    $("#CC_SheetThickness").empty();
+                    $("#CC_SheetThickness").append($("<option></option>").val("").html("Select"));
+
+                    for (var j = 0; j < Res.length; j++) {
+                        $("#CC_SheetColour").append($("<option></option>").val(Res[j]["Id"]).html(Res[j]["COLOUR"]));
+                    }
+                    //GetSizesForAcCC();
+                }
+            });
+
+            if (ProductTypeText == "Valley") {
+                $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option>');
+                $('#SKUSizeInches').val('0').attr("disabled", true);
+            } else if (ProductTypeText == "Crimped ridges") {
+                $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="4">4</option>');
+                $('#SKUSizeInches').val('0').attr("disabled", true);
+            } else if (ProductTypeText == "Corner pieces") {
+                $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option><option value="10">10</option>');
+                $('#SKUSizeInches').val('0').attr("disabled", true);
+            } else if (ProductTypeText == "Ridge" || ProductTypeText == "Gutter") {
+                var SheetColour = $('#CC_SheetColour').val();
+                var SheetColourText = $('#CC_SheetColour option:selected').text();
+                if (SheetColour != "") {
+                    if (CCSheetColorText == "Red" || CCSheetColorText == "Green" || CCSheetColorText == "Sky Blue") {
+                        $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option>');
+                    } else {
+                        $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option><option value="10">10</option>');
+                    }
+                } else {
+                    $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option>');
+                }
+                $('#SKUSizeInches').val('0').attr("disabled", true);
+            }
+            else if (ProductTypeText == "Long Line Crimps") {
+                $('#SKUSizeInches').val('0').attr("disabled", true);
+            }
+            else {
+
+                var Html = "";
+                for (var i = 1; i <= 30; i++) {
+                    Html += "<option value=" + i + ">" + i + "</option>";
+                }
+                $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option>' + Html);
+                $('#SKUSizeInches').val("").attr("disabled", false);
+            }
+
+        } else if (SelectedProduct == "CCSheet" && ProductType == "") {
+            $("#CC_SheetColour").empty();
+            $("#CC_SheetColour").append($("<option></option>").val("").html("Select"));
+
+            $("#CC_SheetThickness").empty();
+            $("#CC_SheetThickness").append($("<option></option>").val("").html("Select"));
+
+            $('#SKUSizeFeet').val("");
+            $('#SKUSizeInches').val();
+        }
+        if (SelectedProduct == "ACSheet") {
+            $('#SKUSIZE').val("");
+            $('#SKUSIZE').attr("disabled", true);
+            if (ProductType == "7") {
+                $('#lblQty').text("Quantity (No of Boxes)");
+                $('#lblQty').append('<span class="Mandatory">*</span>');
+                $('#ACSKU').find('span').remove();
+            } else if (ProductType == "8" || ProductType == "9" || ProductType == "13") {
+                $('#lblQty').text("Quantity (No of Pairs)");
+                $('#lblQty').append('<span class="Mandatory">*</span>');
+                $('#ACSKU').find('span').remove();
+            } else if (ProductType == "10" || ProductType == "11" || ProductType == "12" || ProductType == "14") {
+                $('#lblQty').text("Quantity (No of pieces)");
+                $('#lblQty').append('<span class="Mandatory">*</span>');
+                $('#ACSKU').find('span').remove();
+            } else {
+                $('#SKUSIZE').attr("disabled", false);
+                $('#lblQty').text("Quantity (No of Sheets)");
+                $('#lblQty').not(":has(span)").append('<span class="Mandatory">*</span>');
+                $('#ACSKU').not(":has(span)").append('<span class="Mandatory">*</span>');
+            }
+        }
+    }
+
+    function GetAcCCSheetData(SelectedProduct) {
+        if (SelectedProduct != "") {
+            $.ajax({
+                type: 'get',
+                async: 'false',
+                datatype: 'JSON',
+                data: { data: SelectedProduct },
+                url: '../../SFDC/GetAcCCSheetData',
+                success: function (data) {
+                    var Res = JSON.parse(data);
+                    $("#ProductType").empty();
+                    $("#ProductType").append($("<option></option>").val("").html("Select"));
+                    for (var j = 0; j < Res.length; j++) {
+                        if (SelectedProduct == "ACSheet") {
+                            $("#ProductType").append($("<option data-UOM=" + Res[j]["UOM"] + " data-Weight=" + Res[j]["WEIGHT_OF_1_UOM"] + "></option>").val(Res[j]["id"]).html(Res[j]["PRODUCT_TYPE_NAME"]));
+                        } else {
+                            $("#ProductType").append($("<option></option>").val(Res[j]["Id"]).html(Res[j]["PRODUCT_TYPE_NAME"].trim()));
+                        }
+                    }
+                    GetSizesForAcCC();
+                }
+            });
+        }
+    }
+
+    function GetSizesForAcCC() {
+        $.ajax({
+            type: 'get',
+            async: 'false',
+            datatype: 'JSON',
+            url: '../../SFDC/GetAcCCSheetSizesData',
+            success: function (data) {
+                var Res = JSON.parse(data);
+                $("#SKUSIZE").empty();
+                $("#SKUSIZE").append($("<option></option>").val("").html("Select"));
+                for (var j = 0; j < Res.length; j++) {
+                    $("#SKUSIZE").append($("<option></option>").val(Res[j]["id"]).html(Res[j]["SIZE"]));
+                }
+            }
+        });
+    }
+
+    function CC_ColorChange() {
+        var SelectedProduct = $('#Product').val();
+        var ProductTypeText = $('#ProductType option:selected').text();
+
+        var selectedColour = $('#CC_SheetColour').val();
+
+        if (selectedColour != "") {
+            $.ajax({
+                type: 'get',
+                async: false,
+                datatype: 'JSON',
+                data: { data: selectedColour },
+                url: '../../SFDC/GetCCSheetThickness',
+                success: function (data) {
+                    var Res = JSON.parse(data);
+                    $("#CC_SheetThickness").empty();
+                    $("#CC_SheetThickness").append($("<option></option>").val("").html("Select"));
+                    for (var j = 0; j < Res.length; j++) {
+                        $("#CC_SheetThickness").append($("<option></option>").val(Res[j]["Id"]).html(Res[j]["THICKNESS"]));
+                    }
+                }
+            });
+        }
+
+        if (ProductTypeText == "Valley") {
+            $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option>');
+        } else if (ProductTypeText == "Crimped ridges") {
+            $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="4">4</option>');
+        } else if (ProductTypeText == "Corner pieces") {
+            $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option>');
+        } else if (ProductTypeText == "Ridge" || ProductTypeText == "Gutter") {
+            var CCSheetColorText = $('#CC_SheetColour option:selected').text();
+            if (selectedColour != "") {
+                if (CCSheetColorText == "Red" || CCSheetColorText == "Green" || CCSheetColorText == "Sky Blue") {
+                    $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option>');
+                } else {
+                    $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option><option value="10">10</option>');
+                }
+            } else {
+                $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option>');
+            }
+        } else {
+            var Html = "";
+            for (var i = 1; i < 30; i++) {
+                Html += "<option value=" + i + ">" + i + "</option>";
+            }
+            $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option>' + Html);
+        }
+
+
+    }
+
+    function CC_ThicknessChange() {
+        var SelectedProductType = $('#ProductType option:selected').text();
+        var SelectedColor = $('#CC_SheetColour option:selected').text();
+        var SelectedThickness = $('#CC_SheetThickness option:selected').text();
+
+        if (SelectedThickness != "Select") {
+            if (SelectedProductType == "Valley" || SelectedProductType == "Corner pieces" || SelectedProductType == "Ridge" || SelectedProductType == "Gutter") {
+                if (SelectedThickness == "0.50mm" || SelectedThickness == "0.60mm") {
+                    $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option><option value="10">10</option>');
+                } else {
+                    $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option>');
+                }
+            }
+        } else {
+            CC_ColorChange();
+            //  $('#SKUSizeFeet').empty().append('<option selected=selected value="">Select</option><option value="8">8</option>');
+        }
+    }
+</script>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Master>
+  <TableName>Nature Of Complaint</TableName>
+  <Field>
+    <FN>NATUREOFCOMPLAINT_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>NATUREOFCOMPLAINT_NAME</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>NATUREOFCOMPLAINT_DESCRIPTION</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COMPLAINT_CATEGORY_NAME</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COMPLAINT_TYPE_NAME</FN>
+    <FT>String</FT>
+    <IN>True</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <!--<Field>
+    <FN>PID</FN>
+    <FT>int</FT>
+    <IN>False</IN>
+    <MTN>State</MTN>
+    <MTLC>State_Name</MTLC>
+    <MTLCV>State_Id</MTLCV>
+  </Field>-->
+</Master>

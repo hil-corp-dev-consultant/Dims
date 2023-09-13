@@ -1,0 +1,2406 @@
+﻿@{
+    DIMS.Models.UserProperties UP_SALES = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE_SALES = UP_SALES.SITEDETAIL_CODE;
+    string SessionUserCode_SALES = UP_SALES.UserCode;
+    string SessionUserName_SALES = UP_SALES.UserName;
+    string SessionCOMPANYDETAIL_CODE_SALES = UP_SALES.COMPANYDETAIL_CODE;
+    string SessionUserType_SALES = UP_SALES.UserTypeCode;
+    string SessionUserTypeID_SALES = UP_SALES.UserType;
+    string SessionStateCode_SALES = UP_SALES.UserStateCode;
+    string SessionZoneCode_SALES = UP_SALES.UserZoneCode;
+    string SessionZoneName_SALES = UP_SALES.UserZoneName;
+    string SessionStateName_SALES = UP_SALES.UserStateName;
+}
+
+
+<!DOCTYPE html>
+<html lang="en" ng-app="DIMSApp">
+<head>
+    <meta charset="utf-8" />
+    <title id="LogoTitle">@ViewBag.LogoTitle</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Theme style -->
+    @Styles.Render("~/bundles/Allcss")
+    <link href="~/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/dist/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/bootstrap/ionicons/css/ionicons.min.css" rel="stylesheet" />
+
+
+
+
+    @Styles.Render("~/bundles/DataTablecss")
+    <link href="~/bootstrap/css/jquery.sumoselect.min.css" rel="stylesheet" />
+    @*@Scripts.Render("~/bundles/DataTable")*@
+    <script src="~/bootstrap/DataTables-1.10.5/js/jquery.js"></script>
+    <script src="~/plugins/jQueryUI/jquery-ui.min.js"></script>
+
+    <script src="~/Scripts/DataTableScripts/jquery.dataTables.min.js"></script>
+    @*<script src="~/bootstrap/DataTables-1.10.5/js/jquery.dataTables.min.js"></script>*@
+
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+    <script src="~/Scripts/DataTableScripts/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.flash.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/jszip.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DataTableScripts/buttons.print.min.js"></script>
+
+    <link href="~/Scripts/DataTableScripts/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Scripts/DataTableScripts/buttons.dataTables.min.css" rel="stylesheet" />
+    <script src="~/bootstrap/js/fileinput.js"></script>
+    <script src="~/bootstrap/DataTables-1.10.5/js/dataTables.responsive.js"></script>
+
+    <script src="~/bootstrap/js/dataTables.cellEdit.js"></script>
+    @*<script src="~/bootstrap/js/jquery.tabletojson.js"></script>*@
+
+    @*<script src="~/bootstrap/js/jquery.dataTables.columnFilter.js"></script>*@
+    <link href="~/bootstrap/DataTables-1.10.5/dataTable.fixedColumns.css" rel="stylesheet" />
+    <script src="~/bootstrap/DataTables-1.10.5/dataTable.fixedColumns.js"></script>
+
+
+    @Scripts.Render("~/bundles/AllJs")
+    @Scripts.Render("~/bundles/Angularjs")
+    @*<script src="~/Scripts/angular-datatables.js"></script>*@
+
+    <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/bootstrap/js/jquery.sumoselect.min.js"></script>
+    <script src="~/dist/js/app.js"></script>
+    <script src="~/bootstrap/js/bootstrap.typeahead.js"></script>
+    <link href="~/Scripts/MultiSelect/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/MultiSelect/js/multiselect.min.js"></script>
+    <script src="~/Scripts/SFDCScripts/ZHJourneyPlan.js"></script>
+
+    <script src="~/Scripts/SFDCScripts/SFDCScript.js"></script>
+    <script src="~/Scripts/DIMS/Notification.js"></script>
+
+    <script src="~/Scripts/SFDCScripts/SFDCScriptsOne.js"></script>
+    <script src="~/Scripts/Reports/Reports.js"></script>
+    <script src="~/Scripts/DIMS/CustomerNotification.js"></script>
+
+    @*<script src="~/Scripts/Kar.js"></script>*@
+
+
+
+
+
+
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <style>
+         body {
+                background-color: #ecf0f5;  
+            }
+        .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+            border: 1px none #dddddd;
+        }
+
+        .borderless tbody tr.odd {
+            background-color: #f5f5f5;
+            border: 1px lightgrey;
+        }
+
+        .borderless tbody tr.even {
+            background-color: white;
+            border: 1px lightgrey;
+        }
+
+        .customtable > thead > tr > th {
+            border: none;
+            background-color: #3c8dbc !important;
+            color: White;
+        }
+
+        .content-header > .breadcrumb > li + li::before {
+            color: darkgray !important;
+            content: "> ";
+        }
+
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+
+        .ms-container .ms-list {
+            height: 100px !important;
+        }
+
+        /* Page */
+
+        textarea {
+            resize: none;
+        }
+
+        .Expand {
+            /*background-color: #3C8DBC;*/
+            background-color: #d2401a;
+            color: white;
+            margin-left: 1%;
+        }
+
+        .CloseOpen {
+            cursor: pointer;
+            /*background-color: #3C8DBC;*/
+            background-color: #d2401a;
+        }
+
+        .smallbutton {
+            border: 0px solid white;
+            border-radius: 4px;
+            color: white;
+            background-color: #d2401a;
+        }
+
+        .innertable thead tr th {
+            padding: 2px;
+        }
+
+        .tabdiv {
+            padding-top: 10px;
+        }
+
+        .Mandatory {
+            color: red;
+        }
+
+        .popup {
+            background: rgba(0, 0, 0, 0) url("../../Images/icon_popup.gif") no-repeat scroll 0 0;
+            border: medium none;
+            cursor: pointer;
+            font-size: 10px;
+            height: 16px;
+            vertical-align: top;
+            width: 16px;
+        }
+
+        .OpenPopupIcon {
+            padding-left: 15px !important;
+            padding-right: 21px !important;
+        }
+
+        .OpenPopupIconFor3Columns {
+            padding-left: 15px !important;
+            padding-right: 8px !important;
+        }
+
+        .AddonButton {
+            cursor: pointer;
+            border-color: white !important;
+        }
+
+        /*icons*/
+
+        .ImageBarClass {
+            height: 30px !important;
+            width: 30px !important;
+        }
+
+        #IconsNavBar a {
+            padding-right: 10px !important;
+        }
+
+        .ReportsDropDownMenu {
+            cursor: pointer;
+            color: black !important;
+        }
+        /*icons*/
+        /*Page*/
+
+        @@media (max-width: @@screen-xs-min) {
+            .modal-xs {
+                width: @@modal-sm;
+            }
+        }
+
+        @@media screen and (max-width: 763px) {
+            body {
+                /*padding-top: 0px;
+                padding-bottom: 0px;*/
+            }
+
+            .MobileNavBar {
+                left: 0px !important;
+                width: 100% !important;
+                margin-left: 0px !important;
+            }
+
+            #DynamicPage {
+                margin-bottom: 60px;
+            }
+        }
+
+        .tablecss thead th {
+            vertical-align: middle;
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        .tablecss thead tr {
+            background-color: #d2401a;
+            color: white;
+            font-size: 13px;
+        }
+
+        .form-control[disabled] {
+            background-color: white;
+        }
+
+            .form-control[disabled].gray {
+                background-color: #eee;
+                opacity: 1;
+            }
+
+        .form-control[readonly] {
+            background-color: white;
+        }
+
+        table tbody tr {
+            cursor: pointer;
+        }
+
+        .SumoSelect > .CaptionCont > span.placeholder {
+            color: darkgray;
+            font-style: normal;
+        }
+
+
+        h2 {
+            font-family: Calibri;
+        }
+
+        h1 {
+            font-family: Calibri;
+        }
+
+        .control-label-Nodata {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+            color: red;
+            margin-left: 45%;
+        }
+
+
+        .btn-info, .btn-info[disabled] {
+            background-color: #d2401a;
+            border-color: #AD2C0A;
+        }
+
+            .btn-info:hover, .btn-info:active, .btn-info:focus {
+                background-color: #AD2C0A;
+                border-color: #AD2C0A;
+            }
+
+            .btn-info[disabled]:hover {
+                background-color: #d2401a;
+                border-color: #AD2C0A;
+            }
+
+            .btn-info.active.focus, .btn-info.active:focus, .btn-info.active:hover, .btn-info.focus:active, .btn-info:active:focus, .open > .dropdown-toggle.btn-info.focus {
+                background-color: #AD2C0A;
+                border-color: #AD2C0A;
+            }
+
+        .skin-blue .sidebar-menu > li > .treeview-menu {
+            background: white none repeat scroll 0 0;
+            margin: 0 1px;
+        }
+
+        .skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
+            border-left-color: #AD2C0A;
+        }
+
+        .skin-blue .main-header .navbar .sidebar-toggle:hover {
+            background-color: #AD2C0A;
+        }
+
+        /*harish*/
+        .dataTables_scroll {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        th, td {
+            white-space: nowrap;
+        }
+
+        div.dataTables_wrapper {
+            width: 100%;
+            margin: 0 auto;
+        }      
+
+        .main-footer {   
+             padding:0;        
+             height: 40px;
+             line-height: 40px;    
+             font-size:12px;   
+             white-space:nowrap;       
+        }   
+        
+        body {
+            overflow-y: hidden;
+        }
+        /*harish*/
+
+        .innertable thead tr {
+            background-color: #d2401a;
+            color: white;
+            font-size: 13px;
+        }
+
+        a {
+            color: #3b475b;
+        }
+
+            a:hover, a:focus, a:active {
+                /*color: #d2401a;*/
+                /*color: white;*/
+            }
+
+        .btn-success, .btn-success.focus, .btn-success:hover, .btn-success.active {
+            background-color: #d2401a;
+        }
+
+
+        .ListTable thead tr {
+            background-color: #d2401a;
+            color: white;
+            font-size: 13px;
+        }
+
+        .CommonPopListThead {
+            background-color: #d2401a;
+            color: white;
+            font-size: 13px;
+        }
+
+
+        /*Inline editing css*/
+        .my-input-class {
+            padding: 3px 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .my-confirm-class {
+            padding: 3px 6px;
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 4px;
+            background-color: #337ab7;
+            text-decoration: none;
+        }
+
+        .my-cancel-class {
+            padding: 3px 6px;
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 4px;
+            background-color: #a94442;
+            text-decoration: none;
+        }
+
+        .error {
+            border: solid 1px;
+            border-color: #a94442;
+        }
+
+
+
+        #EditMarketMapDiv li.active a {
+            background-color: #d2401a;
+            color: white;
+        }
+
+        .StandardColor {
+            background-color: #d2401a;
+            color: white;
+        }
+
+        .image_picker_image {
+            width: 100px;
+            height: 100px;
+        }
+
+        .Edit {
+            cursor: text;
+        }
+
+        .my-cancel-class, .my-confirm-class {
+            cursor: default;
+        }
+
+        .content-header > h2 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .form-control:focus {
+            border-color: #d2401a;
+        }
+
+        .datepicker {
+            z-index: 9999 !important;
+        }
+        /*mani*/
+
+        .Background_Sales {
+            background-color: #e5e7e9;
+        }
+
+        .scrol_Sales {
+            height: 400px;
+            overflow: auto;
+        }
+        /*mani end*/  
+
+     /*Venkata Nagaraju*/
+ .sidebar-menu .treeview-menu > li > a {   
+    overflow: hidden;   
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}     
+
+ .sidebar-menu > li > a {
+    display: block;
+    overflow: hidden;
+    padding: 12px 30px 12px 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+ .user-panel > .info {    
+    width: 77%;
+}			
+.user-panel > .info > p {    
+    overflow: hidden;
+    text-overflow: ellipsis;
+}		
+    /*Venkata Nagaraju*/
+
+        .notification {
+            color: white;
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            border-radius: 2px;
+        }
+
+            .notification:hover {
+                text-decoration:none;
+            }
+
+            .notification .badge {
+                position: absolute;
+                top: 0px;
+                right: -4px;
+                padding: 5px 10px;
+                border-radius: 50%;
+                background-color: #D2401A;
+                color: white;
+            }
+    </style>
+</head>
+
+
+<body class="hold-transition skin-blue sidebar-mini fixed" onload="Prevent_Back();" onpageshow="if (event.persisted) Prevent_Back();" onunload="" style="font-family: 'Calibri'">
+
+    <div class="wrapper" ng-controller="HomeCtrl">
+
+        <header class="main-header">
+            <!-- Logo -->
+            <a href ng-click="go('home')" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini">
+                    <img id="LogoImage_Header" style="margin-top: 6px;" src="../../Images/HIL_MIN.png">
+                </span>
+
+
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg">
+
+                    <img id="LogoImage_HeaderMin" style="margin-left: -16px; height: 56px; width: 220px;"
+                        src="../../Images/DIMS_logo_Layout.png">
+                </span>
+            </a>
+            @* <a class="logo" href="#" onclick="">
+                    <img width="154" height="37" id="LogoImage_Header" style="margin-top: 6px;" src="../../Images/CKB & HIL_logos.jpg">
+                </a>*@
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                @*<div style="display:inline;">
+                    <marquee width="55%" style="margin-top: 10px; color: rgb(255, 255, 255); font-size: 15px;">‘’As we are in process of incorporating the new tax structure under GST Act, in the Financial Transactions module, kindly bear with us. We shall update you once the Finance Reports in new format are available.” </marquee>
+                </div>*@
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        @*                        <li class="dropdown messages-menu">
+                                <a href class="dropdown-toggle" onclick="poup()" data-toggle="dropdown">
+                                    <i class="fa fa-qq"></i>
+                                </a>
+                            </li>*@
+                        <li class="dropdown messages-menu" id="NotificationIcon">
+                            @*<a href class="dropdown-toggle" ng-click="go('Notification')" data-toggle="dropdown" title="Notifications">
+            <i class="fa fa-globe fa-lg" id="read_unread_count"></i>
+        </a>*@
+                            <a href class="notification" ng-click="go('Notification')" title="Notifications">
+                                <i class="fa fa-globe fa-lg"></i>
+                                <span class="badge" id="read_unread_count"></span>
+                            </a>
+                        </li>
+                        <li class="dropdown messages-menu" id="NotificationCustomer" style="cursor: pointer;">
+                            <a href class="dropdown-toggle" onclick="GetCustomerNotification()" data-toggle="dropdown" title="Customer Notifications">
+                                <i class="fa fa-globe fa-lg"></i>
+                                <label id="NotificationCount" style="cursor: pointer;"></label>
+                            </a>
+                        </li>
+                        <!-- Messages: style can be found in dropdown.less-->
+                        <li class="dropdown messages-menu">
+                            <a href class="dropdown-toggle" ng-click="go('home')" data-toggle="dropdown" title="Home">
+                                <i class="fa fa-home fa-lg"></i>
+                            </a>
+                        </li>
+                        <!-- Notifications: style can be found in dropdown.less -->
+                        <!-- Tasks: style can be found in dropdown.less -->
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu" id="imgage">
+                            <a href class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="../../dist/img/user-icon-profile.png" class="user-image" alt="User Image">
+                                <span class="hidden-xs">@Session["DisplayName"]</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="../../dist/img/user-icon-profile.png" class="img-circle" alt="User Image">
+                                    <p>
+                                        @Session["DisplayName"]
+
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                @*  <li class="user-body">
+                                        <div class="row">
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Followers</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Sales</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="#">Friends</a>
+                                            </div>
+                                        </div>
+                                        <!-- /.row -->
+                                    </li>*@
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href class="btn btn-default btn-flat" ng-click="go('AdminChangePasword')">Change Password</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href class="btn btn-default btn-flat" onclick="SignOut()">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        @* <li>
+                                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                            </li>*@
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar" style="font-size: 15px;">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel" style="background-color: #D2401A;">
+                    <div class="pull-left image" id="sideimg">
+                        <img src="../../dist/img/user-icon-profile.png" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p title="Hello @Session["DisplayName"]">Hello @Session["DisplayName"]</p>
+
+                        <input type="hidden" id="txtSessionUserName" value="@Session["DisplayName"]" />
+                    </div>
+                </div>
+                <!-- search form -->
+                @*<form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>*@
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" id="CustomHeight_SideMenu" style="overflow-y:auto;overflow-x:hidden;">
+                <li class="treeview" id="FinancialTransactionsTab" style="display: none;">
+                    <a href title="Finance Process Management">
+                        <!--i class="fa fa-dashboard"></!--i><span ng-click="go('SAP_DashBoard')">Financial Transactions</span> <i class="fa fa-angle-left pull-right"></i-->
+                        <i class="fa fa-dashboard"></i><span>Financial Transactions</span> <i class="fa fa-angle-left pull-right"></i>
+                        @*<i class="fa fa-dashboard"></i><span>Financial Transactions</span> <i class="fa fa-angle-left pull-right"></i>*@
+                    </a>
+                    <ul class="treeview-menu">
+                        @*                  <li class="active"><a href ng-click="go('Invoice')"><i class="fa fa-circle-o"></i>Statement Account</a></li>*@
+
+                        <li id="FD" style="display: none"><a href ng-click="go('SAP_DashBoard')"><i class="fa fa-circle-o"></i>Finance Dashboard</a></li>
+                        <li id="AST" style="display: none"><a href ng-click="go('AccountStatement')"><i class="fa fa-circle-o"></i>Account Statements</a></li>
+                        <li id="INV" style="display: none"><a href ng-click="go('InvoiceListView')"><i class="fa fa-circle-o"></i>Invoices</a></li>
+                        <li id="OD" style="display: none"><a href ng-click="go('OutstandingDetail')"><i class="fa fa-circle-o"></i>Outstanding Details</a></li>
+                        <li id="COD" style="display: none"><a href ng-click="go('CreditOutstandingDetail')"><i class="fa fa-circle-o"></i>Dealer Credit Balance</a></li>
+                        <li id="CN" style="display: none"><a href ng-click="go('CreditNotes')"><i class="fa fa-circle-o"></i>Credit Notes</a></li>
+                        <li id="DN" style="display: none"><a href ng-click="go('DebitNotes')"><i class="fa fa-circle-o"></i>Debit Notes</a></li>
+                        <li id="PBS" style="display: none"><a href ng-click="go('PaymentByStockist')"><i class="fa fa-circle-o"></i>Stockist Payment Details</a></li>
+                        @*<li><a href ng-click="go('InvoiceDetail')"><i class="fa fa-circle-o"></i>Invoice Detail</a></li>*@
+                        <li id="PCF" style="display: none"><a href ng-click="go('PendingCForms')"><i class="fa fa-circle-o"></i>C-Forms</a></li>
+                        <li id="TDSC" style="display: none"><a href ng-click="go('TDSCertificateList')"><i class="fa fa-circle-o"></i>TDS Certificates</a></li>
+                    </ul>
+                </li>
+                <li class="treeview" id="FinancialTransactionsTabBU3" style="display: none;">
+                    <a href title="Finance Process Management">
+                        <i class="fa fa-dashboard"></i><span>Financial Transactions</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <!-- svprasadk 25-11-2020 Invoices Tab for SBU3 start-->
+                        <li id="INV_BU3" style="display: none"><a href ng-click="go('InvoiceListViewBU3')"><i class="fa fa-circle-o"></i>Invoices</a></li>
+                        <!-- svprasadk 25-11-2020 Invoices Tab for SBU3 end-->
+                    </ul>
+                </li>
+                @*Harish*@
+                <li class="treeview" id="SalesProcessManagementTab" style="display: none">
+                    <a href title="Sales Process Management">
+                        <i class="fa fa-dashboard"></i><span>Sales Process Management</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li id="SPD" style="display: none"><a href ng-click="go('SalesProcessDashboard')"><i class="fa fa-circle-o"></i>Sales Process Dashboard</a></li>
+                        <li id="DOT" style="display: none"><a href ng-click="go('DailyOrderTracking')"><i class="fa fa-circle-o"></i>Daily Order Tracker</a></li>
+                        <li id="MM" style="display: none"><a href ng-click="go('MarketMap')"><i class="fa fa-circle-o"></i>Market Map</a></li>
+                        <li id="JP" style="display: none"><a href ng-click="go('JourneyPlanList')"><i class="fa fa-circle-o"></i>Journey Plan</a></li>
+                        <li id="SCR" style="display: none"><a href ng-click="go('ScoreCards')"><i class="fa fa-circle-o"></i>Score Cards</a></li>
+                        @*<li id="SCD" style="display: none"><a href ng-click="go('ScoreCardsDetails')"><i class="fa fa-circle-o"></i>Score Card Details</a></li>*@
+                        <li id="IT" style="display: none"><a href ng-click="go('InventoryTracking')"><i class="fa fa-circle-o"></i>Inventory Tracker</a></li>
+                        @*<li><a href ng-click="go('AddNewCounter')"><i class="fa fa-circle-o"></i>Counter Details</a></li>*@
+                        <li id="TRG" style="display: none"><a href data-ng-click="go('CreateTargetList')"><i class="fa fa-circle-o"></i>Sales Targets</a></li>
+                        <li id="SH" style="display: none"><a href data-ng-click="go('SalesHurdleList')"><i class="fa fa-circle-o"></i>Sales Huddles</a></li>
+                        @*<li><a href><i class="fa fa-circle-o"></i>Sales Hurdles</a></li>*@
+                        <li id="PI" style="display: none"><a href ng-click="go('PartnerIssues')"><i class="fa fa-circle-o"></i>Partner Issues</a></li>
+                        @*<li id="SCHM" style="display: none"><a href ng-click="go('SchemesList')"><i class="fa fa-circle-o"></i>Schemes</a></li>*@
+                        <li id="HC" style="display: none"><a href ng-click="go('HolidayConfiguration')"><i class="fa fa-circle-o"></i>Holiday Configuration</a></li>
+                        @*<li id="PIS" style="display: none"><a href ng-click="go('PartnerIssueSummary')"><i class="fa fa-circle-o"></i>Partner Issue Summary</a></li>*@
+                        <li id="KSU" style="display: none"><a href ng-click="go('KeyStockistUpload')"><i class="fa fa-circle-o"></i>Key Stockist Upload</a></li>
+                        @* <li><a href ng-click="go('ScoreCards')"><i class="fa fa-circle-o"></i>Score Cards</a></li>*@
+                        @*<li><a href ng-click="go('SalesAchievements')"><i class="fa fa-circle-o"></i>Sales Achievements</a></li>
+                <li><a href ng-click="go('SalesAchievementMonthly')"><i class="fa fa-circle-o"></i>Sales Achievement Monthly</a></li>*@
+                        @* <li><a href data-ng-click="go('CreateTarget')"><i class="fa fa-circle-o"></i>Create Target</a></li>*@
+                        @* <li><a href ng-click="go('AddNewCounter')"><i class="fa fa-circle-o"></i>New Counter List</a></li>*@
+                        @*Mani*@
+                        @*<li><a href ng-click="go('CreateSchemes')"><i class="fa fa-circle-o"></i>Create Schemes</a></li>*@
+                        @*<li><a href ng-click="go('EditScheme')"><i class="fa fa-circle-o"></i>Scheme Detail</a></li>*@
+                        @*  <li><a href ng-click="go('MarketMap')"><i class="fa fa-circle-o"></i>Market Map</a></li>*@
+                        @*<li><a href ng-click="go('Target')"><i class="fa fa-circle-o"></i>Target</a></li>*@
+
+                    </ul>
+                    <!--  <ul class="treeview-menu">
+            <li><a href ng-click="go('DailyOrderTracking')"><i class="fa fa-circle-o"></i>Daily Order Tracking</a></li>
+            <li><a href ng-click="go('MarketMap')"><i class="fa fa-circle-o"></i>Market Map</a></li>
+            <li><a href ng-click="go('JourneyPlanList')"><i class="fa fa-circle-o"></i>Journey Plan List</a></li>
+            @*<li><a href ng-click="go('JourneyPlanDetails')"><i class="fa fa-circle-o"></i>Journey Plan Details</a></li>*@
+
+            <li><a href ng-click="go('PartnerIssues')"><i class="fa fa-circle-o"></i>Partner Issues</a></li>
+            <li><a href ng-click="go('InventoryTracking')"><i class="fa fa-circle-o"></i>Inventory Tracking</a></li>
+            <li><a href ng-click="go('ScoreCards')"><i class="fa fa-circle-o"></i>Score Cards</a></li>
+            <li><a href ng-click="go('SalesAchievements')"><i class="fa fa-circle-o"></i>Sales Achievements</a></li>
+
+            <li><a href ng-click="go('SalesAchievementMonthly')"><i class="fa fa-circle-o"></i>Sales Achievement Monthly</a></li>
+            <li><a href ng-click="go('SchemesList')"><i class="fa fa-circle-o"></i>Schemes List</a></li>
+
+
+            @*Mani*@
+
+
+            <li><a href data-ng-click="go('CreateTargetList')"><i class="fa fa-circle-o"></i>Create Target List</a></li>
+
+
+            @*Mani*@
+
+            @*<li><a href ng-click="go('CreateSchemes')"><i class="fa fa-circle-o"></i>Create Schemes</a></li>*@
+
+            @*<li><a href ng-click="go('EditScheme')"><i class="fa fa-circle-o"></i>Scheme Detail</a></li>*@
+            @*  <li><a href ng-click="go('MarketMap')"><i class="fa fa-circle-o"></i>Market Map</a></li>*@
+            @*<li><a href ng-click="go('Target')"><i class="fa fa-circle-o"></i>Target</a></li>*@
+
+        </ul> -->
+                </li>
+
+
+
+                <li>
+                    @*<a href id="ConfigurationModule">*@
+
+
+
+                <li>
+
+
+
+                <li id="ComplaintManagementTotalTab" style="display: none">
+                    <a href id="ConfigurationModule">
+                        <i class="fa fa-dashboard"></i><span>Complaint Management</span><i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li id="ComplaintManagementTab" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Management<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li id="REG" style="display: none" class="active"><a href ng-click="go('RegistrationList')"><i class="fa fa-circle-o"></i>Complaint Registration</a></li>
+                                @*<li class="active"><a href ng-click="go('InvestigationList')"><i class="fa fa-circle-o"></i>Investigation</a></li>*@
+                                <li id="INVST" style="display: none" class="active"><a href ng-click="go('Investigation')"><i class="fa fa-circle-o"></i>Investigation</a></li>
+                                <li id="COMP" style="display: none" class="active"><a href ng-click="go('CompensationList')"><i class="fa fa-circle-o"></i>Compensation</a></li>
+                                <li id="CORM" style="display: none"><a href ng-click="go('CorrectiveMeasureList')"><i class="fa fa-circle-o"></i>Corrective Measure</a></li>
+                            </ul>
+                        </li>
+
+                        <li id="ComplaintApprovalsTab" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Approvals<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li id="CPA" style="display: none"><a href ng-click="go('ComplaintPendingApproval')"><i class="fa fa-circle-o"></i>Pending Approvals</a></li>
+                                <li id="AC" style="display: none"><a href ng-click="go('ComplaintsAssigning')"><i class="fa fa-circle-o"></i>Assign Complaint</a></li>
+                                <li id="CAR" style="display: none"><a href ng-click="go('ComplaintsApprovalReport')"><i class="fa fa-circle-o"></i>Approvals Report</a></li>
+                                <li id="PAC" style="display: none"><a href ng-click="go('PendingApprovalCommercial')"><i class="fa fa-circle-o"></i>Pending Approvals-Comm</a></li>
+                            </ul>
+                        </li>
+
+                        <li id="ComplaintReportsTab" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Reports<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li id="CSR" style="display: none"><a href ng-click="go('ComplaintStatusReport')"><i class="fa fa-circle-o"></i>Complaint Status Report</a></li>
+                                @*<li><a href ng-click="go('CMS_Management_Information_System')" title="Management Information System"><i class="fa fa-circle-o"></i>Management Informat...</a></li>*@
+                                <li id="ComplaintsDetailedReport"><a href ng-click="go('ComplaintsDetailedReport')" title="Complaints Detailed Report"><i class="fa fa-circle-o"></i>Complaints Detailed Report</a></li>
+                                @*<li id="StockistCompensation_ComplaintReport"><a href ng-click="go('StockistCompensation')" title="Stockist Compensation Download"><i class="fa fa-circle-o"></i>Stockist Compensation</a></li>*@
+                                @*<li><a href ng-click="go('CMS_Dashboard')" title="CMS Dashboard"><i class="fa fa-circle-o"></i>CMS Dashboard</a></li>*@
+                            </ul>
+                        </li>
+                        <li id="SC" style="display: none"><a href ng-click="go('StockistCompensation')" title="Stockist Compensation Download"><i class="fa fa-circle-o"></i>Stockist Compensation</a></li>
+                        <li id="CMSD" style="display: none"><a href ng-click="go('CMSDashboard')"><i class="fa fa-circle-o"></i>CMS Dashboard</a></li>
+                        @* svprasadk 31-08-2020 getting CMS Graphical Dashboard start *@
+                        <li id="CMSGD" style="display: none"><a href ng-click="go('CMSGraphicalDashboard')"><i class="fa fa-circle-o"></i>CMS Graphical Dashboard</a></li>
+                        @* svprasadk 31-08-2020 getting CMS Graphical Dashboard end *@
+                    </ul>
+                </li>
+
+                <li id="ComplaintManagementTotalTab_STO" style="display: none">
+                    <a href id="ConfigurationModule">
+                        <i class="fa fa-dashboard"></i><span>STO Complaint Management</span><i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        @*svprasadk 17-07-2020 SBU3 Stock Transfer implementation start*@
+                        <li id="ComplaintManagementTab_STO" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Management<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li id="REG_STO" style="display: none" class="active"><a href ng-click="go('RegistrationList_STO')"><i class="fa fa-circle-o"></i>Complaint Registration STO</a></li>
+                                @*<li id="REG_STO" style="display: none" class="active"><a href ng-click="go('RegistrationList_STO')"><i class="fa fa-circle-o"></i>Registration STO</a></li>*@
+                                <li id="INVST_STO" style="display: none" class="active"><a href ng-click="go('Investigation_STO')"><i class="fa fa-circle-o"></i>Investigation STO</a></li>
+                            </ul>
+                        </li>
+                        @*svprasadk 17-07-2020 SBU3 Stock Transfer implementation end*@
+
+                        <li id="ComplaintReportsTab_STO" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Reports<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                @*//svprasadk 04-02-2021 SBU3 Stock Transfer and informal complaint status report start*@
+                                <li id="CSR_STO" style="display: none"><a href ng-click="go('ComplaintStatusReport_STO')"><i class="fa fa-circle-o"></i>STO Complaint Status Report</a></li>
+                                @*//svprasadk 04-02-2021 SBU3 Stock Transfer and informal complaint status report end*@
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="ComplaintManagementTotalTab_ICC" style="display: none">
+                    <a href id="ConfigurationModule">
+                        <i class="fa fa-dashboard"></i><span>ICC Complaint Management</span><i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        @*svprasadk 08-02-2021 SBU3 Informal Customer Complaint implementation start*@
+                        <li id="ComplaintManagementTab_ICC" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Management<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li id="REG_ICC" style="display: none" class="active"><a href ng-click="go('RegistrationList_ICC')"><i class="fa fa-circle-o"></i>Registration ICC</a></li>
+                                <li id="INVST_ICC" style="display: none" class="active"><a href ng-click="go('Investigation_ICC')"><i class="fa fa-circle-o"></i>Investigation ICC</a></li>
+                            </ul>
+                        </li>
+                        @*svprasadk 08-02-2021 SBU3 Informal Customer Complaint implementation end*@
+
+                        @* svprasadk 11-02-2021 SBU3 Informal Customer Complaint implementation start *@
+                        <li id="ComplaintApprovalsTab_ICC" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Approvals<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li id="CPA_ICC" style="display: none"><a href ng-click="go('ComplaintPendingApproval_ICC')"><i class="fa fa-circle-o"></i>Pending Approvals ICC</a></li>
+                                <li id="AC_ICC" style="display: none"><a href ng-click="go('ComplaintsAssigning_ICC')"><i class="fa fa-circle-o"></i>Assign Complaint ICC</a></li>
+                                <li id="CAR_ICC" style="display: none"><a href ng-click="go('ComplaintsApprovalReport_ICC')"><i class="fa fa-circle-o"></i>Approvals Report ICC</a></li>
+                            </ul>
+                        </li>
+                        @* svprasadk 11-02-2021 SBU3 Informal Customer Complaint implementation end *@
+                        <li id="ComplaintReportsTab_ICC" style="display: none">
+                            <a href><i class="fa fa-circle-o"></i>Complaint Reports<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                @*//svprasadk 04-02-2021 SBU3 Stock Transfer and informal complaint status report start*@
+                                <li id="CSR_ICC" style="display: none"><a href ng-click="go('ComplaintStatusReport_ICC')"><i class="fa fa-circle-o"></i>ICC Complaint Status Report</a></li>
+                                @*//svprasadk 04-02-2021 SBU3 Stock Transfer and informal complaint status report end*@
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                @*<li class="treeview">
+            <a href>
+                <i class="fa fa-dashboard"></i><span>Complaint Management</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><i class="fa fa-dashboard"></i><span>Complaint Management</span> <i class="fa fa-angle-left pull-right"></i>
+                    <ul class="treeview-menu">
+                        <li class="active"><a href ng-click="go('RegistrationList')"><i class="fa fa-circle-o"></i>Complaint Registration</a></li>
+                <li class="active"><a href ng-click="go('InvestigationList')"><i class="fa fa-circle-o"></i>Investigation</a></li>
+                <li class="active"><a href ng-click="go('CompensationList')"><i class="fa fa-circle-o"></i>Compensation</a></li>
+                <li><a href ng-click="go('CorrectiveMeasureList')"><i class="fa fa-circle-o"></i>Corrective Measure</a></li>
+                    </ul>
+                </li>
+                <li><i class="fa fa-dashboard"></i><span>Complaint Approvals</span> <i class="fa fa-angle-left pull-right"></i>
+                    <ul class="treeview-menu">
+                        <li><a href ng-click="go('ComplaintPendingApproval')"><i class="fa fa-circle-o"></i>Pending Approvals</a></li>
+                <li><a href ng-click="go('ComplaintsAssigning')"><i class="fa fa-circle-o"></i>Assign Complaint</a></li>
+                <li><a href ng-click="go('ComplaintsApprovalReport')"><i class="fa fa-circle-o"></i>Approvals Report</a></li>
+                    </ul>
+                </li>
+                <li><i class="fa fa-dashboard"></i><span>Complaint Reports</span> <i class="fa fa-angle-left pull-right"></i>
+                    <ul class="treeview-menu">
+                        <li><a href ng-click="go('ComplaintStatusReport')"><i class="fa fa-circle-o"></i>Complaint Status Report</a></li>
+                <li><a><i class="fa fa-circle-o"></i>Management Information System</a></li>
+
+
+                <li><a href ng-click="go('ComplaintsDetailedReport')"><i class="fa fa-circle-o"></i>Complaints Detailed Report</a></li>
+                    </ul>
+                </li>
+
+         <li><a href ng-click="go('UnnatiCustomerMapping')"><i class="fa fa-circle-o"></i>User Mapping</a></li>
+
+        <li><a href ng-click="go('UnnatiCustomerMapping')"><i class="fa fa-circle-o"></i>User Mapping</a></li>
+
+
+                <li><a href ng-click="go('SampleScreen')"><i class="fa fa-circle-o"></i>Sample Screen</a></li>
+            </ul>
+        </li>*@
+
+                <li class="treeview" id="UnnatiModuleList" style="display: none">
+
+                    <a href ng-click="go('UnnatiDashBoard')">
+                        <i class="fa fa-dashboard"></i><span>UNNATI</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li id="UD" style="display: none"><a href ng-click="go('UnnatiDashBoard')"><i class="fa fa-circle-o"></i>UNNATI Dashboard</a></li>
+                        <li id="TSTR" style="display: none"><a href ng-click="go('UnnatiTransactionStatusReport')"><i class="fa fa-circle-o"></i>Transactions Status Report</a></li>
+                        <li id="TSR" style="display: none"><a href ng-click="go('UnnatiTransactionSummaryReport')"><i class="fa fa-circle-o"></i>Transactions Summary Report</a></li>
+                        <li id="TDR" style="display: none"><a href ng-click="go('UnnatiTransactionDetailReport')"><i class="fa fa-circle-o"></i>Transactions Detail Report</a></li>
+                        @*<li id="TVR"><a href ng-click="go('UnnatiTransactionVelocityReport')"><i class="fa fa-circle-o"></i>Transactions Velocity Report</a></li>*@
+                        <li id="RR" style="display: none"><a href ng-click="go('UnnatiRedemptionReport')"><i class="fa fa-circle-o"></i>Points Redemption Report</a></li>
+                        <li id="PBR" style="display: none"><a href ng-click="go('UnnatiPointBalanceReport')"><i class="fa fa-circle-o"></i>Points Balance Report</a></li>
+                        @* <li id="MLR"><a href ng-click="go('UnnatiMemberLoginReport')"><i class="fa fa-circle-o"></i>Member Login Report</a></li>*@
+                        <li id="EDR" style="display: none"><a href ng-click="go('UnnatiEnrollmentDetailReport')"><i class="fa fa-circle-o"></i>Enrollment Details Report</a></li>
+
+                        <li id="UM" style="display: none"><a href ng-click="go('UnnatiCustomerMapping')"><i class="fa fa-circle-o"></i>User Mapping</a></li>
+                        <li id="RC" style="display: none"><a href ng-click="go('UnnatiRewardsCatalogPoints')"><i class="fa fa-circle-o"></i>Rewards Catalogue</a></li>
+
+
+                    </ul>
+                </li>
+
+                <li class="treeview" id="DiscountsTab" style="display: none">
+                    <a href>
+                        <i class="fa fa-dashboard"></i><span>Discounts/Provisions</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+
+
+                        @*                            <li><a href><i class="fa fa-circle-o"></i>Daily Sales Tracker</a></li>
+                <li><a href><i class="fa fa-circle-o"></i>Discounts/Provisions Report</a></li>*@
+
+                        @* <li id="DR" style="display: none"><a href><i class="fa fa-circle-o"></i>Discounts/Provisions Report</a></li>*@
+                        <li id="PDWC" style="display: none"><a href ng-click="go('ProjectDiscountWithCommissionList')"><i class="fa fa-circle-o"></i>Project Discount WithCommission</a></li>
+                        <li id="PDDB" style="display: none"><a href ng-click="go('ProjectDiscountDirectBillingList')"><i class="fa fa-circle-o"></i>Project Discount DirectBilling</a></li>
+                        <li id="NBFS" style="display: none"><a href ng-click="go('NetBillingForStockist')"><i class="fa fa-circle-o"></i>Net Billing For Stockist</a></li>
+                        <li id="DS" style="display: none"><a href ng-click="go('DiscountStructure')"><i class="fa fa-circle-o"></i>Discount Structure</a></li>
+                        @* <li id="KR" style="display: none"><a href ng-click="go('KSMReport')"><i class="fa fa-circle-o"></i>KSM Report</a></li>*@
+                        <li id="PCRP" style="display: none"><a href ng-click="go('PriceCardRateUpload')"><i class="fa fa-circle-o"></i>Price Card Rate Upload</a></li>
+                        <li id="DSR" style="display: none"><a href ng-click="go('DiscountSummary')"><i class="fa fa-circle-o"></i>Discount Summary</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview" id="ReportsTab" style="display: none">
+                    <a href>
+                        <i class="fa fa-dashboard"></i><span>Reports</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+
+
+                        @*                            <li><a href><i class="fa fa-circle-o"></i>Daily Sales Tracker</a></li>
+                <li><a href><i class="fa fa-circle-o"></i>Discounts/Provisions Report</a></li>*@
+
+                        <li id="DST" style="display: none"><a href ng-click="go('DailySalesTracker')"><i class="fa fa-circle-o"></i>Daily Sales Tracker</a></li>
+                        <li id="BTU" style="display: none"><a href ng-click="go('BudgetTargetUpload')"><i class="fa fa-circle-o"></i>Budget Target Upload</a></li>
+                        @* <li id="KRD" style="display: none"><a href ng-click="go('KSMReportDetail')"><i class="fa fa-circle-o"></i>KSM Report Detail</a></li>*@
+                        <li id="FUL" style="display: none"><a href ng-click="go('FreightUpload')"><i class="fa fa-circle-o"></i>Freight Upload</a></li>
+                        <li id="DUL" style="display: none"><a href ng-click="go('DiscountsUpload')"><i class="fa fa-circle-o"></i>Discounts Upload</a></li>
+                        <li id="CML" style="display: none"><a href ng-click="go('CreditLimitTracker')"><i class="fa fa-circle-o"></i>Credit Limit Tracker</a></li>
+
+
+                    </ul>
+                </li>
+                @*                    @{
+        if (@SessionUserType_SALES == "ADMIN")
+        {
+                *@
+                <li class="treeview" id="AdministrationTab" style="display: none">
+                    <a href>
+                        <i class="fa fa-dashboard"></i><span>Administration</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li id="MC" style="display: none"><a href ng-click="go('Master')"><i class="fa fa-circle-o"></i>Master Configuration</a></li>
+                        <li id="CE" style="display: none"><a href ng-click="go('CreateEmployee')"><i class="fa fa-circle-o"></i>Create Employee</a></li>
+
+
+                        <li id="DCS" style="display: none"><a href ng-click="go('DocumentSeries')"><i class="fa fa-circle-o"></i>Document Series</a></li>
+                        @*<li><a href ng-click="go('PlantMaster')"><i class="fa fa-circle-o"></i>Plant Master</a></li>*@
+                        @*<li><a href ng-click="go('NoticeConfiguration')"><i class="fa fa-circle-o"></i>Notice Configuration</a></li>*@
+                        <li id="ERC" style="display: none"><a href ng-click="go('EmpRoleConfiguration')"><i class="fa fa-circle-o"></i>Employee Role Configuration</a></li>
+                        <li id="ECC" style="display: none"><a href ng-click="go('EmpCustomerConfiguration')"><i class="fa fa-circle-o"></i>Customer - FSO Role Mapping</a></li>
+                        <li id="CFU" style="display: none"><a href ng-click="go('CustomerFSOUpload')"><i class="fa fa-circle-o"></i>Customer - FSO Upload</a></li>
+                        <li id="DEC" style="display: none"><a href ng-click="go('EmailConfigDailySalesTracker')"><i class="fa fa-circle-o"></i>Email Config for Daily Sales Tracker</a></li>
+                        <li id="RAC" style="display: none"><a href ng-click="go('RoleAccessConfiguration')"><i class="fa fa-circle-o"></i>Role Access Configuration</a></li>
+                        <li id="SD" style="display: none"><a href ng-click="go('StockistDetails')"><i class="fa fa-circle-o"></i>Stockist Details</a></li>
+                        <li id="LAL" style="display: none"><a href ng-click="go('LoginAuditLog')"><i class="fa fa-circle-o"></i>Login Audit Log</a></li>
+                        <li id="AL" style="display: block"><a href ng-click="go('ApplicationLog')"><i class="fa fa-circle-o"></i>Application Log</a></li>
+                        <li id="GML" style="display: none"><a href ng-click="go('GetMonitorLog')"><i class="fa fa-circle-o"></i>DIMS Monitoring Log</a></li>
+
+
+
+                    </ul>
+                </li>
+                <li class="treeview" id="UserManagementTab" style="display: none">
+                    <a href>
+                        <i class="fa fa-dashboard"></i><span>User Management</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li id="CP" style="display: none"><a href ng-click="go('AdminChangePasword')"><i class="fa fa-circle-o"></i>Change Password</a></li>
+                        <li id="ACL" style="display: none"><a href ng-click="go('GetActiveUserList')"><i class="fa fa-circle-o"></i>Active Users List</a></li>
+                        <li id="CUFE" style="display: none"><a href ng-click="go('GetUserEmployeeList')"><i class="fa fa-circle-o"></i>Create Users : Employees</a></li>
+                        <li id="CUFS" style="display: none"><a href ng-click="go('GetUserStockistList')"><i class="fa fa-circle-o"></i>Create Users : Stockist</a></li>
+                        <li id="IAUL" style="display: none"><a href ng-click="go('GetUserList')"><i class="fa fa-circle-o"></i>In Active Users List</a></li>
+                    </ul>
+                </li>
+                @*<li class="treeview" id="InvoiceListTabt" style="display: block">
+                    <a href>
+                        <i class="fa fa-dashboard"></i><span>Invoice List</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li id="CP" style="display: none"><a href ng-click="go('InvliceListTab')"><i class="fa fa-circle-o"></i>Invoice List</a></li>
+                         </ul>
+                </li>*@
+                @*
+            }
+        }*@
+
+
+
+                @*<li class="treeview">
+            <a href>
+                <i class="fa fa-dashboard"></i><span>Complaint Approvals</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href ng-click="go('ComplaintPendingApproval')"><i class="fa fa-circle-o"></i>Pending Approvals</a></li>
+                <li><a href ng-click="go('ComplaintsAssigning')"><i class="fa fa-circle-o"></i>Assign Complaint</a></li>
+                <li><a href ng-click="go('ComplaintsApprovalReport')"><i class="fa fa-circle-o"></i>Approvals Report</a></li>
+
+
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href>
+                <i class="fa fa-dashboard"></i><span>Complaint Reports</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href ng-click="go('ComplaintStatusReport')"><i class="fa fa-circle-o"></i>Complaint Status Report</a></li>
+                <li><a><i class="fa fa-circle-o"></i>Management Information System</a></li>
+
+                <li><a href ng-click="go('ComplaintsDetailedReport')"><i class="fa fa-circle-o"></i>Complaints Detailed Report</a></li>
+
+            </ul>
+        </li>*@
+
+
+
+
+
+
+
+
+                @*  <li>
+          <a href="pages/mailbox/mailbox.html">
+            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+            <small class="label pull-right bg-yellow">12</small>
+          </a>
+        </li>*@
+            </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+       
+        <div class="content-wrapper" id="DynamicDiv" ng-view>
+            <div>
+                <!--<marquee> Hi Karthik</marquee>-->
+            </div>
+            
+            @RenderSection("featured", required: false)
+           
+
+            @RenderBody()
+
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer navbar-fixed-bottom">
+            <div class="pull-right hidden-xs">
+                @*<b>DIMS UAT Build 1.1</b>*@
+                <b id="BuildString">
+                    <a href="http://www.charminarunnati.com" target="_blank" title="Charminar UNNATI">
+                        <span>
+                            <img src="~/Images/HIL-Unnati-Logo.png" style="width: 20px; height: 20px;" />
+                        </span>
+                    </a>&nbsp;&nbsp;&nbsp;
+                    <a href="http://www.facebook.com/HILLtdIndia" target="_blank" style="color: black;"><span class="fa fa-facebook"></span></a>&nbsp;&nbsp;&nbsp;
+                    <a href="http://twitter.com/HILLimited" target="_blank" style="color: black;">
+                        <span class="fa fa-twitter"></span>
+                    </a>&nbsp;&nbsp;
+                    <a href="http://plus.google.com/+HilIndia" target="_blank" style="color: black;">
+                        <span class="fa fa-google-plus"></span>
+                    </a>&nbsp;&nbsp;
+                    <a href="http://www.youtube.com/user/HILLimited" target="_blank" style="color: black;">
+                        <span class="fa fa-youtube"></span>&nbsp;&nbsp;
+                    </a>&nbsp;&nbsp;
+                    <a href="https://www.linkedin.com/company/hyderabad-industries-ltd?trk=top_nav_home" target="_blank" style="color: black;"><span class="fa fa-linkedin"></span></a>&nbsp;&nbsp;
+
+                </b>
+            </div>
+            <div style="text-align: center;">
+                Copyright &copy;&nbsp;<label id="FooterLabel">@DateTime.Now.Year DIMS. All Rights Reserved. <span style="cursor: pointer;" onclick="GoToEnvision()">Powered by Envision ESL Pvt Ltd.</span></label>
+            </div>
+        </footer>
+
+
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+               immediately after the control sidebar -->
+        @*<div class="control-sidebar-bg"></div>*@
+    </div>
+
+    <!-- ./wrapper used for popup for all the pages -->
+    <div class="modal fade" id="LookUpModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="PopHeading">
+                        <b></b>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <label id="MasterStatus"><b></b></label>
+                        <table id="PopUpTable" class="table ListTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*POP UP FOR COLUMNS DROPDOWN FOR USER SELECTION IN REPORTS*@
+    <div class="modal fade" id="ColumnEditingModal" tabindex="-1" role="dialog" aria-labelledby="ChosenLinesModalLabel" ng-controller="HomeCtrl">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ChosenLinesModalLabel">Column editing</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <select name="from[]" id="undo_redo" class="form-control" size="13" multiple="multiple"></select>
+                                    </div>
+
+                                    <div class="col-xs-2">
+
+                                        <button type="button" id="undo_redo_rightAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                        <button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                        <button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                        <button type="button" id="undo_redo_leftAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+
+                                    </div>
+
+                                    <div class="col-xs-5">
+                                        <select name="to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="CL">
+                    <button type="button" id="ColumnEditing_Save" class="btn btn-primary" ng-click="SaveColumnEditingData()">Save</button>
+                    <button type="button" id="ColumnEditing_View" class="btn btn-danger" ng-click="ViewColumnEditing()">View</button>
+                    <button type="button" id="ColumnEditing_Close" class="btn btn-default" data-dismiss="modal">Close</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* table used for reports selected columns  preview*@
+    <div class="modal fade" id="ReportsPopUpModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="padding:0px;">
+                <div class="modal-header">
+                    <label id="PreviewStatus"><b></b></label>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="PreviewHeading">
+                        <b></b>
+                    </h4>
+                </div>
+                <div class="modal-body" style="overflow:auto;">
+                    <div class="table-responsive">                        
+                        <table id="ReportPreviewTable" class="table ListTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="overlay" id="loading" style="background-color: rgba(0, 0, 0, 0.4); z-index: 2000; position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: none">
+        <div style="position: absolute; left: 49%; top: 49%; z-index: 55555555555">
+            <img src="../Images/PageLoader.gif" />
+        </div>
+    </div>
+
+
+
+    <input type="text" id="CMSState" style="display: none;" />
+    <input type="text" id="HiddenForCMS" style="display: none;" />
+    <input type="text" id="TestUserCode" value="@SessionUserCode_SALES" style="display:none;" />
+    <input type="text" id="LoggedinUserType" value="@SessionUserType_SALES" style="display:none;" />
+
+
+    @*<script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>*@
+    @RenderSection("scripts", required: false)
+
+
+
+    @*popup up's useed for sales huddles*@
+    <div class="modal fade" id="DailyPopup" role="dialog">
+        <div class="modal-dialog">
+            @*style="background-color:cyan"*@
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header Background_Sales">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align: center">&nbsp;Daily Sales Huddle</h4>
+                </div>
+                <div class="modal-body scrol_Sales">
+                    <table border="2" width="50%" style="text-align: center; margin-left: 19%" id="DailyPopupTable" class="PopupTable1">
+                        <thead>
+                            <tr style="border: 2px solid black">
+                                <th style="text-align: center; border: 2px solid black">Employee Name</th>
+                                <th style='text-align: center; border: 2px solid black'>Role</th>
+                                <th style='text-align: center; border: 2px solid black'>Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+                </div>
+                <div class="modal-footer align-center">
+
+
+
+                    <button type="button" class="btn btn-info" style="margin-left: 100px" onclick="savedailysaleshuddle()">Save</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="WeeklyPopup" role="dialog">
+        <div class="modal-dialog">
+            @*style="background-color:cyan"*@
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header Background_Sales">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align: center">&nbsp;Weekly Sales Huddle</h4>
+                </div>
+                <div class="modal-body scrol_Sales">
+                    <table border="2" width="50%" style="text-align: center; margin-left: 19%" id="WeeklyPopupTable" class="PopupTable1">
+                        <thead>
+                            <tr style="border: 2px solid black">
+                                <th style="text-align: center; border: 2px solid black">Employee Name</th>
+                                <th style='text-align: center; border: 2px solid black'>Role</th>
+                                <th style='text-align: center; border: 2px solid black'>Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer align-center">
+
+
+
+                    <button type="button" class="btn btn-info" style="margin-left: 100px" onclick="saveweeklysaleshuddle()">Save</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="MonthlyPopup" role="dialog">
+        <div class="modal-dialog">
+            @*style="background-color:cyan"*@
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header Background_Sales">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align: center">&nbsp;Monthly Sales Huddle</h4>
+                </div>
+                <div class="modal-body scrol_Sales">
+                    <table border="2" width="50%" style="text-align: center; margin-left: 19%;" id="MonthlyPopupTable" class="PopupTable1">
+
+                        <thead>
+                            <tr style="border: 2px solid black">
+                                <th style="text-align: center; border: 2px solid black">Employee Name</th>
+                                <th style='text-align: center; border: 2px solid black'>Role</th>
+                                <th style='text-align: center; border: 2px solid black'>Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+                </div>
+                <div class="modal-footer align-center">
+
+
+
+                    <button type="button" class="btn btn-info" style="margin-left: 100px" onclick="savemonthlysaleshuddle()">Save</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    @*<div aria-labelledby="fbNotificationsJewelHeader" id="" role="dialog" class="modal fade">
+            Notifications Will Come Here...
+        </div>*@
+    <div class="modal fade" id="CustomerNotificationList" tabindex="-1" role="dialog" aria-labelledby="NotiLabel">
+        <div class="modal-dialog" role="document" style="width: 25%; margin-left: 65%; margin-top: 3%;">
+            <div class="modal-content" style="border-radius: 6px;">
+                <div class="modal-body">
+                    <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                        <div class="row">
+                            <table id="CustomerNotificationTable"></table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+
+    //Pop Ups of Sales Huddles
+    var userrole_sales = '@SessionUserType_SALES';
+    var UserCode_sales = '@SessionUserCode_SALES';
+    var UserStateCode_sales = '@SessionStateCode_SALES';
+    var UserZoneCode_sales = '@SessionZoneCode_SALES';
+    var UserZoneName_sales = '@SessionZoneName_SALES';
+    var UserStateName_sales = '@SessionStateName_SALES';
+    var SERVER_DATE;
+    var TODAY_DATE;
+    var TodayDateTime = "";
+
+    var SessionValue = '@SessionUserType_SALES';
+    var DisplayName = '@Session["DisplayName"]';
+
+    $(document).ready(function () {
+
+        //$("div").removeClass('modal-backdrop fade in');
+        $(window).resize(function () {
+            $('#CustomHeight_SideMenu').height($(window).height() - 180);
+        });
+        $('#CustomHeight_SideMenu').height($(window).trigger('resize'));
+
+
+        $(window).resize(function () {
+            $('.content-wrapper').height($(window).height() - 95);
+        });
+        $('.content-wrapper').height($(window).trigger('resize'));
+
+        layoutLoadimages();
+
+        var width = $(window).width(), height = $(window).height();
+        if (width <= 1024) {
+            $('body').addClass('sidebar-collapse');
+        } else {
+            $('body').removeClass('sidebar-collapse');
+        }
+
+        //var totalheight = height - 191;
+        // var totalheight = height - 148;//--------
+        //if (height <= 800) {
+        // totalheight = height - 148;
+        //}
+
+        //$('.content').css({ "height": totalheight, "overflow-y": "auto" });//-----------
+        // $('.content-header > h2').css({ "font-size": "18px", "font-weight": "500" });//----------
+
+        //var totalheightSideMenu = height - 110;
+        // var totalheight = height - 148;//--------
+        // alert(height);
+        // if (height <= 800) {
+        // totalheightSideMenu = height - 110;
+        //}
+
+        //$("#CustomHeight_SideMenu").css({ "height": totalheightSideMenu, "overflow-y": "auto", "overflow-x": "hidden" });
+
+
+
+
+        @*$.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetBuildString", "Home")',
+            async: true,
+            success: function (response) {
+                if (response == "") {
+                }
+                else {
+                }
+            }
+        });*@
+
+        if (userrole_sales == "SH") {
+            PopUpForSalesHuddles();
+        }
+
+        if (userrole_sales == "ZH") {
+            PopUpForZHSalesHuddles();
+        }
+        GetServerDateTime();
+
+
+
+        //Dynamic Menu Binding
+        var User_Role_Access_Code = '@Session["UserRole"]';
+        $.ajax({
+            url: '../Home/GetUserPageAccess',
+            type: 'POST',
+            data: { UserRole: User_Role_Access_Code },
+            success: function (response) {
+                // alert(response)
+                debugger
+                var result = JSON.parse(response);
+
+
+
+                //Dynamic Menu
+                for (var i = 0; i < result.length; i++) {
+                    //$("#" + result[i]["FORM_CODE"]).css({ "display": "block" });
+                    // svprasadk 20-07-2020 SBU3 Stock Transfer implementation start
+                    $("li[id^='" + result[i]["FORM_CODE"] + "']").css({ "display": "block" });
+                    // svprasadk 20-07-2020 SBU3 Stock Transfer implementation end
+
+                    if (result[i]["FORM_CODE"] == "FD" || result[i]["FORM_CODE"] == "AST" || result[i]["FORM_CODE"] == "INV" || result[i]["FORM_CODE"] == "OD" || result[i]["FORM_CODE"] == "COD" || result[i]["FORM_CODE"] == "CN" || result[i]["FORM_CODE"] == "DN" || result[i]["FORM_CODE"] == "PBS" || result[i]["FORM_CODE"] == "PCF" || result[i]["FORM_CODE"] == "TDSC") {
+                        if (($("#LoggedinUserType").val() == "CSM" || $("#LoggedinUserType").val() == "CSO") && result[i]["FORM_CODE"] == "INV" && ($("#TestUserCode").val() == "50002662" || $("#TestUserCode").val() == "88016512" || $("#TestUserCode").val() == "50001141" || $("#TestUserCode").val() == "50003134" || $("#TestUserCode").val() == "50000527" || $("#TestUserCode").val() == "50000213" || $("#TestUserCode").val() == "50000380" || $("#TestUserCode").val() == "50000392" || $("#TestUserCode").val() == "50001463" || $("#TestUserCode").val() == "50002978" || $("#TestUserCode").val() == "50001138" || $("#TestUserCode").val() == "50003046" || $("#TestUserCode").val() == "50003080" || $("#TestUserCode").val() == "50003143" || $("#TestUserCode").val() == "50003262" || $("#TestUserCode").val() == "50003297")) {
+                            $("#FinancialTransactionsTab").css({ "display": "block" });
+                        } else {
+                            $("#FinancialTransactionsTab").css({ "display": "block" });
+                        }
+                    }
+
+                    // svprasadk 25-11-2020  Invoices Tab for SBU3 start
+                    if (result[i]["FORM_CODE"] == "INV_BU3") {
+                        $("#FinancialTransactionsTabBU3").css({ "display": "block" });
+                        $("#INV_BU3").css({ "display": "block" });
+                    }
+                    //else {
+                    //    $("#INV_BU3").css({ "display": "none" });
+                    //}
+                    // svprasadk 25-11-2020  Invoices Tab for SBU3 start
+
+                    if (result[i]["FORM_CODE"] == "SPD" || result[i]["FORM_CODE"] == "DOT" || result[i]["FORM_CODE"] == "MM" || result[i]["FORM_CODE"] == "JP" || result[i]["FORM_CODE"] == "SCR" || result[i]["FORM_CODE"] == "IT" || result[i]["FORM_CODE"] == "TRG" || result[i]["FORM_CODE"] == "SH" || result[i]["FORM_CODE"] == "PI" || result[i]["FORM_CODE"] == "SCHM" || result[i]["FORM_CODE"] == "HC" || result[i]["FORM_CODE"] == "PIS" || result[i]["FORM_CODE"] == "SCD" || result[i]["FORM_CODE"] == "KSU") {
+                        $("#SalesProcessManagementTab").css({ "display": "block" });
+                    }
+
+                    if (result[i]["FORM_CODE"] == "REG" || result[i]["FORM_CODE"] == "INVST" || result[i]["FORM_CODE"] == "COMP" || result[i]["FORM_CODE"] == "CORM") {
+                        $("#ComplaintManagementTotalTab").css({ "display": "block" });
+                        $("#ComplaintManagementTab").css({ "display": "block" });
+                    }
+
+                    // svprasadk 17-07-2020 SBU3 Stock Transfer implementation start
+                    //if (result[i]["FORM_CODE"] == "REG" || result[i]["FORM_CODE"] == "INVST" || result[i]["FORM_CODE"] == "COMP" || result[i]["FORM_CODE"] == "CORM") {
+                    //    $("#ComplaintManagementTotalTab").css({ "display": "block" });
+                    //    if ($("#LoggedinUserType").val() == "Plant_MHD") {
+                    //        $("#ComplaintManagementTab_STO").css({ "display": "block" });
+                    //    } else if (UserCode_sales == "50003209") {
+                    //        $("#ComplaintManagementTab").css({ "display": "block" });
+                    //        $("#ComplaintManagementTab_STO").css({ "display": "block" });
+                    //    } else {
+                    //        $("#ComplaintManagementTab").css({ "display": "block" });
+                    //    }
+                    //}
+                    //svprasadk 07-09-2020 updated SBU3 Stock Transfer implementation
+                    if (result[i]["FORM_CODE"] == "REG_STO" || result[i]["FORM_CODE"] == "INVST_STO") {
+                        $("#ComplaintManagementTotalTab_STO").css({ "display": "block" });
+                        $("#ComplaintManagementTab_STO").css({ "display": "block" });
+                    }
+                    // svprasadk 17-07-2020 SBU3 Stock Transfer implementation end
+
+                    //svprasadk 10-02-2021 SBU3 Informal Customer Complaint implementation start
+                    if (result[i]["FORM_CODE"] == "REG_ICC" || result[i]["FORM_CODE"] == "INVST_ICC") {
+                        $("#ComplaintManagementTotalTab_ICC").css({ "display": "block" });
+                        $("#ComplaintManagementTab_ICC").css({ "display": "block" });
+                    }
+                    //svprasadk 10-02-2021 SBU3 Informal Customer Complaint implementation end
+
+                    if (result[i]["FORM_CODE"] == "CPA" || result[i]["FORM_CODE"] == "AC" || result[i]["FORM_CODE"] == "CAR" || result[i]["FORM_CODE"] == "PAC") {
+                        $("#ComplaintManagementTotalTab").css({ "display": "block" });
+                        $("#ComplaintApprovalsTab").css({ "display": "block" });
+                    }
+                    //svprasadk 10-02-2021 SBU3 Informal Customer Complaint implementation start
+                    if (result[i]["FORM_CODE"] == "CPA_ICC" || result[i]["FORM_CODE"] == "AC_ICC" || result[i]["FORM_CODE"] == "CAR_ICC" || result[i]["FORM_CODE"] == "PAC_ICC") {
+                        $("#ComplaintManagementTotalTab_ICC").css({ "display": "block" });
+                        $("#ComplaintApprovalsTab_ICC").css({ "display": "block" });
+                    }
+                    //svprasadk 10-02-2021 SBU3 Informal Customer Complaint implementation end
+                    if (result[i]["FORM_CODE"] == "CSR" || result[i]["FORM_CODE"] == "SC") {
+                        $("#ComplaintManagementTotalTab").css({ "display": "block" });
+                        $("#ComplaintReportsTab").css({ "display": "block" });
+                    }
+
+                    //svprasadk 04-02-2021 SBU3 Stock Transfer and informal complaint status report start
+                    if (result[i]["FORM_CODE"] == "CSR_STO") {
+                        $("#ComplaintManagementTotalTab_STO").css({ "display": "block" });
+                        $("#ComplaintReportsTab_STO").css({ "display": "block" });
+                    }
+                    //svprasadk 04-02-2021 SBU3 Stock Transfer and informal complaint status report end
+
+                    //svprasadk 11-02-2021 SBU3 Stock Transfer and informal complaint status report start
+                    if (result[i]["FORM_CODE"] == "CSR_ICC") {
+                        $("#ComplaintManagementTotalTab_ICC").css({ "display": "block" });
+                        $("#ComplaintReportsTab_ICC").css({ "display": "block" });
+                    }
+                    //svprasadk 11-02-2021 SBU3 Stock Transfer and informal complaint status report end
+
+                    if (result[i]["FORM_CODE"] == "CMSD") {
+                        $("#ComplaintManagementTotalTab").css({ "display": "block" });
+                    }
+
+                    if (result[i]["FORM_CODE"] == "UD" || result[i]["FORM_CODE"] == "TSTR" || result[i]["FORM_CODE"] == "TSR" || result[i]["FORM_CODE"] == "TDR" || result[i]["FORM_CODE"] == "RR" || result[i]["FORM_CODE"] == "PBR" || result[i]["FORM_CODE"] == "EDR" || result[i]["FORM_CODE"] == "UM" || result[i]["FORM_CODE"] == "RC") {
+                        $("#UnnatiModuleList").css({ "display": "block" });
+                    }
+
+                    if (result[i]["FORM_CODE"] == "DR" || result[i]["FORM_CODE"] == "PDWC" || result[i]["FORM_CODE"] == "PDDB" || result[i]["FORM_CODE"] == "NBFS" || result[i]["FORM_CODE"] == "DS" || result[i]["FORM_CODE"] == "KR" || result[i]["FORM_CODE"] == "KRD" || result[i]["FORM_CODE"] == "PCRP" || result[i]["FORM_CODE"] == "DSR") {
+                        $("#DiscountsTab").css({ "display": "block" });
+                    }
+
+                    if (result[i]["FORM_CODE"] == "DST" || result[i]["FOM_CODE"] == "BTU" || result[i]["FORM_CODE"] == "FUL" || result[i]["FORM_CODE"] == "DUL" || result[i]["FORM_CODE"] == "CML") {
+                        $("#ReportsTab").css({ "display": "block" });
+                    }
+
+                    if (result[i]["FORM_CODE"] == "MC" || result[i]["FORM_CODE"] == "DCS" || result[i]["FORM_CODE"] == "ERC" || result[i]["FORM_CODE"] == "ECC" || result[i]["FORM_CODE"] == "RAC" || result[i]["FORM_CODE"] == "CE" || result[i]["FORM_CODE"] == "SD" || result[i]["FORM_CODE"] == "LAL" || result[i]["FORM_CODE"] == "CFU" || result[i]["FORM_CODE"] == "DEC") {
+
+                        $("#AdministrationTab").css({ "display": "block" });
+                    }
+
+                    if (result[i]["FORM_CODE"] == "CP" || result[i]["FORM_CODE"] == "ACL" || result[i]["FORM_CODE"] == "CUFE" || result[i]["FORM_CODE"] == "CUFS" || result[i]["FORM_CODE"] == "IAUL") {
+                        $("#UserManagementTab").css({ "display": "block" });
+                    }
+                }
+
+                //Customization for Stockist CMS
+                if (User_Role_Access_Code == "STOCKIST" || User_Role_Access_Code == "BU3_STK" ) {
+                    $("#ComplaintReportsTab").css('display', 'none');
+                    $("#ComplaintsDetailedReport").css('display', 'none');
+                    // $("#NotificationIcon").css('display', 'none');
+                }
+
+                //Unnati Module Hiding for Stockist Role
+                //var table = $("#PopUpTable").dataTable();
+
+                var UserRole = '@Session["UserRole"]';
+                if (UserRole == "STOCKIST" || UserRole == "C&F" || UserRole == "BU3_STK") {
+
+                    var UnnatiEnrolledCustomer = '@Session["UnnatiEnrolledCustomer"]';
+                    if (UnnatiEnrolledCustomer == "Yes") {
+                        StockistZone = '@Session["UnnatiEnrolledCustomerZone"]';
+                        StockistState = '@Session["UnnatiEnrolledCustomerState"]';
+                        StockistDistrict = '@Session["UnnatiEnrolledCustomerDistrict"]';
+                        UnnatiMembershipID = '@Session["UnnatiEnrolledMembershipID"]';
+                    }
+                    else {
+                        $("#UnnatiModuleList").hide();
+                    }
+                }
+
+                var TestUserCode = $("#TestUserCode").val();
+
+                if (TestUserCode == "KAM") {
+                    $("#FinancialTransactionsTab").css('display', 'none');
+                    $("#UnnatiModuleList").css('display', 'none');
+                    $("#ReportsTab").css('display', 'none');
+                    $("#AdministrationTab").css('display', 'none');
+                    $("#UserManagementTab").css('display', 'none');
+                    $("#SalesProcessManagementTab").css('display', 'none');
+                }
+
+
+
+                //Some Sap
+                var UserRole_SAP = '@Session["UserRole"]';
+                var UserCreatedRole = "";
+                $.ajax({
+                    url: '../SAP/GetAccessLevel_SAPDashboard',
+                    type: 'POST',
+                    data: { UserRole: UserRole_SAP },
+                    success: function (res) {
+                        // UserCreatedRole = res;
+                        // $('#DailyPopup').modal('hide');
+                    }
+                });
+
+                var LoggedType = $("#LoggedinUserType").val();
+
+                if (LoggedType == "STOCKIST" || LoggedType == "BU3_STK") {
+                    $("#NotificationCustomer").css("display", "block");
+                    $("#NotificationIcon").css("display", "none");
+                    GetCustomerNotificationFromDB();
+                }
+                else {
+                    $("#NotificationCustomer").css("display", "none");
+                    $("#NotificationIcon").css("display", "block");
+                }
+            }
+        });
+    });
+
+
+    function layoutLoadimages() {
+        var loc = "";
+        $.ajax({
+            type: 'POST',
+            // url: '../../ProfilePhotos/' + UserCode_sales + '.jpg',
+            async: false,
+            url: '../../Home/GetUserProfilePics',
+            data: { UserCode_sales: UserCode_sales },
+            success: function (response) {
+
+                if (response == "FALSE") {
+                    loc = "../../ProfilePhotos/user-icon-profile.jpg";
+                    $("#imgage img").attr('src', loc);
+                    $("#sideimg img").attr('src', loc);
+                }
+                else if (response == "TRUE") {
+                    loc = "../../ProfilePhotos/" + UserCode_sales + ".jpg";
+                    $("#imgage img").attr('src', loc);
+                    $("#sideimg img").attr('src', loc);
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+
+        // var loc = "../../ProfilePhotos/" + UserCode_sales + ".jpg";
+
+
+    }
+
+
+    function SessionExpired() {
+        HideLoader();
+        alert("Your Session has been expired.Please Login again");
+        //window.location.reload();
+        window.location.href = "../../LogOn/LogOn";
+    }
+
+    var specialKeys = new Array();
+    specialKeys.push(8); //Backspace
+    specialKeys.push(9); //Tab
+    specialKeys.push(46); //Delete
+    specialKeys.push(36); //Home
+    specialKeys.push(35); //End
+    specialKeys.push(37); //Left
+    specialKeys.push(39); //Right
+    function onlyAlphabets(e) {
+        var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+        //if (keyCode == 32) { alert("hi"); e.keyCode = keyCode; e.charCode = keyCode; }
+        //alert(keyCode); alert(e.keyCode); alert(e.charCode);
+        var ret = ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode == 32) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+        return ret;
+    }
+
+    function onlyNumerics(e) {
+        var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+        var ret = ((keyCode >= 48 && keyCode <= 57) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+        return ret;
+    }
+
+    function ChangeCase(elem) {
+        elem.value = elem.value.toUpperCase();
+    }
+
+    // window.history.forward();
+    function Prevent_Back() {
+        window.history.forward();
+    }
+    //window.onbeforeunload = function () { return "You work will be lost."; };
+    //window.onunload = function () {
+    //    //window.location.reload();
+    //    //window.location.href = "../../LogOn/LogOn";
+    //};
+
+    function ShowLoader() {
+        $("#loading").fadeIn();
+    }
+    function HideLoader() {
+        $("#loading").fadeOut();
+    }
+
+    function onlyNos(e, t) {
+        //console.log(e.which);
+        try {
+
+            if (window.event) {
+
+                var charCode = window.event.keyCode;
+
+            }
+
+            else if (e) {
+
+                var charCode = e.which;
+
+            }
+
+            else { return true; }
+            if (charCode == 46) {
+
+            }
+            else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+        catch (err) {
+
+            alert(err.Description);
+
+        }
+
+    }
+    function fun_AllowOnlyAmountAndDot(event, txt) {
+        if (event.keyCode > 47 && event.keyCode < 58 || event.keyCode == 46) {
+            var txtbx = document.getElementById(txt);
+            var amount = document.getElementById(txt).value;
+            var present = 0;
+            var count = 0;
+
+            if (amount.indexOf(".", present) || amount.indexOf(".", present + 1));
+            {
+                // alert('0');
+            }
+
+            /*if(amount.length==2)
+            {
+              if(event.keyCode != 46)
+              return false;
+            }*/
+            do {
+                present = amount.indexOf(".", present);
+                if (present != -1) {
+                    count++;
+                    present++;
+                }
+            }
+            while (present != -1);
+            if (present == -1 && amount.length == 0 && event.keyCode == 46) {
+                event.keyCode = 0;
+                //alert("Wrong position of decimal point not  allowed !!");
+                return false;
+            }
+
+            if (count >= 1 && event.keyCode == 46) {
+
+                event.keyCode = 0;
+                //alert("Only one decimal point is allowed !!");
+                return false;
+            }
+            if (count == 1) {
+                var lastdigits = amount.substring(amount.indexOf(".") + 1, amount.length);
+                if (lastdigits.length >= 2) {
+                    //alert("Two decimal places only allowed");
+                    event.keyCode = 0;
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            event.keyCode = 0;
+            //alert("Only Numbers with dot allowed !!");
+            return false;
+        }
+
+    }
+
+    $(document).ready(function () {
+
+    });
+
+
+    // Function is used to auto adjust screen height based on screen resolution
+    // function AutoHeight_Adjustment() {
+    //var width = $(window).width(), height = $(window).height();
+    //var totalheight = height - 191;
+    //if (height <= 800) {
+    //  totalheight = height - 148;
+    // }
+    // var totalheight = height - 148;
+
+
+    //$('.content').css({ "max-height": totalheight, "overflow-y": "auto" });
+    // $('.content-header > h2').css({ "font-size": "18px", "font-weight": "500" });//----------
+    //}
+    function SignOut() {
+        window.location.href = "../../LogOn/LogOut";
+    }
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+
+                    TodayDateTime = result;
+                }
+
+                if (result == "") {
+                    SERVER_DATE = "";
+                } else {
+                    //var dates = new Date(result);
+                    // alert("DAT :"+dates);
+                    SERVER_DATE = result; // 0-->Day 1-->Month 2-->year
+                    TODAY_DATE = result;
+                    //var Month = parseInt(SERVER_DATE.getMonth()) + parseInt(1);
+                    //var Day;
+
+                    //if (parseInt(SERVER_DATE.getDate()) < 10) {
+                    //    Day = "0" + parseInt(SERVER_DATE.getDate());
+                    //} else {
+                    //    Day = parseInt(SERVER_DATE.getDate());
+                    //}
+
+                    //if (Month < 10) {
+                    //    Month = "0" + Month;
+                    //} else {
+                    //    Month = Month;
+                    //}
+                    //TODAY_DATE = Day + "/" + Month + "/" + SERVER_DATE.getFullYear();
+                    //alert(TODAY_DATE);
+
+
+                }
+                //
+
+            }
+
+        });
+    }
+
+    function AllowOnlyChars(evt) {
+        var charCode = evt.which;
+        if (evt.ctrlKey == true && (charCode == 65 || charCode == 67 || charCode == 86 || charCode == 88 || charCode == 90 || charCode == 97 || charCode == 99 || charCode == 118 || charCode == 120 || charCode == 122)) {
+            return true;
+        }
+        else if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || charCode == 0 || charCode == 8 || charCode == 32) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    function upperCase(myfield, e, dec) {
+
+
+        var key;
+        var keychar;
+        var count = myfield.value.split('.').length;
+        myfield.value = myfield.value.toUpperCase();
+
+        //var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+        ////if (keyCode == 32) { alert("hi"); e.keyCode = keyCode; e.charCode = keyCode; }
+        ////alert(keyCode); alert(e.keyCode); alert(e.charCode);
+        //var ret = ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode == 32) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+        //return ret;
+
+
+    }
+    function onlyNos(e, t) {
+        //console.log(e.which);
+        try {
+
+            if (window.event) {
+
+                var charCode = window.event.keyCode;
+
+            }
+
+            else if (e) {
+
+                var charCode = e.which;
+
+            }
+
+            else { return true; }
+            if (charCode == 46) {
+
+            }
+            else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+        catch (err) {
+
+            alert(err.Description);
+
+        }
+
+    }
+
+    function FormToggle(DivName) {
+        try {            
+            if ($("#" + DivName + "_Form").css("display") == "none") {
+                $("#" + DivName + "_Form").css("display", "block");
+                $("#" + DivName + "_Img").attr("src", "../../Images/en_expend.png");
+            }
+            else if ($("#" + DivName + "_Form").css("display") == "block") {
+                $("#" + DivName + "_Form").css("display", "none");
+                $("#" + DivName + "_Img").attr("src", "../../Images/en_next.png");
+            }
+        }
+        catch (e) {
+            alert("Error : " + e);
+        }
+    }
+
+    function savedailysaleshuddle() {
+        var obj = new Array();
+
+        $('#DailyPopupTable tbody tr').each(function () {
+            var $row = $(this);
+            // alert($row.find('input').length);
+            //alert($row.find(':nth-child(1)').attr('id'));
+            var status = "";
+            if ($row.find('input').is(":checked")) {
+                //alert("Yes")
+                status = "Y";
+                // $row.find(':nth-child(3)').text("Yes");
+            }
+            else {
+                // alert("NO")
+                status = "N";
+                // $row.find(':nth-child(3)').text("NO");
+                //$row.find(':nth-child(3)').text() = "No";
+            }
+            obj.push({
+                Employee_Code: $row.find(':nth-child(1)').attr('id'),
+                Employee_Name: $row.find(':nth-child(1)').text(),
+                Employee_Role: $row.find(':nth-child(2)').text(),
+                Status: status,
+
+            });
+        });
+        var StateHeadCode = JSON.stringify({ "StateHead": UserCode_sales, "StateCode": UserStateCode_sales, "ZoneCode": UserZoneCode_sales });
+
+        var Totaldata = JSON.stringify({ "StateHeadCode": StateHeadCode, "Employeedata": obj })
+
+        // alert(JSON.stringify(Totaldata));
+        $.ajax({
+            url: '../SFDC/SaveDailySalesHuddles',
+            type: 'POST',
+            data: { Totaldata: Totaldata },
+            "beforeSend": function () {
+                ShowLoader();
+            },
+            success: function (res) {
+                if (res == "Inserted") {
+                    alert("Successfully Inserted");
+                }
+                else if (res == "Not Inserted") {
+                    alert("Records Not Inserted");
+                }
+                else {
+                    alert("Technical error has been occured");
+                }
+                $('#DailyPopup').modal('hide');
+            },
+            "complete": function () {
+                HideLoader();
+            }
+        });
+    }
+
+    function saveweeklysaleshuddle() {
+        var obj = new Array();
+
+        $('#WeeklyPopupTable tbody tr').each(function () {
+            var $row = $(this);
+            // alert($row.find('input').length);
+            //alert($row.find(':nth-child(1)').attr('id'));
+            var status = "";
+            if ($row.find('input').is(":checked")) {
+                //alert("Yes")
+                status = "Y";
+                // $row.find(':nth-child(3)').text("Yes");
+            }
+            else {
+                // alert("NO")
+                status = "N";
+                // $row.find(':nth-child(3)').text("NO");
+                //$row.find(':nth-child(3)').text() = "No";
+            }
+            obj.push({
+                Employee_Code: $row.find(':nth-child(1)').attr('id'),
+                Employee_Name: $row.find(':nth-child(1)').text(),
+                Employee_Role: $row.find(':nth-child(2)').text(),
+                Status: status,
+
+            });
+        });
+        //var StateHeadCode = JSON.stringify({ "StateHead": UserCode_sales })
+        var StateHeadCode = JSON.stringify({ "StateHead": UserCode_sales, "StateCode": UserStateCode_sales, "ZoneCode": UserZoneCode_sales });
+        var Totaldata = JSON.stringify({ "StateHeadCode": StateHeadCode, "Employeedata": obj })
+
+        // alert(JSON.stringify(Totaldata));
+        $.ajax({
+            url: '../SFDC/SaveWeeklySalesHuddles',
+            type: 'POST',
+            data: { Totaldata: Totaldata },
+            "beforeSend": function () {
+                ShowLoader();
+            },
+            success: function (res) {
+                if (res == "Inserted") {
+                    alert("Successfully Inserted");
+                }
+                else if (res == "Not Inserted") {
+                    alert("Records Not Inserted");
+                }
+                else {
+                    alert("Technical error has been occured");
+                }
+                $('#WeeklyPopup').modal('hide');
+
+            },
+            "complete": function () {
+                HideLoader();
+            }
+        });
+    }
+
+    function savemonthlysaleshuddle() {
+        var obj = new Array();
+
+        $('#MonthlyPopupTable tbody tr').each(function () {
+            var $row = $(this);
+            // alert($row.find('input').length);
+            //alert($row.find(':nth-child(1)').attr('id'));
+            var status = "";
+            if ($row.find('input').is(":checked")) {
+                //alert("Yes")
+                status = "Y";
+                // $row.find(':nth-child(3)').text("Yes");
+            }
+            else {
+                // alert("NO")
+                status = "N";
+                // $row.find(':nth-child(3)').text("NO");
+                //$row.find(':nth-child(3)').text() = "No";
+            }
+            obj.push({
+                Employee_Code: $row.find(':nth-child(1)').attr('id'),
+                Employee_Name: $row.find(':nth-child(1)').text(),
+                Employee_Role: $row.find(':nth-child(2)').text(),
+                Status: status,
+
+            });
+        });
+        var StateHeadCode = JSON.stringify({ "StateHead": UserCode_sales, "StateCode": UserStateCode_sales, "ZoneCode": UserZoneCode_sales });
+
+        var Totaldata = JSON.stringify({ "StateHeadCode": StateHeadCode, "Employeedata": obj })
+
+        //alert(JSON.stringify(Totaldata));
+        $.ajax({
+            url: '../SFDC/SaveMonthlySalesHuddles',
+            type: 'POST',
+            data: { Totaldata: Totaldata },
+            "beforeSend": function () {
+                ShowLoader();
+            },
+            success: function (res) {
+                if (res == "Inserted") {
+                    alert("Successfully Inserted");
+                }
+                else if (res == "Not Inserted") {
+                    alert("Records Not Inserted");
+                }
+                else {
+                    alert("Technical error has been occured");
+                }
+                $('#MonthlyPopup').modal('hide');
+            },
+            "complete": function () {
+                HideLoader();
+            }
+        });
+    }
+
+    function MakeThisNumbertoInteger(TextBoxName) {
+        var TextValue = $("#" + TextBoxName + "").val();
+
+        if (TextValue == "" || TextValue == null || TextValue == undefined) {
+            $("#" + TextBoxName + "").val("");
+        }
+        else if (isNaN(TextValue)) {
+            $("#" + TextBoxName + "").val("");
+        }
+        else {
+            var TextValue = parseInt(TextValue);
+            $("#" + TextBoxName + "").val(TextValue);
+        }
+    }
+
+
+    function PopUpForSalesHuddles() {
+        var UserData_sales = JSON.stringify({ "StateCode": UserStateCode_sales, "UserCode": UserCode_sales, "StateCode": UserStateCode_sales, "ZoneCode": UserZoneCode_sales });
+        $.ajax({
+            url: '../SFDC/PopupData',
+            type: 'post',
+            data: { SessionData: UserData_sales },
+            "beforeSend": function () {
+                //ShowLoader();
+            },
+            success: function (res) {
+                //alert(res);
+                if (res != "No Data") {
+                    // var data = res.split('$$$');
+                    var Result = JSON.parse(res);
+                    $("#DailyPopupTable tbody").empty();
+                    $("#WeeklyPopupTable tbody").empty();
+                    $("#MonthlyPopupTable tbody").empty();
+                    //var Employeelist = ["J.K.gupta", "GARAJAN", "SINGH S R", "R A SHARMA"];
+                    for (var i = 0; i < Result.EmployeeList.length; i++) {
+                        var Htmldata = "";
+                        Htmldata += "<tr style='text-align:center;border:2px solid black'>";
+                        Htmldata += " <td id=" + Result.EmployeeList[i]["EMPLOYEE_CODE"] + " style='text-align:center;border:2px solid black'>" + Result.EmployeeList[i]["EMPLOYEE_NAME"] + "</td>";
+                        //  Htmldata += " <td id=" + Result[i]["EMPLOYEE_CODE"] + ">" + Employeelist[i] + "</td>";
+                        Htmldata += " <td id=" + Result.EmployeeList[i]["ORG_LEVEL_NAME"] + " style='text-align:center;border:2px solid black'>" + Result.EmployeeList[i]["ORG_LEVEL_NAME"] + "</td>";
+                        if (Result.EmployeeList[i]["EMPLOYEE_CODE"] == UserCode_sales) {
+                            Htmldata += " <td> <input type='checkbox' checked='checked' /></td>";
+                        }
+                        else {
+                            Htmldata += "<td><input type='checkbox'/></td>";
+                        }
+                        Htmldata += "</tr>";
+                        $("#DailyPopupTable tbody").append(Htmldata);
+                        // $("#WeeklyPopupTable tbody").append(Htmldata);
+                        // $("#MonthlyPopupTable tbody").append(Htmldata);
+                    }
+                    if (Result.EmployeeSHList != "NoData") {
+                        for (var i = 0; i < Result.EmployeeSHList.length; i++) {
+                            var Htmldata = "";
+                            Htmldata += "<tr style='text-align:center;border:2px solid black'>";
+                            Htmldata += " <td id=" + Result.EmployeeSHList[i]["EMPLOYEE_CODE"] + " style='text-align:center;border:2px solid black'>" + Result.EmployeeSHList[i]["EMPLOYEE_NAME"] + "</td>";
+                            //  Htmldata += " <td id=" + Result[i]["EMPLOYEE_CODE"] + ">" + Employeelist[i] + "</td>";
+                            Htmldata += " <td id=" + Result.EmployeeSHList[i]["ORG_LEVEL_NAME"] + " style='text-align:center;border:2px solid black'>" + Result.EmployeeSHList[i]["ORG_LEVEL_NAME"] + "</td>";
+                            if (Result.EmployeeSHList[i]["EMPLOYEE_CODE"] == UserCode_sales) {
+                                Htmldata += " <td> <input type='checkbox' checked='checked' /></td>";
+                            }
+                            else {
+                                Htmldata += "<td><input type='checkbox'/></td>";
+                            }
+                            Htmldata += "</tr>";
+                            // $("#DailyPopupTable tbody").append(Htmldata);
+                            $("#WeeklyPopupTable tbody").append(Htmldata);
+                            $("#MonthlyPopupTable tbody").append(Htmldata);
+                        }
+                    }
+                    if (Result.Daily != "Exist") {
+
+                        $('#DailyPopup').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $('#DailyPopup').modal('show');
+
+
+                    }
+                    if (Result.Weekly != "Exist") {
+                        $('#WeeklyPopup').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $('#WeeklyPopup').modal('show');
+                    }
+                    if (Result.Monthly != "Exist") {
+
+                        $('#MonthlyPopup').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $('#MonthlyPopup').modal('show');
+
+                    }
+                    setTimeout(function () {
+                        PopUpForSalesHuddles();
+                    }, 6000000);
+
+                }
+            },
+            "complete": function () {
+                HideLoader();
+            }
+        });
+
+    }
+
+    function PopUpForZHSalesHuddles() {
+        var UserData_sales = JSON.stringify({ "StateCode": UserStateCode_sales, "UserCode": UserCode_sales, "StateCode": UserStateCode_sales, "ZoneCode": UserZoneCode_sales });
+        $.ajax({
+            url: '../SFDC/PopupDataForZH',
+            type: 'post',
+            data: { SessionData: UserData_sales },
+            "beforeSend": function () {
+                //ShowLoader();
+            },
+            success: function (res) {
+                //alert(res);
+                if (res != "No Data") {
+                    // var data = res.split('$$$');
+                    var Result = JSON.parse(res);
+                    $("#DailyPopupTable tbody").empty();
+                    $("#WeeklyPopupTable tbody").empty();
+                    $("#MonthlyPopupTable tbody").empty();
+                    //var Employeelist = ["J.K.gupta", "GARAJAN", "SINGH S R", "R A SHARMA"];
+                    for (var i = 0; i < Result.EmployeeList.length; i++) {
+                        var Htmldata = "";
+                        Htmldata += "<tr style='text-align:center;border:2px solid black'>";
+                        Htmldata += " <td id=" + Result.EmployeeList[i]["EMPLOYEE_CODE"] + " style='text-align:center;border:2px solid black'>" + Result.EmployeeList[i]["EMPLOYEE_NAME"] + "</td>";
+                        //  Htmldata += " <td id=" + Result[i]["EMPLOYEE_CODE"] + ">" + Employeelist[i] + "</td>";
+                        Htmldata += " <td id=" + Result.EmployeeList[i]["ORG_LEVEL_NAME"] + " style='text-align:center;border:2px solid black'>" + Result.EmployeeList[i]["ORG_LEVEL_NAME"] + "</td>";
+                        if (Result.EmployeeList[i]["EMPLOYEE_CODE"] == UserCode_sales) {
+                            Htmldata += " <td> <input type='checkbox' checked='checked' /></td>";
+                        }
+                        else {
+                            Htmldata += "<td><input type='checkbox'/></td>";
+                        }
+                        Htmldata += "</tr>";
+                        //$("#DailyPopupTable tbody").append(Htmldata);
+                        $("#WeeklyPopupTable tbody").append(Htmldata);
+                        $("#MonthlyPopupTable tbody").append(Htmldata);
+                    }
+
+
+                    //if (Result.Daily != "Exist") {
+
+                    //    $('#DailyPopup').modal({
+                    //        backdrop: 'static',
+                    //        keyboard: false
+                    //    });
+                    //    $('#DailyPopup').modal('show');
+
+
+                    //}
+                    if (Result.Weekly != "Exist") {
+                        $('#WeeklyPopup').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $('#WeeklyPopup').modal('show');
+                    }
+                    if (Result.Monthly != "Exist") {
+
+                        $('#MonthlyPopup').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $('#MonthlyPopup').modal('show');
+
+                    }
+                    setTimeout(function () {
+                        PopUpForZHSalesHuddles();
+                    }, 6000000);
+
+                }
+            },
+            "complete": function () {
+                HideLoader();
+            }
+        });
+
+    }
+
+    function GoToEnvision() {
+        window.open('http://www.envisionesl.com');
+    }
+
+    function allowTwoDecimalPoints(element) {
+        element
+          .data("oldValue", '')
+          .bind("paste", function (e) {
+              var validNumber = /^[-]?\d+(\.\d{1,2})?$/;
+              element.data('oldValue', element.val())
+              setTimeout(function () {
+                  if (!validNumber.test(element.val()))
+                      element.val(element.data('oldValue'));
+              }, 0);
+          });
+        element
+          .keypress(function (event) {
+              var text = $(this).val();
+              if ((event.which != 46 || text.indexOf('.') != -1) && //if the keypress is not a . or there is already a decimal point
+                ((event.which < 48 || event.which > 57) && //and you try to enter something that isn't a number
+                  (event.which != 45 || (element[0].selectionStart != 0 || text.indexOf('-') != -1)) && //and the keypress is not a -, or the cursor is not at the beginning, or there is already a -
+                  (event.which != 0 && event.which != 8))) { //and the keypress is not a backspace or arrow key (in FF)
+                  event.preventDefault(); //cancel the keypress
+              }
+
+              if ((text.indexOf('.') != -1) && (text.substring(text.indexOf('.')).length > 2) && //if there is a decimal point, and there are more than two digits after the decimal point
+                ((element[0].selectionStart - element[0].selectionEnd) == 0) && //and no part of the input is selected
+                (element[0].selectionStart >= element.val().length - 2) && //and the cursor is to the right of the decimal point
+                (event.which != 45 || (element[0].selectionStart != 0 || text.indexOf('-') != -1)) && //and the keypress is not a -, or the cursor is not at the beginning, or there is already a -
+                (event.which != 0 && event.which != 8)) { //and the keypress is not a backspace or arrow key (in FF)
+                  event.preventDefault(); //cancel the keypress
+              }
+          });
+    }
+
+
+</script>

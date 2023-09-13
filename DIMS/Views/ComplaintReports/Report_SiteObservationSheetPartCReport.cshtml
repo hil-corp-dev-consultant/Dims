@@ -1,0 +1,208 @@
+﻿@{
+    Layout = null;
+    string CTN = Request.QueryString["CTN"].ToString();
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionUserType = UP.UserTypeCode;    
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+
+    <div style="width: 100%; height: 100%;" id="Report_SiteObservationSheetPartC">
+
+        <input type="text" style="display:none;" id="SessionUserCode" value="@SessionUserCode" />
+        <input type="text" style="display:none;" id="SessionUserType" value="@SessionUserType" />
+
+        <table style="width: 98%" align="center" border="0">
+            <tr>
+                <td>
+                    <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+                        <label style="font-size: 18px; color: #0165C4">
+                            <b>HIL Limited</b></label><br />
+                        <label style="font-size: 18px; color: #0026ff">
+                            <b>SITE OBSERVATION SHEET</b></label><br />
+                    </div>
+                    <div>
+                        <div style="text-align: left; vertical-align: top; width: 45%; margin-right: 2px; float: left;">
+                            Complaint Tracking No:<label id="ComplaintTrackingNo"></label>
+                        </div>
+                        <div style="text-align: right; vertical-align: top; width: 45%; margin-right: 2px; float: left;">
+                            Dated:<label id="ToDayDate"></label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <input type="text" id="CTN" value="@CTN" style="display:none;" />
+
+        <br />
+
+        <div style="width: 98%" id="HeaderTable">
+            <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                <tr>
+                    <td style="font-weight: bold; border: 1px solid Black !important;">Stockiest/Customer Name : </td>
+                    <td style="border: 1px solid Black !important;">
+                        <label id="StockiestCustomerName"></label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br />
+
+        <div style="width: 98%">
+            <table style="width: 98%; border-collapse: collapse;" class="ChildTable" id="ContentTable">
+            </table>
+        </div>
+
+    </div>
+    @*<input type="button" id="PrintReport" onclick="PrintPDF()" value="Save As PDF" />*@
+</body>
+</html>
+
+<script type="text/javascript">
+
+    //function PrintPDF() {
+    //    $("#PrintReport").css("display", "none");
+    //    $.ajax({
+    //        url: '/Home/Exportdata',
+    //        type: 'POST',
+    //        beforeSend: function () {
+    //            //ShowLoader();
+    //        },
+    //        data: { QueryVal: $('#Report_SiteObservationSheetPartC').html() },
+    //        success: function (result) {
+    //            if (result == "ok") {
+    //                $("#PrintReport").css("display", "block");
+    //                window.location.href = "../../Home/GetPDF?reportname=SiteObservationSheet_" + $("#CTN").val() + "";
+    //            }
+    //        },
+    //        error: function (e) {
+    //            alert(e);
+    //        }
+    //    });
+    //}
+
+
+    $(document).ready(function () {
+
+
+        $("#Report_SiteObservationSheetPartC").width($(window).width());
+
+
+
+        var CTN = $("#CTN").val();
+
+        if (CTN == "") {
+            $("#Report_SiteObservationSheetPartC").empty();
+        }
+        else {
+    
+            var UserCode = $("#SessionUserCode").val();
+            var UserType = $("#SessionUserType").val();
+
+            var Data = JSON.stringify({
+                CTN: CTN,
+                Report: "SiteObservationSheetPartC",
+                UserCode: UserCode,
+                UserType: UserType
+            });
+
+
+            $.ajax({
+                method: 'POST',
+                url: '../../ComplaintReports/GetReportData',
+                data: { Data: Data },
+            }).then(function successCallback(response) {
+                if (response == "") {
+                    alert("No Data Available");
+                    $("#Report_SiteObservationSheetPartC").empty();
+                    window.close();
+                }
+                else {
+                    $("#ComplaintTrackingNo").text(CTN);
+
+                    var Data = JSON.parse(response);
+                    var Header = Data["Head"];
+
+
+                    $("#ToDayDate").text(Data["ToDay"]);
+                    $("#StockiestCustomerName").text(Data["CUSTOMER_NAME"]);
+
+                    var TableData = Data["SheetTable"];
+
+                    var TRCode = "";
+
+                    for (var i = 0; i < TableData.length; i++) {
+
+                        TRCode = TRCode + "<tr>";
+
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + (i + 1) + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + TableData[i]["OBSERVATION"] + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + TableData[i]["VARIFIED_OR_NOT"] + "</td>";
+                        TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + TableData[i]["COMMENTS"] + "</td>";
+
+                        TRCode = TRCode + "</tr>";
+
+                    }
+
+                    var FinalCode = "";
+
+                    var CommonHeader = "<tr style='background-color: #00FFFF'><th style='border: 1px solid Black !important;text-align:left;'>S.No</th><th style='text-align:left;'>Observations</th><th style='border: 1px solid Black !important;text-align:left;'>Verified Or Not </th><th style='border: 1px solid Black !important;text-align:left;'>Comments</th></tr>";
+
+                    if (Data["Head"] == "Stacking Breakage Before laying") {
+                        FinalCode = FinalCode + "<tr><th style='border: 1px solid Black !important;text-align:left;'>1.0</th><th colspan='3'  style='border: 1px solid Black !important;text-align:left;'>Incase of breakages are found in stacks before laying:</th></tr>";
+                        FinalCode = FinalCode + CommonHeader + TRCode + "<tr><th  style='border: 1px solid Black !important;'>2.0</th><th colspan='3'  style='border: 1px solid Black !important;text-align:left;'>Incase of breakages are found after laying:</th></tr>" + CommonHeader;
+                    }
+                    else if (Data["Head"] == "Breakage After Laying") {
+                        FinalCode = FinalCode + "<tr><th style='border: 1px solid Black !important;'>1.0</th><th colspan='3'  style='border: 1px solid Black !important;text-align:left;'>Incase of breakages are found in stacks before laying:</th></tr>";
+                        FinalCode = FinalCode + CommonHeader + "<tr><th  style='border: 1px solid Black !important;'>2.0</th><th colspan='3'  style='border: 1px solid Black !important;text-align:left;'>Incase of breakages are found after laying:</th></tr>" + CommonHeader + TRCode;
+                    }
+
+                    $("#ContentTable").append(FinalCode);
+
+                    $.ajax({
+                        url: '/Home/Exportdata',
+                        type: 'POST',
+                        beforeSend: function () {
+                            //ShowLoader();
+                        },
+                        data: { QueryVal: $('#Report_SiteObservationSheetPartC').html() },
+                        success: function (result) {
+                            if (result == "ok") {
+                                $("#PrintReport").css("display", "block");
+                                window.location.href = "../../Home/GetPDF?reportname=SiteObservationSheet_" + $("#CTN").val() + "";
+                                window.onfocus = function () {
+                                    window.close();
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+
+                }
+            },
+            function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+        }
+    });
+
+
+</script>
+

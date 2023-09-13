@@ -1,0 +1,311 @@
+﻿@*
+
+    Module              : CMS - DIMS Solution.
+    DocumentName        : PartnerIssues.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for Add Scheme Screen.
+    Developer Name      : Manikanta
+    Change Log          : NA.
+
+*@
+
+
+
+@using LabelNames = DIMS.Content.Resource_Files.PartnerIssues;
+@{
+    Layout = null;
+    //  string Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string Role = UP.UserTypeCode;
+   
+}
+
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 150px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Partner Issues</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Partner Issues</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar" style="display: none">
+                <a href ng-click="go('AddPartnerIssues')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+                @*<a href>
+                        <i class="fa fa-print fa-4" title="Print"></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-file-excel-o fa-4" title="Excel"></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-file-pdf-o fa-4" title="Pdf"></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-paperclip fa-4" title="Attachements"></i>
+                    </a>
+                    <a href>
+                        <i class=" fa fa-thumbs-o-up" title="Send for Reviews" ></i>
+                    </a>
+                    <a href>
+                        <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                    </a>  *@
+            </div>
+        </div>
+    </nav>
+</section>
+<input type="text" id="SessionRoleCode" hidden="hidden" value="@SessionUserCode" />
+<input type="text" id="SessionUserCode" hidden="hidden" value="@Role" />
+<input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="EditPartnerIssueDiv">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header" @*style="overflow-x: scroll; width: 98%"*@>
+                    <h3 class="box-title"></h3>
+                    <div class="pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="GetPartnerIssuse()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" id="Reset" ng-click="Reset()" class="btn btn-info navbar-btn" style="background-color: #d2401a;border:1px solid #d2401a;color: white">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+
+                @*Filters*@
+                <div class="box-body">
+                <form class="form-horizontal" role="form" style="font-size: small">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            From Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="IssueFromDate" placeholder="From Date" readonly onchange="DateValidation('IssueFromDate', 'IssueToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtBatchNo">
+                            To Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="IssueToDate" placeholder="To Date" readonly />
+                        </div>
+                        <label class="col-sm-1 control-label" for="SalesEmapName">
+                            Zone
+                        </label>
+                        <div class="col-sm-1">
+                            <select id="Zone" multiple="multiple" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="SalesEmapName">
+                            State
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="TerriotryArea">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-1 control-label" for="Verified">Verified</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Verified" multiple="multiple">
+                                <option value="Yes I have Verified and it is closed">Yes,I have verified the issue & it is closed</option>
+                                <option value="No the issue is not closed">No, the issue is not closed to my verification</option>
+                                <option value="Pending Verification">Pending Verification</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Status" multiple="multiple">
+                                <option value="Open">Open</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2 control-label" for="StockistID">
+                            Customer Code/Name
+                        </label>
+                        <div class="col-sm-3">
+                            <input id="CustomerCode" class="form-control" placeholder="Customer Code/Name" />
+                            @*<select id="StockistID" multiple="multiple" class="form-control"></select>*@
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12" style="display:none" id="Issue_Summary">
+                            <a href class="btn-link pull-right" ng-click="go('PartnerIssueSummary')">View Partner Issue Summary</a>
+                        </div>
+                    </div>
+            </form>
+                <div style="padding:10px;"></div>
+                <div id="PartnerIssueDiv" @*class="hidden"*@>
+                    <table class="table ListTable" width="100%" cellspacing="0" id="PartnerIssuesList">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                </div>
+                </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        //$("#IssueFromDate").datepicker({
+        //    format: 'dd/mm/yyyy'
+        //});
+        //$("#IssueToDate").datepicker({
+        //    format: 'dd/mm/yyyy'
+        //});
+        // $("#PartnerIssuesList").dataTable();
+        //$('#Status').SumoSelect({ placeholder: 'Status' });
+        //$('#TerritoryArea').SumoSelect({ placeholder: 'Territory/Area' });
+        //$('#State').SumoSelect({ placeholder: 'State' });
+        //$('#Zone').SumoSelect({ placeholder: 'Zone' });
+        //$('#StockistID').SumoSelect({ placeholder: 'Stockist ID' });
+        //$('#StockistName').SumoSelect({ placeholder: 'Stockist Name' });
+
+        if ($("#SessionUserCode").val() == "FSO" || $("#SessionUserCode").val() == "FSO_BU2" || $("#SessionUserCode").val() == "TM") {
+            $("#IconsNavBar").css("display", "block");
+        }
+
+
+
+
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'Terriotry/Area' });
+        $('#Verified').SumoSelect({ placeholder: 'Verified' });
+        $('#Status').SumoSelect({ placeholder: 'Status' });
+
+
+
+        GetServerDateTime();
+
+        GetAccessForSummary();
+
+        $('#IssueFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#IssueFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#IssueToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#IssueToDate').bind('keypress', function (e) {
+            return false;
+        });
+    });
+
+
+    $("#IssueFromDate").datepicker().on("changeDate", function (e) {
+        $("#IssueToDate").datepicker('setStartDate', $("#IssueFromDate").val());
+        //$("#OrderToDate").data("datepicker").setStartDate((moment(e.date).add(0, 'days')));
+        $("#IssueToDate").val("");
+    });
+    //$("#IssueToDate").datepicker().on("changeDate", function (e) {
+    //    if ($("#IssueFromDate").val() == "") {
+    //        $("#IssueToDate").val("");
+    //    } else {
+    //        $("#IssueFromDate").datepicker('setEndDate', $("#IssueToDate").val());
+    //    }
+    //});
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+
+                if (result == "") {
+                }
+                else {
+                    $("#IssueFromDate").datepicker('setEndDate', result);
+                    $("#IssueToDate").datepicker('setEndDate', result);
+                }
+
+            }
+
+        });
+    }
+
+    function GetAccessForSummary() {
+        //alert("hai");
+        $.ajax({
+            url: '../Home/GetUserPageAccess',
+            type: 'POST',
+            data: { UserRole: $("#SessionUserCode").val() },
+            beforeSend: function () {
+                ShowLoader();
+            },
+            success: function (response) {
+                var result = JSON.parse(response);
+               // alert(response.data);
+                for (var i = 0; i < result.length; i++) {
+                    
+                    if (result[i]["FORM_CODE"] == "PIS")
+                    {
+                        //alert("Yes");
+                        $("#Issue_Summary").css({ "display": "block" });
+                    }
+                }
+            },
+            complete: function () {
+                HideLoader();
+            }
+        });
+    }
+</script>
+

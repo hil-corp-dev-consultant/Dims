@@ -1,0 +1,81 @@
+﻿@* Module              : DIMS Client Application.
+    DocumentName        : CMSDashboard.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for generate Dashboard for CMS.
+    Developer Name      : Rajanna Bhanothu.
+    Change Log          : NA.*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Dashboard</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="row" id="CMS_Dashboard">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+
+                <div class="table-responsive" id="RoleAccessConfigDiv">
+                    <table id="MasterTable" class="table" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="background-color:#d2401a;color:white;">
+                                <td>
+                                    Product
+                                </td>
+                                <td>
+                                    No of Complaint
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Sheeting
+                                </td>
+                                <td>
+                                    Aerocon
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("#tbl_RoleAccessConfig").dataTable({
+        "bDestroy": true,
+        scrollY: "200px",
+        scrollX: true,
+        scrollCollapse: true,
+        paging: true,
+        fixedColumns: {
+            leftColumns: 0
+        },
+    });
+</script>

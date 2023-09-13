@@ -1,0 +1,645 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApprovedDate" xml:space="preserve">
+    <value>Approved Date</value>
+  </data>
+  <data name="BatchNo" xml:space="preserve">
+    <value>Batch No</value>
+  </data>
+  <data name="ChosenPermanentActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="ChosenPermanentActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="ChosenPermanentCorrectiveAction" xml:space="preserve">
+    <value>Chosen Permanent Corrective Action(s)</value>
+  </data>
+  <data name="ChosenPermanentDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ChosenPermanentLinesHeading" xml:space="preserve">
+    <value>Add/Update Corrective Chosen Permanent Lines</value>
+  </data>
+  <data name="ChosenPermanentRelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="ChosenPermanentRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="ChosenPermanentSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="ChosenPermanentTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="CMDocStatus" xml:space="preserve">
+    <value>CM Doc Status</value>
+  </data>
+  <data name="CMSeriesCode" xml:space="preserve">
+    <value>CM Series Code</value>
+  </data>
+  <data name="CommunicationNoteDetails" xml:space="preserve">
+    <value>Communication Note Details</value>
+  </data>
+  <data name="CommunicationNoteID" xml:space="preserve">
+    <value>Communication Note ID</value>
+  </data>
+  <data name="ComplaintCategory" xml:space="preserve">
+    <value>Complaint Category</value>
+  </data>
+  <data name="ComplaintDesc" xml:space="preserve">
+    <value>Complaint Desc</value>
+  </data>
+  <data name="ComplaintRegisteredDate" xml:space="preserve">
+    <value>Complaint Registered Date</value>
+  </data>
+  <data name="ComplaintTrackingNo" xml:space="preserve">
+    <value>Complaint Tracking No</value>
+  </data>
+  <data name="ComplaintType" xml:space="preserve">
+    <value>Complaint Type</value>
+  </data>
+  <data name="Conclusion" xml:space="preserve">
+    <value>Conclusion</value>
+  </data>
+  <data name="CorrectiveEmergencyLinesHeading" xml:space="preserve">
+    <value>Add/Update Corrective Emergency Lines</value>
+  </data>
+  <data name="CorrectiveIntermLineActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="CorrectiveIntermLineActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="CorrectiveIntermLineDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="CorrectiveIntermLineRelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="CorrectiveIntermLineRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="CorrectiveIntermLines" xml:space="preserve">
+    <value>Add/Update Corrective Interm Lines</value>
+  </data>
+  <data name="CorrectiveIntermLineTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="CorrectiveMeasureDate" xml:space="preserve">
+    <value>Corrective Measure Date</value>
+  </data>
+  <data name="CorrectiveMeasureId" xml:space="preserve">
+    <value>Corrective Measure Id</value>
+  </data>
+  <data name="CorrectiveMeasureRemarks" xml:space="preserve">
+    <value>Corrective Measure Remarks</value>
+  </data>
+  <data name="CorrectiveMeasureStatus" xml:space="preserve">
+    <value>Corrective Measure Status</value>
+  </data>
+  <data name="CorrectiveObservationLinesHeading" xml:space="preserve">
+    <value>Add/Update Corrective Observation Lines</value>
+  </data>
+  <data name="CorrectiveObservationLinesObservationName" xml:space="preserve">
+    <value>Observation Name</value>
+  </data>
+  <data name="CorrectiveTeamLinesHeading" xml:space="preserve">
+    <value>Add/Update Corrective Team Lines</value>
+  </data>
+  <data name="CorrectiveTeamLinesName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CorrectiveTeamLinesRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="CorrectiveTeamLinesRole" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="CorrectiveTeamLinesTeamMembers" xml:space="preserve">
+    <value>Team Members</value>
+  </data>
+  <data name="CustomerCode" xml:space="preserve">
+    <value>Customer Code</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Customer Name</value>
+  </data>
+  <data name="Defect" xml:space="preserve">
+    <value>Defect</value>
+  </data>
+  <data name="EmergencyModelActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="EmergencyModelActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="EmergencyModelDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="EmergencyModelRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="EmergencyModelTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="EmergencyResponseActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="EmergencyResponseActions" xml:space="preserve">
+    <value>Emergency Response Actions</value>
+  </data>
+  <data name="EmergencyResponseActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="EmergencyResponseDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="EmergencyResponseRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="EmergencyResponseSNo" xml:space="preserve">
+    <value>SNo</value>
+  </data>
+  <data name="EmergencyResponseTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="ImplementedCorrectiveActionDetails" xml:space="preserve">
+    <value>Implemented Corrective Action Details</value>
+  </data>
+  <data name="ImplementedCorrectiveActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="ImplementedCorrectiveChosenActionName" xml:space="preserve">
+    <value>Chosen Action Name</value>
+  </data>
+  <data name="ImplementedCorrectiveDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ImplementedCorrectiveRelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="ImplementedCorrectiveRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="ImplementedCorrectiveSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="ImplementedCorrectiveTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="InterimContainmentActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="InterimContainmentActions" xml:space="preserve">
+    <value>Interim Containment Actions</value>
+  </data>
+  <data name="InterimContainmentActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="InterimContainmentDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="InterimContainmentRelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="InterimContainmentRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="InterimContainmentSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="InterimContainmentTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="InvestigationDate" xml:space="preserve">
+    <value>Investigation Date</value>
+  </data>
+  <data name="InvestigationDoneBy" xml:space="preserve">
+    <value>Investigation Done By</value>
+  </data>
+  <data name="InvestigationNum" xml:space="preserve">
+    <value>Investigation Num</value>
+  </data>
+  <data name="InvoiceDate" xml:space="preserve">
+    <value>Invoice Date</value>
+  </data>
+  <data name="InvoiceNo" xml:space="preserve">
+    <value>Invoice No</value>
+  </data>
+  <data name="IssueCommunicationNote" xml:space="preserve">
+    <value>Issue Communication Note</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="NoofDefectiveSheets" xml:space="preserve">
+    <value>No of Defective Sheets</value>
+  </data>
+  <data name="NoticeIssuedDate" xml:space="preserve">
+    <value>Notice Issued Date</value>
+  </data>
+  <data name="NoticeRemarksAdditionalinformation" xml:space="preserve">
+    <value>Notice Remarks/Additional information</value>
+  </data>
+  <data name="NoticeType" xml:space="preserve">
+    <value>Notice Type</value>
+  </data>
+  <data name="ObservationByInvestigationSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="ObservationName" xml:space="preserve">
+    <value>Observation Name</value>
+  </data>
+  <data name="ObservationsByInvestigator" xml:space="preserve">
+    <value>Observations By Investigator</value>
+  </data>
+  <data name="Plant" xml:space="preserve">
+    <value>Plant</value>
+  </data>
+  <data name="PreventiveActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="PreventiveActionsDetails" xml:space="preserve">
+    <value>Preventive Actions Details</value>
+  </data>
+  <data name="PreventiveActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="PreventiveDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PreventiveName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PreventiveRelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="PreventiveRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="PreventiveSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="PreventiveTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="ProblemDescription" xml:space="preserve">
+    <value>Problem Description</value>
+  </data>
+  <data name="ProblemImpact" xml:space="preserve">
+    <value>Problem Impact</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductCategory" xml:space="preserve">
+    <value>Product Category</value>
+  </data>
+  <data name="ProductType" xml:space="preserve">
+    <value>Product Type</value>
+  </data>
+  <data name="RootCauseEscapePoint" xml:space="preserve">
+    <value>Root Cause(s) and Escape Point</value>
+  </data>
+  <data name="RootCauseEscapePointCauseName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="RootCauseEscapePointDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="RootCauseEscapePointFindings" xml:space="preserve">
+    <value>Findings</value>
+  </data>
+  <data name="RootCauseEscapePointRelatedTo" xml:space="preserve">
+    <value>RelatedTo</value>
+  </data>
+  <data name="RootCauseEscapePointRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="RootCauseEscapePointSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="RootCauseLinesCauseName" xml:space="preserve">
+    <value>Cause Name</value>
+  </data>
+  <data name="RootCauseLinesDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="RootCauseLinesFindings" xml:space="preserve">
+    <value>Findings</value>
+  </data>
+  <data name="RootCauseLinesHeading" xml:space="preserve">
+    <value>Add/Update Root Cause Lines</value>
+  </data>
+  <data name="RootCauseLinesRelatedTo" xml:space="preserve">
+    <value>RelatedTo</value>
+  </data>
+  <data name="RootCauseLinesRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="Symptoms" xml:space="preserve">
+    <value>Symptoms</value>
+  </data>
+  <data name="TeamInvolved" xml:space="preserve">
+    <value>Team Involved</value>
+  </data>
+  <data name="TeamInvolvedName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TeamInvolvedRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="TeamInvolvedRole" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="TeamInvolvedSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="TeamInvolvedTeamMembers" xml:space="preserve">
+    <value>Team Members</value>
+  </data>
+  <data name="VerificationofCorrectiveActions" xml:space="preserve">
+    <value>Verification of Corrective Actions</value>
+  </data>
+  <data name="VerificationofCorrectiveActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="VerificationofCorrectiveEffectivePercent" xml:space="preserve">
+    <value>Effective Percent</value>
+  </data>
+  <data name="VerificationofCorrectiveImplementActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="VerificationofCorrectiveImplementLineId" xml:space="preserve">
+    <value>ImplementLine Id</value>
+  </data>
+  <data name="VerificationofCorrectiveRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="VerificationofCorrectiveSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="VerificationofCorrectiveTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="VerificationofCorrectiveValidation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
+  <data name="VerificationofPreventiveActions" xml:space="preserve">
+    <value>Verification of Preventive Actions</value>
+  </data>
+  <data name="VerificationofPreventiveActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="VerificationofPreventiveEffectivePercent" xml:space="preserve">
+    <value>Effective Percent</value>
+  </data>
+  <data name="VerificationofPreventivePreventiveActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="VerificationofPreventivePreventiveLineId" xml:space="preserve">
+    <value>PreventiveLine Id</value>
+  </data>
+  <data name="VerificationofPreventiveRemarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="VerificationofPreventiveSNo" xml:space="preserve">
+    <value>S No</value>
+  </data>
+  <data name="VerificationofPreventiveTargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="VerificationofPreventiveValidation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
+  <data name="ChosenPermanentModel_ActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="ChosenPermanentModel_ActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="ChosenPermanentModel_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ChosenPermanentModel_RelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="ChosenPermanentModel_Remarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="ChosenPermanentModel_TargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="CorrectivePreventiveLinesHeading" xml:space="preserve">
+    <value>Add/Update Corrective Preventive Lines</value>
+  </data>
+  <data name="CorrectivePreventiveModel_ActionName" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="CorrectivePreventiveModel_ActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="CorrectivePreventiveModel_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="CorrectivePreventiveModel_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CorrectivePreventiveModel_RelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="CorrectivePreventiveModel_Remarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="CorrectivePreventiveModel_TargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="ImplementLinesHeading" xml:space="preserve">
+    <value>Add/Update Implement Lines</value>
+  </data>
+  <data name="ImplementModel_ActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="ImplementModel_ChosenActionName" xml:space="preserve">
+    <value>Chosen Action Name</value>
+  </data>
+  <data name="ImplementModel_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ImplementModel_RelatedTo" xml:space="preserve">
+    <value>Related To</value>
+  </data>
+  <data name="ImplementModel_Remarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="ImplementModel_TargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="PreventiveVerificationLines" xml:space="preserve">
+    <value>Add/Update Preventive Verification Lines</value>
+  </data>
+  <data name="PreventiveVerificationModel_ActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="PreventiveVerificationModel_EffectivePercent" xml:space="preserve">
+    <value>Effective Percent</value>
+  </data>
+  <data name="PreventiveVerificationModel_PreventiveActionName" xml:space="preserve">
+    <value>Preventive Action Name</value>
+  </data>
+  <data name="PreventiveVerificationModel_PreventiveLineId" xml:space="preserve">
+    <value>Preventive Line Id</value>
+  </data>
+  <data name="PreventiveVerificationModel_Remarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="PreventiveVerificationModel_TargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="PreventiveVerificationModel_Validation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
+  <data name="VerificationLinesHeading" xml:space="preserve">
+    <value>Add/Update Verification Lines</value>
+  </data>
+  <data name="VerificationModel_ActualDate" xml:space="preserve">
+    <value>Actual Date</value>
+  </data>
+  <data name="VerificationModel_EffectivePercent" xml:space="preserve">
+    <value>Effective Percent</value>
+  </data>
+  <data name="VerificationModel_ImplementedActionName" xml:space="preserve">
+    <value>Implemented Action Name</value>
+  </data>
+  <data name="VerificationModel_ImplementedLineId" xml:space="preserve">
+    <value>ImplementedLine Id</value>
+  </data>
+  <data name="VerificationModel_Remarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="VerificationModel_TargetDate" xml:space="preserve">
+    <value>Target Date</value>
+  </data>
+  <data name="VerificationModel_Validation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
+</root>

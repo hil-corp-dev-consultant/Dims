@@ -1,0 +1,8 @@
+2022-02-15 14:48:43 Message: Error : MakeApproval : The operation has timed out
+ApprovalData : {"CM_Id":"47916","ModifiedBy":"50000985","FormName":"Compensation","Decision":"Approved","Approvals_Remarks":""}
+2022-02-15 15:33:29 Message: Error : MakeApproval : Input array is longer than the number of columns in this table.
+ApprovalData : {"CM_Id":"47916","ModifiedBy":"50000985","FormName":"Compensation","Decision":"Approved","Approvals_Remarks":""}
+2022-02-15 15:39:21 Message: Error : MakeApproval : Input array is longer than the number of columns in this table.
+ApprovalData : {"CM_Id":"47916","ModifiedBy":"50000985","FormName":"Compensation","Decision":"Approved","Approvals_Remarks":""}
+2022-02-15 15:50:06 Message: Error : MakeApproval : A column named 'Dummying' already belongs to this DataTable.
+ApprovalData : {"CM_Id":"47916","ModifiedBy":"50000985","FormName":"Compensation","Decision":"Approved","Approvals_Remarks":""}

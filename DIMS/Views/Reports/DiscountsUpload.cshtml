@@ -1,0 +1,153 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP_SALES = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE_SALES = UP_SALES.SITEDETAIL_CODE;
+    string SessionUserCode = UP_SALES.UserCode;
+    string SessionUserName_SALES = UP_SALES.UserName;
+    string SessionCOMPANYDETAIL_CODE_SALES = UP_SALES.COMPANYDETAIL_CODE;
+    string SessionUserType_SALES = UP_SALES.UserTypeCode;
+    string SessionUserTypeID_SALES = UP_SALES.UserType;
+    string SessionStateCode_SALES = UP_SALES.UserStateCode;
+    string SessionZoneCode_SALES = UP_SALES.UserZoneCode;
+    string SessionZoneName_SALES = UP_SALES.UserZoneName;
+    string SessionStateName_SALES = UP_SALES.UserStateName;
+}
+
+<style>
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+
+    .filestyle {
+        border: 1px solid;
+        border-radius: 6px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Dicounts Upload</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Reports</li>
+        <li class="active">Dicounts Upload</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @* <a href ng-click="go('AddMarketMap')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+                <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                <form id="FileUploadForm" method="post" enctype="multipart/form-data">
+                    <br />
+
+                    <div class="form-group" style="padding-top:10px;padding-left:10px">
+                        <input type="file" id="DiscountsUpload" name="DiscountsUpload" class="filestyle" onchange="FileUploaded()" />
+
+                        <input type="submit" class="btn btn-info navbar-btn" value="Upload" />
+                    </div>
+                    <br />
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+
+    });
+
+    function FileUploaded() {
+        var filename = $("#DiscountsUpload").val();
+        var extension = filename.replace(/^.*\./, '');
+
+        if (extension == "xlsx" || extension == "xls") {
+
+        }
+        else {
+            alert("Invalid File");
+            $("#DiscountsUpload").val("");
+        }
+    }
+
+    $("form#FileUploadForm").submit(function () {
+        ShowLoader();
+        var value = $("#DiscountsUpload").val();
+        if (value == "No file selected." || value == "" || value == undefined || value == null) {
+            alert("Please select the file to upload");
+            HideLoader();
+            return false;
+
+        }
+
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            url: '../../SFDC/UploadDiscountsUpload',
+            type: 'POST',
+            data: formData,
+            async: true,
+            success: function (Resp) {
+
+                if (Resp == "FALSE") {
+                    HideLoader();
+                    alert("Upload Fail due to technical error");
+                    window.location.reload();
+
+                }
+                else if (Resp == "") {
+                    HideLoader();
+                    alert("Upload Fail due to technical error");
+                    window.location.reload();
+                }
+                else if (Resp == "TRUE") {
+                    HideLoader();
+                    $("#DiscountsUpload").val("");
+                    alert("Uploaded Successfully");
+                }
+                else {
+
+                    HideLoader();
+                    $("#DiscountsUpload").val("");
+                    alert(Resp + " Records Uploaded Successfully");
+
+
+                }
+
+                //LoadCFormFromDB();
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+        //HideLoader();
+
+        return false;
+
+    });
+</script>

@@ -1,0 +1,79 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+<section class="content-header" style="padding: 1px 15px 0;" id="CMS_Comp_List_Menu">
+    <h2>Compensation</h2>
+    <ol class="breadcrumb">
+        <li><a href="#" ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">Compensation</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('Compensation')" id="Create_New_Comp" style="float: left;">
+                    <i class="fa fa-file-o fa-4" title="Create New Compensation"></i>
+                </a>
+                @*<a href>
+                    <i class="fa fa-print fa-4" title="Print"></i>
+                </a>
+                <a href>
+                    <i class="fa fa-file-excel-o fa-4" title="Excel"></i>
+                </a>
+                <a href>
+                    <i class="fa fa-file-pdf-o fa-4" title="Pdf"></i>
+                </a>
+                <a href ng-click="go('CompensationList')">
+                    <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                </a>*@
+                <select id="StateFilter" ng-model="StateFilter" ng-change="StateChange()" style="float: left;"></select>
+                <input type="hidden" id="CompensationId" data-ng-model="CompensationId" />
+                <input type="text" id="SITEDETAIL_CODE_CompensationList" style="display: none;" value="@SessionSITEDETAIL_CODE" />
+                <input type="text" id="COMPANYDETAIL_CODE_CompensationList" style="display: none;" value="@SessionCOMPANYDETAIL_CODE" />
+                <input type="text" id="USERNAME_CompensationList" style="display: none;" value="@SessionUserName" />
+                <input type="text" id="USERCODE_CompensationList" style="display: none;" value="@SessionUserCode" />
+                <input type="text" id="USERTYPE_Compensation" style="display: none;" value="@SessionUserType" />
+            </div>
+        </div>
+    </nav>
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;" id="CMS_List_Details">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-body" style="overflow-x: scroll; width: 98%" id="CompensationlistDiv">
+                        <table id="CompensationList" class="table ListTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <input type="button" value="Advanced" id="AdvancedColumnEditing" style="background-color: #d2401a; display: none;" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        //CompensationListTable = $("#CompensationList").DataTable({ "scrollX": true, "order": [[1, "desc"]] });
+    });
+</script>

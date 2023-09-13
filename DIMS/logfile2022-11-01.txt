@@ -1,0 +1,81 @@
+2022-11-01 13:31:45 Error: Error : GetPDF : System.FormatException: An invalid character was found in the mail header: ';'.
+   at System.Net.Mail.MailAddressParser.ParseLocalPart(String data, Int32& index, Boolean expectAngleBracket, Boolean expectMultipleAddresses)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at System.Net.Mail.Message..ctor(String from, String to)
+   at System.Net.Mail.MailMessage..ctor(String from, String to)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1944
+2022-11-01 13:33:51 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1893
+2022-11-01 13:36:27 Error: Error : GetPDF : System.FormatException: An invalid character was found in the mail header: ';'.
+   at System.Net.Mail.MailAddressParser.ParseLocalPart(String data, Int32& index, Boolean expectAngleBracket, Boolean expectMultipleAddresses)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at System.Net.Mail.Message..ctor(String from, String to)
+   at System.Net.Mail.MailMessage..ctor(String from, String to)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1944
+2022-11-01 14:42:51 Error: Error : GetPDF : System.FormatException: An invalid character was found in the mail header: ';'.
+   at System.Net.Mail.MailAddressParser.ParseLocalPart(String data, Int32& index, Boolean expectAngleBracket, Boolean expectMultipleAddresses)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at System.Net.Mail.Message..ctor(String from, String to)
+   at System.Net.Mail.MailMessage..ctor(String from, String to)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1944
+2022-11-01 14:47:33 Error: Error : GetPDF : System.Net.Mail.SmtpException: Failure sending mail. ---> System.IO.IOException: Authentication failed because the remote party has closed the transport stream.
+   at System.Net.Security.SslState.StartReadFrame(Byte[] buffer, Int32 readBytes, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.StartReceiveBlob(Byte[] buffer, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.CheckCompletionBeforeNextReceive(ProtocolToken message, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.StartSendBlob(Byte[] incoming, Int32 count, AsyncProtocolRequest asyncRequest, Boolean renegotiation)
+   at System.Net.Security.SslState.ForceAuthentication(Boolean receiveFirst, Byte[] buffer, AsyncProtocolRequest asyncRequest, Boolean renegotiation)
+   at System.Net.Security.SslState.ProcessAuthentication(LazyAsyncResult lazyResult)
+   at System.Net.TlsStream.CallProcessAuthentication(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Net.TlsStream.ProcessAuthentication(LazyAsyncResult result)
+   at System.Net.TlsStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at System.Net.PooledStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at System.Net.Mail.SmtpConnection.Flush()
+   at System.Net.Mail.ReadLinesCommand.Send(SmtpConnection conn)
+   at System.Net.Mail.EHelloCommand.Send(SmtpConnection conn, String domain)
+   at System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   at System.Net.Mail.SmtpTransport.GetConnection(ServicePoint servicePoint)
+   at System.Net.Mail.SmtpClient.GetConnection()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- End of inner exception stack trace ---
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1985
+2022-11-01 14:56:03 Error: Error : GetPDF : System.Net.Mail.SmtpException: Failure sending mail. ---> System.IO.IOException: Authentication failed because the remote party has closed the transport stream.
+   at System.Net.Security.SslState.StartReadFrame(Byte[] buffer, Int32 readBytes, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.StartReceiveBlob(Byte[] buffer, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.CheckCompletionBeforeNextReceive(ProtocolToken message, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.StartSendBlob(Byte[] incoming, Int32 count, AsyncProtocolRequest asyncRequest, Boolean renegotiation)
+   at System.Net.Security.SslState.ForceAuthentication(Boolean receiveFirst, Byte[] buffer, AsyncProtocolRequest asyncRequest, Boolean renegotiation)
+   at System.Net.Security.SslState.ProcessAuthentication(LazyAsyncResult lazyResult)
+   at System.Net.TlsStream.CallProcessAuthentication(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Net.TlsStream.ProcessAuthentication(LazyAsyncResult result)
+   at System.Net.TlsStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at System.Net.PooledStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at System.Net.Mail.SmtpConnection.Flush()
+   at System.Net.Mail.ReadLinesCommand.Send(SmtpConnection conn)
+   at System.Net.Mail.EHelloCommand.Send(SmtpConnection conn, String domain)
+   at System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   at System.Net.Mail.SmtpTransport.GetConnection(ServicePoint servicePoint)
+   at System.Net.Mail.SmtpClient.GetConnection()
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- End of inner exception stack trace ---
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1986
+2022-11-01 16:12:36 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1893
+2022-11-01 18:18:42 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1893

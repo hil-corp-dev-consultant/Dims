@@ -1,0 +1,177 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+<style type="text/css">
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+
+
+<input type="text" id="USERNAME_Discounts" style="display: none;" value="@SessionUserName" />
+<input type="text" id="USERCODE_Discounts" style="display: none;" value="@SessionUserCode" />
+<input type="text" id="USERTYPE_Discounts" style="display: none;" value="@SessionUserType" />
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Discount Summary Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Discounts/Provisions</li>
+        <li class="active">Discount Summary</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                 <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body" style="overflow-x: scroll; width: 98%">
+                <form role="form" class="form-horizontal" name="UnnatiTransactionDetailForm">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">From Date<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="DiscountSummaryFromDate" placeholder="Select Date" />
+                        </div>
+                        <label class="col-sm-3 control-label">To Date<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="DiscountSummaryToDate" placeholder="Select Date" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Type of Discount</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="TypeofDiscount">
+                                <option value="ALL">ALL</option>
+                                <option value="AdditionalDiscount">Additional Discount</option>
+                                <option value="TargetDiscount">Target Discount</option>
+                                <option value="AgreedrateDiscount">Agreed rate Discount</option>
+                                <option value="Others">Other Discounts</option>
+                                <option value="DiscountWithCommission">Project Discount With Commission</option>
+                                <option value="DirectBilling">Project Discount Direct Billing</option>
+                                <option value="NetBilling">Net Billing</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-2 text-center">
+                            <input type="button" class="btn btn-success" style="background-color: #d2401a;border:1px solid #d2401a;" value="Submit" name="Submit" ng-click="GetDiscountSummary()">
+                            @*<input type="button" class="btn btn-primary" value="Request Email" name="RequestEmail" ng-click="TransactionDetailRequestEmail()">*@
+                        </div>
+
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div id="Discounts_Div" >
+                    <table id="tbl_DiscountSummary" class="table ListTable" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">Report Name</th>
+                                <th style="text-align: center">Total Requests
+                                <br />
+                                    Approved</th>
+                                <th style="text-align: center">No of Requests
+                                    <br />
+                                    in Process</th>
+                                <th style="text-align: center">No of Requests
+                                    <br />
+                                     Rejected</th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        GetServerDateTime();
+        $("#tbl_DiscountSummary").DataTable();
+    
+    });
+
+    var OnchangeCount = 0;
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+
+                if (result == "") {
+                }
+                else {
+                    $("#DiscountSummaryFromDate").datepicker('setEndDate', result);
+
+                    $("#DiscountSummaryToDate").datepicker('setEndDate', result);
+                }
+
+            }
+
+        });
+    }
+
+    $("#DiscountSummaryFromDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+    });
+    $("#DiscountSummaryToDate").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+    });
+
+    $('#DiscountSummaryFromDate').bind('keypress', function (e) {
+        return false;
+    });
+
+    $('#DiscountSummaryToDate').bind('keypress', function (e) {
+        return false;
+    });
+
+    $("#DiscountSummaryFromDate").datepicker().on("changeDate", function (e) {
+        $("#DiscountSummaryToDate").datepicker('setStartDate', $("#IssueFromDate").val());
+        //$("#OrderToDate").data("datepicker").setStartDate((moment(e.date).add(0, 'days')));
+        $("#DiscountSummaryToDate").val("");
+       OnchangeCount = 0;
+    });
+    $("#DiscountSummaryToDate").datepicker().on("changeDate", function (e) {
+        OnchangeCount = 0;
+
+    });
+    
+
+</script>
+

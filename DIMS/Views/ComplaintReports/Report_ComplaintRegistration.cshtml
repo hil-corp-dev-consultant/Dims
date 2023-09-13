@@ -1,0 +1,889 @@
+﻿@{
+    Layout = null;
+    string CTN = Request.QueryString["CTN"].ToString();
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string SessionUserType = UP.UserTypeCode;
+
+  
+    
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>DIMS CMS Registration Report</title>
+    <script src="~/Scripts/DataTableScripts/jsPDF-1.2.60/jspdf.js"></script>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="generator" content="Geany 1.22" />
+</head>
+<body style="font-family: Calibri; font-size: 12px;">
+
+    <div style="width: 100%; height: 100%; font-family: Calibri; font-size: 12px;" id="Report_ComplaintRegistration">
+
+        <input type="text" style="display:none;" id="SessionUserCode" value="@SessionUserCode" />
+        <input type="text" style="display:none;" id="SessionUserType" value="@SessionUserType" />
+
+        <div style="width: 100%; height: 100%; font-family: Calibri; font-size: 12px;" id="Report_ComplaintRegistration_12">
+
+            <table style="width: 98%; border-collapse: collapse;" align="center">
+                <tr>
+                    <td>
+                        <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+                            <label style="font-size: 18px; color: #0165C4">
+                                <b>HIL Limited</b>
+                            </label><br />
+                            <label style="font-size: 18px; color: #0026ff" id="SBU1HeaderLabel">
+                                <b>ACKNOWLEDGEMENT FORM</b>
+                            </label><br />
+                            <label style="font-size: 18px; color: #0026ff" id="SBU23HeaderLabel">
+                                <b>CUSTOMER COMPLAINT REPORT-Hysil/Block/Panel</b>
+                            </label><br />
+                        </div>
+                        <div>
+                            <div style="text-align: left; vertical-align: top; width: 48%; margin-right: 2px; float: left;">
+                                <label style="display: none">Complaint Tracking No:</label><label id="ComplaintTrackingNo" style="display: none"></label>
+                            </div>
+                            <div style="text-align: right; vertical-align: top; width: 48%; margin-right: 30px; float: right;">
+                                Dated:<label id="ToDayDate"></label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <input type="text" id="CTN" value="@CTN" style="display:none;" />
+
+            <div style="width: 98%" id="SBU1Header">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="border: 1px solid Black !important;">Complaint Code:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU1ComplaintCode"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">Complaint Tracking No:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU1ComplaintNo"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid Black !important;">Registered By</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU1RegisteredBy"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">Complaint Registered Date</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU1ComplaintDate"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div style="width: 98%" id="SBU23Header">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="border: 1px solid Black !important;">Complaint Code:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23ComplaintCode"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">Complaint Tracking No:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23ComplaintNo"></label>
+                        </td>
+                        @*<td style="border: 1px solid Black !important;">Received Date</td>*@
+                        <td style="border: 1px solid Black !important;">Registered Date</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23ReceivedDate"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%" id="SBU1CustomerToFillBelowInformation">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr style="background-color: #00FFFF">
+                        <th colspan="3" style="border: 1px solid Black !important; text-align: left;">Customer Details</th>
+                    </tr>
+                    <tr>
+                        @*<td style="border: 1px solid Black !important;">S.No</td>*@
+                        <td style="border: 1px solid Black !important;"></td>
+                        <td style="border: 1px solid Black !important;">
+                            @*<label id="CFBI_Complaint_Description"></label>*@
+                        </td>
+                    </tr>
+                    <tr>
+                        @*<td style="border: 1px solid Black !important;">1</td>*@
+                        <td style="border: 1px solid Black !important;">Name of the Customer</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="CFBI_CustomerName"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        @*<td style="border: 1px solid Black !important;">2</td>*@
+                        <td style="border: 1px solid Black !important;">Address of the Customer</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="CFBI_Customer_Address"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        @*<td style="border: 1px solid Black !important;">3</td>*@
+                        <td style="border: 1px solid Black !important;">Phone/Mobile No(s) of Customer</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="CFBI_Customer_Phone_Mobile"></label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th style="border: 1px solid Black !important; text-align: left;">Complaint Description</th>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="CFBI_Complaint_Description"></label>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <table>
+                </table>
+
+
+            </div>
+
+
+            <div style="width: 98%" id="SBU23CustomerAddressTable">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr style="background-color: #00FFFF">
+                        <th style="border: 1px solid Black !important; text-align: left;">Name/Address of Customer</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Site Address</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23CustomerName"></label>
+                            <br />
+                            <label id="SBU23CustomerAddress"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23SiteAddress"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%" id="ReceiptDetails">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable" id="ReceiptDetailsTable">
+                    <thead>
+                        <tr style="background-color: #00FFFF;">
+                            <th colspan="9" style="border: 1px solid Black !important; text-align: left;">Receipt Details</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2" style="border: 1px solid Black !important; text-align: left;">S.No</th>
+                            <th rowspan="2" style="border: 1px solid Black !important; text-align: left;">Item</th>
+                            <th rowspan="2" style="border: 1px solid Black !important; text-align: left;">Size</th>
+                            <th rowspan="2" style="border: 1px solid Black !important; text-align: left;">Invoice No</th>
+                            <th rowspan="2" style="border: 1px solid Black !important; text-align: left;">Invoice Date</th>
+                            <th rowspan="2" style="border: 1px solid Black !important; text-align: left;">Batch No</th>
+                            <th colspan="2" style="border: 1px solid Black !important; text-align: left;">Quantity (No's)</th>
+                            <th rowspan="2" style="border: 1px solid Black !important; text-align: left;">Type of Defect</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid Black !important; text-align: left;">Received</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Defective</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+
+            <div style="width: 98%" id="SupplyDetails">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable" id="SupplyDetailsTable">
+                    <thead>
+                        <tr style="background-color: #00FFFF">
+                            <th colspan="7" style="border: 1px solid Black !important; text-align: left;">Supply Details</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid Black !important; text-align: left;">Invoice No</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Date</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Batch No</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Product Details</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Qty Supplied</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Transporter</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Defect</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <br />
+
+
+            <div style="width: 98%" id="SBU1Footer">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="width: 50%; border: 1px solid Black !important;">Remarks:<label id="AddRemarks"></label></td>
+                        <td style="width: 50%; border: 1px solid Black !important;">
+                            Sales Representative:<label id="SalesRepresentative"></label>
+                            <br />
+                            Dated:<label id="Dated"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div style="width: 98%" id="SBU23Footer">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Complaint Description:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23ComplaintDescription"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Nature Of Complaint :</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23NatureOfComplaint"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Observation By HIL Official:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23ObservationByHILOfficial"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div style="width: 98%" id="SBU23Footer2">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Registered By:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23RegisteredBy"></label>
+                        </td>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Sales Representative Name:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU23SalesRepresentativeName"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div style="width: 100%; height: 100%; font-family: Calibri; font-size: 12px;" id="Report_ComplaintRegistration_3">
+
+            <table style="width: 98%; border-collapse: collapse;" align="center">
+                <tr>
+                    <td>
+                        <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+                            <label style="font-size: 18px; color: #0165C4">
+                                <b>HIL Limited</b>
+                            </label><br />
+                            <label style="font-size: 18px; color: #0026ff">
+                                <b>CUSTOMER COMPLAINT REGISTRATION REPORT-PIPES & FITTINGS</b>
+                            </label><br />
+                        </div>
+                        <div>
+                            <div style="text-align: left; vertical-align: top; width: 48%; margin-right: 2px; float: left;">
+                                <label style="display: none">Complaint Tracking No:</label><label style="display: none"></label>
+                            </div>
+                            <div style="text-align: right; vertical-align: top; width: 48%; margin-right: 30px; float: right;">
+                                Dated:<label id="ToDayDate2"></label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="border: 1px solid Black !important;">Complaint Code:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU3ComplaintCode"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">Complaint Tracking No:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU3ComplaintNo"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">Registered Date</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU3ReceivedDate"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr style="background-color: #00FFFF">
+                        <th style="border: 1px solid Black !important; text-align: left;">Name/Address of Customer</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Site Address</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU3CustomerName"></label>
+                            <br />
+                            <label id="SBU3CustomerAddress"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU3SiteAddress"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable" id="SupplyDetails3Table">
+                    <thead>
+                        <tr style="background-color: #00FFFF">
+                            <th colspan="9" style="border: 1px solid Black !important; text-align: left;">Supply Details</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid Black !important; text-align: left;">Product Code</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Product Description</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Invoice No</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Date</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Batch No</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">
+                                Quantity
+                                <br />
+                                Supplied
+                            </th>
+                            <th style="border: 1px solid Black !important; text-align: left;">
+                                Defect
+                                <br />
+                                Quantity
+                            </th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Defect</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Transporter</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Complaint Category :</td>
+                        <td style="border: 1px solid Black !important;" colspan="3">
+                            <label id="ComplaintCategory3"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Nature of the Complaint:<br />Provide Techinical Information</td>
+                        <td style="border: 1px solid Black !important;" colspan="3">
+                            <label id="NatureoftheComplaint3"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Registered By:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU3RegisteredBy"></label>
+                        </td>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Sales Representative Name:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU3SalesRepresentativeName"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        @*VIKAS G, 2023-APRIL-11 SBU-8 START*@
+
+        <div style="width: 100%; height: 100%; font-family: Calibri; font-size: 12px;" id="Report_ComplaintRegistration_8">
+
+            <table style="width: 98%; border-collapse: collapse;" align="center">
+                <tr>
+                    <td>
+                        <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+                            <label style="font-size: 18px; color: #0165C4">
+                                <b>HIL Limited</b>
+                            </label><br />
+                            <label style="font-size: 18px; color: #0026ff">
+                                <b>CUSTOMER COMPLAINT REGISTRATION REPORT-TILES & ADHESIVE</b>
+                            </label><br />
+                        </div>
+                        <div>
+                            <div style="text-align: left; vertical-align: top; width: 48%; margin-right: 2px; float: left;">
+                                <label style="display: none">Complaint Tracking No:</label><label style="display: none"></label>
+                            </div>
+                            <div style="text-align: right; vertical-align: top; width: 48%; margin-right: 30px; float: right;">
+                                Dated:<label id="ToDayDate2"></label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="border: 1px solid Black !important;">Complaint Code:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU8ComplaintCode"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">Complaint Tracking No:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU8ComplaintNo"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">Registered Date</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU8ReceivedDate"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr style="background-color: #00FFFF">
+                        <th style="border: 1px solid Black !important; text-align: left;">Name/Address of Customer</th>
+                        <th style="border: 1px solid Black !important; text-align: left;">Site Address</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU8CustomerName"></label>
+                            <br />
+                            <label id="SBU8CustomerAddress"></label>
+                        </td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU8SiteAddress"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable" id="SupplyDetails8Table">
+                    <thead>
+                        <tr style="background-color: #00FFFF">
+                            <th colspan="9" style="border: 1px solid Black !important; text-align: left;">Supply Details</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid Black !important; text-align: left;">Product Code</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Product Description</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Invoice No</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Date</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Batch No</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">
+                                Quantity
+                                <br />
+                                Supplied
+                            </th>
+                            <th style="border: 1px solid Black !important; text-align: left;">
+                                Defect
+                                <br />
+                                Quantity
+                            </th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Defect</th>
+                            <th style="border: 1px solid Black !important; text-align: left;">Transporter</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <br />
+
+            <div style="width: 98%">
+                <table style="width: 98%; border-collapse: collapse;" class="ChildTable">
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Complaint Category :</td>
+                        <td style="border: 1px solid Black !important;" colspan="3">
+                            <label id="ComplaintCategory8"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Nature of the Complaint:<br />Provide Techinical Information</td>
+                        <td style="border: 1px solid Black !important;" colspan="3">
+                            <label id="NatureoftheComplaint8"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Registered By:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU8RegisteredBy"></label>
+                        </td>
+                        <td style="font-weight: bold; border: 1px solid Black !important;">Sales Representative Name:</td>
+                        <td style="border: 1px solid Black !important;">
+                            <label id="SBU8SalesRepresentativeName"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        @*VIKAS G, 2023-APRIL-11 SBU-8 START*@
+
+    </div>
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        debugger
+        $("#Report_ComplaintRegistration").width($(window).width());
+
+        var CTN = $("#CTN").val();
+
+        if (CTN == "") {
+            $("#Report_ComplaintRegistration").empty();
+            window.close();
+        }
+        else {
+
+            var UserCode = $("#SessionUserCode").val();
+            var UserType = $("#SessionUserType").val();
+
+            var Data = JSON.stringify({
+                CTN: CTN,
+                Report: "ComplaintRegistrationReport",
+                UserCode: UserCode,
+                UserType: UserType
+            });
+
+
+            $.ajax({
+                method: 'POST',
+                url: '../../ComplaintReports/GetReportData',
+                data: { Data: Data },
+            }).then(function successCallback(response) {
+
+                console.log("Response : " + response);
+                debugger
+                if (response == "") {
+                    $("#Report_ComplaintRegistration").empty();
+                    alert("No Data Available");
+                    window.close();
+                }
+                else {
+
+                    $("#ComplaintTrackingNo").text(CTN);
+
+                    var Data = JSON.parse(response);
+                    var Header = Data["Header"];
+
+                    if (Header[0]["PRODUCT_TYPE_CODE"] == "SBU1" || Header[0]["PRODUCT_TYPE_CODE"] == "SBU2") {
+
+                        $("#Report_ComplaintRegistration_3").css("display", "none");
+                        $("#Report_ComplaintRegistration_12").css("display", "block");
+                        $("#Report_ComplaintRegistration_8").css("display", "none");
+
+                        if (Header[0]["PRODUCT_TYPE_CODE"] == "SBU1") {
+                            $("#SBU1HeaderLabel").css('display', 'block');
+                            $("#SBU23HeaderLabel").css('display', 'none');
+                            $("#SBU1Header").css('display', 'block');
+                            $("#SBU23Header").css('display', 'none');
+                            $("#SBU1CustomerToFillBelowInformation").css('display', 'block');
+                            $("#SBU23CustomerAddressTable").css('display', 'none');
+                            $("#ReceiptDetails").css('display', 'block');
+                            $("#SupplyDetails").css('display', 'none');
+                            $("#SBU1Footer").css('display', 'block');
+                            $("#SBU23Footer").css('display', 'none');
+                            $("#SBU23Footer2").css('display', 'none');
+                        }
+                        else if (Header[0]["PRODUCT_TYPE_CODE"] == "SBU2") {
+                            $("#SBU1HeaderLabel").css('display', 'none');
+                            $("#SBU23HeaderLabel").css('display', 'block');
+                            $("#SBU1Header").css('display', 'none');
+                            $("#SBU23Header").css('display', 'block');
+                            $("#SBU1CustomerToFillBelowInformation").css('display', 'none');
+                            $("#SBU23CustomerAddressTable").css('display', 'block');
+                            $("#ReceiptDetails").css('display', 'none');
+                            $("#SupplyDetails").css('display', 'block');
+                            $("#SBU1Footer").css('display', 'none');
+                            $("#SBU23Footer").css('display', 'block');
+                            $("#SBU23Footer2").css('display', 'block');
+                        }
+
+                        var Address = Header[0]["CITY_NAME"] + "," + Header[0]["AREA_NAME"] + "," + Header[0]["STATE_NAME"];
+
+                        $("#SBU1ComplaintCode").text(Header[0]["COMPLAINT_CODE"]);
+                        $("#SBU1ComplaintNo").text(Header[0]["ID"]);
+                        //$("#SBU1RegisteredBy").text(Header[0]["CREATED_BY"] + "," + Header[0]["CREATED_BY_NAME"]);
+                        $("#SBU1RegisteredBy").text(Header[0]["CREATED_BY_NAME"] + "(" + Header[0]["CREATED_BY"] + ")");
+                        $("#SBU1ComplaintDate").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+                        $("#SBU23ComplaintCode").text(Header[0]["COMPLAINT_CODE"]);
+                        $("#SBU23ComplaintNo").text(Header[0]["ID"]);
+                        $("#SBU23ReceivedDate").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+                        //$("#SBU23ReceivedDate").text(Header[0]["COMPLAINT_RECEIVED_DATE"]);
+
+
+                        $("#AddRemarks").text(Header[0]["REMARKS"]);
+
+
+                        $("#CFBI_Complaint_Description").text(Header[0]["COMPLAINT_DESC"]);
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#CFBI_CustomerName").text(Header[0]["CUSTOMER_NAME"]);
+                        }
+                        else {
+                            $("#CFBI_CustomerName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"]);
+                        }
+                        $("#CFBI_Customer_Address").text(Address);
+                        $("#CFBI_Customer_Phone_Mobile").text(Header[0]["PHONE"]);
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#SBU23CustomerName").text(Header[0]["CUSTOMER_NAME"]);
+                        }
+                        else {
+                            $("#SBU23CustomerName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"]);
+                        }
+                        $("#SBU23CustomerAddress").text(Address);
+                        $("#SBU23SiteAddress").text(Header[0]["SITE_ADDRESS"]);
+
+                        $("#SalesRepresentative").text(Header[0]["SALES_REPRESENTATIVE_NAME"]);
+                        $("#Dated").text(Header[0]["TodayDate"]);
+                        $("#Dated").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+
+                        $("#ToDayDate").text(Header[0]["TodayDate"]);
+
+                        $("#SBU23ComplaintDescription").text(Header[0]["COMPLAINT_DESC"]);
+                        $("#SBU23NatureOfComplaint").text(Header[0]["NATURE_OF_COMPLAINT"]);
+                        $("#SBU23ObservationByHILOfficial").text(Header[0]["OBSERVATIONSBY_OFFICIAL"]);
+
+                        $("#SBU23RegisteredBy").text(Header[0]["CREATED_BY"]);
+                        $("#SBU23SalesRepresentativeName").text(Header[0]["SALES_REPRESENTATIVE_NAME"]);
+
+
+                        var RCPT_Lines = Data["RCPTLines"];
+                        var i = 0;
+                        var TRCode = "";
+
+                        for (i = 0; i < RCPT_Lines.length; i++) {
+                            TRCode = TRCode + "<tr>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + (i + 1) + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["PRODUCT_NAME"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["SIZE"] + "</td>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["INVOICE_NO"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["INVOICE_DATE"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["batch_no"] + "</td>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["Received_Qty"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["Defective_Qty"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + RCPT_Lines[i]["DEFECT_TYPE_NAME"] + "</td>";
+
+                            TRCode = TRCode + "</tr>";
+
+                        }
+
+                        $("#ReceiptDetailsTable tbody").append(TRCode);
+
+                        var SupplyLines = Data["SupplyLines"];
+                        TRCode = "";
+                        i = 0;
+
+                        for (i = 0; i < SupplyLines.length; i++) {
+                            TRCode = TRCode + "<tr>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["INVOICE_NO"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["INVOICE_DATE"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["batch_no"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["PRODUCT_NAME"] + "</td>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["QTY_SUPPLIED"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["TRANSPORTER"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["DEFECT_TYPE_NAME"] + "</td>";
+
+                            TRCode = TRCode + "</tr>";
+                        }
+
+                        $("#SupplyDetailsTable tbody").append(TRCode);
+
+                    }
+                    else if (Header[0]["PRODUCT_TYPE_CODE"] == "SBU3") {
+
+                        $("#Report_ComplaintRegistration_3").css("display", "block");
+                        $("#Report_ComplaintRegistration_12").css("display", "none");
+                        $("#Report_ComplaintRegistration_8").css("display", "none");
+
+                        $("#SBU3ComplaintCode").text(Header[0]["COMPLAINT_CODE"]);
+                        $("#SBU3ComplaintNo").text(Header[0]["ID"]);
+                        $("#SBU3ReceivedDate").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+                        $("#ToDayDate2").text(Header[0]["TodayDate"]);
+
+                        var Address = Header[0]["CITY_NAME"] + "," + Header[0]["AREA_NAME"] + "," + Header[0]["STATE_NAME"];
+                        $("#SBU3CustomerAddress").text(Address);
+
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#SBU3CustomerName").text(Header[0]["CUSTOMER_NAME"]);
+                        }
+                        else {
+                            $("#SBU3CustomerName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"]);
+                        }
+
+                        $("#SBU3SiteAddress").text(Header[0]["SITE_ADDRESS"]);
+
+                        $("#NatureoftheComplaint3").text(Header[0]["NATURE_OF_COMPLAINT"]);
+                        $("#SBU3RegisteredBy").text(Header[0]["CREATED_BY_NAME"]);
+                        $("#SBU3SalesRepresentativeName").text(Header[0]["SALES_REPRESENTATIVE_NAME"]);
+
+                        $("#ComplaintCategory3").text(Header[0]["COMPLAINT_CATEGORY_NAME"]);
+
+                        var RCPT_Lines = Data["RCPTLines"];
+                        var i = 0;
+                        var TRCode = "";
+
+
+                        var SupplyLines = Data["SupplyLines"];
+                        TRCode = "";
+
+                        for (var i = 0; i < SupplyLines.length; i++) {
+                            TRCode = TRCode + "<tr>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["PRODUCT_CODE"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["PRODUCT_NAME"] + "</td>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["INVOICE_NO"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["INVOICE_DATE"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["batch_no"] + "</td>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["QTY_SUPPLIED"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["BreakageQtyNos"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["DEFECT_TYPE_NAME"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["TRANSPORTER"] + "</td>";
+
+                            TRCode = TRCode + "</tr>";
+                        }
+
+                        $("#SupplyDetails3Table tbody").append(TRCode);
+
+                    }
+
+                    //VIKAS G, 2023-APRIL-11 SBU-8 START.
+                    else if (Header[0]["PRODUCT_TYPE_CODE"] == "SBU8") {
+
+                        $("#Report_ComplaintRegistration_8").css("display", "block");
+                        $("#Report_ComplaintRegistration_12").css("display", "none");
+                        $("#Report_ComplaintRegistration_3").css("display", "none");
+
+                        $("#SBU8ComplaintCode").text(Header[0]["COMPLAINT_CODE"]);
+                        $("#SBU8ComplaintNo").text(Header[0]["ID"]);
+                        $("#SBU8ReceivedDate").text(Header[0]["COMPLAINT_REGISTERED_DATE"]);
+                        $("#ToDayDate2").text(Header[0]["TodayDate"]);
+
+                        var Address = Header[0]["CITY_NAME"] + "," + Header[0]["AREA_NAME"] + "," + Header[0]["STATE_NAME"];
+                        $("#SBU8CustomerAddress").text(Address);
+
+                        if (Header[0]["END_CUSTOMER_DETAILS"] == "" || Header[0]["END_CUSTOMER_DETAILS"] == null || Header[0]["END_CUSTOMER_DETAILS"] == undefined) {
+                            $("#SBU8CustomerName").text(Header[0]["CUSTOMER_NAME"]);
+                        }
+                        else {
+                            $("#SBU8CustomerName").text(Header[0]["END_CUSTOMER_DETAILS"] + ", A/C " + Header[0]["CUSTOMER_NAME"]);
+                        }
+
+                        $("#SBU8SiteAddress").text(Header[0]["SITE_ADDRESS"]);
+
+                        $("#NatureoftheComplaint8").text(Header[0]["NATURE_OF_COMPLAINT"]);
+                        $("#SBU8RegisteredBy").text(Header[0]["CREATED_BY_NAME"]);
+                        $("#SBU8SalesRepresentativeName").text(Header[0]["SALES_REPRESENTATIVE_NAME"]);
+
+                        $("#ComplaintCategory8").text(Header[0]["COMPLAINT_CATEGORY_NAME"]);
+
+                        var RCPT_Lines = Data["RCPTLines"];
+                        var i = 0;
+                        var TRCode = "";
+
+
+                        var SupplyLines = Data["SupplyLines"];
+                        TRCode = "";
+
+                        for (var i = 0; i < SupplyLines.length; i++) {
+                            TRCode = TRCode + "<tr>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["PRODUCT_CODE"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["PRODUCT_NAME"] + "</td>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["INVOICE_NO"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["INVOICE_DATE"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["batch_no"] + "</td>";
+
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["QTY_SUPPLIED"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["BreakageQtyNos"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["DEFECT_TYPE_NAME"] + "</td>";
+                            TRCode = TRCode + "<td style='border: 1px solid Black !important;'>" + SupplyLines[i]["TRANSPORTER"] + "</td>";
+
+                            TRCode = TRCode + "</tr>";
+                        }
+
+                        $("#SupplyDetails8Table tbody").append(TRCode);
+
+                    }
+                        //VIKAS G, 2023-APRIL-11 SBU-8 END.
+
+                    $.ajax({
+                        url: '/Home/Exportdata',
+                        type: 'POST',
+                        beforeSend: function () {
+                            //ShowLoader();
+                        },
+                        data: { QueryVal: $('#Report_ComplaintRegistration').html() },
+                        success: function (result) {
+                            if (result == "ok") {
+                                window.location.href = "../../Home/GetPDF?reportname=ComplaintRegistration_" + $("#CTN").val() + "";
+                                window.onfocus = function () {
+                                    window.close();
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+
+                }
+            },
+            function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+        }
+    });
+
+
+</script>

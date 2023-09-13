@@ -1,0 +1,51 @@
+2023-02-27 09:59:49 Error: Error : GetPDF :
+2023-02-27 10:18:13 Error: Error : GetPDF :
+2023-02-27 10:31:19 Error: Error :Microsoft.Exchange.WebServices.Data.ExchangeService
+2023-02-27 10:31:19 Error: Error1 :
+2023-02-27 10:31:40 Error: BODY :AccountSummary_1101115
+2023-02-27 10:31:50 Error: BODY :Dear KUNDU BROTHERS, GOURHATI,<br/><br/>Your AccountSummary_1101115 comes in an easy to view PDF (printable download format) and is<br/> attached with this mail.<br/><br/><b>Instructions for opening your e-statement:</b><br/>To open this secure encrypted file, all you need is Adobe Acrobat PDF format version 7.<br/> You can download the free version of Adobe Acrobat Reader by clicking on this link <a href='http://www.adobe.com/products/acrobat/readstep2.html' target='_blank'>Please Click here to get adobe</a><br/><br/><b>Please note:</b> You will not be able to 'Reply' to this email.<br/><br/>For any further queries please write to us at  http://dims.support@hil.in or get in touch with HIL Sales representative of your area.<br/><br/><br/><br/>Thank You.<br/><br/>Regards,<br/>Team HIL Ltd.
+2023-02-27 10:31:55 Error: BODY :Microsoft.Exchange.WebServices.Data.EmailAddressCollection
+2023-02-27 10:31:59 Error: Error : GetPDF :
+2023-02-27 10:41:35 Error: Error :Microsoft.Exchange.WebServices.Data.ExchangeService
+2023-02-27 10:41:35 Error: Error1 :
+2023-02-27 10:41:38 Error: BODY :AccountSummary_1101115
+2023-02-27 10:41:38 Error: BODY :Dear KUNDU BROTHERS, GOURHATI,<br/><br/>Your AccountSummary_1101115 comes in an easy to view PDF (printable download format) and is<br/> attached with this mail.<br/><br/><b>Instructions for opening your e-statement:</b><br/>To open this secure encrypted file, all you need is Adobe Acrobat PDF format version 7.<br/> You can download the free version of Adobe Acrobat Reader by clicking on this link <a href='http://www.adobe.com/products/acrobat/readstep2.html' target='_blank'>Please Click here to get adobe</a><br/><br/><b>Please note:</b> You will not be able to 'Reply' to this email.<br/><br/>For any further queries please write to us at  http://dims.support@hil.in or get in touch with HIL Sales representative of your area.<br/><br/><br/><br/>Thank You.<br/><br/>Regards,<br/>Team HIL Ltd.
+2023-02-27 10:41:38 Error: BODY :Microsoft.Exchange.WebServices.Data.EmailAddressCollection
+2023-02-27 10:41:38 Error: Error : GetPDF :
+2023-02-27 10:46:45 Error: Error :Microsoft.Exchange.WebServices.Data.ExchangeService
+2023-02-27 10:46:45 Error: Error1 :
+2023-02-27 10:46:47 Error: BODY :AccountSummary_1101115
+2023-02-27 10:46:47 Error: BODY :Dear KUNDU BROTHERS, GOURHATI,<br/><br/>Your AccountSummary_1101115 comes in an easy to view PDF (printable download format) and is<br/> attached with this mail.<br/><br/><b>Instructions for opening your e-statement:</b><br/>To open this secure encrypted file, all you need is Adobe Acrobat PDF format version 7.<br/> You can download the free version of Adobe Acrobat Reader by clicking on this link <a href='http://www.adobe.com/products/acrobat/readstep2.html' target='_blank'>Please Click here to get adobe</a><br/><br/><b>Please note:</b> You will not be able to 'Reply' to this email.<br/><br/>For any further queries please write to us at  http://dims.support@hil.in or get in touch with HIL Sales representative of your area.<br/><br/><br/><br/>Thank You.<br/><br/>Regards,<br/>Team HIL Ltd.
+2023-02-27 10:46:47 Error: BODY :Microsoft.Exchange.WebServices.Data.EmailAddressCollection
+2023-02-27 10:46:48 Error: Error : GetPDF :
+2023-02-27 10:53:00 Error: Error :Microsoft.Exchange.WebServices.Data.ExchangeService
+2023-02-27 10:53:00 Error: Error1 :
+2023-02-27 10:53:02 Error: BODY :AccountSummary_1101115
+2023-02-27 10:53:02 Error: BODY :Dear KUNDU BROTHERS, GOURHATI,<br/><br/>Your AccountSummary_1101115 comes in an easy to view PDF (printable download format) and is<br/> attached with this mail.<br/><br/><b>Instructions for opening your e-statement:</b><br/>To open this secure encrypted file, all you need is Adobe Acrobat PDF format version 7.<br/> You can download the free version of Adobe Acrobat Reader by clicking on this link <a href='http://www.adobe.com/products/acrobat/readstep2.html' target='_blank'>Please Click here to get adobe</a><br/><br/><b>Please note:</b> You will not be able to 'Reply' to this email.<br/><br/>For any further queries please write to us at  http://dims.support@hil.in or get in touch with HIL Sales representative of your area.<br/><br/><br/><br/>Thank You.<br/><br/>Regards,<br/>Team HIL Ltd.
+2023-02-27 10:53:02 Error: BODY :Microsoft.Exchange.WebServices.Data.EmailAddressCollection
+2023-02-27 10:53:03 Error: Error : GetPDF :
+2023-02-27 11:36:21 Error: Error :Microsoft.Exchange.WebServices.Data.ExchangeService
+2023-02-27 11:36:21 Error: Error1 :
+2023-02-27 11:36:25 Error: BODY :AccountSummary_1101115
+2023-02-27 11:36:25 Error: BODY :Dear KUNDU BROTHERS, GOURHATI,<br/><br/>Your AccountSummary_1101115 comes in an easy to view PDF (printable download format) and is<br/> attached with this mail.<br/><br/><b>Instructions for opening your e-statement:</b><br/>To open this secure encrypted file, all you need is Adobe Acrobat PDF format version 7.<br/> You can download the free version of Adobe Acrobat Reader by clicking on this link <a href='http://www.adobe.com/products/acrobat/readstep2.html' target='_blank'>Please Click here to get adobe</a><br/><br/><b>Please note:</b> You will not be able to 'Reply' to this email.<br/><br/>For any further queries please write to us at  http://dims.support@hil.in or get in touch with HIL Sales representative of your area.<br/><br/><br/><br/>Thank You.<br/><br/>Regards,<br/>Team HIL Ltd.
+2023-02-27 11:36:25 Error: BODY :Microsoft.Exchange.WebServices.Data.EmailAddressCollection
+2023-02-27 11:36:26 Error: Error : GetPDF :
+2023-02-27 11:45:56 Error: Error :Microsoft.Exchange.WebServices.Data.ExchangeService
+2023-02-27 11:45:56 Error: Error1 :
+2023-02-27 11:45:57 Error: BODY :AccountSummary_1101115
+2023-02-27 11:45:57 Error: BODY :Dear KUNDU BROTHERS, GOURHATI,<br/><br/>Your AccountSummary_1101115 comes in an easy to view PDF (printable download format) and is<br/> attached with this mail.<br/><br/><b>Instructions for opening your e-statement:</b><br/>To open this secure encrypted file, all you need is Adobe Acrobat PDF format version 7.<br/> You can download the free version of Adobe Acrobat Reader by clicking on this link <a href='http://www.adobe.com/products/acrobat/readstep2.html' target='_blank'>Please Click here to get adobe</a><br/><br/><b>Please note:</b> You will not be able to 'Reply' to this email.<br/><br/>For any further queries please write to us at  http://dims.support@hil.in or get in touch with HIL Sales representative of your area.<br/><br/><br/><br/>Thank You.<br/><br/>Regards,<br/>Team HIL Ltd.
+2023-02-27 11:45:57 Error: BODY :Microsoft.Exchange.WebServices.Data.EmailAddressCollection
+2023-02-27 11:45:58 Error: Error : GetPDF :
+2023-02-27 11:55:36 Error: Error :Microsoft.Exchange.WebServices.Data.ExchangeService
+2023-02-27 11:55:36 Error: Error1 :
+2023-02-27 11:55:46 Error: BODY :AccountSummary_1101115
+2023-02-27 11:55:46 Error: BODY :Dear KUNDU BROTHERS, GOURHATI,<br/><br/>Your AccountSummary_1101115 comes in an easy to view PDF (printable download format) and is<br/> attached with this mail.<br/><br/><b>Instructions for opening your e-statement:</b><br/>To open this secure encrypted file, all you need is Adobe Acrobat PDF format version 7.<br/> You can download the free version of Adobe Acrobat Reader by clicking on this link <a href='http://www.adobe.com/products/acrobat/readstep2.html' target='_blank'>Please Click here to get adobe</a><br/><br/><b>Please note:</b> You will not be able to 'Reply' to this email.<br/><br/>For any further queries please write to us at  http://dims.support@hil.in or get in touch with HIL Sales representative of your area.<br/><br/><br/><br/>Thank You.<br/><br/>Regards,<br/>Team HIL Ltd.
+2023-02-27 11:55:46 Error: BODY :Microsoft.Exchange.WebServices.Data.EmailAddressCollection
+2023-02-27 11:55:46 Error: Error : GetPDF : Microsoft.Exchange.WebServices.Data.ServiceResponseException: At least one recipient isn't valid., Recipient "mcshekhar2280@gmail.com,chandrashekhar.m@hil.in" isn't resolved. All recipients must be resolved before a message can be submitted.
+   at Microsoft.Exchange.WebServices.Data.ServiceResponse.InternalThrowIfNecessary() in \\REDMOND\EXCHANGE\BUILD\E15\15.00.0913.015\SOURCES\sources\dev\EwsManagedApi\src\EwsManagedApi\Core\Responses\ServiceResponse.cs:line 277
+   at Microsoft.Exchange.WebServices.Data.MultiResponseServiceRequest`1.Execute() in \\REDMOND\EXCHANGE\BUILD\E15\15.00.0913.015\SOURCES\sources\dev\EwsManagedApi\src\EwsManagedApi\Core\Requests\MultiResponseServiceRequest.cs:line 166
+   at Microsoft.Exchange.WebServices.Data.ExchangeService.InternalCreateItems(IEnumerable`1 items, FolderId parentFolderId, Nullable`1 messageDisposition, Nullable`1 sendInvitationsMode, ServiceErrorHandling errorHandling) in \\REDMOND\EXCHANGE\BUILD\E15\15.00.0913.015\SOURCES\sources\dev\EwsManagedApi\src\EwsManagedApi\Core\ExchangeService.cs:line 401
+   at Microsoft.Exchange.WebServices.Data.Item.InternalCreate(FolderId parentFolderId, Nullable`1 messageDisposition, Nullable`1 sendInvitationsMode) in \\REDMOND\EXCHANGE\BUILD\E15\15.00.0913.015\SOURCES\sources\dev\EwsManagedApi\src\EwsManagedApi\Core\ServiceObjects\Items\Item.cs:line 198
+   at Microsoft.Exchange.WebServices.Data.EmailMessage.InternalSend(FolderId parentFolderId, MessageDisposition messageDisposition) in \\REDMOND\EXCHANGE\BUILD\E15\15.00.0913.015\SOURCES\sources\dev\EwsManagedApi\src\EwsManagedApi\Core\ServiceObjects\Items\EmailMessage.cs:line 102
+   at Microsoft.Exchange.WebServices.Data.EmailMessage.SendAndSaveCopy() in \\REDMOND\EXCHANGE\BUILD\E15\15.00.0913.015\SOURCES\sources\dev\EwsManagedApi\src\EwsManagedApi\Core\ServiceObjects\Items\EmailMessage.cs:line 248
+   at DIMS.Controllers.HomeController.GetPDF_STOCKIST(String reportname) in D:\WorkSpace-Devlopment\Dims\DimsSBU-8\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1843

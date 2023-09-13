@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Test1";
+    Layout = null;
+}
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        loadCaptcha();
+    });
+
+
+
+    function loadCaptcha() {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("generateCaptcha", "LogOn")',
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (response) {
+                $("#m_imgCaptcha").attr('src', '../' + response);
+            },
+            error: function (data) {
+                alert("Error while loading captcha image");
+            }
+        });
+    }
+
+    function ValidateCaptcha() {
+        alert("ValidateCaptcha");
+        var val = "{\"Captcha\":\"" + $('#m_tbCaptcha').val() + "\"}";
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ValidateCaptch", "LogOn")',
+            dataType: "json",
+            data: { data: val },
+            async: true,
+            cache: false,
+            success: function (response) {
+                if (response == "true") {
+                } else {
+                }
+            },
+            error: function (data) {
+            }
+        });
+    }
+</script>
+
+<form id="form1">
+    <div>
+        <img id="m_imgCaptcha" alt="Click to Change image" src="" title="Click to Change image" onclick="loadCaptcha();" style="width: 200px; height: 50px;" />
+        <br />
+        <input type="text" id="m_tbCaptcha" style="Width:150px;" />
+        <input type="button" id="m_btValidate" value="Validate" style="Width:120px;" onclick="ValidateCaptcha();" />
+        <br />
+        <label id="m_lbMessage"></label>
+    </div>
+</form>
+

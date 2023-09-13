@@ -1,0 +1,251 @@
+﻿@{
+    Layout = null;
+}
+
+<style type="text/css">
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 146px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Counters List</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Counter Details</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('AddNewCounter')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>
+               @* <a href ng-clik="go('AddNewCounter')">
+                    <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;" id="CounterListId">
+    <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+        <div class="box-body">
+            <h3 class="box-title"></h3>
+            <div class="pull-right" style="margin-left: 15px;">
+                <button type="button" class="btn btn-info navbar-btn" data-ng-click="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;color:white">
+                    Reset Filter</button>
+            </div>
+            @*Filters Zone*@
+            <form class="form-horizontal" role="form" style="font-size: small; margin-top: 36px;">
+                <div class="form-group">
+                    @*@Html.DropDownList("ddlOrderCountry", (IEnumerable<SelectListItem>)ViewBag.Country, new { @class = "form-control", multiple = "multiple" })*@
+                    <label class="col-sm-2 control-label" for="StockistID">
+                        Customer Code
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="StockistID" multiple="multiple" class="form-control">                           
+                        </select>
+                    </div>
+                    
+                     <label class="col-sm-2 control-label" for="Stockistname">
+                        Customer Name
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="Stockistname" multiple="multiple" class="form-control">                           
+                        </select>
+                    </div>
+                   
+                    <label class="col-sm-2 control-label" for="StockistID">
+                        Zone
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="Zone" multiple="multiple" class="form-control">                           
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="StockistID">
+                        State
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="State" multiple="multiple" class="form-control">                           
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label" for="TerritoryArea">
+                        Territory/Area
+                    </label>
+                    <div class="col-sm-2">
+                        <select id="TerritoryArea" multiple="multiple" class="form-control">                           
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label" for="OrderFromDate">
+                        From Date
+                    </label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control Date" id="OrderFromDate" data-ng-model="OrderFromDate" placeholder="From Date" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="OrderToDate">
+                        To Date
+                    </label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control Date" id="OrderToDate" placeholder="To Date" readonly="readonly" />
+                    </div>
+                    <label class="col-sm-2 control-label" for="txtCompany">
+                        Employee Code</label>
+                    <div class="col-sm-2">
+                        <select id="EmpId" multiple="multiple" class="form-control">
+                            
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label" for="txtCompany">
+                        Employee Name</label>
+                    <div class="col-sm-2">
+                        <select id="EmapName" multiple="multiple" class="form-control">
+                           
+                        </select>
+                    </div>
+                    
+                </div>
+            </form>
+            <div style="padding:10px;"></div>
+            <div style="overflow:auto;">
+            <table id="CounterList" class="table tablecss" width="100%" cellspacing="0">
+                <thead>
+                    <tr style="background-color:#d2401a;color:white">
+                        <th>ID</th>
+                        <th>Sales Employee
+                        </th>
+                        <th>Sales Region
+                        </th>
+                        <th>Customer Name
+                        </th>
+                        <th>Customer Type
+                        </th>
+                        <th>Customer Address
+                        </th>
+                        <th>Pin Code
+                        </th>
+                        <th>Contact Person Name
+                        </th>
+                        <th>Contact Person Number
+                        </th>
+                        <th>Customer State
+                        </th>
+                        <th>Customer City/Location
+                        </th>                        
+                        <th>Expected Volume Target
+                        </th>
+                        <th>DIMS reference ID
+                        </th>
+                        <th>Sale Order No
+                        </th>
+                        <th>SAP Customer code
+                        </th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+        $('#Stockistname').SumoSelect({ placeholder: 'Customer name' });
+        $('#StockistID').SumoSelect({ placeholder: 'Customer Code' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#TerritoryArea').SumoSelect({ placeholder: 'Territory/area' });
+        $('#EmapName').SumoSelect({ placeholder: 'Employee Name' });
+        $('#EmpId').SumoSelect({ placeholder: 'Employee Code' });
+
+        //$('#CounterList').DataTable();
+
+        $('#OrderFromDate').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+            $(this).datepicker('hide');
+        });
+        $('#OrderToDate').datepicker({
+            format: 'dd-mm-yyyy',
+
+            
+        });
+        $('#OrderToDate').bind('keypress', function (e) {
+            return false;
+            $(this).datepicker('hide');
+        });
+
+    });
+
+    //function ResetFilters() {
+    //    // $('#ddlOrderBattery').SumoSelect.un
+    //    var Stockistname = $('#Stockistname option').length;
+    //    var StockistID = $('#StockistID option').length;
+    //    var Zone = $('#Zone option').length;
+    //    var State = $('#State option').length;
+
+    //    var TerritoryArea = $('#TerritoryArea option').length;
+
+    //    var EmpName = $('#EmapName option').length;
+    //    var EmpId = $('#EmpId option').length;
+
+    //    for (var i = 0; i < StockistID; i++) {
+    //        $('#StockistID')[0].sumo.unSelectItem(i);
+    //    }
+
+    //    for (var i = 0; i < Stockistname; i++) {
+    //        $('#Stockistname')[0].sumo.unSelectItem(i);
+    //    }
+
+    //    for (var i = 0; i < Zone; i++) {
+    //        $('#Zone')[0].sumo.unSelectItem(i);
+    //    }
+    //    for (var i = 0; i < State; i++) {
+    //        $('#State')[0].sumo.unSelectItem(i);
+    //    }
+
+    //    for (var i = 0; i < TerritoryArea; i++) {
+    //        $('#TerritoryArea')[0].sumo.unSelectItem(i);
+    //    }
+    //    for (var i = 0; i < EmapName; i++) {
+    //        $('#EmapName')[0].sumo.unSelectItem(i);
+    //    }
+    //    for (var i = 0; i < EmpId; i++) {
+    //        $('#EmpId')[0].sumo.unSelectItem(i);
+    //    }
+    //    $("#DailyOrder").dataTable().fnFilter("", 2, true, false);
+    //    $("#DailyOrder").dataTable().fnFilter("", 7, true, false);
+    //    $("#DailyOrder").dataTable().fnFilter("", 5, true, false);
+    //    $("#DailyOrder").dataTable().fnFilter("", 10, true, false);
+    //    $("#DailyOrder").dataTable().fnFilter("", 6, true, false);
+    //}
+</script>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Master>
+  <TableName>cms_area_master</TableName>
+  <Field>
+    <FN>AREA_CODE</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>AREA_NAME</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>AREA_DESCRIPTION</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  <Field>
+    <FN>COUNTRY_NAME</FN>
+    <FT>String</FT>
+    <IN>False</IN>
+    <MTN></MTN>
+    <MTLC></MTLC>
+    <MTLCV></MTLCV>
+  </Field>
+  
+  <!--<Field>
+    <FN>Country_Id</FN>
+    <FT>int</FT>
+    <IN>False</IN>
+    <MTN>TBL_COUNTRY</MTN>
+    <MTLC>Country_Name</MTLC>
+    <MTLCV>Country_Id</MTLCV>
+  </Field>-->
+</Master>

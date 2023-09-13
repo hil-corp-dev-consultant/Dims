@@ -1,0 +1,1174 @@
+﻿@*
+
+    Module              : DIMS Solution.
+    DocumentName        : LogOn.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Description         : This Doc is for used for User Authentication,Password change, User Login and Logout.
+    Developer Name      : Swamy Ayyappa Peddinti.
+    Change Log          : NA.
+
+
+
+
+    This is the page where the user Log in to this system.
+
+*@
+
+
+@{
+    Layout = "~/Views/Shared/LoginLayout.cshtml";
+}
+
+<header style="background-color: white;" id="hed">
+    <div class="container">
+        <div class="row" style="padding-top: 10px; padding-bottom: 10px;">
+            <div class="col-sm-12">
+                <a href="http://www.hil.in" target="_blank">
+                    <img class="HeaderlogoLeft" src="../../Images/CKBIRLA.png" style="width:237px !Important;padding-top:10px">
+                </a><a href="#" class="pull-right" style="cursor: default">
+                    <img class="HeaderLogoRight" src="../../Images/DIMS_logo.png" width="182" height="42">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+@using (Html.BeginForm())
+{
+
+    @Html.ValidationSummary(true)
+    <div class="CustomHeight_Section">
+
+        <div class="customimage">
+
+            @*<img src="../../Images/LoginImage.jpg" />*@
+
+
+            <div class="overlay" id="loading" style="background-color: rgba(0, 0, 0, 0.4); z-index: 2000; position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: none">
+                <div style="position: absolute; left: 49%; top: 49%; z-index: 55555555555">
+                    <img src="../Images/PageLoader.gif" />
+                </div>
+            </div>
+
+
+
+            <div class="container " style="font-family: 'Calibri'">
+                <div id="LoginDiv" style="margin-top: 11%;" class="col-sm-5 pull-right">
+                    <div class="panel-heading" style="background: #d2401a none repeat scroll 0 0; color: white;">
+                        <div class="panel-title" style="font-weight: bold; font-size: 15px;">
+                            Dealer Information Management System
+                        </div>
+                        <div style="float: right; font-size: 80%; position: relative; top: -10px" id="ForgotPasswordDiv">
+                            <a href="#" style="color: white; font-weight: bold; outline: none;" data-toggle='modal' onclick="ForgotPwdPopup()">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div style="padding-top: 30px" class="panel-body">
+                            <span style="display: none" id="Alert" class="alert alert-danger col-sm-12" disabled="disabled"></span>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input id="Username" type="text" class="form-control" name="username" placeholder="User Code" />
+                                <input id="LoginCaptchaHidden" type="text" class="form-control" name="LoginCaptchaHidden" style="display: none;" />
+                                <input id="IPAddress" type="text" class="form-control" style="display: none;" />
+                                <input id="DeviceType" type="text" class="form-control" style="display: none;" />
+                                <input id="Browser" type="text" class="form-control" style="display: none;" />
+                            </div>
+                            <div style="margin-bottom: -15px; display: none;" class="input-group" id="PasswordDiv">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input id="Password" type="password" class="form-control" name="password" placeholder="Enter Password" />
+                                <span class="add-on"><i class="icon-eye-open"></i></span>
+                            </div>
+                            <div style="margin-bottom: 20px" class="input-group">
+                                <img id="LoginCaptcha" alt="Click to Change image" src="" title="Click to Change image" onclick="LoadLoginCaptcha();" style="width: 35%; float: left;" />
+                                <div style="width: 5%; float: left;"></div>
+                                <input id="LoginCaptchaText" type="text" class="form-control" name="LoginCaptchaText" placeholder="Enter Captcha" style="width: 40%; float: left;" />
+                                <a href="" id="RefreshCaptcha" onclick="LoadLoginCaptcha(); return false;" class="col-sm-offset-1 form-group no_selection" style="color: #d2401a;">
+                                    <i class="fa fa-refresh fa-4" title="Refresh"></i>
+
+                                </a>
+                            </div>
+                            <div style="margin-bottom: -25px;" class="input-group" id="UserLoginImageChbboxDiv">
+                                @*  <input type="checkbox" id="UserLoginImageChbbox" value="true">*@
+                                Please confirm your secure access image to login
+                                <select id="ImagePickerSelect" class="image-picker show-html ">
+                                    <option></option>
+                                    <option data-img-src="../../UserLoginImages/Home.png" style="width: 50px; height: 50px;" value="1">Home.png</option>
+                                    <option data-img-src="../../UserLoginImages/BusinessMan.png" style="width: 50px; height: 50px;" value="2">BusinessMan.png</option>
+                                    <option data-img-src="../../UserLoginImages/Success.png" style="width: 50px; height: 50px;" value="3">Success.png</option>
+                                    <option data-img-src="../../UserLoginImages/Logistics.png" style="width: 50px; height: 50px;" value="4">Logistics.png</option>
+                                    <option data-img-src="../../UserLoginImages/Solutions.png" style="width: 50px; height: 50px;" value="5">Solutions.png</option>
+                                    <option data-img-src="../../UserLoginImages/Diamond.png" style="width: 50px; height: 50px;" value="6">Diamond.png</option>
+                                    @*<option data-img-src="../../UserLoginImages/CoreComp.png" style="width: 50px; height: 50px;" value="7">CoreComp.png</option>
+                                        <option data-img-src="../../UserLoginImages/Globe.png" style="width: 50px; height: 50px;" value="8">Globe.png</option>*@
+                                </select>
+                                @*<img class="img-responsive" style="width: 50%; height: 50%;" src="~/Images/3rd_slider.jpg" id="UserLoginImage" />*@
+                            </div>
+                            <div style="margin-top: 0px" class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label style="margin-top: 10px">Get app: <span onclick="Downloadapp()" class="fa fa-android" style="color: green; cursor: pointer" title="Click to download"></span></label>
+                                    </div>
+                                    <div class="col-sm-3 col-sm-offset-6">
+                                        <div class="btn-group pull-right">
+                                            <button id="ContinueButton" type="button" class="btn btn-primary" onclick="Continue()"
+                                                    style="background: #d2401a none repeat scroll 0 0; font-weight: bold; border-color: #44adab;">
+                                                Continue
+                                            </button>
+
+                                            <button id="LoginButton" type="button" class="btn btn-primary" onclick="Login()"
+                                                    style="background: #d2401a none repeat scroll 0 0; font-weight: bold; border-color: #44adab; display: none;">
+                                                Login
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="OTPValidationModel" tabindex="-1" role="dialog" aria-labelledby="SDModalLabel" style="font-family: 'Calibri'">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="LoginOTP">Enter OTP</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                            <div class="row">
+                                <input type="text" id="OneTimePasswordHidden" data-ng-model="SD_id" style="display: none;" />
+                                <input type="text" id="TokenNo" style="display: none" />
+                                <input type="text" id="UserNameFromDB" style="display: none" />
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="input-group OpenPopupIcon col-sm-5">
+                                                <input type="text" class="form-control" id="OneTimePassword" style="margin-left: 60%; border-radius: 4px;" onkeypress="return isInteger(event)" maxlength="10" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="ValidateLoginOTP_BTN" class="btn btn-primary" style="background: #d2401a;" onclick="ValidateLoginOTP()">Continue</button>
+                        <button type="button" id="ResendFirstTimeLoginOTPContinue" class="btn btn-primary" style="background: #d2401a;" onclick="ResendOTP_FirstTimeLogin()">Resend OTP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="FPMPwdModel" data-backdrop="static" data-keyboard="false" style="font-family: 'Calibri'">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="false">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">Forget Password</h4>
+                    </div>
+                    <div class="modal-body" id="ForgotPasswordPartOne">
+                        <input type="text" class="alert alert-danger col-lg-12" id="DangerFPM" style="display: none; width: 100%;" disabled="disabled" />
+                        <div>
+                            <span>User Code</span>
+                            <div style="margin-bottom:25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input id="UserCodeForgot" type="text" class="form-control" />
+                                <input id="FPLoginCaptchaHiddenText" type="text" class="form-control" style="display: none;" />
+                                <input id="FPOTPHiddenText" type="text" class="form-control" style="display: none;" />
+                            </div>
+                            <div class="form-group input-group col-lg-12">
+                                <img id="FPLoginCaptcha" class="pull-left" alt="Click to Change image" src="" title="Click to Change image" onclick="LoadFPCaptcha();" style="width: 35%;" />
+                                <div style="width:5%; float:left;">
+                                    <input style="display: none;" />
+                                </div>
+                                <input id="FPLoginCaptchaText" type="text" class="form-control pull-left" placeholder="Enter Captcha" style="width: 40%;" />
+                                <a href="" id="RefreshFPLoginCaptcha" onclick="LoadFPCaptcha(); return false;" class="col-sm-offset-1 form-group no_selection" style="color: #d2401a;">
+                                    <i class="fa fa-refresh fa-4" title="Refresh"></i>
+
+                                </a>
+                            </div>
+                            <div class="from-group">
+                                <button type="button" id="FPPartOneContinue" class="btn btn-primary" style="background: #d2401a;" onclick="ForgetPWDFirstClick()">Send OTP</button>
+                            </div>
+                            <div style="margin-bottom:25px" class="input-group">
+                                @*<img id="FPLoginCaptcha" alt="Click to Change image" src="" title="Click to Change image" onclick="LoadFPCaptcha();" style="width: 35%; float: left;" />*@
+                                @*<div style="width: 5%; float: left;">
+                                        <input style="display: none;" />
+                                    </div>
+                                    <input id="FPLoginCaptchaText" type="text" class="form-control" placeholder="Enter Captcha" style="width: 40%; float: left;" />*@
+                                @*<button type="button" id="FPPartOneContinue" class="btn btn-primary" onclick="ForgetPWDFirstClick()">Send OTP</button>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body" id="ForgotPasswordPartTwo">
+                        <div class="form-group">
+                            <span id="ForgotPasswordOTPMobileNumber">Enter OTP</span>
+                            <input id="FPOTP" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="FPPartTwoContinue" class="btn btn-primary" style="background: #d2401a;" onclick="ForgetPWDSecondClick()">Continue</button>
+                            <button type="button" id="ResendOTPContinue" class="btn btn-primary" style="background: #d2401a;" onclick="ForgetPWDFirstClick()">Resend OTP</button>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<footer class="main-footer navbar-fixed-bottom" style="background-color: white; padding: 10px; font-family: 'Calibri'">
+    <div class="pull-left">
+        <label id="asd">
+            Contact us:
+            <label style="color: blue">dims.support@hil.in</label>
+        </label>
+    </div>
+    <div class="pull-right hidden-xs">
+        @*<b>DIMS Dev Build 1.0</b>*@
+        <b id="BuildString">
+            <a href="http://www.charminarunnati.com" target="_blank" title="Charminar UNNATI">
+                <span>
+                    <img src="~/Images/HIL-Unnati-Logo.png" style="width: 20px; height: 20px;" />
+                </span>
+            </a>&nbsp;&nbsp;&nbsp;
+            <a href="http://www.facebook.com/HILLtdIndia" target="_blank" style="color: black;"><span class="fa fa-facebook"></span></a>&nbsp;&nbsp;&nbsp;
+            <a href="http://twitter.com/HILLimited" target="_blank" style="color: black;">
+                <span class="fa fa-twitter"></span>
+            </a>&nbsp;&nbsp;
+            <a href="http://plus.google.com/+HilIndia" target="_blank" style="color: black;">
+                <span class="fa fa-google-plus"></span>
+            </a>&nbsp;&nbsp;
+            <a href="http://www.youtube.com/user/HILLimited" target="_blank" style="color: black;">
+                <span class="fa fa-youtube"></span>&nbsp;&nbsp;
+            </a>&nbsp;&nbsp;
+            <a href="https://www.linkedin.com/company/hyderabad-industries-ltd?trk=top_nav_home" target="_blank" style="color: black;"><span class="fa fa-linkedin"></span></a>&nbsp;&nbsp;
+
+        </b>
+    </div>
+    <div style="text-align: center;">
+        <strong>Copyright &copy;&nbsp;<label id="FooterLabel">@DateTime.Now.Year DIMS. All Rights Reserved.</label></strong>
+    </div>
+
+
+</footer>
+<script src="~/Scripts/DIMS/Crypto-js/aes.js"></script>
+<script src="~/Scripts/DIMS/Crypto-js/mode-ecb.js"></script>
+@*<script src="~/Scripts/DIMS/Crypto-js/angularjs-crypto.js"></script>
+<script src="~/Scripts/DIMS/Crypto-js/CryptoJSCipher.js"></script>*@
+<script src="~/Scripts/DIMS/Crypto-js/sha256.js"></script>
+<script src="~/Scripts/DIMS/Crypto-js/pbkdf2.js"></script>
+<script src="https://cdn.rawgit.com/CryptoStore/crypto-js/3.1.2/build/rollups/tripledes.js"></script>
+<script type="text/javascript">
+    var count = 0;
+    var UserDefaultLoginImage = "";
+    var UserFirstLogin = "";
+    var CountOTP = 0;
+
+    function ShowLoader() {
+        $("#loading").fadeIn();
+    }
+    function HideLoader() {
+        $("#loading").fadeOut();
+    }
+    function Downloadapp() {
+        window.location.href = "../../AndroidFiles/DIMS.apk";
+    }
+
+    //Karthik
+    function BindSelectImagePicker() {
+        //alert("22");
+        $.ajax({
+            type: 'GET',
+            url: '../LogOn/GetLoginImages',
+            datatype: 'JSON',
+            async: false,
+            success: function (response) {
+                response = JSON.parse(response);
+                $("#ImagePickerSelect").empty();
+                $("#ImagePickerSelect").append('<option></option>');
+                for (var i = 0; i < response.length; i++) {
+                    var HTML = "<option style='width: 10px; height: 10px;' value='" + i + "'>" + response[i]["IMAGE_NAMES"] + "</option>";
+                    $("#ImagePickerSelect").append(HTML);
+
+                    $("#ImagePickerSelect option[value='" + i + "']").attr('data-img-src', "../../UserLoginImages/" + response[i]["IMAGE_NAMES"] + "");
+                }
+            }
+        })
+    }
+    //End Karthik
+
+    $(document).ready(function () {
+
+
+
+        //var width = $(window).width(), height = $(window).height();
+        //var totalheight = height - 120;
+        //if (height <= 800) {
+            //totalheight = height - 120;
+        //}
+        //$('#customdiv').css({ "height": totalheight + 'px' });//-----------
+
+        //if ($(window).width() > 200 && $(window).width() < 400)
+        //{
+           // $(".customimage").css("background", "url(../../Images/LoginImage.jpg) no-repeat scroll 0 0 / 100% 100% transparent !important");
+        //}
+
+        $(window).resize(function () {
+            $('.CustomHeight_Section').height($(window).height() - 140);
+        });
+        $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+        //$('.content-header > h2').css({ "font-size": "18px", "font-weight": "500" });//----------
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetBuildString", "Home")',
+            async: true,
+            success: function (response) {
+                if (response == "") {
+                }
+                else {
+                    //$("#BuildString").text(response);
+                }
+            }
+        });
+
+
+
+        BindSelectImagePicker();
+        $("#ImagePickerSelect").imagepicker();
+        $("#ForgotPasswordDiv").css("display", "none");
+        //$('#UserLoginImageChbbox').prop('checked', false);
+        $("#UserLoginImageChbboxDiv").hide();
+        $("#LoginCaptchaText").removeAttr("readonly");
+        $("#LoginCaptchaText").show();
+        $("#RefreshCaptcha").show();
+        $("#LoginCaptcha").show();
+
+        $("#btnContinue").show();
+        $("#otpSection").hide();
+        $("#ForgotPwdSent").hide();
+        window.history.forward();
+        //getCookie(document.cookie);
+
+        //$("#PasswordDiv").hide();
+        //$("#RememberPassword").hide();
+        sessionendornot = true;
+        $('#Username').focus();
+
+        LoadLoginCaptcha();
+
+        $('#LoginCaptchaText').keypress(function (e) {
+            if (e.keyCode == 13) {
+                $('#ContinueButton').click();
+            }
+        });
+
+        $('#Password').keypress(function (e) {
+            if (e.keyCode == 13)
+            {
+                $('#LoginButton').click();
+            }
+
+        });
+
+        $('#Username').keypress(function (e) {
+            if (e.keyCode == 13)
+            {
+                $('#ContinueButton').click();
+            }
+
+        });
+
+        $('#Password').keypress(function (e) {
+            if (e.keyCode == 13)
+            {
+                $('#LoginButton').click();
+            }
+        });
+
+        //$("#ImagePickerSelect").change(function () {
+        //    $('#Password').focus();
+        //});
+
+        $('#otpsms').hide();
+        $('#otpverify').hide();
+        $("#Mailbutton").prop("checked", true);
+        $("#otp").prop("checked", false);
+        $('#OTPVerification').hide();
+        var UserName = "";
+
+
+
+        $.getJSON("https://api.ipify.org?format=jsonp&callback=?", function (json) {
+            $("#IPAddress").val(json.ip);
+        });
+
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $("#DeviceType").val("Mobile");
+        }
+        else {
+            $("#DeviceType").val("Desktop");
+        }
+        //alert(window.navigator.userAgent);
+
+
+
+        if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
+            $("#Browser").val("Opera");
+            //alert('Opera');
+        }
+        else if (navigator.userAgent.indexOf("Chrome") != -1) {
+            $("#Browser").val("Chrome");
+            //alert('Chrome');
+        }
+        else if (navigator.userAgent.indexOf("Safari") != -1) {
+            $("#Browser").val("Safari");
+            //alert('Safari');
+        }
+        else if (navigator.userAgent.indexOf("Firefox") != -1) {
+            $("#Browser").val("Firefox");
+            //alert('Firefox');
+        }
+        else if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) //IF IE > 10
+        {
+            $("#Browser").val("IE");
+            //alert('IE');
+        }
+        else {
+            $("#Browser").val("");
+        }
+
+        $("#Username").focus();
+
+        //$("#Username").val("50001342");                                                     //Remove this Line
+        //$("#Password").val("12345678");                                                     //Remove this Line
+    });
+
+
+
+
+    function Continue() {
+
+        var Username = $('#Username').val();
+        // var imagename = $("#ImagePickerSelect option:selected").text();
+        var HiddenCaptcha = $('#LoginCaptchaHidden').val();
+        var UserCaptcha = $('#LoginCaptchaText').val();
+        $('#Alert').css("display", "none");
+        //   $('.thumbnails image_picker_selector').find('li').find('div').removeClass("selected");
+
+        //if ((Username == "" || Username == "null" || Username == null) && (Password == "" || Password == "null" || Password == null)) {
+        if ((Username == "" || Username == "null" || Username == null)) {
+            $('#Alert').text("Please enter credentials");
+            $('#Alert').css("display", "block");
+        }
+        else if (Username == "" || Username == "null" || Username == null) {
+            $('#Alert').text("Please enter User Name");
+            $('#Alert').css("display", "block");
+        }
+        else if (UserCaptcha == "") {
+            $('#Alert').text("Please enter captcha");
+            $('#Alert').css("display", "block");
+        }
+        else if (HiddenCaptcha != UserCaptcha) {
+            LoadLoginCaptcha();
+            $('#Alert').text("Please enter valid captcha");
+            $('#Alert').css("display", "block");
+            // $('#Username').val("");
+        }
+        else {
+            $('#Alert').css("display", "none");
+            //alert(rememberme);
+            var IPAddress = $("#IPAddress").val();
+            var DeviceType = $("#DeviceType").val();
+            var Browser = $("#Browser").val();
+            var LoginData = JSON.stringify({
+                UserName: Username
+            });
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ValidateUserName", "LogOn")',
+                data: { LoginData: LoginData },
+                async: true,
+                success: function (response) {
+                    if (response == "FALSE" || response == "") {
+                        $('#Alert').text("Error Occured.Try Again");
+                        $('#Alert').css("display", "block");
+                        //$("#RememberPassword").hide();
+                        $("#PasswordDiv").hide();
+                        $("#LoginButton").hide();
+                        $("#Username").removeAttr("readonly");
+                        $("#LoginCaptchaText").removeAttr("readonly");
+                        $("#UserLoginImageChbboxDiv").hide();
+                    }
+                    else if (response == "INVALID") {
+                        $('#Alert').text("Invalid Username");
+                        $('#Alert').css("display", "block");
+                        //$("#RememberPassword").hide();
+                        $("#PasswordDiv").hide();
+                        $("#LoginButton").hide();
+                        $("#Username").removeAttr("readonly");
+                        $("#LoginCaptchaText").removeAttr("readonly");
+                        $("#UserLoginImageChbboxDiv").hide();
+                    }
+                    else {
+                        UserDefaultLoginImage = response;
+                        if (response == "0") {
+                            $("#UserLoginImageChbboxDiv").hide();
+                        } else {
+                            $("#UserLoginImageChbboxDiv").show();
+                            //$('#UserLoginImage').attr('src', '../../UserLoginImages/' + response);
+                        }
+                        $("#Username").attr("readonly", "true");
+                        $("#LoginCaptchaText").attr("readonly", "true");
+                        $("#LoginCaptchaText").hide();
+                        $("#RefreshCaptcha").hide();
+                        $("#LoginCaptcha").hide();
+                        //$("#RememberPassword").show();
+                        $("#ForgotPasswordDiv").css("display", "block");
+                        $("#PasswordDiv").show();
+                        $("#LoginButton").show();
+                        $("#ContinueButton").hide();
+                        $("#Password").focus();
+                        $('#LoginDiv').css({ "margin-top": "2%" });
+                        // $("ul.image_picker_selector > li > div").removeClass("selected");
+                        //  alert($('.image_picker_selector').find('li').find('.selected').parent().find('div').html());
+                        // $('.image_picker_selector').find('li').find('.selected').parent().find('div').removeClass('.selected');
+
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("Technical error has been occured.Please try again later");
+                }
+            });
+        }
+}
+
+function BlockAccount() {
+    var Username = $('#Username').val();
+    var Password = $('#Password').val();
+    var LoginData = JSON.stringify({
+        UserName: Username,
+        Password: Password
+    });
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("BlockAccount", "LogOn")',
+            data: { LoginData: LoginData },
+            async: true,
+            success: function (response) {
+                if (response == "FALSE" || response == "") {
+                    $('#Alert').text("Error Occured.Try Again");
+                    $('#Alert').css("display", "block");
+                }
+                else if (response == "404") {
+                    $('#Alert').text("Invalid Username/Password.\r\nFor your safety,access to application will be disabled after 4 consecutive Wrong Password entries.");
+                    $('#Alert').css("display", "block");
+                    $('#Password').val("");
+
+                }
+                else if (response == "PasswordExpired") {
+
+                    alert("Password Expired has expired. Please change it.");
+                    window.location.href = "../../Home/Homepage#/AdminChangePasword";
+                }
+                else if (response == "BLOCKED" || response == "INACTIVE") {
+                    $('#Alert').text("Your Account is Inactive.Please contact admin");
+                    $('#Alert').css("display", "block");
+                }
+            }
+        });
+
+    }
+
+    //User Login Button Script
+    function Login() {
+    debugger
+        //alert("Login");
+        var Username = $('#Username').val();
+        var Password = $('#Password').val();
+        var HiddenCaptcha = $('#LoginCaptchaHidden').val();
+        var UserCaptcha = $('#LoginCaptchaText').val();
+        //var UserLoginImageChbbox = $("#UserLoginImageChbbox").is(":checked");
+        var UserSelectedimagename = $("#ImagePickerSelect option:selected").text();
+
+        $('#Alert').css("display", "none");
+
+        if ((Username == "" || Username == "null" || Username == null) && (Password == "" || Password == "null" || Password == null)) {
+            $('#Alert').text("Please enter credentials");
+            $('#Alert').css("display", "block");
+        }
+        else if (Username == "" || Username == "null" || Username == null) {
+            $('#Alert').text("Please enter User Name");
+            $('#Alert').css("display", "block");
+        }
+        else if ((Password == "" || Password == "null" || Password == null)) {
+            $('#Alert').text("Please enter Password");
+            $('#Alert').css("display", "block");
+        }
+        else if (HiddenCaptcha != UserCaptcha) {
+            $('#Alert').text("Please enter valid captcha");
+            $('#Alert').css("display", "block");
+        }
+            //else if (UserDefaultLoginImage != "0" && UserDefaultLoginImage != "" && !UserLoginImageChbbox) {
+
+            //    $('#Alert').text("Please confirm your Secure Access details");
+            //    $('#Alert').css("display", "block");
+
+            //}
+        else if ((UserSelectedimagename == "" || UserSelectedimagename == null) && UserDefaultLoginImage != "0") {
+
+            $('#Alert').text("Please confirm your secure access by selecting image");
+            $('#Alert').css("display", "block");
+
+        }
+        else if ((UserDefaultLoginImage != UserSelectedimagename) && (UserDefaultLoginImage != "0")) {
+
+            count = count + 1;
+            if (count != 3) {
+                $('#Alert').text("Invalid Secure Access selection");
+                $('#Alert').css("display", "block");
+            }
+            else {
+                BlockAccount();
+            }
+        }
+        else {
+
+            $('#Alert').css("display", "none");
+
+            var IPAddress = $("#IPAddress").val();
+            var DeviceType = $("#DeviceType").val();
+            var Browser = $("#Browser").val();
+
+            var LoginData = JSON.stringify({
+                UserName: Username,
+                Password: Password,
+
+                IPAddress: IPAddress,
+                Device: DeviceType,
+                Browser: Browser
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("LogIn", "LogOn")',
+                data: { LoginData: LoginData },
+                async: false,
+                success: function (response) {
+    debugger
+
+
+                    //console.log('response', response);
+                    if (response == "FALSE" || response == "") {
+                        $('#Alert').text("Error Occured.Try Again");
+                        $('#Alert').css("display", "block");
+                    }
+                    else if (response == "404") {
+                        $('#Alert').text("Invalid Username/Password.\r\nFor your safety,access to application will be disabled after 4 consecutive Wrong Password entries.");
+                        $('#Alert').css("display", "block");
+                        $('#Password').val("");
+                    }
+                    else if (response == "PasswordExpired") {
+                        alert("Password Expired has expired. Please change it.");
+                        window.location.href = "../../Home/Homepage#/AdminChangePasword";
+                    }
+                    else if (response == "BLOCKED" || response == "INACTIVE") {
+                        $('#Alert').text("Your Account is Inactive.Please contact admin");
+                        $('#Alert').css("display", "block");
+                    }
+                    else {
+                        ShowLoader();
+                        response = JSON.parse(response);
+                        UserFirstLogin = response["FirstLogin"];
+     //VIKAS G, 24-2-2022 requirement of decryption of encrypted OTP from services, Multiple Vulnerability in DIMS.HIL.IN by Sujith
+    //response = JSON.parse(response);
+    var encryptedOTP =response["OTP"];
+    encryptedOTP = encryptedOTP.toString();
+    var key = "4512631236589784";
+key = CryptoJS.enc.Utf8.parse(key);
+
+var iv = "4512631236589784";
+iv = CryptoJS.enc.Utf8.parse(iv);
+
+var decryptedOTP = CryptoJS.AES.decrypt(encryptedOTP, key, { iv: iv });
+ decryptedOTP = decryptedOTP.toString(CryptoJS.enc.Utf8);
+
+                        if (response["PWDAlert"] == "" || response["PWDAlert"] == null) {
+                        }
+                        else {
+                            alert("Your Account Password Will Expire in " + response["PWDAlert"] + " Days.");
+                        }
+
+                        var SpecialUsers = new Array();
+                        SpecialUsers.push("2013");
+                        SpecialUsers.push("2010");
+                        SpecialUsers.push("2022");
+                        SpecialUsers.push("2008");
+                        SpecialUsers.push("2021");
+                        SpecialUsers.push("2006");
+                        SpecialUsers.push("2002");
+                        SpecialUsers.push("2017");
+                        SpecialUsers.push("2019");
+                        SpecialUsers.push("2018");
+
+                        if (response["OTP"] == "") {
+                            if (response["Result"] == "TRUE") {
+
+                                window.localStorage.setItem("UserName", $('#Username').val());
+                                window.localStorage.setItem("IPAddress", $("#IPAddress").val());
+                                window.localStorage.setItem("DeviceType", $("#DeviceType").val());
+                                window.localStorage.setItem("Browser", $("#Browser").val());
+                                // window.localStorage.setItem("Token", response["TOKEN"]);
+                                HideLoader();
+                                window.location.href = "../../Home/Homepage";
+
+                                $('#Alert').css("display", "none");
+                            }
+                        }
+                        else if (Username == "KAM") {
+                            HideLoader();
+                            $("#OneTimePassword").css('display', 'none');
+     //VIKAS G, 24-2-2022 requirement of decryption of encrypted OTP from services, Multiple Vulnerability in DIMS.HIL.IN by Sujith
+                            //$("#OneTimePasswordHidden").val(response["OTP"]);
+    $("#OneTimePasswordHidden").val(decryptedOTP);
+                            $("#TokenNo").val(response["TOKEN"]);
+                            $("#UserNameFromDB").val(response["UserName"]);
+                            $('#OTPValidationModel').modal('show');
+                            $("#Username").attr("disabled", "disabled");
+                            $("#Password").attr("disabled", "disabled");
+                            $("#LoginCaptchaText").attr("disabled", "disabled");
+                            $("#chbRememberPwd").attr("disabled", "disabled");
+      //VIKAS G, 24-2-2022 requirement of decryption of encrypted OTP from services, Multiple Vulnerability in DIMS.HIL.IN by Sujith
+                            //$("#OneTimePassword").val(response["OTP"]);
+    $("#OneTimePassword").val(decryptedOTP);
+                            ValidateLoginOTP();
+                        }
+
+                        else if (SpecialUsers.indexOf(Username) > -1) {
+                            HideLoader();
+                            $("#OneTimePassword").css('display', 'none');
+      //VIKAS G, 24-2-2022 requirement of decryption of encrypted OTP from services, Multiple Vulnerability in DIMS.HIL.IN by Sujith
+                           // $("#OneTimePasswordHidden").val(response["OTP"]);
+    $("#OneTimePasswordHidden").val(decryptedOTP);
+                            $("#TokenNo").val(response["TOKEN"]);
+                            $("#UserNameFromDB").val(response["UserName"]);
+                            $('#OTPValidationModel').modal('show');
+                            $("#Username").attr("disabled", "disabled");
+                            $("#Password").attr("disabled", "disabled");
+                            $("#LoginCaptchaText").attr("disabled", "disabled");
+                            $("#chbRememberPwd").attr("disabled", "disabled");
+                            //$("#OneTimePassword").val(response["OTP"]);
+    $("#OneTimePassword").val(decryptedOTP);
+                            ValidateLoginOTP();
+                        }
+
+                        else {
+                            HideLoader();
+                            //$("#OneTimePasswordHidden").val(response["OTP"]);
+    $("#OneTimePasswordHidden").val(decryptedOTP);
+                            $("#TokenNo").val(response["TOKEN"]);
+                            $("#UserNameFromDB").val(response["UserName"]);
+                            $('#OTPValidationModel').modal('show');
+
+                            $("#Username").attr("disabled", "disabled");
+                            $("#Password").attr("disabled", "disabled");
+                            $("#LoginCaptchaText").attr("disabled", "disabled");
+                            $("#chbRememberPwd").attr("disabled", "disabled");
+
+                        }
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("Technical error has been occured.Please try again later");
+                }
+            });
+        }
+
+}
+
+function getCookie(cname) {
+    //alert(cname);
+    if (cname != undefined && cname.trim() != "" && cname != null && cname != "null") {
+        var name = cname.split(';');
+        // alert(name);
+        var userName = name[0].split('=');
+        //alert(userName);
+        $('#Username').val(userName[1]);
+        //alert(userName[1]);
+        var pwd = name[1].split('=');
+        $('#Password').val(pwd[1]);
+        $('#chbRememberPwd').prop("checked", true);
+    } else {
+        $('#Username').val("");
+        $('#Password').val("");
+        $('#chbRememberPwd').prop("checked", false);
+    }
+    return "";
+}
+
+//To Load Login Captcha
+function LoadLoginCaptcha() {
+    $.ajax({
+        type: 'GET',
+        url: '@Url.Action("generateCaptcha", "LogOn")',
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (response) {
+                if (response == "FALSE") {
+                }
+                else {
+                    response = JSON.parse(response);
+                    $("#LoginCaptchaHidden").val(response["Text"]);
+                    $("#LoginCaptchaText").val("");
+                    $("#LoginCaptcha").attr('src', '../Images/' + response["Path"]);
+
+                    //$("#LoginCaptchaText").val(response["Text"]);                       //Remove This Line
+                }
+            },
+            error: function (data) {
+                alert("Error while loading captcha image");
+            }
+        });
+    }
+
+
+    //To Validate the Login OPT and Audit the Login
+    function ValidateLoginOTP() {
+    debugger
+        try {
+            var OTP = $("#OneTimePassword").val();
+            var OTPH = $("#OneTimePasswordHidden").val();
+
+            if (OTP == OTPH) {
+                var UserName = $('#Username').val();
+                var Password = $('#Password').val();
+                var IPAddress = $("#IPAddress").val();
+
+                var DeviceType = $("#DeviceType").val();
+                var Browser = $("#Browser").val();
+                var TokenNo = $("#TokenNo").val();
+                var UserNameFromDB = $("#UserNameFromDB").val();
+
+                var LoginData = JSON.stringify({
+                    UserName: UserName,
+                    UserNameFromDB: UserNameFromDB,
+                    Password: Password,
+
+                    IPAddress: IPAddress,
+                    Device: DeviceType,
+                    Browser: Browser,
+                    TokenNo: TokenNo
+                });
+
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("ValidOTPEntered", "LogOn")',
+                    dataType: "json",
+                    async: true,
+                    data: { LoginData: LoginData },
+                    cache: false,
+                    success: function (response) {
+                        if (response == "TRUE") {
+
+
+                            if (UserFirstLogin == "true") {
+                                window.location.href = "../../Home/Homepage#/UserLoginImageSelection";
+                            } else {
+
+                                window.location.href = "../../Home/Homepage";
+                            }
+                            window.localStorage.setItem("UserName", $('#Username').val());
+                            window.localStorage.setItem("IPAddress", $("#IPAddress").val());
+                            window.localStorage.setItem("DeviceType", $("#DeviceType").val());
+                            window.localStorage.setItem("Browser", $("#Browser").val());
+                            $('#Alert').css("display", "none");
+                        }
+                        else {
+                            alert("Error Occurred.Please try again");
+                        }
+                    },
+                    error: function (data) {
+                        alert("Error Occured");
+                    }
+                });
+
+
+            }
+            else {
+                alert("OTP you have entered is Invalid.Please Try Again");
+            }
+        }
+        catch (e) {
+            alert("Error : ValidateLoginOTP : " + e);
+        }
+
+    }
+
+
+    //To Open the Forget Password pop up
+    function ForgotPwdPopup() {
+        try {
+            $("#DangerFPM").hide();
+            $('#FPMPwdModel').modal('show');
+            $("#ForgotPasswordPartOne").show();
+            $("#ForgotPasswordPartTwo").hide();
+            $("#UserCodeForgot").val("");
+            $("#FPLoginCaptchaText").val("");
+            $("#FPLoginCaptchaHiddenText").val("");
+            LoadFPCaptcha();
+            $("#UserCodeForgot").focus();
+        }
+        catch (e) {
+            alert("Error : ForgotPwdPopup : " + e);
+        }
+    }
+
+
+    //User enters the Continue after entering the  Usercode and the captcha image.
+    function ForgetPWDFirstClick() {
+
+        try {
+            $("#DangerFPM").css("display", "none");
+            var UID = $("#UserCodeForgot").val();
+            var FPCapText = $("#FPLoginCaptchaText").val();
+            var FPCapTextHidden = $("#FPLoginCaptchaHiddenText").val();
+
+            if (UID == "") {
+                $("#DangerFPM").css("display", "block");
+                $("#DangerFPM").val("Please Enter UserCode");
+                return;
+            }
+            else if (FPCapText == "") {
+                $("#DangerFPM").css("display", "block");
+                $("#DangerFPM").val("Please Enter Captcha");
+                return;
+            }
+            else {
+                if (FPCapText == FPCapTextHidden) {
+                    $("#DangerFPM").css("display", "none");
+
+
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetMeOTPToMobileForFP", "LogOn")',
+                        dataType: "json",
+                        async: true,
+                        data: { UID: UID },
+                        cache: false,
+                        success: function (response) {
+    debugger
+                            if (response == "FALSE") {
+                                $("#DangerFPM").css("display", "block");
+                                $("#DangerFPM").val("Technical error Occured...");
+                            }
+                            else if (response == "INVALID") {
+                                $("#DangerFPM").css("display", "block");
+                                $("#DangerFPM").val("Enter Valid UserName");
+                            }
+                            else {
+     //VIKAS G, 24-2-2022 requirement of decryption of encrypted OTP from services, Multiple Vulnerability in DIMS.HIL.IN by Sujith
+    //response = JSON.parse(response);
+    var encryptedOTP =response;
+    encryptedOTP = encryptedOTP.toString();
+    var key = "4512631236589784";
+key = CryptoJS.enc.Utf8.parse(key);
+
+var iv = "4512631236589784";
+iv = CryptoJS.enc.Utf8.parse(iv);
+
+var decryptedOTP = CryptoJS.AES.decrypt(encryptedOTP, key, { iv: iv });
+ decryptedOTP = decryptedOTP.toString(CryptoJS.enc.Utf8);
+                                //$("#FPPartOneContinue").text("Resend")
+                                $("#ForgotPasswordPartOne").hide();
+                                $("#ForgotPasswordPartTwo").show();
+                               // var Otp_Last3digitsMNo = response.split('$$');
+
+                                //$("#ForgotPasswordOTPMobileNumber").text("Enter the OTP sent to the Mobile Number or Email *******" + Otp_Last3digitsMNo[1]);
+                                //$("#FPOTPHiddenText").val(Otp_Last3digitsMNo[0]);
+     $("#ForgotPasswordOTPMobileNumber").text("Enter the OTP sent to the Mobile Number or Email.");
+    $("#FPOTPHiddenText").val(decryptedOTP);
+                                $("#FPOTP").val("");
+                                $("#FPOTP").focus();
+                            }
+
+                        },
+                        error: function (data) {
+                            alert("Error Occured");
+                        }
+                    });
+                }
+                else {
+                    $("#DangerFPM").css("display", "block");
+                    $("#DangerFPM").val("Please Enter valid Captcha");
+                    LoadFPCaptcha();
+                    return;
+                }
+            }
+    }
+    catch (e) {
+        alert("Error : ForgetPWDFirstClick : " + e);
+    }
+
+}
+
+
+//To load the Forget password captcha
+function LoadFPCaptcha() {
+    $.ajax({
+        type: 'GET',
+        url: '@Url.Action("generateCaptcha", "LogOn")',
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (response) {
+                if (response == "FALSE") {
+
+                }
+                else {
+                    response = JSON.parse(response);
+                    $("#FPLoginCaptchaHiddenText").val(response["Text"]);
+                    $("#FPLoginCaptchaText").val("");
+                    $("#FPLoginCaptcha").attr('src', '../Images/' + response["Path"]);
+
+                }
+            },
+            error: function (data) {
+                alert("Error while loading captcha image");
+            }
+        });
+    }
+
+
+    //To validate OPT Send Password to mail.
+    function ForgetPWDSecondClick() {
+    //debugger
+        $("#DangerFPM").css("display", "none");
+
+        var FPOTP = $("#FPOTP").val();
+        var FPOTPHiddenText = $("#FPOTPHiddenText").val();
+
+
+        if (FPOTP == FPOTPHiddenText) {
+            var UID = $("#UserCodeForgot").val();
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("SendPasswordtoMail", "LogOn")',
+                dataType: "json",
+                async: true,
+                data: { UID: UID },
+                cache: false,
+                success: function (response) {
+                    if (response == "TRUE") {
+                        $("#FPMPwdModel").modal('hide');
+                        alert("Your Password will be sent to your email shortly");
+                    }
+                    else {
+                        $("#DangerFPM").css("display", "block");
+                        $("#DangerFPM").val("Error Occured. Try Again");
+                    }
+                },
+                error: function (data) {
+                    alert("Error Occured");
+                }
+            });
+        }
+        else {
+            $("#DangerFPM").css("display", "block");
+            $("#DangerFPM").val("Enter the Correct OTP");
+        }
+    }
+
+
+
+    //Textbox typing only numbers
+    function isInteger(evt) {
+        try {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        catch (e) {
+            alert("Error : isInteger " + e);
+        }
+    }
+
+    //Resend OTP FOR FIRST TIME LOGIN
+    function ResendOTP_FirstTimeLogin() {
+        CountOTP = CountOTP + 1;
+        if (CountOTP == 3) {
+            $("#ResendFirstTimeLoginOTPContinue").hide();
+        }
+        var Username = $('#Username').val();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("ResendOTPFirstLogin", "LogOn")',
+            dataType: "json",
+            async: true,
+            data: { UID: Username },
+            cache: false,
+            success: function (response) {
+    debugger
+                if (response == "FALSE") {
+                    alert("Error in connecting server");
+                }
+                else if (response == "INVALID") {
+
+                }
+                else {
+                     response = JSON.parse(response);
+     //VIKAS G, 24-2-2022 requirement of decryption of encrypted OTP from services, Multiple Vulnerability in DIMS.HIL.IN by Sujith
+    var encryptedOTP =response["OTP"];
+    encryptedOTP = encryptedOTP.toString();
+    var key = "4512631236589784";
+key = CryptoJS.enc.Utf8.parse(key);
+
+var iv = "4512631236589784";
+iv = CryptoJS.enc.Utf8.parse(iv);
+
+var decryptedOTP = CryptoJS.AES.decrypt(encryptedOTP, key, { iv: iv });
+ decryptedOTP = decryptedOTP.toString(CryptoJS.enc.Utf8);
+
+
+                    $("#OneTimePasswordHidden").val(decryptedOTP);
+
+                    alert("OTP has sent successfully to Mobile and Email");
+
+                }
+
+            },
+            error: function (data) {
+                alert("Error Occured");
+            }
+        });
+    }
+
+
+
+    document.getElementById('LoginCaptcha').ondragstart = function () { return false; };
+
+
+</script>

@@ -1,0 +1,1369 @@
+﻿<!-- Content Header (Page header) -->
+
+
+
+<style>
+    .usersettings {
+    }
+
+    .table-user-information > tbody > tr {
+        border-top: 1px solid rgb(221, 221, 221);
+        cursor: default;
+    }
+
+        .table-user-information > tbody > tr:first-child {
+            border-top: 0;
+        }
+
+        .table-user-information > tbody > tr > td {
+            border-top: 0;
+        }
+
+    .toppad {
+        margin-top: 20px;
+    }
+
+    .usersettings .userpic {
+        border: 2px solid #4c4c4c;
+        border-radius: 10px;
+    }
+
+    .usersettings a {
+        color: #e65100;
+        font-weight: bold;
+    }
+
+    .usersettings .panel-info {
+        border-color: #e65100;
+    }
+
+        .usersettings .panel-info > .panel-heading {
+            background-color: #e65100;
+            border-color: #e65100;
+            color: #fff;
+        }
+    /*-----------------------------------*/
+    /*Profile Pic Start*/
+    .picture-container {
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .picture {
+        width: 200px;
+        /*height:250px;*/
+        background-color: #999999;
+        border: 4px solid #CCCCCC;
+        color: #FFFFFF;
+        margin: 0px auto;
+        overflow: hidden;
+        transition: all 0.2s;
+        -webkit-transition: all 0.2s;
+    }
+
+        .picture:hover {
+            border-color: #2ca8ff;
+        }
+
+    .content.ct-wizard-green .picture:hover {
+        border-color: #05ae0e;
+    }
+
+    .content.ct-wizard-blue .picture:hover {
+        border-color: #3472f7;
+    }
+
+    .content.ct-wizard-orange .picture:hover {
+        border-color: #ff9500;
+    }
+
+    .content.ct-wizard-red .picture:hover {
+        border-color: #ff3b30;
+    }
+
+    .picture input[type="file"] {
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        left: 0;
+        opacity: 0 !important;
+        position: absolute;
+        top: 0px;
+        width: 100%;
+    }
+
+    .picture-src {
+        width: 100%;
+    }
+
+    .dataTables_scroll {
+        max-height: initial !important;
+        overflow: auto !important;
+    }
+
+    table tbody tr th {
+        text-align: center !important;
+    }
+
+    table tbody tr td {
+        text-align: right;
+    }
+
+    table tfoot tr th {
+        text-align: right;
+    }
+
+    .chart-container {
+        width: 80%;
+        height: 480px;
+        margin: 0 auto;
+    }
+</style>
+
+
+@*<script type="text/javascript" src="~/Scripts/jquery.min.js"></script>*@
+<script type="text/javascript" src="~/Scripts/Chart.min.js"></script>
+@*<script type="text/javascript" src="~/Scripts/bar.js"></script>*@
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 style="font-family: Calibri;font-size:18px;font-weight:500;">Personal Details</h2>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Personal Details</li>
+    </ol>
+</section>
+<div class="CustomHeight_Section" style="overflow:auto;">
+    <!-- Main content -->
+    <section style="padding:0 15px 70px;">
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-18 toppad usersettings" id="divimg">
+                <div id="maindiv" class="panel panel-info" style="border-color: #D2401A; width:135%">
+                    <div class="panel-heading" style="background-color: #D2401A; border-color: #D2401A">
+                        <h3 class="panel-title" style="color: #FFFFFF;" id="hName">No Data Found</h3>
+                    </div>
+                    <div class="panel-body" style="border-color: #D2401A;">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3" align="center">
+                                <img alt="User Pic" src="~/dist/img/user-icon-profile.png" class="img-responsive userpic">
+                                <a onclick="ShowModal()" style="cursor: pointer">Edit Profile</a>
+                            </div>
+                            <div class=" col-md-9 col-lg-9" style="overflow:auto;">
+                                <table class="table table-user-information" style="cursor:default; ">
+                                    <tbody style="cursor:default">
+                                        <tr>
+                                            <td>User Name</td>
+                                            <td>
+                                                <label id="lblName">No Data Found</label>
+                                            </td>
+                                            <td class="hidetd">PAN</td>
+                                            <td class="hidetd">
+                                                <label id="lblPan">No Data Found</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Employee/Stockist Code</td>
+                                            <td>
+                                                <label id="lblEmpCode">No Data Found</label>
+                                            </td>
+
+                                            <td class="hidetd">TIN</td>
+                                            <td class="hidetd">
+                                                <label id="lblTin">No Data Found</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Role</td>
+                                            <td>
+                                                <label id="lblRole">No Data Found</label>
+                                            </td>
+
+
+                                            <td class="hidetd">VAT Number</td>
+                                            <td class="hidetd">
+                                                <label id="lblVat">No Data Found</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Contact Number</td>
+                                            <td>
+                                                <label id="lblMobileNo">No Data Found</label>
+                                            </td>
+                                            <td class="hidetd">CST Number</td>
+                                            <td class="hidetd">
+                                                <label id="lblCst">No Data Found</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email Id</td>
+                                            <td>
+                                                <label id="lblEmail">No Data Found</label>
+                                            </td>
+                                            <td class="hidetd">Bank Account Number</td>
+                                            <td class="hidetd">
+                                                <label id="lblaccountno">No Data Found</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address/Location</td>
+                                            <td>
+                                                <textarea id="lblLocation" cols="15" disabled>No Data Found</textarea>
+
+                                                @*<label id="lblLocation">No Data Found</label>*@
+                                            </td>
+                                            <td class="hidetd">Bank Name</td>
+                                            <td class="hidetd">
+                                                <label id="lblbankname">No Data Found</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="hidetd">IFSC Code</td>
+                                            <td class="hidetd">
+                                                <label id="lblifsc">No Data Found</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*VIKAS G,20-SEP-2022,SBU1 REQUIREMENT OF SIGNATURE CLUB. START*@
+                                <div class="col-sm-12" id="signatureClub_PopUp" style="display : none">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" style="font-weight: bold;font-size: 22px;border: solid 1px;padding: 15px;border-radius: 10px;background-color: #4974a5;color: #ffff; cursor: pointer;" data-target=".bd-example-modal-lg">Welcome to Signature Club</button>
+                                    </div>
+                                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content" style="border-radius: 20px; ">
+                                                <div class="modal-body" style=" border: #ff3b30 6px solid; border-radius: 20px;">
+                                                    <section class="content" style="max-height: 550px; overflow-y: scroll;">
+                                                        <div class="row" id="CMS_Graphical_Dashboard">
+                                                            <div class="col-md-12">
+                                                                <label id="SignatureHeaderLable"></label>
+                                                                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                                                                    <div class="table-responsive" id="RoleAccessConfigDiv">
+                                                                        <div id="canvas-holder" style="width:50%; height:50%; text-align:center" class="col-md-4">
+                                                                            <canvas id="TargetWiseGraphBar" width="300" height="300"></canvas>
+                                                                        </div>
+                                                                        <div id="canvas-holder2" style="width:50%; height:50%; text-align:center" class="col-md-4">
+                                                                            <canvas id="9MTargetWiseGraphBar" width="300" height="300"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="table-responsive" id="RoleAccessConfigDiv">
+                                                                        <div id="canvas-holder1" style="width:50%; height:50%; text-align:center ; margin:0 auto" class="col-sd-6">
+                                                                            <canvas id="TargetWiseGraphPie" width="300" height="300"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="Totalachieved" style="width:100%; height:50%; text-align:right" class="col-md-8">
+                                                                        <lable></lable>
+                                                                    </div>
+                                                                    <div id="note" style="width:100%; height:50%; " class="col-md-8">
+                                                                        <label><em><b>Note:</b> Incentive applicable only for 9 months (July' 2022 - March'2023)</em></label>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <div class="modal-footer" style="border-radius: 20px;">
+                                                        <button type="button" id="SignatureClub_Close" class="btn btn-info" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<button type="button" class="btn btn-primary" data-dismiss="modal" style="background-color: #d2401a">Welcome to Signature Club</button>*@
+                                    @*<div class="modal-header">
+                                            <button type="button" class="btn btn-primary mt-5" data-toggle="modal" style="font-weight: bold;font-size: 22px;border: solid 1px;padding: 15px;border-radius: 10px;background-color: #4974a5;color: #ffff; cursor: pointer;" data-target=".bd-example-modal-lg" >Welcome to Signature Club</button>
+                                        </div>
+                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content" style="background-color: #7f0c8a; border-radius: 20px; ">
+                                                    <div class="modal-body" style=" border: #ff3b30 6px solid; border-radius: 20px;">
+                                                        <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label for="txtDealerCode" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver ">
+                                                                            Dealer Code :
+                                                                        </label>
+                                                                        <div class="col-sm-5">
+                                                                            <label id="txtDealerCodeVal" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="txtDealerName" class="col-sm-5 control-label" style="text-align: right; font-size: 20px;color:silver">
+                                                                            Distributor  Name :
+                                                                        </label>
+                                                                        <div class="col-sm-7">
+                                                                            <label id="txtDealerNameVal" class="col-sm-8 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="txtTarget_month" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+                                                                            Target for the month (MT/Running Meter) :
+                                                                        </label>
+                                                                        <div class="col-sm-5">
+                                                                            <label id="txtTarget_monthVal" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="txtTragetFY" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+                                                                            Target for Financial Year (MT/Running Meter) :
+                                                                        </label>
+                                                                        <div class="col-sm-5">
+                                                                            <label id="txtTragetFYVal" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="txtAchievementMTD" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+                                                                            Achievement MTD (MT/Running Meter) :
+                                                                        </label>
+                                                                        <div class="col-sm-5">
+                                                                            <label id="txtAchievementMTDVal" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="txtAchievementYTD" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+                                                                            Achievement YTD (MT/Running Meter) :
+                                                                        </label>
+                                                                        <div class="col-sm-5">
+                                                                            <label id="txtAchievementYTDVal" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="txtAchievementMTDRS" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+                                                                            MTD Achievement in Rs. :
+                                                                        </label>
+                                                                        <div class="col-sm-5">
+                                                                            <label id="txtAchievementMTDRSVal" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="txtAchievementYTDRS" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+                                                                            YTD Achievement in Rs. :
+                                                                        </label>
+                                                                        <div class="col-sm-5">
+                                                                            <label id="txtAchievementYTDRSVal" class="col-sm-5 control-label" style="text-align: right; font-size: 20px; color: silver">
+
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer" style=" border: #ff3b30 6px solid; border-radius: 20px;">
+                                                        <button type="button" id="SignatureClub_Close" class="btn btn-info" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                </div>
+                                @*VIKAS G,20-SEP-2022, SBU1 REQUIREMENT OF SIGNATURE CLUB. END*@
+                            </div>
+                        </div>
+                        <!-- -->
+                        <!-- -->
+                    </div>
+                    <!--<div class="panel-footer"> <a href="#" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a> <span class="pull-right"> <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a> </span> </div>-->
+                </div>
+            </div>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Edit Profile</h4>
+                        </div>
+                        <div class="modal-body" style="max-height: calc(100vh - 210px); overflow-y: auto;">
+                            <div class="row" style="">
+
+                                <div class="col-md-12">
+                                    <form class="form-horizontal" role="form">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <div class="picture-container">
+                                                    <div class="picture" id="Image">
+                                                        <img src="~/dist/img/user-icon-profile.png" class="picture-src" id="wizardPicturePreview" title="">
+                                                        <input id="wizard-picture" class="" type="file" onchange="FileUploaded()">
+                                                    </div>
+                                                    <h6 class="text-bold text-blue">Choose Picture</h6>
+                                                    <label id="error" style="color:red;font-size:11px" hidden>Your Image size should be less than or equal to 120KB</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label" for="textinput">User Name</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="User Name" id="txtName" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label" for="textinput">Employee/Stockist Code</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="Employee Code" id="txtEmpCode" class="form-control grey" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label" for="textinput">Contact Number</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="Contact No" id="txtMobileNo" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label" for="textinput">Email Id</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="Contact No" id="txtemail" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label" for="textinput">Address/Location</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="Address" id="txtAddress" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidetd">
+                                                <label class="col-sm-4 control-label" for="textinput">PAN</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="PAN" id="txtpan" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidetd">
+                                                <label class="col-sm-4 control-label" for="textinput">TIN</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="TIN" id="txttin" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidetd">
+                                                <label class="col-sm-4 control-label" for="textinput">VAT Number</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="VAT" id="txtvat" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidetd">
+                                                <label class="col-sm-4 control-label" for="textinput">CST Number</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="CST" id="txtcst" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidetd">
+                                                <label class="col-sm-4 control-label" for="textinput">Account Number<span class="Mandatory">*</span></label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="Bank Account No." id="txtaccountno" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidetd">
+                                                <label class="col-sm-4 control-label" for="textinput">Bank Name<span class="Mandatory">*</span></label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="Bank Name" id="txtbankname" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidetd">
+                                                <label class="col-sm-4 control-label" for="textinput">IFSC Code<span class="Mandatory">*</span></label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" placeholder="IFSC Code" id="txtifsc" class="form-control">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" style="background-color: #d2401a">Close</button>
+                            <button type="button" class="btn btn-primary" style="background-color: #d2401a" onclick="UpdateDetails()"> Update </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"></div>
+
+        </div>
+
+
+        <div class="row" id="DashboardUserTypeCountDiv" hidden="hidden">
+            <section class="col-lg-6 connectedSortable ui-sortable">
+                <!-- Box (with bar chart) -->
+                <div id="loading-example" class="box box-danger">
+                    <div class="box-header" style="cursor: move;">
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <!-- <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" title="Reload"><i class="fa fa-refresh"></i></button>
+                                            <button class="btn btn-danger btn-sm" data-widget='remove' data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button> -->
+                            <button title="" data-toggle="tooltip" data-widget="collapse" class="btn btn-danger btn-sm" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+
+                        </div>
+                        <!-- /. tools -->
+                        <i class="fa fa-cloud"></i>
+
+                        <h3 class="box-title">Overview</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- /.box-body -->
+                    <!-- /.box-footer -->
+                </div>
+                <!-- /.box -->
+
+
+            </section>
+        </div>
+
+    </section>
+    <!-- /.content -->
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        CheckUserSession();
+        //ShowLoader();
+        $("#lblRole").empty();
+        $("#lblRole").append(userrole_sales);
+        @* VIKAS G, 20 - SEP - 2022, SBU1 REQUIREMENT OF SIGNATURE CLUB.START *@
+        $("#signatureClub_PopUp").hide();
+        @* VIKAS G, 20 - SEP - 2022, SBU1 REQUIREMENT OF SIGNATURE CLUB.END *@
+        //var width = $(window).width(), height = $(window).height();//---------
+
+        //var totalheight = height - 191;
+        // var totalheight = height - 148;//--------
+        //if (height <= 800) {
+            //totalheight = height - 148;
+        //}
+
+        //$('.content').css({ "height": totalheight, "overflow-y": "auto" });//-----------
+        $(window).resize(function () {
+            $('.CustomHeight_Section').height($(window).height() - 170);
+        });
+        $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+        //$('.content-header > span').css({ "font-size": "18px", "font-weight": "500" });//----------
+
+        if (userrole_sales == "STOCKIST" || userrole_sales == "BU3_STK") {
+            @* VIKAS G, 20 - SEP - 2022, SBU1 REQUIREMENT OF SIGNATURE CLUB.START *@
+            if (userrole_sales == "STOCKIST") {
+                //$("#signatureClub_PopUp").show();
+                //getCustomerSignatureClubData();
+                getSignatureClubData();
+            }
+            else {
+                $("#signatureClub_PopUp").hide();
+            }
+            @* VIKAS G, 20 - SEP - 2022, SBU1 REQUIREMENT OF SIGNATURE CLUB.END *@
+        }
+        else {
+
+            $("#maindiv").css("width", '');
+
+            $(".hidetd").hide();
+        }
+
+        @*  if ('@Session["UserRole"]' == "Normal" || '@Session["UserRole"]' == "A-Sonic") {
+            $("#ConfigurationModule").hide();
+            $("#DashboardUserTypeCountDiv").hide();
+            $("#UserDashboardDiv").show();
+            $("#AdminDashboardDiv").hide();
+        } else {
+            $("#DashboardUserTypeCountDiv").show();
+            $("#ConfigurationModule").show();
+            $("#UserDashboardDiv").hide();
+            $("#AdminDashboardDiv").show();
+        }
+        if ('@Session["UserRole"]' == "ADMIN" || '@Session["UserRole"]' == "A-Sonic") {
+            $("#BatchStatusUpdate").show();
+            $("#ShipmentManagement").show();
+        } else {
+            $("#BatchStatusUpdate").hide();
+            $("#ShipmentManagement").hide();
+        }*@
+        //<img src="~/ProfilePhotos/50001342.jpg" />
+
+        $("#wizard-picture").change(function () {
+            readURL(this);
+        });
+
+        getUserDetails();
+        //getSignatureClubData();
+        Loadimages();
+
+
+        //HideLoader();
+
+    });
+
+    function FileUploaded() {
+        var filename = $("#wizard-picture").val();
+        var extension = filename.replace(/^.*\./, '');
+        //var size =
+        if (extension == "jpeg" || extension == "jpg" || extension == "png") {
+
+        }
+        else {
+            alert("Invalid File");
+            $("#wizard-picture").val("");
+        }
+    }
+
+    function Loadimages() {
+        var loc = "";
+        $.ajax({
+            type: 'POST',
+            // url: '../../ProfilePhotos/' + UserCode_sales + '.jpg',
+            async:false,
+            url: '../../Home/GetUserProfilePics',
+            data: { UserCode_sales: UserCode_sales },
+
+            success: function (response) {
+
+                if (response == "FALSE") {
+
+                    loc = "../../ProfilePhotos/user-icon-profile.jpg";
+                    $("#divimg img").attr('src', loc);
+                }
+                else if (response == "TRUE") {
+
+                    loc = "../../ProfilePhotos/" + UserCode_sales + ".jpg";
+                    $("#divimg img").attr('src', loc);
+                    $("#myModal img").attr('src', loc);
+                }
+
+
+
+            },
+            error: function () {
+
+
+            }
+        });
+    }
+
+    function getUserDetails() {
+        var total = JSON.stringify({ "UserCode": UserCode_sales, "userrole": userrole_sales })
+
+        $.ajax({
+            url: '../Home/getUserDetails',
+            type: 'POST',
+            data: { UserDetails: total },
+            success: function (response) {
+
+                var result = JSON.parse(response);
+                if (response == '') {
+                    //window.location.reload();
+                }
+                else {
+
+                    $("#lblName").empty();
+                    $("#lblEmpCode").empty();
+                    $("#lblMobileNo").empty();
+                    $("#lblLocation").empty();
+                    $("#lblVat").empty();
+                    $("#lblCst").empty();
+                    $("#lblPan").empty();
+                    $("#lblTin").empty();
+                    $("#hName").empty();
+                    if (result[0]["EMPLOYEE_NAME"] == '' || result[0]["EMPLOYEE_NAME"] == null || result[0]["EMPLOYEE_NAME"] == undefined || result[0]["EMPLOYEE_NAME"] == 'NULL') {
+                        $("#lblName").html("No Data Found")
+                    }
+                    else {
+                        $("#lblName").html(result[0]["EMPLOYEE_NAME"]);
+                    }
+                    if (result[0]["EMPLOYEE_CODE"] == '' || result[0]["EMPLOYEE_CODE"] == null || result[0]["EMPLOYEE_CODE"] == undefined || result[0]["EMPLOYEE_CODE"] == 'NULL') {
+                        $("#lblEmpCode").html("No Data Found");
+                    }
+                    else {
+                        $("#lblEmpCode").html(result[0]["EMPLOYEE_CODE"]);
+                    }
+                    if (result[0]["MOBILE_NO"] == '' || result[0]["MOBILE_NO"] == null || result[0]["MOBILE_NO"] == undefined || result[0]["MOBILE_NO"] == 'NULL') {
+                        $("#lblMobileNo").html("No Data Found");
+                    }
+                    else {
+                        $("#lblMobileNo").html(result[0]["MOBILE_NO"]);
+                    }
+                    if (result[0]["Address"] == '' || result[0]["Address"] == null || result[0]["Address"] == undefined || result[0]["Address"] == 'NULL') {
+                        $("#lblLocation").html("No Data Found");
+                    }
+                    else {
+                        $("#lblLocation").html(result[0]["Address"]);
+                    }
+                    if (result[0]["PAN_NO"] == '' || result[0]["PAN_NO"] == null || result[0]["PAN_NO"] == undefined || result[0]["PAN_NO"] == 'NULL') {
+                        $("#lblPan").html("No Data Found");
+                    }
+                    else {
+                        $("#lblPan").html(result[0]["PAN_NO"]);
+                    }
+                    if (result[0]["TIN_NO"] == '' || result[0]["TIN_NO"] == null || result[0]["TIN_NO"] == undefined || result[0]["TIN_NO"] == 'NULL') {
+                        $("#lblTin").html("No Data Found");
+                    }
+                    else {
+                        $("#lblTin").html(result[0]["TIN_NO"]);
+                    }
+                    if (result[0]["VAT_NO"] == '' || result[0]["VAT_NO"] == null || result[0]["VAT_NO"] == undefined || result[0]["VAT_NO"] == 'NULL') {
+                        $("#lblVat").html("No Data Found");
+                    }
+                    else {
+                        $("#lblVat").html(result[0]["VAT_NO"]);
+                    }
+                    if (result[0]["CST_NO"] == '' || result[0]["CST_NO"] == null || result[0]["CST_NO"] == undefined || result[0]["CST_NO"] == 'NULL') {
+                        $("#lblCst").html("No Data Found");
+                    }
+                    else {
+                        $("#lblCst").html(result[0]["CST_NO"]);
+                    }
+                    if (result[0]["AcountNumber"] == '' || result[0]["AcountNumber"] == null || result[0]["AcountNumber"] == undefined || result[0]["AcountNumber"] == 'NULL') {
+                        $("#lblacountno").html("No Data Found");
+                    }
+                    else {
+                        $("#lblaccountno").html(result[0]["AcountNumber"]);
+                    }
+                    if (result[0]["BankName"] == '' || result[0]["BankName"] == null || result[0]["BankName"] == undefined || result[0]["BankName"] == 'NULL') {
+                        $("#lblbankname").html("No Data Found");
+                    }
+                    else {
+                        $("#lblbankname").html(result[0]["BankName"]);
+                    }
+                    if (result[0]["EMAIL"] == '' || result[0]["EMAIL"] == null || result[0]["EMAIL"] == undefined || result[0]["EMAIL"] == 'NULL') {
+                        $("#lblEmail").html("No Data Found");
+                    }
+                    else {
+                        $("#lblEmail").html(result[0]["EMAIL"]);
+                    }
+                    if (result[0]["IFSC_CODE"] == '' || result[0]["IFSC_CODE"] == null || result[0]["IFSC_CODE"] == undefined || result[0]["IFSC_CODE"] == 'NULL') {
+                        $("#lblifsc").html("No Data Found");
+                    }
+                    else {
+                        $("#lblifsc").html(result[0]["IFSC_CODE"]);
+                    }
+
+                    $("#hName").html(result[0]["EMPLOYEE_NAME"]);
+
+                }
+            }
+        });
+    }
+
+
+    //VIKAS G, 20-SEP-2022 GetSignatureClubData start
+    function getSignatureClubData() {
+        var UserCode = UserCode_sales;
+        //var total = JSON.stringify({ "UserCode": UserCode_sales})
+        debugger
+        $.ajax({
+            url: '../Home/GetSignatureClubData',
+            type: 'POST',
+            data: { UserDetails: UserCode },
+            success: function (response) {
+                debugger
+                var result = JSON.parse(response);
+                if (response == '') {
+                    //window.location.reload();
+                    $("#signatureClub_PopUp").hide();
+                }
+                //else if (result.ExcelData = "" || result.ExcelData == undefined || result.ExcelData == null)
+                //{
+                //    $("#signatureClub_PopUp").hide();
+                //}
+                else {
+                    $("#signatureClub_PopUp").show();
+                    //$("#txtDealerCodeVal").empty();
+                    //$("#txtDealerNameVal").empty();
+                    //$("#txtTarget_monthVal").empty();
+                    //$("#txtTragetFYVal").empty();
+                    //$("#txtAchievementMTDVal").empty();
+                    //$("#txtAchievementYTDVal").empty();
+                    //$("#txtAchievementMTDRSVal").empty();
+                    //$("#txtAchievementYTDRSVal").empty();
+
+                    //$("#txtDealerCodeVal").html(result.ExcelData[0]["Sold_To_Code"]);
+                    //$("#txtDealerNameVal").html(result.ExcelData[0]["Sold_To_Name"]);
+                    //$("#txtTarget_monthVal").html(result.ExcelData[0]["FY 23 Target MT"]);
+                    //$("#txtTragetFYVal").html(result.dbData[0]["YTD_Achievement"]); //response.weather[0].main
+                    //$("#txtAchievementMTDVal").html(result.ExcelData[0]["FY 23 9 Months Target"]);
+                    //$("#txtAchievementYTDVal").html(result.ExcelData[0]["Q2 FY 23"]);
+                    //$("#txtAchievementMTDRSVal").html(result.ExcelData[0]["Q3,Q4  (6 Months balance)"]);
+                    //$("#txtAchievementYTDRSVal").html(result.ExcelData[0]["FY 23 9M Payout"]);
+                    var YTD_TARGET_DATA_BAR = Math.round(result.ExcelData[0]["FY 23 Target MT"]);
+                    var Q1_ACHIEVED_DATA_BAR = Math.round(result.dbData[0]["Q1_Achievement"]/1000);
+                    var Q2_ACHIEVED_DATA_BAR = Math.round(result.dbData[0]["Q2_Achievement"]/1000);
+                    var Q3_ACHIEVED_DATA_BAR = Math.round(result.dbData[0]["Q3_Achievement"]/1000);
+                    var Q4_ACHIEVED_DATA_BAR = Math.round(result.dbData[0]["Q4_Achievement"]/1000);
+                    var NINE_MONTHS_TARGET_DATA_BAR = Math.round(result.ExcelData[0]["FY 23 9 Months Target"]);
+                    var NINE_MONTHS_ACHIEVED_DATA_BAR = Math.round((result.dbData[0]["9M_Achievement"]) / 1000);
+                    var Y23_ACHIEVED_DATA_BAR = Math.round((result.dbData[0]["Y23_Achievement"]) / 1000);
+                    var Y23_BALANCE_TARGET_DATA_BAR = Math.round(YTD_TARGET_DATA_BAR - Y23_ACHIEVED_DATA_BAR);
+                    var BALANCE_TARGET_DATA_BAR = Math.round(result.ExcelData[0]["FY 23 9 Months Target"] - ((result.dbData[0]["9M_Achievement"])/1000));
+
+                    $("#Totalachieved").html("<h5><b>FY23 Total Volume achieved till date : " + Y23_ACHIEVED_DATA_BAR +" MT </B></h5>");
+                    $("#SignatureHeaderLable").html("<h4>Dear Channel Partner (" + result.ExcelData[0]["Sold_To_Code"] + " - " + result.ExcelData[0]["Sold_To_Name"] + "), welcome to <b>Signature Club</b></h4>");
+                }
+                  window.chartColors = {
+                    red: 'rgb(255, 0, 0)',
+                    yellow: 'rgb(255, 255, 0)',
+                    orange: 'rgb(138, 0, 0)',
+                    blue: 'rgb(0, 204, 255)',
+                    purple: 'rgb(255, 102, 0)',
+                    green: 'rgb(77, 182, 0)',
+                    grey: 'rgb(201, 203, 207)'
+                };
+                Chart.plugins.register({
+                    afterDraw: function (chart) {
+                        if (chart.data.datasets[0].data.every(item => item === 0)) {
+                            // No data is present
+                            var ctx = chart.chart.ctx;
+                            var width = chart.chart.width;
+                            var height = chart.chart.height
+                            chart.clear();
+                            ctx.save();
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.font = "16px normal 'Helvetica Nueue'";
+                            ctx.fillText('No data to display', width / 2, height / 2);
+                            ctx.restore();
+                        }
+                    }
+                });
+
+                //var TargetWiseGraphBar = document.getElementById('canvas-holder');
+                //TargetWiseGraphBar.innerHTML = '&nbsp;';
+                //$('#canvas-holder').append('<canvas id="TargetWiseGraphBar" width="200" height="200"></canvas>');
+
+                var Target_wise_CTX_BAR = document.getElementById('TargetWiseGraphBar').getContext('2d');
+                var Target_wise_BAR = new Chart(Target_wise_CTX_BAR, {
+                    type: 'bar',
+                    data: {
+                        labels: ["FY23 Target", "YTD Achievement", "Balance"],
+                        datasets: [{
+                             axis: 'y',
+                            //label: "Target Wise Chart",
+                            data: [YTD_TARGET_DATA_BAR, Y23_ACHIEVED_DATA_BAR, Y23_BALANCE_TARGET_DATA_BAR],
+                            backgroundColor: [
+                                window.chartColors.blue,
+                                window.chartColors.green,
+                                window.chartColors.red,
+                                window.chartColors.yellow,
+                                window.chartColors.orange,
+                                window.chartColors.purple
+                            ],
+                        }],
+                        // These labels appear in the legend and in the tooltips when hovering different arcs
+                        //labels: "Targets & Balance"
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        tooltips: {
+                            enabled: true
+                        },
+                        hover: {
+                            animationDuration: 1
+                        },
+                        animation: {
+                            duration: 1,
+                            onComplete: function () {
+                                var chartInstance = this.chart,
+                                    Target_wise_CTX_BAR = chartInstance.ctx;
+                                //Target_wise_CTX_BAR.font = this.scale.font;
+                                Target_wise_CTX_BAR.textAlign = 'center';
+                                Target_wise_CTX_BAR.fillStyle = "rgba(0, 0, 0, 1)";
+                                Target_wise_CTX_BAR.textBaseline = 'bottom';
+                                //const lineHeigt = Target_wise_CTX_BAR.measureText('M').width;
+                                // Loop through each data in the datasets
+
+                                this.data.datasets.forEach(function (dataset, i) {
+                                    var meta = chartInstance.controller.getDatasetMeta(i);
+                                    meta.data.forEach(function (bar, index) {
+                                        var data = dataset.data[index];
+                                        Target_wise_CTX_BAR.fillText(data, bar._model.x, bar._model.y +0);
+                                        //Target_wise_CTX_BAR.fillText(bar.value, 0, 0);
+
+                                    });
+                                });
+                               
+                            }
+                        },
+                        title: {
+                            display: true,
+                            fontsize: 14,
+                            text: 'FY23 Targets & Balance'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                generateLabels: function (chart) {
+                                    var data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map(function (label, i) {
+                                            var meta = chart.getDatasetMeta(0);
+                                            var ds = data.datasets[0];
+                                            var arc = meta.data[i];
+                                            var custom = arc && arc.custom || {};
+                                            var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                            var arcOpts = chart.options.elements.arc;
+                                            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                            // We get the value of the current label
+                                            var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                            if (value < 10) {
+                                                value = '0' + value;
+                                            }
+                                            return {
+                                                // Instead of `text: label,`
+                                                // We add the value to the string
+                                                text: label + " : " + value + " MT",
+                                                fillStyle: fill,
+                                                strokeStyle: stroke,
+                                                lineWidth: bw,
+                                                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                index: i
+                                            };
+                                        });
+                                    } else {
+                                        return [];
+                                    }
+                                }
+                            },
+
+                        }
+                    }
+                });
+
+                var NINE_MONTHS_Target_wise_CTX_BAR = document.getElementById('9MTargetWiseGraphBar').getContext('2d');
+                var NINE_MONTHS_Target_wise_BAR = new Chart(NINE_MONTHS_Target_wise_CTX_BAR, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Target", "Achieved", "Balance"],
+                        datasets: [{
+                            axis: 'y',
+                            //label: "Target Wise Chart",
+                            data: [NINE_MONTHS_TARGET_DATA_BAR, NINE_MONTHS_ACHIEVED_DATA_BAR, BALANCE_TARGET_DATA_BAR],
+                            backgroundColor: [
+                                window.chartColors.blue,
+                                window.chartColors.green,
+                                window.chartColors.red,
+                                window.chartColors.yellow,
+                                window.chartColors.orange,
+                                window.chartColors.purple
+                            ],
+                        }],
+                        // These labels appear in the legend and in the tooltips when hovering different arcs
+                        //labels: "Targets & Balance"
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        tooltips: {
+                            enabled: true
+                        },
+                        hover: {
+                            animationDuration: 1
+                        },
+                        animation: {
+                            duration: 1,
+                            onComplete: function () {
+                                var chartInstance = this.chart,
+                                    NINE_MONTHS_Target_wise_CTX_BAR = chartInstance.ctx;
+                                NINE_MONTHS_Target_wise_CTX_BAR.textAlign = 'center';
+                                NINE_MONTHS_Target_wise_CTX_BAR.fillStyle = "rgba(0, 0, 0, 1)";
+                                NINE_MONTHS_Target_wise_CTX_BAR.textBaseline = 'bottom';
+
+                                // Loop through each data in the datasets
+
+                                this.data.datasets.forEach(function (dataset, i) {
+                                    var meta = chartInstance.controller.getDatasetMeta(i);
+                                    meta.data.forEach(function (bar, index) {
+                                        var data = dataset.data[index];
+                                        NINE_MONTHS_Target_wise_CTX_BAR.fillText(data, bar._model.x, bar._model.y +0);
+
+                                    });
+                                });
+                            }
+                        },
+                        title: {
+                            display: true,
+                            fontsize: 14,
+                            text: 'Signature Club (9 Months) Targets & Balance'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                generateLabels: function (chart) {
+                                    var data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map(function (label, i) {
+                                            var meta = chart.getDatasetMeta(0);
+                                            var ds = data.datasets[0];
+                                            var arc = meta.data[i];
+                                            var custom = arc && arc.custom || {};
+                                            var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                            var arcOpts = chart.options.elements.arc;
+                                            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                            // We get the value of the current label
+                                            var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                            if (value < 10) {
+                                                value = '0' + value;
+                                            }
+                                            return {
+                                                // Instead of `text: label,`
+                                                // We add the value to the string
+                                                text: label + " : " + value + " MT",
+                                                fillStyle: fill,
+                                                strokeStyle: stroke,
+                                                lineWidth: bw,
+                                                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                index: i
+                                            };
+                                        });
+                                    } else {
+                                        return [];
+                                    }
+                                }
+                            },
+
+                        }
+                    }
+                });
+
+                var Target_wise_CTX_PIE = document.getElementById('TargetWiseGraphPie').getContext('2d');
+                var Target_wise_BAR = new Chart(Target_wise_CTX_PIE, {
+                    type: 'pie',
+                    //data: {
+                    //    dataPoints: [
+                    //        { label: "YTD", y: result.ExcelData[0]["Q2 FY 23"] },
+                    //        { label: "NINE", y: result.ExcelData[0]["FY 23 9 Months Target"] },
+                    //        { label: "BALNCE", y: inPercent }
+                    //    ]
+                    //    },
+                    data: {
+                        labels: ["QUARTER 1", "QUARTER 2", "QUARTER 3","QUARTER 4"],
+                        datasets: [{
+                            axis: 'y',
+                            label: "Quarter Wise Target Chart",
+                            data: [Q1_ACHIEVED_DATA_BAR,Q2_ACHIEVED_DATA_BAR,Q3_ACHIEVED_DATA_BAR,Q4_ACHIEVED_DATA_BAR],
+                            backgroundColor: [
+                                window.chartColors.red,
+                                window.chartColors.yellow,
+                                window.chartColors.blue,
+                                //window.chartColors.green,
+                                window.chartColors.purple
+                            ],
+                        }],
+                        // These labels appear in the legend and in the tooltips when hovering different arcs
+                        //labels: COMPLAINT_CATEGORY_NAME_DATA_BAR
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        animation: {
+                            duration: 500,
+                            easing: "easeOutQuart",
+                            onComplete: function () {
+                                var ctx = this.chart.ctx;
+                                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'bottom';
+
+                                this.data.datasets.forEach(function (dataset) {
+
+                                    for (var i = 0; i < dataset.data.length; i++) {
+                                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                            total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                            mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                            start_angle = model.startAngle,
+                                            end_angle = model.endAngle,
+                                            mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                                        var x = mid_radius * Math.cos(mid_angle);
+                                        var y = mid_radius * Math.sin(mid_angle);
+
+                                        ctx.fillStyle = '#0c0c0b';
+                                        if (i == 3) { // Darker text color for lighter background
+                                            ctx.fillStyle = '#0c0c0b';
+                                        }
+                                        var percent = String(Math.round(dataset.data[i] / total * 100)) + "%";
+                                        ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                                        // Display percent in another line, line break doesn't work for fillText
+                                        ctx.fillText(percent, model.x + x, model.y + y + 15);
+                                    }
+                                });
+                            }
+                        },
+                        title: {
+                            display: true,
+                            fontsize: 14,
+                            text: 'Quarter Wise Achieved'
+                        },                                          
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                generateLabels: function (chart) {
+                                    var data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map(function (label, i) {
+                                            var meta = chart.getDatasetMeta(0);
+                                            var ds = data.datasets[0];
+                                            var arc = meta.data[i];
+                                            var custom = arc && arc.custom || {};
+                                            var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                            var arcOpts = chart.options.elements.arc;
+                                            var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                            var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                            var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                            // We get the value of the current label
+                                            var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+                                            if (value < 10) {
+                                                value = '0' + value;
+                                            }
+                                            return {
+                                                // Instead of `text: label,`
+                                                // We add the value to the string
+                                                text: label + " : " + value + " MT",
+                                                fillStyle: fill,
+                                                strokeStyle: stroke,
+                                                lineWidth: bw,
+                                                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                index: i
+                                            };
+                                        });
+                                    } else {
+                                        return [];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function getCustomerSignatureClubData() {
+        var UserCode = UserCode_sales;
+        //var total = JSON.stringify({ "UserCode": UserCode_sales})
+        debugger
+        $.ajax({
+            url: '../Home/GetSignatureClubData',
+            type: 'POST',
+            data: { UserDetails: UserCode },
+            success: function (response) {
+                debugger
+                var result = JSON.parse(response);
+                if (response == '') {
+                    //window.location.reload();
+                }
+                else if (result.ExcelData = "" || result.ExcelData == undefined || result.ExcelData == null)
+                {
+                    $("#signatureClub_PopUp").hide();
+                }
+                else {
+                    ("#signatureClub_PopUp").show();
+                }
+            }
+        });
+    }
+
+    //VIKAS G, 20-SEP-2022 GetSignatureClubData end
+    function ShowModalSign() {
+
+        //$("#txtName").val($("#lblName").html());
+        $("#txtName").val($("#lblName").html().replace("&amp;", "&"));
+
+        $("#txtEmpCode").val($("#lblEmpCode").html());
+        $("#txtMobileNo").val($("#lblMobileNo").html());
+        $("#txtAddress").val($("#lblLocation").html());
+        $("#txtemail").val($("#lblEmail").html());
+        $("#txtpan").val($("#lblPan").html());
+        $("#txtaccountno").val($("#lblaccountno").html());
+        $("#txttin").val($("#lblTin").html());
+        $("#txtvat").val($("#lblVat").html());
+        $("#txtcst").val($("#lblCst").html());
+        $("#txtbankname").val($("#lblbankname").html());
+        $("#txtifsc").val($("#lblifsc").html());
+        $('#myModal').modal('show');
+    }
+
+
+    //VIKAS G, 20-SEP-2022 GetSignatureClubData END
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function ShowModal() {
+
+        //$("#txtName").val($("#lblName").html());
+        $("#txtName").val($("#lblName").html().replace("&amp;", "&"));
+
+        $("#txtEmpCode").val($("#lblEmpCode").html());
+        $("#txtMobileNo").val($("#lblMobileNo").html());
+        $("#txtAddress").val($("#lblLocation").html());
+        $("#txtemail").val($("#lblEmail").html());
+        $("#txtpan").val($("#lblPan").html());
+        $("#txtaccountno").val($("#lblaccountno").html());
+        $("#txttin").val($("#lblTin").html());
+        $("#txtvat").val($("#lblVat").html());
+        $("#txtcst").val($("#lblCst").html());
+        $("#txtbankname").val($("#lblbankname").html());
+        $("#txtifsc").val($("#lblifsc").html());
+        $('#myModal').modal('show');
+    }
+
+    function UpdateDetails() {
+        $("#error").hide();
+        var filename = $('#wizard-picture').val();
+        var name = $("#txtName").val();
+        var empcode = $("#txtEmpCode").val();
+        var mobileno = $("#txtMobileNo").val();
+        var address = $("#txtAddress").val();
+        var pan = $("#txtpan").val();
+        var tin = $("#txttin").val();
+        var cst = $("#txtcst").val();
+        var vat = $("#txtvat").val();
+        var acountno = $("#txtaccountno").val();
+        var bankname = $("#txtbankname").val();
+        var email = $("#txtemail").val();
+        var ifsc = $("#txtifsc").val();
+        var Details = "";
+
+        if (acountno == '' || acountno == undefined || acountno == 'NULL' || acountno == null)
+        {
+            alert("Please enter Bank Account number");
+            return false;
+        }
+        if (bankname == '' || bankname == undefined || bankname == 'NULL' || bankname == null)
+        {
+            alert("Please enter Bank Name");
+            return false;
+        }
+        if (ifsc == '' || ifsc == undefined || ifsc == 'NULL' || ifsc == null) {
+            alert("Please enter IFSC code");
+            return false;
+        }
+
+        if (userrole_sales != "STOCKIST") {
+
+            Details = JSON.stringify({
+                "name": name,
+                "empcode": empcode,
+                "mobileno": mobileno,
+                "address": address,
+                "UserCode": UserCode_sales,
+                "userrole": userrole_sales,
+                "email": email
+                //"file": file
+            });
+
+        }
+        else
+        {
+            Details = JSON.stringify({
+                "name": name,
+                "empcode": empcode,
+                "mobileno": mobileno,
+                "address": address,
+                "UserCode": UserCode_sales,
+                "userrole": userrole_sales,
+                "email": email,
+                "pan": pan,
+                "tin": tin,
+                "vat": vat,
+                "cst": cst,
+                "bankname": bankname,
+                "acountno": acountno,
+                "ifsc": ifsc
+            });
+
+        }
+        if (filename != "") {
+
+            var Filedata = $('#wizard-picture').prop("files")[0];
+            var form_data = new FormData();
+            form_data.append("file", Filedata);
+
+            var size = Filedata.size;
+            if (size > 122880)
+            {
+                $("#error").show();
+                $("#wizard-picture").val("");
+                return;
+            }
+            $.ajax({
+                contentType: false,
+                processData: false,
+                cache: false,
+                async: false,
+                url: '../Home/PhotoUpload',
+                type: 'POST',
+                data: form_data,
+                success: function (response) {
+                    $.ajax({
+                        url: '../Home/UpdateDetails',
+                        type: 'POST',
+                        data: { UserDetails: Details },
+                        success: function (response) {
+                            if (response != "") {
+                                alert(response);
+                                Loadimages();
+                                getUserDetails();
+                                $('#myModal').modal('hide');
+                                window.location.reload();
+                            }
+                            else {
+                                alert("Fail to Update");
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        else {
+
+            $.ajax({
+                url: '../Home/UpdateDetails',
+                type: 'POST',
+                data: { UserDetails: Details },
+                success: function (response) {
+                    if (response != "") {
+                        alert(response);
+                        Loadimages();
+                        getUserDetails();
+                        $('#myModal').modal('hide');
+                        //window.location.reload();
+                    }
+                    else {
+                        alert("Fail to Update");
+                    }
+                }
+            })
+        }
+    }
+
+</script>

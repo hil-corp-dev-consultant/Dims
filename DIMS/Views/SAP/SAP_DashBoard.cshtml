@@ -1,0 +1,1934 @@
+﻿@*
+    Module              : DIMS Client Application.
+    DocumentName        : SAP_DashBoard.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for get Payment by Stockist.
+    Developer Name      : Swamy Ayyappa P.
+    Change Log          : NA.
+
+*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+    //string Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    // string Role = UP.UserTypeCode;
+    // Role = "FSO";
+    string Role = "";
+    Role = UP.UserTypeCode;
+    //if (UP.SAP_DashboardAccess == "ADMIN")
+    //{
+    //    Role = UP.SAP_DashboardAccess;
+    //}
+    //else
+    //{
+    //    Role = UP.UserTypeCode;
+    //}
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    table thead tr th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table tfoot tr th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table tbody tr td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table tbody tr {
+        cursor: default;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 style="font-family: Calibri;font-size:18px;font-weight:500;">Finance Dashboard</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li class="active">Finance Dashboard</li>
+    </ol>
+    @*VIKAS G, 30-06-2022*@
+    @if ((@Role.Trim() != "STOCKIST") && (@Role.Trim() != "BU3_STK"))
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;">
+        <div class="row">
+            <input type="hidden" id="SessionUserRole" value="@Role.Trim()" />
+            <input type="hidden" id="ActualUserRole" value="@Role.Trim()" />
+            <input type="hidden" id="SessionUserCode" value="@SessionUserCode.Trim()" />
+            <input type="hidden" id="SessionUserZoneCode" value="@SessionZone_Code.Trim()" />
+            <input type="hidden" id="SessionUserStateCode" value="@SessionStateCode.Trim()" />
+            <input type="hidden" id="ActualUserStateCode" value="@SessionStateCode.Trim()" />
+            <input type="hidden" id="ActualUserZoneCode" value="@SessionZone_Code.Trim()" />
+            <input type="hidden" id="ActualUserCode" value="@SessionUserCode.Trim()" />
+            <input type="hidden" id="StckistTodate" />
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-body">
+                        <form class="form-horizontal" role="form" style="font-size: small">
+                            @if ((@Role.Trim() == "ADMIN") || (@Role.Trim() == "COO") || (@Role.Trim() == "CFO") || (@Role.Trim() == "NSH") || (@Role.Trim() == "NSH_BU3"))
+                            {
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="SAPOrderToDate">
+                                        Date
+                                        <span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="SAPOrderToDate" placeholder="Date" readonly />
+                                    </div>
+
+                                    <label class="col-sm-3 control-label" for="AdminZoneList">
+                                        Zone
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminZoneList" class="form-control" onchange="AdminZoneChange()"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="StatesFSO" style="display: none;">
+                                    <label class="col-sm-2 control-label" for="AdminStateListWithZone">
+                                        State
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminStateListWithZone" class="form-control AdminStateList" onchange="ADMINStateChange()">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-3 control-label" for="AdminFSOListWithState">
+                                        Territory/Area
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminFSOListWithState" class="form-control AdminFSOList" onchange="ADMINFSOListChange()">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="AdminStateListWithZone">
+                                        Sheet Type
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminSheetType" class="form-control">
+                                            <option value="">Select</option>
+                                            <option value="11">AC Sheets</option>
+                                            <option value="14">CC Sheets</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-5 col-sm-2 text-center">
+                                        <button type="button" class="btn btn-info navbar-btn" onclick="GetDashBoardData()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            @if ((@Role.Trim() == "ZH") || (@Role.Trim() == "RCC") || (@Role.Trim() == "ZSC") || (@Role.Trim() == "RSH_BU3"))
+                            {
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="SAPOrderToDate">
+                                        Date
+                                        <span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="SAPOrderToDate" placeholder="Date" readonly />
+                                    </div>
+
+                                    <label class="col-sm-3 control-label" for="AdminStateList">
+                                        State
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminStateList" class="form-control AdminStateList" onchange="ZHStateChange()"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div id="ZHFSOs" style="display: none;">
+                                        <label class="col-sm-2 control-label" for="ZHFSOListWithState">
+                                            Territory/Area
+                                        </label>
+                                        <div class="col-sm-3">
+                                            <select id="ZHFSOListWithState" class="form-control AdminFSOList" onchange="ZHFSOListChange()">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-3 control-label" for="AdminStateListWithZone">
+                                        Sheet Type
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminSheetType" class="form-control">
+                                            <option value="">Select</option>
+                                            <option value="11">AC Sheets</option>
+                                            <option value="14">CC Sheets</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-6">
+                                        <button type="button" class="btn btn-info navbar-btn" onclick="GetDashBoardData()" style="background-color: #d2401a">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            @if ((@Role.Trim() == "SH") || (@Role.Trim() == "TM") || (@Role.Trim() == "SH_BU3") || (@Role.Trim() == "TM_BU3"))
+                            {
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="SAPOrderToDate">
+                                        Date
+                                        <span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="SAPOrderToDate" placeholder="Date" readonly />
+                                    </div>
+
+                                    <label class="col-sm-3 control-label" for="AdminFSOList">
+                                        Territory/Area
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminFSOList" class="form-control AdminFSOList" onchange="FSOListChange()"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="AdminStateListWithZone">
+                                        Sheet Type
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select id="AdminSheetType" class="form-control">
+                                            <option value="">Select</option>
+                                            <option value="11">AC Sheets</option>
+                                            <option value="14">CC Sheets</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-6">
+                                        <button type="button" class="btn btn-info navbar-btn" onclick="GetDashBoardData()" style="background-color: #d2401a">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            @if (@Role.Trim() == "FSO" || @Role.Trim() == "FSO_BU2")
+                            {
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="SAPOrderToDate">
+                                        Date
+                                        <span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="SAPOrderToDate" placeholder="Date" readonly />
+                                    </div>
+                                    <label class="col-sm-3 control-label" for="AdminStateListWithZone">
+                                        Sheet Type
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="AdminSheetType" ng-model="AdminSheetType" style="float: left;"></select>
+                                        @*<select id="AdminSheetType" class="form-control">
+                            <option value="">Select</option>
+                            <option value="11">AC Sheets</option>
+                            <option value="14">CC Sheets</option>
+                        </select>*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-6">
+                                        <button type="button" class="btn btn-info navbar-btn" onclick="GetDashBoardData()" style="background-color: #d2401a">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            @if (@Role.Trim() == "FSO_BU3" || @Role.Trim() == "MDO")
+                            {
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="SAPOrderToDate">
+                                        Date
+                                        <span class="Mandatory">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="SAPOrderToDate" placeholder="Date" readonly />
+                                    </div>
+                                    <label class="col-sm-3 control-label" for="AdminStateListWithZone">
+                                        Sheet Type
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" id="AdminSheetType" ng-model="AdminSheetType" style="float: left;"></select>
+                                        @*<select id="AdminSheetType" class="form-control">
+                            <option value="">Select</option>
+                            <option value="11">AC Sheets</option>
+                            <option value="14">CC Sheets</option>
+                        </select>*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-6">
+                                        <button type="button" class="btn btn-info navbar-btn" onclick="GetDashBoardData()" style="background-color: #d2401a">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            @if ((@Role.Trim() == "STOCKIST") || (@Role.Trim() == "BU3_STK"))
+                            {
+                                <div class="form-group" hidden="hidden">
+                                    <label class="col-sm-2 control-label" for="SAPOrderToDate">
+                                        Date
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="SAPOrderToDate" placeholder="Date" readonly />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="button" class="btn btn-info navbar-btn" onclick="GetDashBoardData()" style="background-color: #d2401a">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+
+
+
+
+
+                            @*<div class="form-group">
+                <div class="col-sm-offset-6">
+                    <button type="button" class="btn btn-info navbar-btn" onclick="GetDashBoardData()" style="background-color:#d2401a">
+                        Submit
+                    </button>
+                </div>
+            </div>*@
+                        </form>
+
+
+                        <div class="table-responsive">
+                            <table id="SAP_DB_Fin_Transactions" class="table ListTable">
+                                <thead>
+
+                                    @*<tr>
+                        @if (@Role.Trim() == "STOCKIST")
+                        {
+                            <th style="text-align: center;" colspan="4">
+                                <label id="FinTransactionsHeader"></label>
+                            </th>
+                        }
+                        else
+                        {
+                            <th style="text-align: center;" colspan="6">
+                                <label id="FinTransactionsHeader"></label>
+                            </th>
+                        }
+                    </tr>*@
+                                    <tr>
+                                        @if ((@Role.Trim() == "STOCKIST") || (@Role.Trim() == "BU3_STK"))
+                                        {
+                                            <th colspan="4" style="text-align: center;">Volume Summary ( Last 5 Invoices )</th>
+                                        }
+                                        else
+                                        {
+                                            <th colspan="6" style="text-align: center;">Top 10 Customers- Volume Summary (YTD Basis)</th>
+                                        }
+                                    </tr>
+                                    <tr>
+
+                                        @if ((@Role.Trim() == "ADMIN") || (@Role.Trim() == "COO") || (@Role.Trim() == "CFO") || (@Role.Trim() == "NSH") || (@Role.Trim() == "NSH_BU3"))
+                                        {
+                                            <th>Sl. No.</th>
+                                            <th>Customer Code</th>
+                                            <th>Customer Name</th>
+                                            <th class="TextName">Zone</th>
+                                        }
+                                        @if ((@Role.Trim() == "ZH") || (@Role.Trim() == "RCC") || (@Role.Trim() == "ZSC") || (@Role.Trim() == "RSH_BU3"))
+                                        {
+                                            <th>Sl. No.</th>
+                                            <th>Customer Code</th>
+                                            <th>Customer Name</th>
+                                            <th class="TextName">State</th>
+                                        }
+                                        @if ((@Role.Trim() == "SH") || (@Role.Trim() == "TM") || (@Role.Trim() == "SH_BU3") || (@Role.Trim() == "TM_BU3"))
+                                        {
+                                            <th>Sl. No.</th>
+                                            <th>Customer Code</th>
+                                            <th>Customer Name</th>
+                                            <th class="TextName">FSO</th>
+                                        }
+                                        @if ((@Role.Trim() == "FSO") || (@Role.Trim() == "FSO_BU2") || (@Role.Trim() == "FSO_BU3") || (@Role.Trim() == "MDO"))
+                                        {
+                                            <th>Sl. No.</th>
+                                            <th>Customer Code</th>
+                                            <th>Customer Name</th>
+                                            <th>District</th>
+                                        }
+                                        @if ((@Role.Trim() == "STOCKIST") || (@Role.Trim() == "BU3_STK"))
+                                        {
+                                            <th>Sl. No.</th>
+                                            <th>Invoice Number</th>
+                                            <th class="HideForStockist"></th>
+                                        }
+                                        <th>Quantity Lifted (MT)</th>
+                                        <th>Invoice Value (INR in Lakhs)</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        @if ((@Role.Trim() == "STOCKIST") || (@Role.Trim() == "BU3_STK"))
+                                        {
+                                            <th colspan="2" style="text-align: left;">TOTAL</th>
+                                            @*
+                            <th class="HideForStockist"></th>*@
+                                            <th style="text-align: right;">
+                                                <label id="GrossWtSum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="InvValueSum"></label>
+                                            </th>
+                                        }
+                                        else
+                                        {
+                                            <th colspan="4" style="text-align: left">TOTAL</th>
+                                            @*
+                            <th class="HideForStockist"></th>*@
+                                            <th style="text-align: right;">
+                                                <label id="GrossWtSum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="InvValueSum"></label>
+                                            </th>
+                                        }
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div style="padding:10px;"></div>
+
+                        @if ((@Role.Trim() == "STOCKIST") || (@Role.Trim() == "BU3_STK"))
+                        {
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="NetOutStanding" id="lblNetOutStanding">
+                                    NET Outstanding Amount (INR in Lakhs):
+                                </label>
+                                <label class="col-sm-3 control-label" id="NetOutStanding">
+                                </label>
+
+                                <label class="col-sm-3 col-sm-offset-2 control-label" for="TotalPendingCForm" id="lblTotalPendingCForm">
+                                    TOTAL Pending C-Forms (INR in Lakhs):
+                                </label>
+                                <label class="col-sm-1 control-label" id="TotalPendingCForm">
+                                </label>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table id="SAP_DB_Ageing_Outstanding_Summary" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="8" style="text-align: center;" class="AgeingOn">Ageing of Outstanding Summary (INR in Lakhs)</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="vertical-align: middle;">Area/FSO</th>
+                                            <th>0-30 Days</th>
+                                            <th>31-60 Days</th>
+                                            <th>61-90 Days</th>
+                                            <th>91-120 Days</th>
+                                            <th>121-180 Days</th>
+                                            <th>Above 180 Days</th>
+                                            <th>Total Outstanding</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th style="text-align: left;">TOTAL</th>
+                                            <th style="text-align: right;">
+                                                <label id="Amount1Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Amount2Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Amount3Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Amount4Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Amount5Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Amount6Sum"></label>
+                                            </th>
+
+                                            <th style="text-align: right;">
+                                                <label id="TotalSum"></label>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div style="padding:10px;"></div>
+                        }
+
+
+                        @if ((@Role.Trim() == "STOCKIST") || (@Role.Trim() == "BU3_STK"))
+                        {
+
+                        }
+                        else
+                        {
+                            <div class="table-responsive" id="CFORMLast">
+                                <table id="SAP_DB_C_FormSummary" class="table ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="9" style="text-align: center;" class="Financeyear">C-Form Summary (INR in Lakhs)</th>
+                                        </tr>
+                                        <tr>
+                                            @if ((@Role.Trim() == "ADMIN") || (@Role.Trim() == "COO") || (@Role.Trim() == "CFO") || (@Role.Trim() == "NSH") || (@Role.Trim() == "NSH_BU3"))
+                                            {
+                                                <th rowspan="2" style="vertical-align: middle;" class="TextName">Zone</th>
+                                            }
+                                            @if ((@Role.Trim() == "ZH") || (@Role.Trim() == "RCC") || (@Role.Trim() == "ZSC") || (@Role.Trim() == "RSH_BU3"))
+                                            {
+                                                <th rowspan="2" style="vertical-align: middle;" class="TextName">State</th>
+                                            }
+                                            @if ((@Role.Trim() == "SH") || (@Role.Trim() == "TM"))
+                                            {
+                                                <th rowspan="2" style="vertical-align: middle;">FSO</th>
+                                            }
+                                            @if ((@Role.Trim() == "FSO") || (@Role.Trim() == "FSO_BU2"))
+                                            {
+                                                <th rowspan="2" style="vertical-align: middle;">Customer Name</th>
+                                            }
+                                            @if ((@Role.Trim() == "STOCKIST"))
+                                            {
+                                                <th rowspan="2" style="vertical-align: middle;">Customer Name</th>
+                                            }
+
+                                            <th colspan="2">Q1</th>
+                                            <th colspan="2">Q2</th>
+                                            <th colspan="2">Q3</th>
+                                            <th colspan="2">Q4</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Pending </th>
+                                            <th>Pending (%)</th>
+                                            <th>Pending </th>
+                                            <th>Pending (%)</th>
+                                            <th>Pending </th>
+                                            <th>Pending (%)</th>
+                                            <th>Pending </th>
+                                            <th>Pending (%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th style="text-align: left;">TOTAL</th>
+                                            <th style="text-align: right;">
+                                                <label id="Q1Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Q1PercentageSum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Q2Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Q2PercentageSum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Q3Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Q3PercentageSum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Q4Sum"></label>
+                                            </th>
+                                            <th style="text-align: right;">
+                                                <label id="Q4PercentageSum"></label>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div style="padding:10px;"></div>
+                            <div class="form-group" id="CFormLatest">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-link" onclick="GetLastQuarters()">View Last 3 Years C-Form Summary</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="Finance_CFORM" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header Background">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align: center">&nbsp;Last 3 Years C-Form Summary (INR in Lakhs)</h4>
+                </div>
+
+                <div class="modal-body" style="overflow:auto;">
+
+                    <table id="CFORMSummary" class="table ListTable">
+                        <thead>
+                            @*<tr>
+                                    <th colspan="12" style="text-align: center;">C-Form Summary 3 Years (INR in Lakhs)</th>
+                                </tr>*@
+                            <tr>
+                                @if ((@Role.Trim() == "ADMIN") || (@Role.Trim() == "COO") || (@Role.Trim() == "CFO") || (@Role.Trim() == "NSH") || (@Role.Trim() == "NSH_BU3"))
+                                {
+                                    <th rowspan="2" style="vertical-align: middle;" class="TextName">Zone</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Year</th>
+                                }
+                                @if ((@Role.Trim() == "ZH") || (@Role.Trim() == "RCC") || (@Role.Trim() == "ZSC") || (@Role.Trim() == "RSH_BU3"))
+                                {
+                                    <th rowspan="2" style="vertical-align: middle;" class="TextName">State</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Year</th>
+                                }
+                                @if ((@Role.Trim() == "SH") || (@Role.Trim() == "TM") || (@Role.Trim() == "SH_BU3") || (@Role.Trim() == "TM_BU3"))
+                                {
+                                    <th rowspan="2" style="vertical-align: middle;">FSO</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Year</th>
+                                }
+                                @if ((@Role.Trim() == "FSO") || (@Role.Trim() == "FSO_BU2") || (@Role.Trim() == "FSO_BU3") || (@Role.Trim() == "MDO"))
+                                {
+                                    <th rowspan="2" style="vertical-align: middle;">Customer Name</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Year</th>
+                                }
+                                @if ((@Role.Trim() == "STOCKIST") || (@Role.Trim() == "BU3_STK"))
+                                {
+                                    <th rowspan="2" style="vertical-align: middle;">Customer Name</th>
+                                }
+                                <th colspan="2">Q1</th>
+                                <th colspan="2">Q2</th>
+                                <th colspan="2">Q3</th>
+                                <th colspan="2">Q4</th>
+                                <th colspan="2">Total</th>
+                            </tr>
+                            <tr>
+                                <th>Pending</th>
+                                <th>Pending (%)</th>
+                                <th>Pending</th>
+                                <th>Pending (%)</th>
+                                <th>Pending</th>
+                                <th>Pending (%)</th>
+                                <th>Pending</th>
+                                <th>Pending (%)</th>
+                                <th>Pending</th>
+                                <th>Pending (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;"></div>
+                <div id="TotalYearWise"> </div>
+                <div style="padding:10px;"></div>
+                <div class="modal-footer align-center">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+        //ShowLoader();
+        // console.clear();
+        var SessionValue = $('#SessionUserRole').val();
+        var BusinessUnit = "";
+        if (SessionValue == "BU3_STK" || SessionValue == "FSO_BU3" || SessionValue == "MDO" || SessionValue == "TM_BU3" || SessionValue == "SH_BU3" || SessionValue == "RSH_BU3" || SessionValue == "NSH_BU3") {
+            BusinessUnit = "SBU3";
+        }
+        else if (SessionValue == "FSO_BU2" || SessionValue == "TM_BU2" || SessionValue == "SH_BU2" ) {
+            BusinessUnit = "SBU2";
+        }
+        else {
+            BusinessUnit = "SBU1";
+        }
+        var Data = JSON.stringify({
+            "BusinessUnit": BusinessUnit,
+        });
+        $.ajax({
+            type: 'POST',
+            url: '../../SAP/FillDivisionFilter',
+            data: { Data: Data },
+            async: true,
+            success: function (response) {
+                // console.log("response :" + response);
+                $("#AdminSheetType").empty();
+                $("#DivisionFilterSBU3").empty();
+                debugger
+                if (response == "") {
+
+                }
+                else {
+                    response = JSON.parse(response);
+                    if (SessionValue == "BU3_STK") {
+                        var option = $('<option></option>').attr("value", "ALL").text("ALL");
+                        $("#DivisionFilterSBU3").append(option);
+                        for (var i = 0; i < response.length; i++) {
+                            var option = $('<option></option>').attr("value", response[i]["DIVISION_CODE"]).text(response[i]["DIVISION_NAME"]);
+                            $("#DivisionFilterSBU3").append(option);
+                        }
+                    }
+                    else {
+                        var option = $('<option></option>').attr("value", "ALL").text("ALL");
+                        $("#AdminSheetType").append(option);
+                        for (var i = 0; i < response.length; i++) {
+                            var option = $('<option></option>').attr("value", response[i]["DIVISION_CODE"]).text(response[i]["DIVISION_NAME"]);
+                            $("#AdminSheetType").append(option);
+                        }
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+
+
+
+
+
+        $('#SAPOrderToDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        GetServerDateTime();
+        var SessionUserRole = $("#SessionUserRole").val();
+        GetCurrentFinanceYear();
+        //if (SessionUserRole != "FSO") {
+        //    GetCurrentFinanceYear();
+        //}
+        GetUserStateZoneCodes();
+        //if (SessionUserRole == "SH" || SessionUserRole == "ZH" || SessionUserRole == "TM" || SessionUserRole == "RCC") {
+        //    ShowLoader();
+        //    GetUserStateZoneCodes();
+        //}
+
+        $('#SAPOrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $('#SAPOrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+
+        $('#SAPOrderToDate').bind('keypress', function (e) {
+            return false;
+        });
+
+
+
+        var UserZoneCode = $('#SessionUserZoneCode').val();
+
+        if (SessionUserRole == "COO" || SessionUserRole == "CFO" || SessionUserRole == "NSH" || SessionUserRole == "NSH_BU3" || SessionUserRole == "ADMIN") {
+            // $("#FinTransactionsHeader").text("Financial Transactions Dashboard");
+
+            GetAllZoneList();
+        }
+        else if (SessionUserRole == "ZH" || SessionUserRole == "RCC" || SessionUserRole == "ZSC" || SessionUserRole == "RSH_BU3") {
+            // $("#FinTransactionsHeader").text("Financial Transactions Dashboard");
+            if (SessionUserRole == "RCC") {
+                setTimeout(GetStatesListBasedOnZone, 2000)
+            } else {
+                GetStatesListBasedOnZone();
+            }
+            // GetStatesListBasedOnZone();
+        }
+        else if (SessionUserRole == "SH" || SessionUserRole == "TM" || SessionUserRole == "SH_BU3" || SessionUserRole == "TM_BU3" ) {
+            // $("#FinTransactionsHeader").text("Financial Transactions Dashboard");
+            GetFSOListBasedOnEmp();
+        }
+            //else if (SessionUserRole == "TM") {
+            //    GetFSOBasedOrgLevelId();
+            //}
+        else if (SessionUserRole == "FSO" || SessionUserRole == "FSO_BU2" || SessionUserRole == "FSO_BU3" || SessionUserRole == "MDO") {
+            GetFSOBasedOrgLevelId();
+            // $("#FinTransactionsHeader").text("Financial Transactions Dashboard");
+        }
+        else if ((SessionUserRole == "STOCKIST") ||(SessionUserRole == "BU3_STK")) {
+            //  $("#FinTransactionsHeader").text("Financial Transactions Dashboard");
+            $(".HideForStockist").css("display", "none");
+            $('#lblNetOutStanding').text("NET Outstanding Amount (As on Date) (INR in Lakhs) :");
+            //$('#SAPOrderToDate').val();
+        }
+
+
+        //if (SessionUserRole == "FSO") {
+        //    $("#CFORMLast").hide();
+        //    $('#CFormLatest').hide();
+        //} else {
+        //    $("#CFORMLast").show();
+        //    $('#CFormLatest').show();
+        //}
+
+        if ((SessionUserRole == "STOCKIST") || (SessionUserRole == "BU3_STK")) {
+            $("#SAP_DB_Fin_Transactions").dataTable({
+                searching: false,
+                paging: false,
+                "bSort": false
+            });
+            GetDashBoardData();
+        }
+            //else if (SessionUserRole == "FSO") {
+            //    $("#SAP_DB_Ageing_Outstanding_Summary").dataTable({
+            //        searching: false,
+            //        paging: false
+            //    });
+            //    $("#SAP_DB_Fin_Transactions").dataTable({
+            //        searching: false,
+            //        paging: false,
+            //        "bSort": false
+            //    });
+            //    $("#SAP_DB_C_FormSummary").dataTable({
+            //        searching: false,
+            //        paging: false
+            //    });
+            //}
+        else {
+            $("#SAP_DB_Ageing_Outstanding_Summary").dataTable({
+                searching: false,
+                paging: false
+            });
+            $("#SAP_DB_Fin_Transactions").dataTable({
+                searching: false,
+                paging: false,
+                "bSort": false
+            });
+
+            $("#SAP_DB_C_FormSummary").dataTable({
+                searching: false,
+                paging: false
+            });
+
+            $("#CFORMSummary").dataTable({
+                searching: false,
+                paging: false,
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        className: "dt-body-left"
+
+                    },
+                    {
+                        "targets": [2],
+                        className: "dt-body-right"
+                    },
+                    {
+                        "targets": [3],
+                        className: "dt-body-right"
+                    },
+                    {
+                        "targets": [4],
+                        className: "dt-body-right"
+                    },
+        {
+            "targets": [5],
+            className: "dt-body-right"
+        },
+        {
+            "targets": [6],
+            className: "dt-body-right"
+        },
+        {
+            "targets": [7],
+            className: "dt-body-right"
+        },
+        {
+            "targets": [8],
+            className: "dt-body-right"
+        },
+         {
+             "targets": [9],
+             className: "dt-body-right"
+         },
+         {
+             "targets": [10],
+             className: "dt-body-right"
+         }, {
+             "targets": [11],
+             className: "dt-body-right"
+         }
+                ],
+            });
+        }
+
+        HideLoader();
+    });
+
+    function GetDashBoardData() {
+        debugger
+        // var FromDate = $('#SAPOrderFromDate').val();
+        var ToDate = $('#SAPOrderToDate').val();
+        var stockistdate = $('#StckistTodate').val();
+       // var Role = $('#SessionUserRole').val();
+        var Role = $('#ActualUserRole').val();
+        var UserCode = $('#SessionUserCode').val();
+        var table123 = $('#SAP_DB_Ageing_Outstanding_Summary').DataTable();
+
+        var table1234;
+
+        //if ((Role != "FSO") && (Role != "STOCKIST")) {
+        //    table1234 = $('#SAP_DB_C_FormSummary').DataTable();
+        //}
+
+        if ((Role != "STOCKIST") && (Role != "BU3_STK")) {
+            table1234 = $('#SAP_DB_C_FormSummary').DataTable();
+        }
+        if ((Role == "STOCKIST") || (Role == "BU3_STK")) {
+            ToDate = stockistdate;
+        }
+
+        var table12345 = $('#SAP_DB_Fin_Transactions').DataTable();
+        var UserZoneCode = $('#SessionUserZoneCode').val();
+        var UserStateCode = $('#SessionUserStateCode').val();
+        var SheetType = $('#AdminSheetType').val();
+
+        //if (ToDate == "" || ToDate == null) {
+        //    alert("Please select date");
+        //} else {
+
+            //  ShowLoader();
+
+            $('.AgeingOn').empty();
+            $('.AgeingOn').append("Ageing of Outstanding Summary (INR in Lakhs) As on " + ToDate);
+            //  ShowLoader();
+            var Data = JSON.stringify({
+                "UserRole": Role,
+                // "FromDate": DateConverter(FromDate),
+                "ToDate": DateConverter(ToDate),
+                "UserCode": UserCode,
+                "CFormFrom": "CurrentFinance",
+                "UserZoneCode": UserZoneCode,
+                "UserStateCode": UserStateCode,
+                "SheetType": SheetType
+            });
+          
+            $.ajax({
+                url: '../../SAP/AgeingofOutstandingSummary',
+                type: 'POST',
+                data: { Data: Data },
+                beforeSend: function () {
+                    ShowLoader();
+                },
+                async: true,
+                success: function (Resps) {
+                    debugger
+                    // ShowLoader();
+                    if (Resps == "") {
+                        table123.clear().draw();
+                        $("#Amount1Sum").text("0.00");
+                        $("#Amount2Sum").text("0.00");
+                        $("#Amount3Sum").text("0.00");
+                        $("#Amount4Sum").text("0.00");
+                        $("#Amount5Sum").text("0.00");
+                        $("#Amount6Sum").text("0.00");
+                        $("#TotalSum").text("0.00");
+                        if ((Role == "STOCKIST") || (Role == "BU3_STK")) {
+                            $('#NetOutStanding').text("0.00");
+                        }
+                    }
+                    else {
+                        //  ShowLoader();
+                        var HtmlCode = "";
+                        Resps = JSON.parse(Resps);
+                        table123.clear().draw();
+                        table123.destroy();
+                        var Amount1Sum = 0;
+
+                        var Amount2Sum = 0;
+                        var Amount3Sum = 0;
+                        var Amount4Sum = 0;
+                        var Amount5Sum = 0;
+                        var Amount6Sum = 0;
+                        var TotalSum = 0;
+                        //  $("#SAP_DB_Ageing_Outstanding_Summary").dataTable().fnDestroy();
+                        //$("#SAP_DB_Ageing_Outstanding_Summary").dataTable.fnClearTable();
+                        //$("#SAP_DB_Ageing_Outstanding_Summary").dataTable.fnDraw();
+                        //$("#SAP_DB_Ageing_Outstanding_Summary").dataTable.fnDestroy();
+                        //table123.clear().draw();
+                        //table123.destroy();
+                        // $('#SAP_DB_Ageing_Outstanding_Summary tbody').empty();
+
+                        for (var i = 0; i < Resps.length; i++) {
+
+                            //   $('#SAP_DB_Ageing_Outstanding_Summary').dataTable().fnAddData([Resps[i]["ZONE_NAME"], Resps[i]["Amount1"], Resps[i]["Amount2"], Resps[i]["Amount3"], Resps[i]["Amount4"], Resps[i]["Amount5"], Resps[i]["Total"]]);
+
+                            if ((Role != "STOCKIST") && (Role != "BU3_STK")) {
+                                HtmlCode = HtmlCode + "<tr>";
+                                if (Role == "COO" || Role == "CFO" || Role == "NSH" || Role == "NSH_BU3" || Role == "ADMIN") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Resps[i]["ZONE_NAME"] + "</td>";
+                                } else if (Role == "ZH" || Role == "RCC" || Role == "ZSC" || Role == "RSH_BU3") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Resps[i]["STATE_NAME"] + "</td>";
+                                } else if (Role == "SH" || Role == "TM" || Role == "SH_BU3" || Role == "TM_BU3") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Resps[i]["ORG_LEVEL_NAME"] + "</td>";
+                                } else if (Role == "FSO" || Role == "FSO_BU2" || Role == "MDO" || Role == "FSO_BU3") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>Outstanding</td>";
+                                }
+
+                                else {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'></td>";
+                                }
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resps[i]["Amount1"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resps[i]["Amount2"]).toFixed(2) + "</td>";
+
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resps[i]["Amount3"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resps[i]["Amount4"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resps[i]["Amount5"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resps[i]["Amount6"]).toFixed(2) + "</td>";
+
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resps[i]["Total"]).toFixed(2) + "</td>";
+
+                                HtmlCode = HtmlCode + "</tr>";
+
+                                Amount1Sum = parseFloat(Amount1Sum) + parseFloat(Resps[i]["Amount1"]);
+                                Amount2Sum = parseFloat(Amount2Sum) + parseFloat(Resps[i]["Amount2"]);
+                                Amount3Sum = parseFloat(Amount3Sum) + parseFloat(Resps[i]["Amount3"]);
+                                Amount4Sum = parseFloat(Amount4Sum) + parseFloat(Resps[i]["Amount4"]);
+                                Amount5Sum = parseFloat(Amount5Sum) + parseFloat(Resps[i]["Amount5"]);
+                                Amount6Sum = parseFloat(Amount6Sum) + parseFloat(Resps[i]["Amount6"]);
+
+                                TotalSum = parseFloat(TotalSum) + parseFloat(Resps[i]["Total"]);
+
+                                $("#Amount1Sum").text((Math.round(Amount1Sum * 100) / 100).toFixed(2));
+                                $("#Amount2Sum").text((Math.round(Amount2Sum * 100) / 100).toFixed(2));
+                                $("#Amount3Sum").text((Math.round(Amount3Sum * 100) / 100).toFixed(2));
+                                $("#Amount4Sum").text((Math.round(Amount4Sum * 100) / 100).toFixed(2));
+                                $("#Amount5Sum").text((Math.round(Amount5Sum * 100) / 100).toFixed(2));
+                                $("#Amount6Sum").text((Math.round(Amount6Sum * 100) / 100).toFixed(2));
+                                $("#TotalSum").text((Math.round(TotalSum * 100) / 100).toFixed(2));
+
+
+                                $("#SAP_DB_Ageing_Outstanding_Summary tbody").remove();
+                                $("#SAP_DB_Ageing_Outstanding_Summary").append("<tbody>" + HtmlCode + "</tbody>");
+
+                                $("#SAP_DB_Ageing_Outstanding_Summary").dataTable({
+                                    "searching": false,
+                                    "paging": false,
+                                    "bDestroy": true,
+                                });
+                                // HideLoader();
+                            }
+                            else {
+
+                                var TotalOutstanding = Resps[i]["total"];
+                                if (TotalOutstanding == "" || TotalOutstanding == "0.0" || TotalOutstanding == 0.0 || TotalOutstanding == 0 || TotalOutstanding == "0" || TotalOutstanding == undefined) {
+
+                                    $('#NetOutStanding').text("0.0");
+                                } else {
+                                    TotalOutstanding = (TotalOutstanding / 100000).toFixed(2);
+                                    $('#NetOutStanding').text(TotalOutstanding);
+                                }
+                                // HideLoader();
+
+                            }
+                            //  HideLoader();
+
+                        }
+                    }
+                    // HideLoader();
+                },
+                complete: function () {
+                    //  HideLoader();
+                    //  $("#loading").fadeOut();
+                }, error: function () {
+                    HideLoader();
+                }
+            });
+            // if (Role != "FSO") {
+            $.ajax({
+                url: '../../SAP/CFormLatestQuarters',
+                type: 'POST',
+                data: { Data: Data },
+                beforeSend: function () {
+                    // setting a timeout
+                    // ShowLoader();
+                },
+                async: true,
+                success: function (Resp) {
+                    debugger
+                    // ShowLoader();
+                    if (Resp == "") {
+
+                        $("#Q1Sum").text("0.00");
+                        $("#Q2Sum").text("0.00");
+                        $("#Q3Sum").text("0.00");
+                        $("#Q4Sum").text("0.00");
+
+                        $("#Q1PercentageSum").text("0.00");
+                        $("#Q2PercentageSum").text("0.00");
+                        $("#Q3PercentageSum").text("0.00");
+                        $("#Q4PercentageSum").text("0.00");
+
+                        if ((Role == "STOCKIST") || (Role == "BU3_STK")) {
+                            $('#TotalPendingCForm').text("0.00");
+                        } else {
+                            table1234.clear().draw();
+                        }
+                        // HideLoader();
+                    }
+                    else {
+                        // ShowLoader();
+                        Resp = JSON.parse(Resp);
+                        var HtmlCode = "";
+                        var Q1Sum = 0;
+                        var Q2Sum = 0;
+                        var Q3Sum = 0;
+                        var Q4Sum = 0;
+                        var Q1PercentageSum = 0;
+                        var Q2PercentageSum = 0;
+                        var Q3PercentageSum = 0;
+                        var Q4PercentageSum = 0;
+
+                        var Q1TotalAmt = 0;
+                        var Q2TotalAmt = 0;
+                        var Q3TotalAmt = 0;
+                        var Q4TotalAmt = 0;
+
+                        //  $('#SAP_DB_Ageing_Outstanding_Summary tbody').empty();
+
+                        if ((Role == "STOCKIST") || (Role == "BU3_STK")) {
+                            $('#TotalPendingCForm').text(parseFloat(Resp[0]["TotalQ"]).toFixed(2));
+                            // HideLoader();
+                        } else {
+                            table1234.clear().draw();
+                            table1234.destroy();
+                            // ShowLoader();
+                            for (var i = 0; i < Resp.length; i++) {
+                                HtmlCode = HtmlCode + "<tr>";
+                                if (Role == "COO" || Role == "CFO" || Role == "NSH" || Role == "NSH_BU3" || Role == "ADMIN") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Resp[i]["ZONE_NAME"] + "</td>";
+                                } else if (Role == "ZH" || Role == "RCC" || Role == "ZSC" || Role == "RSH_BU3") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Resp[i]["State_Name"] + "</td>";
+                                }
+                                else if (Role == "SH" || Role == "TM" || Role == "SH_BU3" || Role == "TM_BU3") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Resp[i]["ORG_LEVEL_NAME"] + "</td>";
+                                }
+                                else if (Role == "FSO" || Role == "FSO_BU2" || Role == "MDO" || Role == "FSO_BU3") {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Resp[i]["CUSTOMER_NAME"] + "</td>";
+                                }
+                                else {
+                                    HtmlCode = HtmlCode + "<td style='text-align:left;'></td>";
+                                }
+
+
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q1_CFORM_PENDING"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q1CFORM_PERCENTAGE"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q2_CFORM_PENDING"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q2CFORM_PERCENTAGE"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q3_CFORM_PENDING"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q3CFORM_PERCENTAGE"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q4_CFORM_PENDING"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Resp[i]["Q4CFORM_PERCENTAGE"]).toFixed(2) + "</td>";
+                                HtmlCode = HtmlCode + "</tr>";
+                                Q1Sum = parseFloat(Q1Sum) + parseFloat(Resp[i]["Q1_CFORM_PENDING"]);
+                                Q2Sum = parseFloat(Q2Sum) + parseFloat(Resp[i]["Q2_CFORM_PENDING"]);
+                                Q3Sum = parseFloat(Q3Sum) + parseFloat(Resp[i]["Q3_CFORM_PENDING"]);
+                                Q4Sum = parseFloat(Q4Sum) + parseFloat(Resp[i]["Q4_CFORM_PENDING"]);
+
+                                Q1TotalAmt = parseFloat(Q1TotalAmt) + parseFloat(Resp[i]["Q1_CFORM_TAMT"]);
+                                Q2TotalAmt = parseFloat(Q2TotalAmt) + parseFloat(Resp[i]["Q2_CFORM_TAMT"]);
+                                Q3TotalAmt = parseFloat(Q3TotalAmt) + parseFloat(Resp[i]["Q3_CFORM_TAMT"]);
+                                Q4TotalAmt = parseFloat(Q4TotalAmt) + parseFloat(Resp[i]["Q4_CFORM_TAMT"]);
+
+                                // Q1PercentageSum = parseFloat(Q1PercentageSum) + parseFloat(Resp[i]["Q1CFORM_PERCENTAGE"]);
+                                // Q2PercentageSum = parseFloat(Q2PercentageSum) + parseFloat(Resp[i]["Q2CFORM_PERCENTAGE"]);
+                                // Q3PercentageSum = parseFloat(Q3PercentageSum) + parseFloat(Resp[i]["Q3CFORM_PERCENTAGE"]);
+                                // Q4PercentageSum = parseFloat(Q4PercentageSum) + parseFloat(Resp[i]["Q4CFORM_PERCENTAGE"]);
+
+
+                                //  Q1PercentageSum = (Math.Round(Convert.ToDouble((QTotalPend / QTotalPer) * 100), 2)).ToString();
+
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q1Pending"] + "</td>";
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q1Percent"] + "</td>";
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q2Pending"] + "</td>";
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q2Percent"] + "</td>";
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q3Pending"] + "</td>";
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q3Percent"] + "</td>";
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q4Pending"] + "</td>";
+                                //HtmlCode = HtmlCode + "<td>" + Resp[i]["Q4Percent"] + "</td>";
+                                //HtmlCode = HtmlCode + "</tr>";
+                                //Q1Sum = parseFloat(Q1Sum) + parseFloat(Resp[i]["Q1Pending"]);
+                                //Q2Sum = parseFloat(Q2Sum) + parseFloat(Resp[i]["Q2Pending"]);
+                                //Q3Sum = parseFloat(Q3Sum) + parseFloat(Resp[i]["Q3Pending"]);
+                                //Q4Sum = parseFloat(Q4Sum) + parseFloat(Resp[i]["Q4Pending"]);
+                            }
+
+                            $("#SAP_DB_C_FormSummary tbody").remove();
+                            $("#SAP_DB_C_FormSummary").append("<tbody>" + HtmlCode + "</tbody>");
+
+                            $("#SAP_DB_C_FormSummary").dataTable({
+                                "searching": false,
+                                "paging": false
+                            });
+
+                            $("#Q1Sum").text(((Q1Sum)).toFixed(2));
+                            $("#Q2Sum").text(((Q2Sum)).toFixed(2));
+                            $("#Q3Sum").text(((Q3Sum)).toFixed(2));
+                            $("#Q4Sum").text(((Q4Sum)).toFixed(2));
+
+                            // Q1TotalAmt = Q1TotalAmt / 100000;
+                            // Q2TotalAmt = Q2TotalAmt / 100000;
+                            // Q3TotalAmt = Q3TotalAmt / 100000;
+                            // Q4TotalAmt = Q4TotalAmt / 100000;
+                            //$("#Q1PercentageSum").text((Math.round((Q1Sum / Q1TotalAmt) * 100)).toFixed(2));
+                            //$("#Q2PercentageSum").text((Math.round((Q2Sum / Q2TotalAmt) * 100)).toFixed(2));
+                            //$("#Q3PercentageSum").text((Math.round((Q3Sum / Q3TotalAmt) * 100)).toFixed(2));
+                            //$("#Q4PercentageSum").text((Math.round((Q4Sum / Q4TotalAmt) * 100)).toFixed(2));
+
+                            if (Q1Sum == "0") {
+                                $("#Q1PercentageSum").text("0.00");
+                            } else {
+                                $("#Q1PercentageSum").text(parseFloat((Q1Sum / Q1TotalAmt) * 100).toFixed(2));
+                            }
+                            if (Q2Sum == "0") {
+                                $("#Q2PercentageSum").text("0.00");
+                            } else {
+                                $("#Q2PercentageSum").text(parseFloat((Q2Sum / Q2TotalAmt) * 100).toFixed(2));
+                            }
+                            if (Q3Sum == "0") {
+                                $("#Q3PercentageSum").text("0.00");
+                            } else {
+                                $("#Q3PercentageSum").text(parseFloat((Q3Sum / Q3TotalAmt) * 100).toFixed(2));
+                            }
+                            if (Q4Sum == "0") {
+                                $("#Q4PercentageSum").text("0.00");
+                            } else {
+                                $("#Q4PercentageSum").text(parseFloat((Q4Sum / Q4TotalAmt) * 100).toFixed(2));
+                            }
+
+
+                            // HideLoader();
+                        }
+
+                    }
+
+                },
+                complete: function () {
+                    //  HideLoader();
+                }, error: function () {
+                    HideLoader();
+                }
+            });
+            //   }
+            // ShowLoader();
+            $.ajax({
+                url: '../../SAP/Financial_Transactions_Dashboard',
+                type: 'POST',
+                data: { Data: Data },
+                beforeSend: function () {
+                    // setting a timeout
+                    //ShowLoader();
+                },
+                async: true,
+                success: function (Respn) {
+                    debugger
+                    //  ShowLoader();
+                    if (Respn == "") {
+                        table12345.clear().draw();
+                        $("#GrossWtSum").text("0.00");
+                        $("#InvValueSum").text("0.00");
+                        //HideLoader();
+                        //table12345.destroy();
+                    }
+                    else {
+                        
+                        Respn = JSON.parse(Respn);
+                        console.log('Respn', Respn);
+                        var HtmlCode = "";
+                        var Count = 0;
+                        if (Respn.length > 10) {
+                            Count = 10;
+                        }
+                        else {
+                            Count = Respn.length;
+                        }
+
+                        var GrossWtSum = 0;
+                        var InvValueSum = 0;
+
+                        table12345.clear().draw();
+                        table12345.destroy();
+
+                        for (var i = 0; i < Count; i++) {
+                            HtmlCode = HtmlCode + "<tr>";
+                            if (Role == "COO" || Role == "CFO" || Role == "NSH" || Role == "NSH_BU3" || Role == "ADMIN") {
+                                HtmlCode = HtmlCode + "<td>" + (i + 1) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + Respn[i]["BILL_TO_PARTY_NO"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["DelarName"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["ZoneName"] + "</td>";
+                            }
+                            else if (Role == "ZH" || Role == "RCC" || Role == "ZSC" || Role == "RSH_BU3") {
+                                HtmlCode = HtmlCode + "<td>" + (i + 1) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + Respn[i]["BILL_TO_PARTY_NO"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["DelarName"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["StateName"] + "</td>";
+                            }
+                            else if (Role == "SH" || Role == "TM" || Role == "SH_BU3" || Role == "TM_BU3") {
+                                HtmlCode = HtmlCode + "<td>" + (i + 1) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + Respn[i]["BILL_TO_PARTY_NO"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["DelarName"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["FSO_Name"] + "</td>";
+                            }
+                            else if (Role == "FSO" || Role == "FSO_BU2" || Role == "MDO" || Role == "FSO_BU3") {
+                                HtmlCode = HtmlCode + "<td>" + (i + 1) + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:right;'>" + Respn[i]["BILL_TO_PARTY_NO"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["DelarName"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='text-align:left;'>" + Respn[i]["DISTRICT_NAME"] + "</td>";
+                            }
+                            else if ((Role == "STOCKIST") || (Role == "BU3_STK")){
+                                HtmlCode = HtmlCode + "<td>" + (i + 1) + "</td>";
+                                HtmlCode = HtmlCode + "<td>" + Respn[i]["DOC_NO"] + "</td>";
+                                HtmlCode = HtmlCode + "<td style='display:none;'></td>";
+                            }
+                            HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Respn[i]["GROSS_WT"]).toFixed(2) + "</td>";
+                            HtmlCode = HtmlCode + "<td style='text-align:right;'>" + parseFloat(Respn[i]["inv_value"]).toFixed(2) + "</td>";
+                            HtmlCode = HtmlCode + "</tr>";
+
+                            GrossWtSum = parseFloat(GrossWtSum) + parseFloat(Respn[i]["GROSS_WT"]);
+                            InvValueSum = parseFloat(InvValueSum) + parseFloat(Respn[i]["inv_value"]);
+                        }
+
+                        $("#SAP_DB_Fin_Transactions tbody").remove();
+                        $("#SAP_DB_Fin_Transactions").append("<tbody>" + HtmlCode + "</tbody>");
+
+                        $("#SAP_DB_Fin_Transactions").dataTable({
+                            "searching": false,
+                            "paging": false,
+                            "bSort": false
+                        });
+
+                        $("#GrossWtSum").text((Math.round(GrossWtSum * 100) / 100).toFixed(2));
+                        $("#InvValueSum").text((Math.round(InvValueSum * 100) / 100).toFixed(2));
+                        //  HideLoader();
+                    }
+                    // HideLoader();
+                },
+                complete: function () {
+                    HideLoader();
+                }, error: function () {
+                    HideLoader();
+                }
+            });
+        //}
+
+    }
+
+    function DateConverter(DateValue) {
+        if (DateValue != "") {
+            var BackEndDate = DateValue.split('/');
+            BackEndDate = BackEndDate[2] + "-" + BackEndDate[1] + "-" + BackEndDate[0];
+            return BackEndDate;
+        }
+    }
+
+    function GetTotalYearWiseForCForm(Data) {
+        ShowLoader();
+        $.ajax({
+            url: '../../SAP/GetTotalYearWiseForCForm',
+            type: 'POST',
+            data: { Data: Data },
+            async: false,
+            success: function (Resps) {
+                debugger
+                var Respns = JSON.parse(Resps);
+                var html = "";
+                if (Respns != '') {
+
+
+                    for (var i = 0; i < Respns.length; i++) {
+                        if (Respns[i]["TotalPending"] == 0 || Respns[i]["TotalPending"] == '0' || Respns[i]["TotalPending"] == null || Respns[i]["TotalPending"] == '' || Respns[i]["TotalPending"] == 'NULL') {
+                            Respns[i]["TotalPending"] = "0.00";
+                        }
+                        if (Respns[i]["TotalPercent"] == 0 || Respns[i]["TotalPercent"] == '0' || Respns[i]["TotalPercent"] == null || Respns[i]["TotalPercent"] == '' || Respns[i]["TotalPercent"] == 'NULL') {
+                            Respns[i]["TotalPercent"] = "0.00";
+                        }
+                        html += "<div class='form-group'>";
+                        html += '<label class="col-sm-3 control-label">TOTAL  ' + Respns[i]["FINANCIAL_YEAR"] + '  Pending</label>';
+                        html += ' <div class="col-sm-3"> <input type="text" class="form-control gray" disabled=disabled value=' + Respns[i]["TotalPending"] + '></div>';
+
+                        //html += '<label class="col-sm-3 control-label">' + Respns[i]["FINANCIAL_YEAR"] + ' TOTAL Pending</label>';
+                        html += '<label class="col-sm-2 control-label">Pending % </label>';
+                        html += ' <div class="col-sm-3"> <input type="text" class="form-control gray" disabled=disabled value=' + Respns[i]["TotalPercent"] + '></div>';
+                        html += "<br /></div>";
+                    }
+                    $("#TotalYearWise").empty();
+                    $("#TotalYearWise").append(html);
+                    HideLoader();
+                }
+            }
+        });
+
+
+
+    }
+
+    function GetLastQuarters() {
+        // var FromDate = $('#SAPOrderFromDate').val();
+        var ToDate = $('#SAPOrderToDate').val();
+        var Role = $('#SessionUserRole').val();
+        var UserCode = $('#SessionUserCode').val();
+        var UserZoneCode = $('#SessionUserZoneCode').val();
+        var UserStateCode = $('#SessionUserStateCode').val();
+        var SheetType = $('#AdminSheetType').val();
+        //if (FromDate == "" || FromDate == null) {
+        //    alert("Please select From date");
+        //} else
+        if (ToDate == "" || ToDate == null) {
+            alert("Please select date");
+        } else {
+            ShowLoader();
+            var Data = JSON.stringify({
+                "UserRole": Role,
+                //"FromDate": DateConverter(FromDate),
+                "ToDate": DateConverter(ToDate),
+                "UserCode": UserCode,
+                "CFormFrom": "AllFinance",
+                "UserZoneCode": UserZoneCode,
+                "UserStateCode": UserStateCode,
+                "SheetType":SheetType
+            });
+
+            GetTotalYearWiseForCForm(Data);
+
+
+            $('#Finance_CFORM').modal('show');
+            $.ajax({
+                url: '../../SAP/CFormLatestQuarters',
+                type: 'POST',
+                data: { Data: Data },
+                async: false,
+                success: function (Resps) {
+                    debugger
+                    if (Resps == "") {
+                        //$("#CFORMSummary").dataTable.fnClearTable();
+                        //$("#CFORMSummary").dataTable().fnDestroy();
+                        //$("#CFORMSummary").dataTable.fnDraw();
+                        $('#CFORMSummary').DataTable().rows().remove().draw();
+                        HideLoader();
+                    } else {
+                        $('#CFORMSummary').DataTable().rows().remove().draw();
+                        var Respns = JSON.parse(Resps);
+                        for (var i = 0; i < Respns.length; i++) {
+                            if (Role == "COO" || Role == "CFO" || Role == "NSH" || Role == "NSH_BU3" || Role == "ADMIN") {
+                                $('#CFORMSummary').dataTable().fnAddData([Respns[i]["ZONE_NAME"], Respns[i]["FINANCIAL_YEAR"], parseFloat(Respns[i]["Q1_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q1CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q2_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q2CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q3_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q3CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q4_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q4CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["TotalPending"]).toFixed(2), parseFloat(Respns[i]["TotalPercent"]).toFixed(2)]);
+                            } else if (Role == "ZH" || Role == "RCC" || Role == "ZSC" || Role == "RSH_BU3") {
+                                $('#CFORMSummary').dataTable().fnAddData([Respns[i]["State_Name"], Respns[i]["FINANCIAL_YEAR"], parseFloat(Respns[i]["Q1_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q1CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q2_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q2CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q3_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q3CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q4_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q4CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["TotalPending"]).toFixed(2), parseFloat(Respns[i]["TotalPercent"]).toFixed(2)]);
+                            } else if (Role == "SH" || Role == "TM" || Role == "SH_BU3" || Role == "TM_BU3") {
+                                $('#CFORMSummary').dataTable().fnAddData([Respns[i]["ORG_LEVEL_NAME"], Respns[i]["FINANCIAL_YEAR"], parseFloat(Respns[i]["Q1_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q1CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q2_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q2CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q3_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q3CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q4_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q4CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["TotalPending"]).toFixed(2), parseFloat(Respns[i]["TotalPercent"]).toFixed(2)]);
+                            } else if (Role == "FSO" || Role == "FSO_BU2" || Role == "MDO" || Role == "FSO_BU3") {
+                                $('#CFORMSummary').dataTable().fnAddData([Respns[i]["CUSTOMER_NAME"], Respns[i]["FINANCIAL_YEAR"], parseFloat(Respns[i]["Q1_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q1CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q2_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q2CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q3_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q3CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["Q4_CFORM_PENDING"]).toFixed(2), parseFloat(Respns[i]["Q4CFORM_PERCENTAGE"]).toFixed(2), parseFloat(Respns[i]["TotalPending"]).toFixed(2), parseFloat(Respns[i]["TotalPercent"]).toFixed(2)]);
+                            } else {
+                            }
+                        }
+                        HideLoader();
+                    }
+
+                }
+            });
+        }
+    }
+    var ActualRole = $('#ActualUserRole').val();
+    var Data = JSON.stringify({
+        "UserRole": ActualRole
+    });
+
+    function GetAllZoneList() {
+        var ActualRole = $('#ActualUserRole').val();
+        var Data = JSON.stringify({
+            "UserRole": ActualRole
+        });
+        debugger
+        ShowLoader();
+        $.ajax({
+            url: '../../SAP/GetAllZoneList',
+            data: { Data: Data },
+            type: 'POST',
+            success: function (response) {
+                debugger
+                if (response != "") {
+                    $("#AdminZoneList").empty();
+                    $("#AdminZoneList").append($("<option></option>").val("").html("Select"));
+                    var Res = JSON.parse(response);
+                    for (var j = 0; j < Res.length; j++) {
+                        $("#AdminZoneList").append($("<option></option>").val(Res[j]["ZONE_CODE"]).html(Res[j]["ZONE_NAME"]));
+                    }
+                }
+                HideLoader();
+            }
+        });
+    }
+
+    function GetServerDateTime() {
+        $.ajax({
+            url: '../../Home/getServerDateTime',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+                var result = JSON.parse(response.tabledata);
+                if (result == "") {
+                }
+                else {
+                    var SessionRole = $("#SessionUserRole").val();
+                    if ((SessionRole == "STOCKIST") || (SessionRole == "BU3_STK")) {
+                        $('#StckistTodate').val(result);
+                    } else {
+                        $("#SAPOrderToDate").datepicker('setEndDate', result);
+                    }
+                }
+            }
+        });
+    }
+
+    function GetCurrentFinanceYear() {
+        $.ajax({
+            url: '../../SAP/GetCurrentFinanceYear',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+                if (response != "") {
+                    var SessionRole = $("#SessionUserRole").val();
+
+                    if ((SessionRole == "STOCKIST") || (SessionRole == "BU3_STK")) {
+                        var lastupdate = response.split('  ');
+                        $('#lblTotalPendingCForm').text('TOTAL Pending C- Forms (' + lastupdate[1] + ') (INR in Lakhs) :');
+                    } else {
+                        $('.Financeyear').append(" FY " + response);
+                    }
+                }
+            }
+        });
+    }
+
+    function AdminZoneChange() {
+        var ZoneCode = $('#AdminZoneList').val();
+        if (ZoneCode != "") {
+            $('#SessionUserRole').val("ZH");
+            $('#SessionUserZoneCode').val(ZoneCode);
+            $('.TextName').text("State");
+
+
+            $('#StatesFSO').css({ "display": "block" });
+            GetStatesListBasedOnZone();
+            //   GetDashBoardData();
+        } else {
+            var ActualZone = $('#ActualUserZoneCode').val();
+            $('#SessionUserZoneCode').val(ActualZone);
+            var ActualRole = $('#ActualUserRole').val();
+            $('#SessionUserRole').val(ActualRole);
+            $('.TextName').text("Year");
+            $('#AdminStateListWithZone').val("");
+            $('#AdminFSOListWithState').val("");
+            $('#StatesFSO').css({ "display": "none" });
+            //  GetDashBoardData();
+        }
+    }
+
+    function GetStatesListBasedOnZone() {
+        debugger
+        var UserZoneCode = $('#SessionUserZoneCode').val();
+        if (UserZoneCode != "" || UserZoneCode == null) {
+            $.ajax({
+                url: '../../SAP/GetStatesListBasedOnZone',
+                type: 'POST',
+                data: { "ZoneCode": UserZoneCode },
+                success: function (response) {
+                    if (response != "") {
+                        $(".AdminStateList").empty();
+                        $("#AdminFSOListWithState").empty();
+                        $("#AdminFSOListWithState").append($("<option></option>").val("").html("Select"));
+                        $(".AdminStateList").append($("<option></option>").val("").html("Select"));
+                        var Res = JSON.parse(response);
+                        for (var j = 0; j < Res.length; j++) {
+                            $(".AdminStateList").append($("<option></option>").val("'" + Res[j]["STATE_CODE"] + "'").html(Res[j]["STATE_DESC"]));
+                        }
+                    }
+                }
+            });
+        }
+
+    }
+
+    function ZHStateChange() {
+        var StateCode = $('#AdminStateList').val();
+        if (StateCode != "") {
+            $('#SessionUserRole').val("SH");
+            $('#SessionUserStateCode').val(StateCode);
+            $('.TextName').text("FSO");
+            $('#ZHFSOs').css({ "display": "block" });
+            GetZHFSOBasedonState();
+            // GetDashBoardData();
+        } else {
+            var ActualState = $('#ActualUserStateCode').val();
+            $('#SessionUserStateCode').val(ActualState);
+            var ActualRole = $('#ActualUserRole').val();
+            $('#SessionUserRole').val(ActualRole);
+            $('.TextName').text("State");
+
+            $('#ZHFSOs').css({ "display": "none" });
+            $("#ZHFSOListWithState").empty();
+            $("#ZHFSOListWithState").append($("<option></option>").val("").html("Select"));
+            $("#ZHFSOListWithState").val("");
+            //  GetDashBoardData();
+        }
+    }
+
+    function ADMINStateChange() {
+        debugger
+        var selectedState = $('#AdminStateListWithZone').val();
+        var SelectedZone = $('#AdminZoneList').val();
+        var selectedStateText = $("#AdminStateListWithZone option:selected").text();
+        var ActualRole = $('#ActualUserRole').val();
+        if (selectedState != "") {
+            $('#SessionUserRole').val("SH");
+            $('#SessionUserStateCode').val(selectedState);
+            $('.TextName').text("FSO");
+            var Data = JSON.stringify({
+                "State_Code": selectedStateText,
+                "Role": ActualRole                
+            });
+            $.ajax({
+                url: '../../SAP/GetFSOListBasedState', 
+                type: 'POST',
+                data: { Data: Data},
+                success: function (response) {
+                    if (response != "") {
+                        $("#AdminFSOListWithState").empty();
+                        $("#AdminFSOListWithState").append($("<option></option>").val("").html("Select"));
+                        var Res = JSON.parse(response);
+                        for (var j = 0; j < Res.length; j++) {
+                            if ((Res[j]["ORG_LEVEL_ID"] != "") && (Res[j]["ORG_LEVEL_ID"] != null)) {
+                                $("#AdminFSOListWithState").append($("<option></option>").val(Res[j]["ORG_LEVEL_ID"]).html(Res[j]["ORG_LEVEL_NAME"]));
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            $("#AdminFSOListWithState").empty();
+            $("#AdminFSOListWithState").append($("<option></option>").val("").html("Select"));
+
+
+            var ActualZone = $('#ActualUserZoneCode').val();
+            $('#SessionUserZoneCode').val(ActualZone);
+            var ActualRole = $('#ActualUserRole').val();
+            $('#SessionUserRole').val(ActualRole);
+            $('.TextName').text("Year");
+
+            if (SelectedZone != "") {
+                $('#SessionUserRole').val("ZH");
+                $('#SessionUserZoneCode').val(SelectedZone);
+                $('.TextName').text("State");
+            } else {
+                var ActualZone = $('#ActualUserZoneCode').val();
+                $('#SessionUserZoneCode').val(ActualZone);
+                var ActualRole = $('#ActualUserRole').val();
+                $('#SessionUserRole').val(ActualRole);
+                $('.TextName').text("Year");
+            }
+        }
+    }
+
+    function GetFSOListBasedOnEmp() {
+        var SHCode = $('#SessionUserCode').val();
+        
+        // SHCode = "50002430";
+        if (SHCode != "" || SHCode == null) {
+            $.ajax({
+                url: '../../SAP/GetFSOListBasedSH',
+                type: 'POST',
+                data: { "SHCode": SHCode },
+                success: function (response) {
+                    debugger
+                    if (response != "") {
+                        $("#AdminFSOList").empty();
+                        $("#AdminFSOList").append($("<option></option>").val("").html("Select"));
+                        var Res = JSON.parse(response);
+                        for (var j = 0; j < Res.length; j++) {
+                            if ((Res[j]["ORG_LEVEL_ID"] != "") && (Res[j]["ORG_LEVEL_ID"] != null)) {
+                                $("#AdminFSOList").append($("<option></option>").val(Res[j]["ORG_LEVEL_ID"]).html(Res[j]["ORG_LEVEL_NAME"]));
+                            }
+                            //if ((Res[j]["EMPLOYEE_CODE"] != "") && (Res[j]["EMPLOYEE_CODE"] != null)) {
+                            //    $("#AdminFSOList").append($("<option></option>").val(Res[j]["EMPLOYEE_CODE"]).html(Res[j]["ORG_LEVEL_NAME"]));
+                            //}
+                        }
+                    }
+                }
+            });
+            //GetDashBoardData();
+        }
+    }
+
+    function FSOListChange() {
+        var Role = $('#SessionUserRole').val();
+        var FSOCode = $('#AdminFSOList').val();
+        if (FSOCode != "") {
+            // $("#CFORMLast").hide();
+            //   $('#CFormLatest').hide();
+            if (Role == "FSO_BU3") {
+                $('#SessionUserRole').val("FSO_BU3");
+            }
+            else if (Role == "MDO") {
+                $('#SessionUserRole').val("MDO");
+            }
+            else {
+                $('#SessionUserRole').val("FSO");
+            }
+            $('#SessionUserCode').val(FSOCode);
+            $('.TextName').text("District");
+            //GetDashBoardData();
+        } else {
+            //  $("#CFORMLast").show();
+            //  $('#CFormLatest').show();
+            var ActualUserCode = $('#ActualUserCode').val();
+            $('#SessionUserCode').val(ActualUserCode);
+
+            var ActualRole = $('#ActualUserRole').val();
+            $('#SessionUserRole').val(ActualRole);
+            $('.TextName').text("FSO");
+            //  GetDashBoardData();
+
+
+        }
+    }
+
+    function ADMINFSOListChange() {
+        var SelectedFSO = $('#AdminFSOListWithState').val();
+        var selectedState = $('#AdminStateListWithZone').val();
+        var selectedzone = $('#AdminZoneList').val();
+        if (SelectedFSO != "") {
+            //  $("#CFORMLast").hide();
+            // $('#CFormLatest').hide();
+            $('#SessionUserRole').val("FSO");
+            $('#SessionUserCode').val(SelectedFSO);
+            $('.TextName').text("District");
+
+        } else {
+
+            //  $("#CFORMLast").show();
+            //  $('#CFormLatest').show();
+            var ActualUserCode = $('#ActualUserCode').val();
+            $('#SessionUserCode').val(ActualUserCode);
+
+            if (selectedzone != "") {
+                $('#SessionUserRole').val("ZH");
+                $('#SessionUserZoneCode').val(selectedzone);
+                $('.TextName').text("State");
+            } else {
+                var ActualZone = $('#ActualUserZoneCode').val();
+                $('#SessionUserZoneCode').val(ActualZone);
+                var ActualRole = $('#ActualUserRole').val();
+                $('#SessionUserRole').val(ActualRole);
+                $('.TextName').text("Year");
+            }
+
+
+            if (selectedState != "") {
+                $('#SessionUserRole').val("SH");
+                $('#SessionUserStateCode').val(selectedState);
+                $('.TextName').text("FSO");
+            } else {
+                if (selectedzone != "") {
+                    $('#SessionUserRole').val("ZH");
+                    $('#SessionUserZoneCode').val(selectedzone);
+                    $('.TextName').text("State");
+                }
+                else {
+                    //$('#SessionUserRole').val("SH");
+                    //$('#SessionUserStateCode').val(selectedState);
+                    //$('.TextName').text("FSO");
+                    var ActualZone = $('#ActualUserZoneCode').val();
+                    $('#SessionUserZoneCode').val(ActualZone);
+                    var ActualRole = $('#ActualUserRole').val();
+                    $('#SessionUserRole').val(ActualRole);
+                    $('.TextName').text("Year");
+                }
+                //var ActualState = $('#ActualUserStateCode').val();
+                //$('#SessionUserStateCode').val(ActualState);
+                //var ActualRole = $('#ActualUserRole').val();
+                //$('#SessionUserRole').val(ActualRole);
+                //$('.TextName').text("State");
+            }
+
+        }
+    }
+
+    function GetZHFSOBasedonState() {
+        debugger
+        var selectedState = $('#AdminStateList').val();
+        var selectedStatetext = $('#AdminStateList option:selected').text();
+        var ActualRole = $('#ActualUserRole').val();        
+            var Data = JSON.stringify({
+                "State_Code": selectedStatetext,
+                "Role": ActualRole
+            });
+        if (selectedState != "") {
+            $.ajax({
+                url: '../../SAP/GetFSOListBasedState',
+                type: 'POST',
+                data: { Data },
+                success: function (response) {
+                    debugger
+                    if (response != "") {
+                        $("#ZHFSOListWithState").empty();
+                        $("#ZHFSOListWithState").append($("<option></option>").val("").html("Select"));
+                        var Res = JSON.parse(response);
+                        for (var j = 0; j < Res.length; j++) {
+                            if ((Res[j]["ORG_LEVEL_ID"] != "") && (Res[j]["ORG_LEVEL_ID"] != null)) {
+                                $("#ZHFSOListWithState").append($("<option></option>").val(Res[j]["ORG_LEVEL_ID"]).html(Res[j]["ORG_LEVEL_NAME"]));
+                            }
+                        }
+                    } else {
+                        $("#ZHFSOListWithState").empty();
+                        $("#ZHFSOListWithState").append($("<option></option>").val("").html("Select"));
+                    }
+                }
+            });
+        }
+    }
+
+    function ZHFSOListChange() {
+        var SelectedState = $('#AdminStateList').val();
+        var FSOSelectedvalue = $('#ZHFSOListWithState').val();
+        if (FSOSelectedvalue != "") {
+            //  $("#CFORMLast").hide();
+            //   $('#CFormLatest').hide();
+            $('#SessionUserRole').val("FSO");
+            $('#SessionUserCode').val(FSOSelectedvalue);
+            $('.TextName').text("District");
+        } else {
+            //  $("#CFORMLast").show();
+            // $('#CFormLatest').show();
+            if (SelectedState != "") {
+                $('#SessionUserRole').val("SH");
+                $('.TextName').text("FSO");
+                $('#SessionUserStateCode').val(SelectedState);
+            } else {
+                var ActualState = $('#ActualUserStateCode').val();
+                $('#SessionUserStateCode').val(ActualState);
+                var ActualRole = $('#ActualUserRole').val();
+                $('#SessionUserRole').val(ActualRole);
+                $('.TextName').text("State");
+            }
+        }
+    }
+
+    function GetFSOBasedOrgLevelId() {
+        $.ajax({
+            url: '../../SAP/GetFSOOrgId',
+            type: 'POST',
+            success: function (response) {
+                if (response != "") {
+                    $('#SessionUserCode').val(response);
+                }
+            }
+        });
+    }
+
+    function GetUserStateZoneCodes() {
+        var SessionUserRole = $("#SessionUserRole").val();
+        var SessionUserCode = $('#SessionUserCode').val();
+        //    var SessionZoneCode = $('#SessionUserZoneCode').val();
+        var data_value = "{\"Role\":\"" + SessionUserRole + "\",\"UserCode\":\"" + SessionUserCode + "\"}";
+        $.ajax({
+            url: '../../Home/GetFilters',
+            type: 'POST',
+            data: { Data: data_value },
+            beforeSend: function () {
+                ShowLoader();
+            },
+            async: true,
+            success: function (res) {
+                var FilterList = JSON.parse(res);
+                if (SessionUserRole == "ZH" || SessionUserRole == "RCC" || SessionUserRole == "RSH_BU3") {
+                    var UserZoneCodes = new Array();
+                    for (var i = 0; i < FilterList.dtZone.length; i++) {
+                        UserZoneCodes.push("'" + FilterList.dtZone[i]["ZONE_CODE"] + "'");
+                    }
+                    $('#SessionUserZoneCode').val(UserZoneCodes);
+                    $('#ActualUserZoneCode').val(UserZoneCodes);
+                } else if (SessionUserRole == "SH" || SessionUserRole == "SH_BU3") {
+
+                    var UserStateCodes = new Array();
+                    for (var i = 0; i < FilterList.dtState.length; i++) {
+                        UserStateCodes.push("'" + FilterList.dtState[i]["STATE_CODE"] + "'");
+                    }
+                    $('#SessionUserStateCode').val(UserStateCodes);
+                    $('#ActualUserStateCode').val(UserStateCodes);
+                }
+                else if (SessionUserRole == "TM" || SessionUserRole == "TM_BU3") {
+                    var UserTerrCodes = new Array();
+                    for (var i = 0; i < FilterList.dtTerritory.length; i++) {
+                        UserTerrCodes.push("'" + FilterList.dtTerritory[i]["TERRITORY_CODE"] + "'");
+                    }
+                    $('#SessionUserStateCode').val(UserTerrCodes);
+                    $('#ActualUserStateCode').val(UserTerrCodes);
+                }
+                else { }
+            },
+            complete: function () {
+                HideLoader();
+            }, error: function (e) {
+                HideLoader();
+
+            }
+        });
+    }
+</script>

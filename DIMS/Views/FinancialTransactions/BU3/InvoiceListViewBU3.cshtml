@@ -1,0 +1,236 @@
+﻿@* Module              : DIMS Client Application.
+    DocumentName        : InvoiceListViewBU3.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for get Invoice List.
+    Developer Name      : SVPrasadK.
+    Change Log          : NA.*@
+
+
+
+@*@using Inv_Details = DIMS.Content.Resource_Files.Invoice_Details*@
+@{
+    Layout = null;
+    var Role = Session["UserRole"].ToString();
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    /*#StockistID ~ .SlectBox {
+        padding: 5px 8px;
+        width: 250px;
+    }*/
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Invoices</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li class="active">Invoices</li>
+    </ol>
+
+    @if (@Role.Trim() != "STOCKIST")
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFileBU3('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+    @* <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>*@
+</section>
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;">
+        <div class="row" id="InvoiceListBU3">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+
+                    <div class="box-header">
+                        <div class="navbar-header pull-right" style="margin-left: 15px;">
+                            <button type="button" class="btn btn-info navbar-btn" ng-click="GetInvoiceDataBU3()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                                Submit
+                            </button>
+                            <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                                Reset Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        @*Filters Zone*@
+
+                        <form class="form-horizontal" role="form" style="font-size: small" action="">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="txtOrderNo">
+                                    From Date
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="fromDate" placeholder="From Date" readonly onchange="DateValidation('fromDate', 'toDate');" />
+                                </div>
+                                <label class="col-sm-1 control-label" for="txtBatchNo">
+                                    To Date
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="toDate" placeholder="To Date" readonly />
+                                </div>
+                                <label class="col-sm-1 control-label" for="StockistID">
+                                    Customer Code/Name
+                                </label>
+                                <div class="col-sm-3">
+                                    <input id="customerCode" class="form-control" placeholder="Customer Code / Name" />
+                                </div>
+                            </div>
+                            <div class="form-group" style="text-align:center">OR</div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="txtOrderNo">
+                                    Invoice No 
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="invoiceNo" placeholder="Invoice No" />
+                                </div>                                
+                            </div>
+                        </form>
+
+                        <div style="padding:10px;"></div>
+                        <div class="table-responsive" id="InvoiceListDiv_BU3">
+                            <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                            <input type="text" id="SessionRole" value="@Role.Trim()" style="display: none;" />
+                            <table id="tbl_InvoiceList_BU3" class="table ListTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <br />
+                            <div class="form-group" id="DivTotalInvoiceAmount_BU3">
+                                <label class="col-sm-2 control-label" for="txtOrderNo">
+                                    TOTAL Invoice Value (INR in Lakhs)
+                                </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="TotalInvoiceAmount_BU3" placeholder="Total Invoice Value" disabled="disabled" />
+                                </div>
+
+                                @*<label class="col-sm-2 control-label" for="txtOrderNo">
+                                    TOTAL Gross weight(MT)
+                                </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control gray" id="TotalInvoiceGrossWt_BU3" placeholder="Total Invoice Gross Wt" disabled="disabled" />
+                                </div>*@
+                            </div>
+                            <br />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </section>
+</div>
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+        if ($("#UserCode").val() != "50002018") {
+            $("#DivTotalInvoiceAmount_BU3").hide();
+        }
+        $('#fromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+            // endDate: '05/04/2016',
+        });
+        $('#fromDate').bind('keypress', function (e) {
+            return false;
+        });
+        $('#toDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
+        $('#toDate').bind('keypress', function (e) {
+            return false;
+        });
+
+        var picker = $('#fromDate').data('datepicker');
+        
+    });
+    var table = $('#tbl_InvoiceList_BU3').dataTable();
+    function ResetFilters() {
+        $("#fromDate").val("");
+        $("#toDate").val("");
+        $("#customerCode").val("");
+        $("#invoiceNo").val("");
+       $("#InvoiceListDiv_BU3").hide();
+        fnResetAllFilters(table)
+    }
+        
+    $('#fromDate').datepicker().on('changeDate', function (ev) {
+        $("#toDate").val("");
+        table.fnDraw();
+    });
+    $('#toDate').datepicker().on('changeDate', function (ev) {
+        table.fnDraw();
+    });
+
+    $.fn.dataTableExt.afnFiltering.push(
+    function (oSettings, aData, iDataIndex) {
+        var iFini = document.getElementById('fromDate').value;
+
+        var iFfin = document.getElementById('toDate').value;
+        var iStartDateCol = 2;
+        var iEndDateCol = 2;
+
+        iFini = iFini.substring(6, 10) + iFini.substring(3, 5) + iFini.substring(0, 2);
+        iFfin = iFfin.substring(6, 10) + iFfin.substring(3, 5) + iFfin.substring(0, 2);
+
+        // alert(aData[iEndDateCol].substring(6, 10));
+        var datofini = aData[iStartDateCol].substring(6, 10) + aData[iStartDateCol].substring(3, 5) + aData[iStartDateCol].substring(0, 2);
+        var datoffin = aData[iEndDateCol].substring(6, 10) + aData[iEndDateCol].substring(3, 5) + aData[iEndDateCol].substring(0, 2);
+
+        if (iFini === "" && iFfin === "") {
+            return true;
+        }
+        else if (iFini <= datofini && iFfin === "") {
+            return true;
+        }
+        else if (iFfin >= datoffin && iFini === "") {
+            return true;
+        }
+        else if (iFini <= datofini && iFfin >= datoffin) {
+            return true;
+        }
+        return false;
+    }
+);
+
+</script>

@@ -1,0 +1,235 @@
+﻿@{
+    Layout = null;
+    string CTN = Request.QueryString["CTN"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Communication Note Report</title>
+</head>
+<body style="font-family: Calibri; font-size: 12px;">
+    <input type="text" id="CTN" value="@CTN" style="display:none;" />
+    <div style="width: 100%; height: 100%;font-family: Calibri; font-size: 12px;" id="CommuniationNoteDiv">
+        <table border="0" align="center" style="width: 98%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div align="center" style="width: 100%; margin-bottom: 15px;" class="row">
+                            <label style="font-size: 18px; color: #0165C4">
+                                <b>HIL Limited</b></label><br>
+                            <label style="font-size: 18px; color: #0026ff">
+                                <b>CUSTOMER COMPLAINT COMMUNICATION NOTE</b></label><br>
+                        </div>
+                        <div style="text-align: right; vertical-align: top; width: 99%; margin-right: 8px;">
+                            <label style="text-align: right; width: 75%;">
+                                Dated:
+                            </label>
+                            <label id="ToDay">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table align="center" style="width: 98%">
+            <tbody>
+                <tr>
+                    <td colspan="2">Corrective Measure Id:<label id="CorrectiveMeasureId"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Complaint Tracking No:<label id="TrackingNo"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Investigation Doc No:<label id="InvDocNo"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Sl.No:<label id="Sl_No"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">To,<br>
+                        Manager-QAD.</td>
+                </tr>
+                <tr>
+                    <td colspan="2">While analyzing Customer complaints, following complaint has been identified as major Manufacturing related complaint.</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><u>The details of the complaint are given below:</u></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Plant:<label id="Plant"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>Invoice No:<label id="Invoice_No"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>Invoice Date:<label id="InvioceDate"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>Customer Name:<label id="Customer_Name"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>City:<label id="City"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>Product Name:<label id="ProductName"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>Defect:<label id="Defect"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>Batch No:<label id="BatchNo"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>No of defective sheets:<label id="NoOfDefectiveSheets"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td>Remarks/Additional information:<label id="Remarks"></label></td>
+                    <td style="text-align: left"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><u>Please investigate the above complaint and revert with Corrective and Preventive actions within week time.</u></td>
+                </tr>
+                <tr>
+                    <td colspan="2">CC</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    @*<input type="button" id="PrintReport" onclick="PrintPDF()" value="Save As PDF" />*@
+
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+
+
+    //function PrintPDF() {
+    //    $("#PrintReport").css("display", "none");
+    //    $.ajax({
+    //        url: '/Home/Exportdata',
+    //        type: 'POST',
+    //        beforeSend: function () {
+    //            //ShowLoader();
+    //        },
+    //        data: { QueryVal: $('#CommuniationNoteDiv').html() },
+    //        success: function (result) {
+    //            if (result == "ok") {
+    //                $("#PrintReport").css("display", "block");
+    //                window.location.href = "../../Home/GetPDF?reportname=CommuniationNote_" + $("#CTN").val() + "";
+    //            }
+    //        },
+    //        error: function (e) {
+    //            alert(e);
+    //        }
+    //    });
+    //}
+
+    $(document).ready(function () {
+
+        var CTN = $("#CTN").val();
+
+        if (CTN == "") {
+            $("#Report_Compensation").empty();
+        }
+        else {
+
+            var Data = JSON.stringify({
+                CTN: CTN,
+                Report: "CommunicationNoteReport"
+            });
+
+            $.ajax({
+                method: 'POST',
+                url: '../../ComplaintReports/GetReportData',
+                data: { Data: Data },
+            }).then(function successCallback(response) {
+
+                if (response == "") {
+                    alert("No Data Available");
+                    window.close();
+                }
+                else {
+
+                    var Data = JSON.parse(response);
+
+                    $("#CorrectiveMeasureId").text(Data[0]["ID"]);
+                    $("#TrackingNo").text(Data[0]["TRACKING_NUMBER"]);
+                    //$("#InvDocNo").text(Data[0]["Invoice_No"]);
+                    $("#InvDocNo").text(Data[0]["INVESTIGATION_DOC_NUM"]);
+                    $("#Sl_No").text(Data[0]["Notice_Issue_No"]);
+                    $("#Plant").text(Data[0]["PLANT_NAME"]);
+                    $("#Invoice_No").text(Data[0]["Invoice_No"]);
+                    $("#InvioceDate").text(Data[0]["INVOICE_DATE"]);
+                    $("#Customer_Name").text(Data[0]["Customer_Name"]);
+                    $("#City").text(Data[0]["CITY_CODE"]);
+                    $("#ProductName").text(Data[0]["PRODUCT_NAME"]);
+                    $("#Defect").text(Data[0]["Defect"]);
+                    $("#BatchNo").text(Data[0]["BATCH_NO"]);
+                    $("#NoOfDefectiveSheets").text(Data[0]["NO_OF_DEFICTIVE_SHEETS"]);
+                    $("#Remarks").text(Data[0]["REMARKS"]);
+
+                    $("#ToDay").text(Data[0]["ToDay"]);
+                    $.ajax({
+                        url: '/Home/Exportdata',
+                        type: 'POST',
+                        beforeSend: function () {
+                            //ShowLoader();
+                        },
+                        data: { QueryVal: $('#CommuniationNoteDiv').html() },
+                        success: function (result) {
+                            if (result == "ok") {
+                                $("#PrintReport").css("display", "block");
+                                window.location.href = "../../Home/GetPDF?reportname=CommuniationNote_" + $("#CTN").val() + "";
+                                window.onfocus = function () {
+                                    window.close();
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+
+                }
+            },
+            function errorCallback(response) {
+                alert("Error : " + response);
+            });
+
+        }
+    });
+
+
+</script>

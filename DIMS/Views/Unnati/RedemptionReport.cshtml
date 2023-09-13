@@ -1,0 +1,142 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserTypeCode = UP.UserTypeCode;
+    string SessionUserType = UP.UserType;
+    string SessionStateName = UP.UserStateName;
+}
+
+<style type="text/css">
+
+    table tbody tr {
+    
+    cursor:default;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Points Redemption Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li><a href ng-click="go('UnnatiDashBoard')">UNNATI</a></li>
+        <li class="active">Points Redemption Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+
+                </a>
+                <a href ng-click="DownloadFile('TEXT')">
+                    <i class="fa fa-file-text-o fa-4" title="Download Text"></i>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body" style="overflow-x: scroll; width: 98%">
+                <form role="form" class="form-horizontal" name="UnnatiRedemptionForm">
+                    <input type="text" id="USERNAME_UnnatiRedemption" style="display: none;" value="@SessionUserName" />
+                    <input type="text" id="USERCODE_UnnatiRedemption" style="display: none;" value="@SessionUserCode" />
+                    <input type="text" id="USERTYPE_UnnatiRedemption" style="display: none;" value="@SessionUserTypeCode" />
+                    <input type="text" id="StateName_UnnatiRedemption" style="display: none;" value="@SessionStateName" />
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-sm-offset-2 control-label">From Date<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="RedemptionFromDate" ng-model="RedemptionFromDate" readonly required placeholder="Select Date" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-sm-offset-2 control-label">To Date<span class="Mandatory">*</span>&nbsp;</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="RedemptionToDate" ng-model="RedemptionToDate" readonly required placeholder="Select Date"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-3">
+                            <input type="button" class="btn btn-success" style="background-color: #d2401a;border:1px solid #d2401a;" value="Submit" name="Submit" ng-click="GetRedemptionReport()">
+                        </div>
+                    </div>
+                    <input type="button" value="Advanced" data-toggle="tooltip" data-placement="right" ng-disabled="UnnatiRedemptionForm.$invalid" id="AdvancedColumnEditing" style="background-color: #d2401a" class="smallbutton" data-toggle="modal" data-target="#" ng-click="OpenColumnEditing()" />
+
+                </form>
+                <label class="control-label-Nodata " id="RedemptionNodataLabel" style="display: none;">No data available....</label>
+                <div style="padding:10px;"></div>
+                <table id="RedemptionReport_Table" class="table" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div style="padding:10px;"></div>
+                <div class="form-group PageTotals">
+                    <label class="col-sm-3 control-label" style="font-weight: bold; text-align: right;margin-top:1%;">TOTAL Points </label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control gray" style="font-weight: bold" disabled="disabled" id="Points_TOTAL" />
+                    </div>
+               </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+
+
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        $("#AdvancedColumnEditing").attr("title", ToolTipvalue);
+        $("#RedemptionFromDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+        $("#RedemptionToDate").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: SERVER_DATE
+        });
+
+        $('#RedemptionReport_Table').parents('div.dataTables_wrapper').first().hide();
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

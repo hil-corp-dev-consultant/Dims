@@ -1,0 +1,83 @@
+﻿@using LabelNames = DIMS.Content.Resource_Files.Compensation;
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+<style>
+
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Application Log</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li class="active">Application Log</li>
+    </ol>
+
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding:0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-header">
+                        <form name="test" class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" data-ng-init="GetEditData(39)">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input id="UserCode" value="@SessionUserCode" hidden />
+                                    <div id="tblParent" style="display:block;">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+       GetApplicationLogDetails();
+    });
+
+    function GetApplicationLogDetails() {
+        if ('@SessionUserType' == "ADMIN") {
+            ShowLoader();
+            $('#tblParent').css("display", "block");
+            $.ajax({
+                url: '../../Home/GetApplicationLog', method: 'GET',
+                success: function (response) {
+                    var JsonArray = JSON.parse(response);
+                    if (JsonArray.length > 0) {
+                        $.each(JsonArray, function (index, value) {
+                            console.log(index);
+                            $('#tblParent').html($('#tblParent').html() + '<span>' + value + '</span><br/>');
+                        });
+                    } else {
+                        $('#tblParent').html($('#tblParent').html() + '<span> No Data to Display. </span><br/>');
+                    }
+                    HideLoader();
+                }
+            });
+        }
+    };
+</script>

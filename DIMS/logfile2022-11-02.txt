@@ -1,0 +1,50 @@
+2022-11-02 10:17:46 Error: Error : GetPDF : System.FormatException: The specified string is not in the form required for an e-mail address.
+   at System.Net.Mail.MailAddressParser.ReadCfwsAndThrowIfIncomplete(String data, Int32 index)
+   at System.Net.Mail.MailAddressParser.ParseDomain(String data, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at System.Net.Mail.Message..ctor(String from, String to)
+   at System.Net.Mail.MailMessage..ctor(String from, String to)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1937
+2022-11-02 10:20:40 Error: Error : GetPDF : System.FormatException: The specified string is not in the form required for an e-mail address.
+   at System.Net.Mail.MailAddressParser.ReadCfwsAndThrowIfIncomplete(String data, Int32 index)
+   at System.Net.Mail.MailAddressParser.ParseDomain(String data, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at System.Net.Mail.Message..ctor(String from, String to)
+   at System.Net.Mail.MailMessage..ctor(String from, String to)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1937
+2022-11-02 11:26:36 Error: Error : GetPDF : System.FormatException: The specified string is not in the form required for an e-mail address.
+   at System.Net.Mail.MailAddressParser.ReadCfwsAndThrowIfIncomplete(String data, Int32 index)
+   at System.Net.Mail.MailAddressParser.ParseDomain(String data, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at System.Net.Mail.Message..ctor(String from, String to)
+   at System.Net.Mail.MailMessage..ctor(String from, String to)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1937
+2022-11-02 12:16:40 Error: Error : GetPDF : System.FormatException: The specified string is not in the form required for an e-mail address.
+   at System.Net.Mail.MailAddressParser.ReadCfwsAndThrowIfIncomplete(String data, Int32 index)
+   at System.Net.Mail.MailAddressParser.ParseDomain(String data, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at System.Net.Mail.Message..ctor(String from, String to)
+   at System.Net.Mail.MailMessage..ctor(String from, String to)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1938
+2022-11-02 12:34:50 Error: Error : GetPDF : System.ArgumentException: Column 'UserName' does not belong to table .
+   at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1935
+2022-11-02 12:37:50 Error: Error : GetPDF : System.ArgumentException: Column 'USERNAME' does not belong to table .
+   at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1935
+2022-11-02 16:35:44 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1882

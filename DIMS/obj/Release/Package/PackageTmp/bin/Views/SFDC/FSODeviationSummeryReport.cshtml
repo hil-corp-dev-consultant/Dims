@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+    string SessionZone_Code = UP.UserZoneCode;
+    string SessionStateCode = UP.UserStateCode;
+}
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Deviation Summery Report</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Deviation Summery Report</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('JourneyPlanList')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+<input type="text" id="SessionUserCode" style="display:none;" value="@SessionUserCode" />
+<input type="text" id="SessionUserName" style="display:none;" value="@SessionUserName" />
+<input type="text" id="SessionUserRole" style="display:none;" value="@SessionUserType" />
+
+<input type="text" id="SessionUserZone" style="display:none;" value="@SessionZone_Code" />
+<input type="text" id="SessionUserState" style="display:none;" value="@SessionStateCode" />
+
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-body">                
+                <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small;">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Plan for Month<span class="Mandatory">*</span></label>
+                        <div class="col-sm-3">
+                            <input type="text" style="margin-bottom:5px;" class="form-control" id="PlanForMonth" data-ng-model="PlanForMonth" readonly="readonly" />
+                        </div>
+                        <div class="col-sm-3" id="ParentJPDStatus">
+                            <button type="button" class="btn btn-info" ng-click="GetReportingUsers()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div style="padding:10px;"></div>
+                <div class="table-responsive" id="TotalDeviation">
+                    <table id="ZHSHTMFSODeviation" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">Visits</th>
+                                <th style="text-align:center">Planned</th>
+                                <th style="text-align:center">Actual</th>
+                                <th style="text-align:center">Devation</th>
+                                <th style="text-align:center">UnPlanned</th>
+                                <th style="text-align:center">TOTAL</th>
+                                <th style="text-align:center">% Adherence</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;"></div>
+                <div class="table-responsive" id="FSODeviationId">
+                    <table id="FSODeviation" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script>
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+</script>

@@ -1,0 +1,400 @@
+﻿@{    
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+
+    string UserTypeCode = UP.UserTypeCode;
+
+}
+
+<style type="text/css">
+
+    /*label {
+        font-weight: normal;
+        padding-top: 0px;
+        padding-right: 0px;
+        font-size: 12px;
+    }
+        */
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Customer Inventory Tracker</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Add Inventory Tracker</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('InventoryTracking')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SaveInventoryTrack()" id="SaveInventoryTrackBTN">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                @*                <a href ng-click="go('AddInventoryTrack')">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+<input type="text" value="@SessionUserCode" style="display:none" id="UserCode" />
+<input type="text" value="@UserTypeCode" style="display:none" id="UserTypeCode" />
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-body">
+            <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small; margin-top: 36px;" action="">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" style="padding-top:0px !important">Customer Code/<br />DIMS Ref Id</label>
+                    <div class="col-sm-3">
+                        @*                        <div class="input-group add-on">*@
+                        <input class="form-control gray" id="CustomerCode" type="text" disabled="disabled" data-ng-model="CustomerCode" />
+                        @*                            <div class="input-group-btn Customer">
+                                <span class="btn btn-default" ng-click="Getdata('GetCustomerNameForInventory','GetCustomerName','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>*@
+                        @*</div>*@
+                    </div>
+
+                    <label class="col-sm-3 control-label">Current Stock in MT (HIL)</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CurrentStockinMTHIL" type="text" data-ng-model="CurrentStockinMTHIL" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Name</label>
+                    <div class="col-sm-3">
+                        @*                        <div class="input-group add-on">*@
+                        <input class="form-control gray" id="CustomerName" type="text" disabled="disabled" data-ng-model="CustomerName" />
+                        @*                            <div class="input-group-btn Customer">
+                                <span class="btn btn-default" ng-click="Getdata('GetCustomerNameForInventory','GetCustomerName','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>*@
+                        @*</div>*@
+                    </div>
+
+                    <label class="col-sm-3 control-label">Last Updated Date and Time</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="LastUpdatedDateTime" type="text" disabled="disabled" data-ng-model="LastUpdatedDateTime" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Type</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CustomerType" type="text" disabled="disabled" data-ng-model="CustomerType" />
+                    </div>
+
+                    <label class="col-sm-3 control-label">Average Monthly Sale (HIL)</label>
+                    <div class="col-sm-3">
+                        <label class="hidden" id="DailySaleInHIL"></label>
+                        <input class="form-control gray" id="AverageMonthlySaleHIL" type="text" data-ng-model="AverageMonthlySaleHIL" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @*                    <label class="col-sm-2 control-label hidden">Next Visit Planned</label>
+                    <div class="col-sm-3 hidden">
+                        <input class="form-control gray" id="NextVisitPlannedDate" type="text" readonly="readonly" data-ng-model="NextVisitPlannedDate" />
+                    </div>*@
+                    <label class="col-sm-3 col-sm-offset-5 control-label">Next Visit Planned</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="NextVisitPlanned" type="text" readonly="readonly" data-ng-model="NextVisitPlanned" />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-sm-offset-5 control-label">No. of days of Stock (Avg)</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" disabled="disabled" id="NoofdaysofStockAvg" type="text" data-ng-model="NoofdaysofStockAvg" />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-sm-offset-5 control-label">Register Available with Customer</label>
+                    <div class="col-sm-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="RegisterAvailablewithCustomer" data-ng-model="RegisterAvailablewithCustomer">
+                            </label>
+                        </div>
+                        @*<select class="form-control" id="RegisterAvailablewithCustomer" data-ng-model="RegisterAvailablewithCustomer">
+                            <option value="">Select</option>
+                            <option value="YES">YES</option>
+                            <option value="NO">NO</option>
+                        </select>*@
+                    </div>
+                    <label class="col-sm-3 control-label" style="display: none;"></label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" style="display: none;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="navbar-header pull-right" style="margin-right: 50px;">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="ClearData()" style="background-color: #d2401a;border:1px solid #d2401a; color: white;">
+                            Reset</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 tabdiv" id="InventoryTrackLines">
+                        <div class="col-sm-12">  
+                            <div style="overflow:auto;">                          
+                            <table class="table innertable ListTable" id="InventoryTrackTableLines">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" style="text-align: center;">Company</th>
+                                        <th colspan="10" style="text-align: center;">SKU/Size</th>
+                                        <th rowspan="2" style="text-align: center;">Total In Run. Meter</th>
+                                        <th rowspan="2" style="text-align: center;">Total in MT</th>
+                                        <th rowspan="2" style="text-align: center;">Remarks</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">3.60 M</th>
+                                        <th style="text-align: center;">3.00 M</th>
+                                        <th style="text-align: center;">2.75 M</th>
+                                        <th style="text-align: center;">2.50 M</th>
+                                        <th style="text-align: center;">2.25 M</th>
+                                        <th style="text-align: center;">2.00 M</th>
+                                        <th style="text-align: center;">1.75 M</th>
+                                        <th style="text-align: center;">1.50 M</th>
+                                        <th style="text-align: center;">1.25 M</th>
+                                        <th style="text-align: center;">1.00 M</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="sum">
+                                        <td>HIL</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr class="sum">
+                                        <td>Everest</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr class="sum">
+                                        <td>Konark</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr class="sum">
+                                        <td>Visaka</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr class="sum">
+                                        <td>Ramko</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr class="sum">
+                                        <td>Swastik</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr class="sum">
+                                        <td>Uppal</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr class="sum">
+                                        <td>Others</td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td class="Edit Set"></td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td class="Edit Set freeText"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total in No.</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td style="text-align: right;" class="Set">0</td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Total in MT</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set" style="text-align: right;">0.00</td>
+                                        <td class="TotalMT Set"></td>
+                                        <td style="text-align: right;" class="Set">0.00</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" style="font-size: small">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="TableValuesUpdate()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+        if ($("#UserTypeCode").val() == "SH") {
+            $("#SaveInventoryTrackBTN").css('display', '-moz-stack');
+        }
+        else if ($("#UserTypeCode").val() == "TM") {
+            $("#SaveInventoryTrackBTN").css('display', '-moz-stack');
+        }
+        else if ($("#UserTypeCode").val() == "FSO" || $("#UserTypeCode").val() == "FSO_BU2") {
+            $("#SaveInventoryTrackBTN").css('display', '-moz-stack');
+        }
+        else {
+            $("#SaveInventoryTrackBTN").css('display', 'none');
+        }
+
+
+    });
+
+    $("#NextVisitPlanned").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
+
+
+</script>

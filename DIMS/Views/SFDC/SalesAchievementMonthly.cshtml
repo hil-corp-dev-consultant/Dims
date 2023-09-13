@@ -1,0 +1,186 @@
+﻿
+@*
+
+Module              : CMS - DIMS Solution.
+DocumentName        : Sales Achievement Monthly.cshtml
+Project Name        : Dealer Information Management System (DIMS).
+Client Name         : HIL :: CK BIRLA GROUP.
+Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+Team                : ASD.
+Description         : This Doc is for used for Sales Achievement Monthly Screen.
+Developer Name      : Harish Kothuri.
+Change Log          : NA.
+
+*@
+
+
+@{
+    Layout = null;
+}
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Sales Achievement Monthly</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>SFDC SCREENS</li>
+        <li class="active">Sales Achievement Monthly</li>
+    </ol>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0;">
+            <div class="box-body">
+                 <h3 class="box-title">Sales Achievement Monthly</h3>
+                    <div class="pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color:#d2401a;border:1px solid #d2401a;color:white">
+                            Reset Filter</button>                       
+                    </div>
+                <form role="form" class="form-horizontal" style="font-size: small;margin-top:36px;">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Sales Employee:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select Employee</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Stockist ID:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select Stockistid</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Stockist Name:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select StockistName</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Zone:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select Zone</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">State:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select State</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Territory/Area:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select Area</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Location:</label>
+                        <div class="col-sm-2">
+                            <select class="form-control">
+                                <option value="">Select Location</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">From Date:</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="FromDate" />
+                        </div>
+                        <label class="col-sm-2 control-label">To Date:</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="ToDate" />
+                        </div>
+                    </div>                
+                </form>
+                <div style="padding:10px;"></div>
+                <div style="overflow:auto;">
+                <table class="table tablecss" id="SalesAchievementMonthlyList">
+                    <thead>
+                        <tr style="background-color:#d2401a;color:white">
+                            <th rowspan="2">Category</th>
+                            <th rowspan="2">Product</th>
+                            <th rowspan="2">Stockist Name</th>
+                            <th rowspan="2">Sales Employee</th>
+                            <th rowspan="2">Location</th>
+                            <th rowspan="2">Teritory/Area</th>
+                            <th rowspan="2">State</th>
+                            <th rowspan="2">Zone</th>
+                            <th colspan="13">Year</th>
+                            <th colspan="9">Year</th>
+                        </tr>
+                        <tr>
+                            <th>April</th>
+                            <th>May</th>
+                            <th>June</th>
+                            <th>July</th>
+                            <th>August</th>
+                            <th>September</th>
+                            <th>October</th>
+                            <th>November</th>
+                            <th>December</th>
+                            <th>January</th>
+                            <th>February</th>
+                            <th>March</th>
+                            <th>Year Total</th>
+                            <th>January</th>
+                            <th>February</th>
+                            <th>March</th>
+                            <th>April</th>
+                            <th>May</th>
+                            <th>June</th>
+                            <th>July</th>
+                            <th>August</th>
+                            <th>Year Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*<tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>*@
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        $("#FromDate").datepicker();
+        $("#ToDate").datepicker();
+        $("#SalesAchievementMonthlyList").DataTable({
+            "scrollX": true
+        });
+    });
+
+
+</script>
+

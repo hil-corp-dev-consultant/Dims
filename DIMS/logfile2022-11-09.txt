@@ -1,0 +1,50 @@
+2022-11-09 10:35:37 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-09 10:36:35 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":"","DivisionName":""}]
+2022-11-09 11:04:18 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":"","DivisionName":""}]
+2022-11-09 11:08:00 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":"","DivisionName":""}]
+2022-11-09 11:09:03 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-09 11:10:15 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-09 11:11:51 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-09 11:19:25 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-09 11:23:28 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-09 11:24:47 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":"","DivisionName":"Wall Putty"},{"FSOEMail":"Akash.singh@hil.in","FSOName":"Akash Singh","DivisionName":"Wall Putty"},{"FSOEMail":"Atul.chaturvedi@hil.in","FSOName":"Atul Chaturvedi","DivisionName":"Wall Putty"},{"FSOEMail":"khem.thapa@hil.in","FSOName":"Khem Singh Thapa","DivisionName":"Wall Putty"},{"FSOEMail":"nitin.agarwal@hil.in","FSOName":"NITIN AGARWAL","DivisionName":"Wall Putty"},{"FSOEMail":"vikas.ghodekari@hil.in","FSOName":"Kailash Patel","DivisionName":"Wall Putty"}]
+2022-11-09 11:24:47 Error: Error : Get EmployeeList : Akash Singh
+2022-11-09 11:24:47 Error: Error : GetPDF : Akash.singh@hil.in
+2022-11-09 11:24:47 Error: Error : Get EmployeeList : Atul Chaturvedi
+2022-11-09 11:24:48 Error: Error : GetPDF : Atul.chaturvedi@hil.in
+2022-11-09 11:24:48 Error: Error : Get EmployeeList : Khem Singh Thapa
+2022-11-09 11:24:49 Error: Error : GetPDF : khem.thapa@hil.in
+2022-11-09 11:24:49 Error: Error : Get EmployeeList : NITIN AGARWAL
+2022-11-09 11:24:50 Error: Error : GetPDF : nitin.agarwal@hil.in
+2022-11-09 11:24:50 Error: Error : Get EmployeeList : Kailash Patel
+2022-11-09 11:24:50 Error: Error : GetPDF : vikas.ghodekari@hil.in
+2022-11-09 11:36:47 Error: Error : GetPDF : System.NullReferenceException: Object reference not set to an instance of an object.
+   at DIMS.Controllers.HomeController.GetPDF_SalesReturn(String reportname) in E:\DIMS_Project_CodeRecovery\Back_UP from Dims_2PC\DIMSSolution\DIMS\Controllers\HomeController.cs:line 1883
+2022-11-09 11:38:15 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":"","DivisionName":"Wall Putty"},{"FSOEMail":"Akash.singh@hil.in","FSOName":"Akash Singh","DivisionName":"Wall Putty"},{"FSOEMail":"Atul.chaturvedi@hil.in","FSOName":"Atul Chaturvedi","DivisionName":"Wall Putty"},{"FSOEMail":"khem.thapa@hil.in","FSOName":"Khem Singh Thapa","DivisionName":"Wall Putty"},{"FSOEMail":"nitin.agarwal@hil.in","FSOName":"NITIN AGARWAL","DivisionName":"Wall Putty"},{"FSOEMail":"vikas.ghodekari@hil.in","FSOName":"Kailash Patel","DivisionName":"Wall Putty"}]
+2022-11-09 11:38:15 Error: Error : Get EmployeeList : Akash Singh
+2022-11-09 11:38:16 Error: Error : GetPDF : Akash.singh@hil.in
+2022-11-09 11:38:16 Error: Error : Get EmployeeList : Atul Chaturvedi
+2022-11-09 11:38:17 Error: Error : GetPDF : Atul.chaturvedi@hil.in
+2022-11-09 11:38:17 Error: Error : Get EmployeeList : Khem Singh Thapa
+2022-11-09 11:38:17 Error: Error : GetPDF : khem.thapa@hil.in
+2022-11-09 11:38:17 Error: Error : Get EmployeeList : NITIN AGARWAL
+2022-11-09 11:38:18 Error: Error : GetPDF : nitin.agarwal@hil.in
+2022-11-09 11:38:18 Error: Error : Get EmployeeList : Kailash Patel
+2022-11-09 11:38:19 Error: Error : GetPDF : vikas.ghodekari@hil.in
+2022-11-09 11:40:20 Error: Error : EmployeeObj : [{"FSOEMail":"","FSOName":"","DivisionName":"Pipes and Fittings"},{"FSOEMail":"Akash.singh@hil.in","FSOName":"Akash Singh","DivisionName":"Pipes and Fittings"},{"FSOEMail":"Atul.chaturvedi@hil.in","FSOName":"Atul Chaturvedi","DivisionName":"Pipes and Fittings"},{"FSOEMail":"khem.thapa@hil.in","FSOName":"Khem Singh Thapa","DivisionName":"Pipes and Fittings"},{"FSOEMail":"nitin.agarwal@hil.in","FSOName":"NITIN AGARWAL","DivisionName":"Pipes and Fittings"},{"FSOEMail":"vikas.ghodekari@hil.in","FSOName":"Prabhakar Dixit","DivisionName":"Pipes and Fittings"}]
+2022-11-09 11:40:20 Error: Error : Get EmployeeList : Akash Singh
+2022-11-09 11:40:21 Error: Error : GetPDF : Akash.singh@hil.in
+2022-11-09 11:40:21 Error: Error : Get EmployeeList : Atul Chaturvedi
+2022-11-09 11:40:22 Error: Error : GetPDF : Atul.chaturvedi@hil.in
+2022-11-09 11:40:22 Error: Error : Get EmployeeList : Khem Singh Thapa
+2022-11-09 11:40:22 Error: Error : GetPDF : khem.thapa@hil.in
+2022-11-09 11:40:22 Error: Error : Get EmployeeList : NITIN AGARWAL
+2022-11-09 11:40:23 Error: Error : GetPDF : nitin.agarwal@hil.in
+2022-11-09 11:40:23 Error: Error : Get EmployeeList : Prabhakar Dixit
+2022-11-09 11:40:23 Error: Error : GetPDF : vikas.ghodekari@hil.in

@@ -1,0 +1,947 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    .form-group {
+        margin-bottom: 0px;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Debit Note Details</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li><a href ng-click="go('DebitNotes')"><i class="fa fa-dashboard"></i>Debit Notes List</a></li>
+        <li>Debit Details</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href onclick="GetPDFFile()">
+                    <i class="fa fa-file-pdf-o fa-4" title="Download Pdf"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;" id="debitNoteView"">
+    <div style="width: 100%; height: 100%;display:none;" id="addcustomerview_HTML">
+         @*<div id="background" style="position: absolute;
+        display: block;
+        min-width: 100%;
+        opacity: 0.5;
+        text-align: center;
+        background-color: transparent;
+        padding-top: 30%;">
+        <p id="bg-text" style=" color: lightgrey;
+        font-size: 50px;
+        transform: rotate(330deg);
+        -webkit-transform: rotate(330deg);
+        opacity: 0.9;
+        filter: alpha(opacity=50);
+        background-color: transparent;">Not for commercial Purpose</p>
+    </div>*@
+
+        <table style="width: 98%" align="center" border="0">
+            @*<tr>
+                <td>
+                    <div class="row" align="left">
+                        <img src="~/Images/CKBIRLA.png" class="img-thumbnail" alt="Cinque Terre" width="185" height="100" style="border: none;">
+                    </div>
+                </td>
+            </tr>*@
+            <tr>
+                <td>
+                    <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+                        <h4>
+                            <b>HIL Limited</b>
+                        </h4>
+                        <h5>
+                            <b>Regd.Office:7th Floor,SLN Terminus,Sy.No.133,<br />Beside Botanical Gardens,Gachibowli,Hyderabad 500032,Telangana<br />CIN:L74999TG1955PLC000656</b>
+                        </h5>
+                        <h4><b>DEBIT NOTE</b></h4>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td>Business Area Code:&nbsp;<label id="BusinessAreaCode_html"></label></td>
+                <td style="text-align:right;">Doc.No.:&nbsp;<label id="DocNo_html"></label></td>
+            </tr>
+            <tr>
+                <td>Unit / Depot name:&nbsp;<label id="DepoName_html"></label></td>
+                <td style="text-align:right;">Date:&nbsp;<label id="DocDate_html"></label></td>
+            </tr>
+        </table>
+        @*<div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label>Business Area Code:</label>
+            <label id="BusinessAreaCode_html"></label>
+            <label style="margin-left:60%;">Doc.No.:</label>
+            <label id="DocNo_html" style="text-align: left;"></label>
+        </div>
+
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> Unit / Depot name:</label>
+            <label id="DepoName_html"></label>
+            <label style="margin-left:65%;">Date:</label>
+            <label id="DocDate_html" style="text-align: left;"></label>
+        </div>*@
+        <hr />
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> Customer Code:</label>
+            <label id="CustCode_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label>  Customer Name:</label>
+            <label id="CustName_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label id="CustAddress_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <h4>NARRATION</h4>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label id="Towards_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> Gross Amount:</label>
+            <label id="GrossAmt_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> TDS Amount:</label>
+            <label id="TDSAmt_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> Net Amount:</label>
+            <label id="NetAmt_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label id="InWords_html"></label>
+        </div>
+        <hr />
+        <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+            <h5>This is system generated document hence does not require a signature.</h5>
+        </div>
+    </div>
+    <div class="row" id="addcustomerview">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img src="/Images/CKBIRLA.png" class="img-thumbnail" alt="Cinque Terre" width="185" height="202" style="border: none;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center">
+                            <h4>
+                                <b>HIL Limited</b>
+                            </h4>
+                            <h5>
+                                <b>Regd.Office:7th Floor,SLN Terminus,Sy.No.133,<br />Beside Botanical Gardens,Gachibowli,Hyderabad 500032,Telangana<br />CIN:L74999TG1955PLC000656</b>
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center">
+                            <h4><b>DEBIT NOTE</b></h4>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="box-body pad">
+                    <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="font-style:normal;">
+                                Business Area Code:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="BusinessAreaCode" ng-model="BusinessAreaCode">
+                                </label>
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                Doc.No.:
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="control-label" id="DocNo" ng-model="DocNo">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Unit / Depot name:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="DepoName" ng-model="DepoName">
+                                </label>
+                            </div>
+                            <label class="col-sm-3 control-label">
+                                Date:
+                            </label>
+                            <div class="col-sm-3">
+                                <label class="control-label" id="DocDate" ng-model="DocDate">
+                                </label>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <label class="col-sm-2 control-label">
+                                    Customer Code:
+                                </label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="CustCode" ng-model="CustCode">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <label class="col-sm-2 control-label">
+                                    Customer Name:
+                                </label>
+                                <div class="col-sm-4">
+                                    <label class="control-label" id="CustName" ng-model="CustName">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <label class="col-sm-2 control-label">
+                                </label>
+                                <div class="col-sm-4">
+                                    <div class="text-center text-nowrap">
+                                        <label class="control-label" id="CustAddress" ng-model="CustAddress">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 col-sm-offset-1">
+                                <h4><b>NARRATION</b></h4>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6 col-sm-offset-1">
+                                <label class="control-label" id="Towards" ng-model="Towards">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Gross Amount:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="GrossAmt" ng-model="GrossAmt">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                TDS Amount:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="TDSAmt" ng-model="TDSAmt">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Net Amount:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="NetAmt" ng-model="NetAmt">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-offset-1" id="InWords">
+                            </label>
+                        </div>
+                        <hr />
+                        <div class="text-center">
+                            <h5>This is system generated document hence does not require a signature.</h5>
+                        </div>
+                    </form>
+                </div>*@
+                <div class="box-body pad">
+                    <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" @*style="margin-left: -21px;"*@>
+                                Business Area Code:
+                            </label>
+                            <label class="control-label col-sm-1" id="BusinessAreaCode" ng-model="BusinessAreaCode" style="text-align: left;">
+                            </label>
+                            @*<div class="col-sm-4">
+
+                    </div>*@
+                            <label class="col-sm-6 control-label">
+                                Doc.No.:
+                            </label>
+                            <label class="col-sm-1 control-label" id="DocNo" ng-model="DocNo">
+                            </label>
+                            @*<div class="col-sm-3">
+
+                    </div>*@
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Unit / Depot name:
+                            </label>
+                            <label class="control-label col-sm-1" id="DepoName" ng-model="DepoName">
+                            </label>
+                            <label class="col-sm-6 control-label">
+                                Date:
+                            </label>
+                            <span id="SpanDocDate">
+                            <label class="col-sm-1 control-label" id="DocDate" ng-model="DocDate">
+                            </label>
+                            </span>
+                            @*<label class="col-sm-2 control-label" style="margin-left: -21px;">
+                        Unit / Depot name:
+                    </label>
+                    <div class="col-sm-4">
+                        <label class="control-label" id="DepoName" ng-model="DepoName">
+                        </label>
+                    </div>
+                    <label class="col-sm-3 control-label">
+                        Date:
+                    </label>
+                    <div class="col-sm-3">
+                        <label class="control-label" id="DocDate" ng-model="DocDate">
+                        </label>
+                    </div>*@
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="margin-left: -1px;">
+                                Customer Code:
+                            </label>
+                            <label class="col-sm-1 control-label" id="CustCode" ng-model="CustCode" style="text-align:left;">
+                            </label>
+                            @*<div class="col-sm-10">
+                        <label class="col-sm-2 control-label" style="margin-left: -1px;">
+                            Customer Code:
+                        </label>
+                        <div class="col-sm-4">
+                            <label class="control-label" id="CustCode" ng-model="CustCode">
+                            </label>
+                        </div>
+                    </div>*@
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Customer Name:
+                            </label>
+                            <label class="col-sm-4 control-label" id="CustName" ng-model="CustName" style="text-align:left;">
+                            </label>
+                            @*<div class="col-sm-10">
+                        <label class="col-sm-2 control-label" style="margin-left: -1px;">
+                            Customer Name:
+                        </label>
+                        <div class="col-sm-4">
+                            <label class="control-label" id="CustName" ng-model="CustName">
+                            </label>
+                        </div>
+                    </div>*@
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                            </label>
+                            <div class="col-sm-4">
+                                <div class="">
+                                    <label class="control-label" id="CustAddress" ng-model="CustAddress" style="text-align:left;">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4 class="col-sm-offset-1"><b>NARRATION</b></h4>
+                        </div>
+                        @*<div class="col-sm-offset-1">
+                    <h4><b>NARRATION</b></h4>
+                </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-offset-1" id="Towards" ng-model="Towards">
+                            </label>
+                            @*<div class="col-sm-offset-1 col-sm-6">
+                        <label class="control-label" id="Towards" ng-model="Towards">
+                        </label>
+                    </div>*@
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Gross Amount:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="GrossAmt" ng-model="GrossAmt">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                TDS Amount:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="TDSAmt" ng-model="TDSAmt">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Net Amount:
+                            </label>
+                            <div class="col-sm-4">
+                                <label class="control-label" id="NetAmt" ng-model="NetAmt">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-offset-1" id="InWords">
+                            </label>
+                        </div>
+                        <hr />
+                        <div class="text-center">
+                            <h5>This is system generated document hence does not require a signature.</h5>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content GST" style="max-height: 478px; overflow-y: scroll;" id="GSTdebitNoteView">
+    <div style="width: 100%; height: 100%;display:none;" id="GSTaddcustomerview_HTML">
+        <table style="width: 98%" align="center" border="0">
+            <tr>
+                <td>
+                    <div class="text-left col-sm-5" style="padding-left: 2%;">
+                        <p><label class="control-label col-sm-1" id="GSTPlantDesc_html" style="text-align: left;"></label>,<label class="control-label col-sm-1" id="GSTPlantName_html" style="text-align: left;"></label><br />
+                                <label class="control-label col-sm-1" id="GSTPlantAddress_html" style="text-align: left;"></label>,<br />
+                                Phone No  : <label class="control-label col-sm-1" id="GSTPlantPhone_html" style="text-align: left;"></label>
+                        </p>                            
+                    </div>
+                </td>
+                <td>
+                    <div class="row" align="center">
+                        <img id="HILImg" class="img-thumbnail" alt="Cinque Terre" width="50" height="30" style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div class="text-left col-sm-5" style="padding-left: 2%;">
+                        <p>GSTIN Number : <label class="control-label col-sm-1" id="GSTPlantGSTNo_html" style="text-align: left;"></label><br />
+                                PAN Number: AAACH2676Q <br />
+                                CIN Number : L74999TG1955PLC000656<br />
+                                TIN Number : <label class="control-label col-sm-1" id="GSTPlantTINNo_html" style="text-align: left;"></label><br />
+                                E-Mail Id : <label class="control-label col-sm-1" id="GSTPlantEMail_html" style="text-align: left;"></label>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr />
+        <table style="width: 98%" align="center" border="0">
+            <tr>
+                <td>
+                    <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">                        
+                        <h4><b>DEBIT NOTE</b></h4>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr />
+        <table width="100%">
+            <tr>
+                <td>Document Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;&nbsp;<label id="GSTDocNo_html"></label></td>
+            </tr>
+            <tr>
+                <td>Document Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;&nbsp;<label id="GSTDocDate_html"></label></td>
+            </tr>
+            <tr>
+                <td>Document Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;&nbsp;<label id="GSTDocType_html"></label></td>
+            </tr>
+            <tr>
+                <td>Ref. Document Number &nbsp;   :&nbsp;&nbsp;<label id="GSTRefDocNumber_html"></label></td>
+            </tr>
+            <tr>
+                <td>Ref. Document Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   :&nbsp;&nbsp;<label id="GSTRefDocDate_html"></label></td>
+            </tr>
+            <tr>
+                <td>Invoice Ref. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  :&nbsp;&nbsp;<label id="GSTInvoice_html"></label></td>
+            </tr>
+        </table>
+        <hr />
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <h4><label id="GSTCUSTOMERDETAILS_html" style="text-align: left;font-weight:bold;"></label></h4>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label id="GSTCUSTOMERADDRESSDETAILS_html" style="text-align: left;"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> TIN Number :</label>
+            <label id="GSTCustTINNo_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> GST Number :</label>
+            <label id="GSTCustGSTNo_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> PAN Number :</label>
+            <label id="GSTCustPANNo_html"></label>
+        </div>
+        <div class="row" style="width: 100%; margin-bottom: 15px;">
+            <label> Phone Number :</label>
+            <label id="GSTCustPhoneNo_html"></label>
+        </div>
+        <hr />
+        <table width="100%">
+            <thead style="font-size:15px; font-weight:bold;border-bottom:1px solid #c5c5c5 !important">
+                <th style="text-align:left">Srl No</th>
+                <th style="text-align:left">Material /Service Code</th>
+                <th style="text-align:left">Description of Goods / Services</th>
+                <th style="text-align:left">HSN Code Q</th>
+                <th style="text-align:left">Quantity</th>
+                <th style="text-align:left">UOM</th>
+                <th style="text-align:left">Unit Rate</th>
+                <th style="text-align:left">Basic Amount</th>
+                <th style="text-align:left">Remarks</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="9">
+                        <hr />
+                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #c5c5c5 !important">
+                    <td>1</td>
+                    <td><label id="GSTMAT_CODE_html" style="text-align: left;"></label></td>
+                    <td> <label id="GSTMAT_TXT_html" style="text-align: left;"></label></td>
+                    <td><label id="GSTHSN_CODE_html" style="text-align: left;"></label></td>
+                    <td><label id="GSTQty_html" style="text-align: left;"></label></td>
+                    <td><label id="GSTUnit_html" style="text-align: left;"></label></td>
+                    <td><label id="GSTUNIT_RATE_html" style="text-align: left;"></label> </td>
+                    <td><label id="GSTBASE_AMOUNT_html" style="text-align: left;"></label></td>
+                    <td> <label id="GSTREMARKS_html" style="text-align: left;"></label></td>
+                </tr>
+                 <tr>
+                    <td colspan="9">
+                        <hr />
+                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid #c5c5c5 !important">
+                    <td colspan="9" style="text-align:right;padding-right:35.5%;">
+                        <p> <label>Gross Amount &nbsp;&nbsp;&nbsp;: &nbsp;</label><label id="GSTGrossAmount_html" style="text-align: left;"></label> </p>
+                        <p id="ParaGSTTDS_html"> <label>TDS &nbsp;: &nbsp;</label><label id="GSTTDS_html" style="text-align: left;"></label> </p>
+                        <p id="ParaGSTCGST_html"> 
+                            <label id="GSTCGSTP_html" style="text-align: left;"></label>&nbsp;&nbsp;
+                            <label id="GSTCGST_html" style="text-align: left;"></label>
+                        </p>
+                        <p id="ParaGSTSGST_html"> 
+                            <label id="GSTSGSTP_html" style="text-align: left;"></label>&nbsp;&nbsp;
+                            <label id="GSTSGST_html" style="text-align: left;"></label> 
+                        </p>
+                        <p id="ParaGSTIGST_html"> 
+                            <label id="GSTIGSTP_html" style="text-align: left;"></label>&nbsp;&nbsp;
+                            <label id="GSTIGST_html" style="text-align: left;"></label>
+                        </p>                                              
+                        <p> <label>Total Amount &nbsp;&nbsp;&nbsp;: &nbsp;</label><label id="GSTTotalAmount_html" style="text-align: left;"></label> </p>
+                    </td>
+                </tr>
+                 <tr>
+                    <td colspan="9">
+                        <hr />
+                    </td>
+                </tr>
+                <tr>
+                    <td  colspan="9"><label id="GSTTaxInWords_html" style="text-align: left;"></label><br />
+                    <label id="GSTTotalInWords_html" style="text-align: left;"></label></td>
+                </tr>
+            </tbody>            
+        </table>
+        <hr />
+        <div class="row" align="center" style="width: 100%; margin-bottom: 15px;">
+            <h5>This is system generated document hence does not require a signature.</h5>
+        </div>
+    </div>
+
+    <div class="row" id="GSTaddcustomerview">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="row">
+                        <div class="text-left col-sm-5" style="padding-left: 2%;">
+                            @*<p><label class="control-label col-sm-1" id="GSTPlantDesc" style="text-align: left;"></label>,<label class="control-label col-sm-1" id="GSTPlantName" style="text-align: left;"></label><br />
+                                <label class="control-label col-sm-1" id="GSTPlantAddress" style="text-align: left;"></label>,<br />
+                                <label class="control-label col-sm-1" id="GSTPlantPhone" style="text-align: left;"></label>
+                            </p> *@                           
+                            <div class="form-group">
+                                <label id="GSTPlantDesc" style="text-align: left;font-weight:bold;">
+                                </label>
+                                ,<label id="GSTPlantName" style="text-align: left;"></label>
+                            </div>
+                            <div class="form-group">
+                                <label id="GSTPlantAddress" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Phone No  :
+                                </label>
+                                <label  id="GSTPlantPhone" style="text-align: left;">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="~/Images/hil.jpg" class="img-thumbnail" alt="Cinque Terre" width="110" style="border: none;">
+                        </div>
+                        <div class="text-left col-sm-3" style="padding-left: 2%;">
+                            <p>GSTIN Number : <label id="GSTPlantGSTNo" style="text-align: left;"></label><br />
+                                PAN Number: AAACH2676Q <br />
+                                CIN Number : L74999TG1955PLC000656<br />
+                                TIN Number : <label id="GSTPlantTINNo" style="text-align: left;"></label><br />
+                                E-Mail Id : <label id="GSTPlantEMail" style="text-align: left;"></label></p>                            
+                        </div>
+                    </div>
+                <hr style="margin:0px"/>
+                    <div class="row">
+                        <div class="text-center">
+                            <h4><b>DEBIT NOTE</b></h4>
+                        </div>
+                    </div>
+                    <hr style="margin:0px"/>
+                </div>
+
+                <div class="box-body pad" style="padding:0">
+                    <form class="form-horizontal" role="form" style="font-size: 12px; font-weight: normal" action="">
+                        <div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" @*style="margin-left: -21px;"*@>
+                                    Document Number    :
+                                </label>
+                                <label class="control-label col-sm-1" id="GSTDocNo" ng-model="GSTDocNo" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" @*style="margin-left: -21px;"*@>
+                                    Document Date  :
+                                </label>
+                                <label class="control-label col-sm-1" id="GSTDocDate" ng-model="GSTDocDate" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" @*style="margin-left: -21px;"*@>
+                                    Document Type  :
+                                </label>
+                                <label class="control-label col-sm-1" id="GSTDocType" ng-model="GSTDocType" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" @*style="margin-left: -21px;"*@>
+                                    Ref Document Number  :
+                                </label>
+                                <label class="control-label col-sm-1" id="GSTRefDocNumber" ng-model="GSTRefDocNumber" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" @*style="margin-left: -21px;"*@>
+                                    Ref Document Date  :
+                                </label>
+                                <label class="control-label col-sm-1" id="GSTRefDocDate" ng-model="GSTRefDocDate" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                            <label class="col-sm-2 control-label" @*style="margin-left: -21px;"*@>
+                                Invoice Ref  :
+                            </label>
+                            <label class="control-label col-sm-1" id="GSTInvoice" ng-model="GSTInvoice" style="text-align: left;">
+                            </label>
+                        </div>
+                        </div>
+                        <hr style="margin:0px"/>
+                        <div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" id="GSTCUSTOMERDETAILS" ng-model="GSTCUSTOMERDETAILS" style="text-align: left;font-weight:bold;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" id="GSTCUSTOMERADDRESSDETAILS" ng-model="GSTCUSTOMERADDRESSDETAILS" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" @*style="margin-left: -21px;"*@>
+                                    TIN Number  :
+                                </label>
+                                <label class="control-label col-sm-3" id="GSTCustTINNo" ng-model="GSTCustTINNo" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" @*style="margin-left: -21px;"*@>
+                                    GST Number  :
+                                </label>
+                                <label class="control-label col-sm-3" id="GSTCustGSTNo" ng-model="GSTCustGSTNo" style="text-align: left;">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" @*style="margin-left: -21px;"*@>
+                                    PAN Number  :
+                                </label>
+                                <label class="control-label col-sm-3" id="GSTCustPANNo" ng-model="GSTCustPANNo" style="text-align: left;">
+                                </label>
+                                @*<label class="col-sm-3 control-label">
+                                GST Number:
+                                </label>
+                                <label class="col-sm-3 control-label" id="GSTDocNo" ng-model="DocNo">
+                                </label>*@
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" @*style="margin-left: -21px;"*@>
+                                    Phone Number  :
+                                </label>
+                                <label class="control-label col-sm-3" id="GSTCustPhoneNo" ng-model="GSTCustPhoneNo" style="text-align: left;">
+                                </label>                                
+                            </div>
+                        </div>
+                        <hr />
+                         <div class="form-group">
+                             <table style="border-collapse:collapse">
+                                 <thead>
+                                     <th>Srl No</th>
+                                      <th>Material /Service Code</th>
+                                      <th>Description of Goods / Services</th>
+                                      <th>HSN Code Q</th>
+                                      <th>Quantity</th>
+                                      <th>UOM</th>
+                                      <th>Unit Rate</th>
+                                      <th>Basic Amount</th>
+                                      <th>Remarks</th>
+                                 </thead>
+                                 <tbody>
+                                     <tr>
+                                         <td>1</td>
+                                          <td><label id="GSTMAT_CODE" ng-model="GSTMAT_CODE" style="text-align: left;"></label></td>
+                                          <td> <label id="GSTMAT_TXT" ng-model="GSTMAT_TXT" style="text-align: left;"></label></td>
+                                          <td><label id="GSTHSN_CODE" ng-model="GSTHSN_CODE" style="text-align: left;"></label></td>
+                                          <td><label id="GSTQty" ng-model="GSTQty" style="text-align: left;"></label></td>
+                                          <td><label id="GSTUnit" ng-model="GSTUnit" style="text-align: left;"></label></td>
+                                          <td><label id="GSTUNIT_RATE" ng-model="GSTUNIT_RATE" style="text-align: left;"></label> </td>
+                                          <td><label id="GSTBASE_AMOUNT" ng-model="GSTBASE_AMOUNT" style="text-align: left;"></label></td>
+                                          <td> <label id="GSTREMARKS" ng-model="GSTREMARKS" style="text-align: left;"></label></td>
+                                     </tr>
+                                     <tr>
+                                         <td colspan="9" style="text-align:right;padding-right:35.5%;">
+                                             <p> <label>Gross Amount</label><label id="GSTGrossAmount" ng-model="GSTGrossAmount" style="text-align: left;"></label> </p>
+                                            <p id="ParaGSTTDS"> 
+                                                <label>TDS</label><label id="GSTTDS" ng-model="GSTTDS" style="text-align: right;"></label> 
+                                            </p>
+                                             <p id="ParaGSTCGST"> 
+                                                 <label id="GSTCGSTP" ng-model="GSTCGSTP" style="text-align: left;"></label>
+                                                 <label id="GSTCGST" ng-model="GSTCGST" style="text-align: right;"></label>                                                 
+                                             </p>
+                                             <p id="ParaGSTSGST"> 
+                                                 <label id="GSTSGSTP" ng-model="GSTSGSTP" style="text-align: left;"></label>
+                                                 <label id="GSTSGST" ng-model="GSTSGST" style="text-align: right;"></label>                                                 
+                                             </p>
+                                             <p id="ParaGSTIGST"> 
+                                                 <label id="GSTIGSTP" ng-model="GSTIGSTP" style="text-align: left;"></label>
+                                                 <label id="GSTIGST" ng-model="GSTIGST" style="text-align: right;"></label>
+                                             </p>                                              
+                                              <p> 
+                                                  <label>Total Amount</label><label id="GSTTotalAmount" ng-model="GSTTotalAmount" style="text-align: left;"></label>
+                                              </p>
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td  colspan="9"><p id="GSTTaxInWords" ng-model="GSTTaxInWords" style="text-align: left;"></p><br />
+                                            <p id="GSTTotalInWords" ng-model="GSTTotalInWords" style="text-align: left;"></p></td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </div>
+                        <br />
+                        <div class="text-left">
+                            <h5>This is system generated document hence does not require a signature.</h5>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style type="text/css">
+    .GST label {
+        text-align:left !important;
+        padding-top:2px !important;
+        min-width:100px;
+    }
+    .GST form {
+        padding-left:15px;
+    }
+    .GST table {
+        width: 98%;
+    }
+        .GST table tr {
+            border-bottom: 1px solid #c5c5c5;
+        }
+        .GST table td,
+        .GST table th {
+            padding:5px;
+            white-space:inherit !important;
+        }
+            .GST table td p {
+                margin:0;
+            }
+            .GST table td label {
+                max-width:120px;
+                word-break:break-all;
+                
+            }
+</style>
+<script type="text/javascript">
+    var userRole;
+    $(document).ready(function () {
+        ShowLoader();
+        userRole = SessionValue;
+        $("#HILImg").prop('src', window.location.origin + '/Images//hil.jpg' + '?' + Math.random());
+        $('#SpanDocDate').on('DOMSubtreeModified', function () {
+            if ($("#DocDate").text() != "") {
+                var dGSTDate = new Date();
+                dGSTDate.setFullYear(2017, 06, 01);//Date comparision for 1st July 2017(GST).
+                var docDateArray = $("#DocDate").text().split("/");
+                var docDate = new Date();
+                docDate.setFullYear(docDateArray[2], docDateArray[1] - 1, docDateArray[0]);
+                if (docDate >= dGSTDate) {
+                    $("#debitNoteView").hide();
+                    $("#addcustomerview_HTML").hide();
+                    $("#addcustomerview").hide();
+                    $("#GSTdebitNoteView").show();
+                    $("#addcustomerview_HTML").hide();
+                    $("#GSTaddcustomerview").show();
+                } else {
+                    $("#debitNoteView").show();
+                    $("#addcustomerview_HTML").hide();
+                    $("#addcustomerview").show();
+                    $("#GSTdebitNoteView").hide();
+                    $("#addcustomerview_HTML").hide();
+                    $("#GSTaddcustomerview").hide();
+                }
+            }
+        });
+        $('#GSTTDS').on('DOMSubtreeModified', function () {
+            if (Math.abs(parseFloat($('#GSTTDS').text())) > 0) {
+                $('#ParaGSTTDS').show();
+                $('#GSTTDS').text(Math.abs($('#GSTTDS').text()).toFixed(2));
+                $('#ParaGSTTDS_html').show();
+                $('#GSTTDS_html').text(Math.abs($('#GSTTDS_html').text()).toFixed(2));
+            } else {
+                $('#ParaGSTTDS').hide();
+                $('#ParaGSTTDS_html').hide();
+            }
+        });
+        $('#GSTCGST').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTCGST').text()) > 0) {
+                $('#ParaGSTCGST').show();
+                $('#ParaGSTCGST_html').show();
+            } else {
+                $('#ParaGSTCGST').hide();
+                $('#ParaGSTCGST_html').hide();
+            }
+        });
+        $('#GSTCGSTP').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTCGSTP').text()) > 0) {
+                $('#GSTCGSTP').text('CGST @@ ' + $('#GSTCGSTP').text() + ' %');
+            }
+        });
+        $('#GSTCGSTP_html').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTCGSTP_html').text()) > 0) {
+                $('#GSTCGSTP_html').text('CGST @@ ' + $('#GSTCGSTP_html').text() + ' %');
+            }
+        });
+        $('#GSTSGST').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTSGST').text()) > 0) {
+                $('#ParaGSTSGST').show();
+                $('#ParaGSTSGST_html').show();
+            } else {
+                $('#ParaGSTSGST').hide();
+                $('#ParaGSTSGST_html').hide();
+            }
+        });
+        $('#GSTSGSTP').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTSGSTP').text()) > 0) {
+                $('#GSTSGSTP').text('SGST @@ ' + $('#GSTSGSTP').text() + ' %');
+            }
+        });
+        $('#GSTSGSTP_html').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTSGSTP_html').text()) > 0) {
+                $('#GSTSGSTP_html').text('SGST @@ ' + $('#GSTSGSTP_html').text() + ' %');
+            }
+        });
+        $('#GSTIGST').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTIGST').text()) > 0) {
+                $('#ParaGSTIGST').show();
+                $('#ParaGSTIGST_html').show();
+            } else {
+                $('#ParaGSTIGST').hide();
+                $('#ParaGSTIGST_html').hide();
+            }
+        });
+        $('#GSTIGSTP').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTIGSTP').text()) > 0) {
+                $('#GSTIGSTP').text('IGST @@ ' + $('#GSTIGSTP').text() + ' %');
+            }
+        });
+        $('#GSTIGSTP_html').on('DOMSubtreeModified', function () {
+            if (parseFloat($('#GSTIGSTP_html').text()) > 0) {
+                $('#GSTIGSTP_html').text('IGST @@ ' + $('#GSTIGSTP_html').text() + ' %');
+            }
+        });
+        HideLoader();
+    });
+
+    function GetPDFFile() {
+        $.ajax({
+            url: '/Home/Exportdata',
+            type: 'POST',
+            beforeSend: function () {
+                //ShowLoader();
+            },
+            data: { QueryVal: $("#GSTdebitNoteView").is(":visible") ? $('#GSTaddcustomerview_HTML').html() : $('#addcustomerview_HTML').html() },
+            success: function (result) {
+                if (result == "ok") {
+                    if ((userRole == "STOCKIST") || (userRole == "BU3_STK")) {
+                        $.ajax({
+                            type: 'POST',
+                            async: false,
+                            data: { reportname: "DebitNote_" + $("#DocNo").text() + "" },
+                            //datatype: 'JSON',
+                            url: '../../HOME/GetPDF_STOCKIST',
+                            success: function (data) {
+                                if (data == "MailSentSuccessfully") {
+                                    alert("Mail Sent Successfully");
+                                } else {
+                                    alert(data);
+                                }
+                            },
+                            error: function (e) {
+                                alert("Technical Error Occured");
+                            }
+                        });
+
+                        //   window.location.href = "../../Home/GetPDF_STOCKIST?reportname=CreditNote_" + $("#DocNo").text() + "";
+                    } else {
+                        window.location.href = "../../Home/GetPDF?reportname=DebitNote_" + $("#DocNo").text() + "";
+                    }
+                }
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    }
+</script>

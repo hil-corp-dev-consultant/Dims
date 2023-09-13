@@ -1,0 +1,299 @@
+﻿@*Module            : Sales Process Management.
+    DocumentName        : HolidayConfigurationList.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for Holiday Configuration List.
+    Developer Name      : Swamy Ayyappa P
+    Change Log          : NA.*@
+
+@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;    
+    //  string SessionUserUserState = UP.State;
+}
+
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    .tab-pane {
+        padding-top: 20px;
+    }
+
+    ul li {
+        cursor: pointer;
+    }
+
+    .datepicker {
+        z-index: 1200 !important;
+    }
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Holiday Configuration</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Holiday Configuration</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                @*                <a href ng-click="go('')">
+                        <i class="fa fa-file-o fa-4" title="Add New"></i>
+                    </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+        <div class="col-md-12">
+            <label id="UserId" hidden>@SessionUserCode</label>
+            <label id="UserName" hidden>@SessionUserName</label>
+            @* <label id="UserSalesRegion" hidden>@SessionUserUserState</label>*@
+            <div class="box box-primary" style="background: white none repeat scroll 0 0;" id="HolidayList">
+                <div class="box-body">
+                    <form class="form-horizontal" role="form" style="font-size: small;">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="YearFilter">
+                                Year<span class="Mandatory"> *</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="YearFilter" class="form-control">
+                                    <option value="">2016</option>
+                                    <option value="">2015</option>
+                                    <option value="">2014</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>                                    
+                    <div style="margin-left: 15px;" class="pull-right" id="btnAddHoliday" hidden>
+                      <button style="background-color: #d2401a;border:1px solid #d2401a; color: white" onclick="AddHoliday()" class="btn btn-info navbar-btn" type="button">
+                                Add Holiday
+                      </button>
+                    </div>                     
+                    <div style="padding:10px;clear:both;"></div>               
+                    <div style="overflow:auto;">
+                    <table id="HolidayConfigListTable" class="table tablecss ListTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>SNo</th>
+                                <th>Occasion/Description</th>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>States Eligible</th>
+                                <th>Status</th>
+                                <th>Occasion Year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Independence Day</td>
+                                <td>15-08-2016</td>
+                                <td>Monday</td>
+                                <td>AP</td>
+                                <td>Active</td>
+                                <td>2015</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div style="padding:10px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="HolidayFormModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Holiday</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#">
+                    <div class="row">
+                        <input type="hidden" id="HolidayID" data-ng-model="HolidayID" />
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Occasion/ Description<span class="Mandatory">*</span></label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="OccasionDescription" data-ng-model="OccasionDescription" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Date<span class="Mandatory">*</span></label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="OccasionDate" data-ng-model="OccasionDate" readonly="readonly" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Day<span class="Mandatory">*</span></label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control gray" id="OccasionDay" data-ng-model="OccasionDay" disabled="disabled" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Applicable Zone</label>
+                                        <div class="col-sm-4">
+                                            <select id="ApplicableZones" class="form-control" multiple="multiple" data-ng-model="ApplicableZones">
+                                                <option value="">2016</option>
+                                                <option value="">2015</option>
+                                                <option value="">2014</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Applicable State<span class="Mandatory">*</span></label>
+                                    <div class="col-sm-4">
+                                        <select id="ApplicableStates" class="form-control" multiple="multiple" data-ng-model="ApplicableStates"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="label-2-2" class="col-sm-5 control-label" style="text-align: right;">Status<span class="Mandatory">*</span></label>
+                                    <div class="col-sm-4">
+                                        <select id="OccasionStatus" class="form-control" data-ng-model="OccasionStatus">
+                                            <option value="">Select Status</option>
+                                            <option value="Y">Active</option>
+                                            <option value="N">Inactive</option>
+                                        </select>
+                                        @*<input type="text" class="form-control" id="OccasionStatus" data-ng-model="OccasionStatus" />*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="RDST_Save" class="btn btn-info" ng-click="SaveRDFSData()">Save</button>
+                <button type="button" id="RDST_Delete" class="btn btn-info" ng-click="DeleteRDFS()">Delete</button>
+                <button type="button" id="RDST_Close" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="StateModel" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">List of States</h4>
+            </div>
+            <div class="modal-body">
+                <div style="overflow:auto;">
+                <table id="StatesList" class="table tablecss ListTable" style="width:80%;">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>State Name</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    var sessionvalue = SessionValue;
+    $(document).ready(function () {
+        if (sessionvalue == "ADMIN") {           
+            $("#btnAddHoliday").show();
+        }
+        else if (sessionvalue == "ZSC") {
+            $("#btnAddHoliday").show();
+        }
+
+      
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+        var LastDayoftheYear = new Date(new Date().getFullYear(), 11, 31);
+        $('#OccasionDate').datepicker({
+
+            startDate: today,
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            endDate: LastDayoftheYear
+        });
+        // $("#ApplicableZones").SumoSelect({ placeholder: 'Select Zones' });
+        //   $("#ApplicableStates").SumoSelect({ placeholder: 'Select States' });
+
+        //alert(LastDayoftheYear);
+    });
+
+
+    function AddHoliday() {
+        try {
+
+            $("#HolidayFormModel").modal('show');
+            $('#HolidayID').val('');
+            $('#OccasionDescription').val('');
+            $('#OccasionDate').val('');
+            $('#OccasionDay').val('');
+            $('#OccasionStatus').val('');
+            $('#ApplicableStates')[0].sumo.unSelectAll();
+        }
+        catch (e) {
+            alert("Error : AddHoliday : " + e);
+        }
+    }
+
+
+
+</script>

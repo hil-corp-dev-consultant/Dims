@@ -1,0 +1,257 @@
+﻿@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserTypeCode = UP.UserTypeCode;
+    string SessionUserType = UP.UserType;
+}
+
+<style type="text/css">
+
+    table tbody tr {
+    
+    cursor:default;
+    }
+</style>
+
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Price Card Rate Upload</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Discounts/Provisions</li>
+        <li class="active">Price Card Rate Upload</li>
+    </ol>
+
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-body" style="overflow-x: scroll; width: 98%">
+                <form id="PriceCardRateFileUploadForm" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" id="PriceCardRateFormFile" name="PriceCardRateFormFile" class="filestyle" onchange="PriceCardRateFileUploaded()" />
+                        <input type="button" class="btn btn-info navbar-btn" value="Submit" onclick="ImportPriceCardRate()" />
+                    </div>
+                </form>
+                <form role="form" class="form-horizontal">
+                    <input type="text" id="USERNAME_UnnatiReward" style="display: none;" value="@SessionUserName" />
+                    <input type="text" id="USERCODE_UnnatiReward" style="display: none;" value="@SessionUserCode" />
+                    <input type="text" id="USERTYPE_UnnatiReward" style="display: none;" value="@SessionUserTypeCode" />
+                    <div>
+                        <table id="PriceCardRate_Table" class="table ListTable">
+                            <thead>
+                                <tr style="background-color: #d2401a; color: white; font-size: 13px;">
+                                    <th style="text-align: center">Sl No</th>
+                                    <th style="text-align: center">Sales Group Code</th>
+                                    <th style="text-align: center">Sales Group Name</th>
+                                    <th style="text-align: center">Price Card Rate</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+      <div class="modal fade" id="RewardsPopup">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#d2401a;color:#fff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 style="font-size:12px;">
+                        <b>Column Names and order Should be as below</b>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                  <p style="font-size:12px;"><b> Make Sure About Column Names and order as below :</b></p>                    
+                    <p>Sales Group Code</p>
+                    <p>Sales Group Name</p>
+                    <p>Price ( Rs )</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script>
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    function PriceCardRateFileUploaded() {
+        var filename = $("#PriceCardRateFormFile").val();
+        var extension = filename.replace(/^.*\./, '');
+
+        if (extension == "xlsx" || extension == "xls") {
+
+        }
+        else {
+            alert("Invalid File");
+            $("#PriceCardRateFormFile").val("");
+        }
+    }
+
+
+    //$("form#UnnatiRewardsFileUploadForm").submit(function () {
+
+    function ImportPriceCardRate() {
+        var FormData1 = $("#PriceCardRateFormFile").prop("files")[0];
+        if (FormData1 != "undefined" && FormData1 != null) {
+            // var formData = FormData1;
+            var formData = new FormData($("#PriceCardRateFileUploadForm")[0]);
+            ShowLoader();
+            $.ajax({
+                url: '../../Reports/UploadFile_PriceCardRate',
+                type: 'POST',
+                data: formData,
+                async: false,
+                beforeSend: function () {
+                    ShowLoader();
+                },
+                success: function (Resp) {
+
+                    if (Resp == "Columns Doesn't Exist") {
+                        $("#RewardsPopup").modal('show');
+                        $("#PriceCardRateFormFile").val("");
+                    }
+                    else {
+                        Resp = JSON.parse(Resp);
+
+                        if (Resp.length > 0)
+                        {
+                            alert("Uploaded Successfully");
+                        }
+                        GetPriceCardRateData();
+                        /*
+                        var HtmlCode = "";
+                        $("#UnnatiRewardsCatalog_Table").dataTable().fnDestroy();
+                        $('#UnnatiRewardsCatalog_Table').empty();
+                        for (var i = 1; i < Resp.length; i++) {
+                            HtmlCode = HtmlCode + "<tr>";
+    
+                            HtmlCode = HtmlCode + "<td>" + (i) + "</td>";
+    
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["F1"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["F2"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["F3"] + "</td>";
+    
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["F4"] + "</td>";
+                            //HtmlCode = HtmlCode + "<td>" + Resp[i]["F5"] + "</td>";
+    
+    
+                            HtmlCode = HtmlCode + "</tr>";
+                        }
+    
+                        $("#UnnatiRewardsCatalog_Table tbody").remove();
+                        $("#UnnatiRewardsCatalog_Table").append("<tbody>" + HtmlCode + "</tbody>");
+    
+                        $("#UnnatiRewardsCatalog_Table").dataTable({
+                        });
+                        */
+                        $("#PriceCardRateFormFile").val("");
+                    }
+                    HideLoader();
+                },
+                complete: function () {
+                    HideLoader();
+                },
+                error: function () {
+                    HideLoader();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            HideLoader();
+        } else {
+            alert("Please select file");
+        }
+    }
+
+
+    $(document).ready(function () {
+        ShowLoader();
+        CheckUserSession();
+        GetPriceCardRateData();
+        HideLoader();
+    });
+
+
+    function GetPriceCardRateData() {
+
+        try {
+
+            console.clear();
+
+            $.ajax({
+                url: '../../Reports/GetPriceCardRate',
+                type: 'POST',
+                async: false,
+                beforeSend: function () {
+                    ShowLoader();
+                },
+                success: function (Resp) {
+                   
+                    if (Resp != "" && Resp != null && Resp != undefined) {
+                      
+                        Resp = JSON.parse(Resp);
+                        var HtmlCode = "";
+                        $("#PriceCardRate_Table").dataTable().fnDestroy();
+                        $('#PriceCardRate_Table').empty();
+
+                        for (var i = 0; i < Resp.length; i++) {
+                            HtmlCode = HtmlCode + "<tr>";
+
+                            HtmlCode = HtmlCode + "<td>" + (i + 1) + "</td>";
+
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["Sales_Group_Code"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["Sales_Group_Name"] + "</td>";
+                            HtmlCode = HtmlCode + "<td>" + Resp[i]["Price_Card_Rate"] + "</td>";
+                            HtmlCode = HtmlCode + "</tr>";
+
+                        }
+
+                        $("#PriceCardRate_Table tbody").remove();
+
+                        HtmlCode = "<tbody>" + HtmlCode + "</tbody>";
+
+                        HtmlCode = HtmlCode + '<thead><tr style="background-color: #d2401a; color: white; font-size: 13px;"><th style="text-align: center">S No</th><th style="text-align: center">Sales Group Code</th><th style="text-align: center">Sales Group Name</th><th style="text-align: center">Price Card Rate</th></tr></thead>';
+
+                        $("#PriceCardRate_Table").append(HtmlCode);
+                        $("#PriceCardRate_Table").dataTable({});
+                        $("#PriceCardRateFormFile").val("");
+                    }
+                    else {
+                        alert("No Data Found");
+                        HideLoader();
+                    }
+                },
+                complete: function () {
+                    HideLoader();
+                },
+                error: function () {
+                    HideLoader();
+                }
+            });
+        }
+        catch (e) {
+            //alert("Error GetRewardsCatalog: " + e);
+        }
+
+    }
+
+
+</script>

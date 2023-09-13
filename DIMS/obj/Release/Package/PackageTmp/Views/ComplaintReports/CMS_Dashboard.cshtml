@@ -1,0 +1,2552 @@
+﻿@{
+    ViewBag.Title = "CMS_Dashboard";
+
+    string NowYear = DateTime.Now.Year.ToString();
+
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string UserCode = UP.UserCode;
+    string RoleCode = UP.UserTypeCode;
+    var SBU3_Code = global_asax.SBU3_Code;
+   
+    
+}
+
+
+
+
+
+<style>
+    .dataTables_scroll {
+        max-height: initial !important;
+        overflow: auto !important;
+    }
+
+    table tbody tr th {
+        text-align: center !important;
+    }
+
+    table tbody tr td {
+        text-align: right;
+    }
+
+    table tfoot tr th {
+        text-align: right;
+    }
+</style>
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>CMS Dashboard</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Complaint Management</li>
+        <li class="active">CMS Dashboard</li>
+    </ol>
+
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+
+                <select id="StateFilter" style="float: left; display: block;" onchange="LoadCMSDashBoard()"></select>
+                <select id="YearFilter" style="float: left; display: block; margin-left: 10px;" onchange="LoadCMSDashBoard()"></select>
+                @*<input type="text" id="fromDate" onchange="fromDateChange()" />
+                <input type="text" id="toDate" onchange="fromDateChange()" />*@
+                <select id="BusinessUnitFilter" style="float: left; display: block; margin-left: 10px;" onchange="LoadCMSDashBoard()">
+                    <option value="SBU1">SBU1</option>
+                    <option value="SBU2">SBU2</option>
+                    <option value="SBU3">SBU3</option>
+                </select>
+                <input type="text" id="NowYear" value="@NowYear" style="display:none;" />
+                <input type="text" id="UserCode" value="@UserCode" style="display:none;" />
+                <input type="text" id="RoleCode" value="@RoleCode" style="display:none;" />
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+    <section style="padding: 0 15px 90px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                    <div class="box-body">
+                        <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" id="cmsDashboardForm">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+
+                                                <table id="ComplaintCountStatusWise" class="table tablecss" style="width: 60%; float: left;">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="2" style="text-align: left !important;">Complaints Summary Status</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Status</th>
+                                                            <th>Count</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+
+
+                                                <br />
+                                                <br />
+                                                <br />
+
+
+
+                                                <table id="ComplaintCountStateWise" class="table tablecss">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="37" style="text-align: left !important;">Monthwise Status Report</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th rowspan="2" style="vertical-align: middle; text-align: center">State Name</th>
+
+                                                            <th colspan="3">January</th>
+                                                            <th colspan="3">February</th>
+                                                            <th colspan="3">March</th>
+
+                                                            <th colspan="3">April</th>
+                                                            <th colspan="3">May</th>
+                                                            <th colspan="3">June</th>
+
+                                                            <th colspan="3">July</th>
+                                                            <th colspan="3">August</th>
+                                                            <th colspan="3">September</th>
+
+                                                            <th colspan="3">October</th>
+                                                            <th colspan="3">November</th>
+                                                            <th colspan="3">December</th>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>
+                                                                Registereded
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                                <br />
+                                                                Complaints
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
+                                                </table>
+
+                                                <br />
+
+                                                <table id="ComplaintCountStateWiseTotals" class="table tablecss" style="width: 30%; float: left;">
+                                                    <thead style="display: none;">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Total Registered Compalint in the Year : </td>
+                                                            <td>
+                                                                <label id="TotalRegisteredCompalintYear"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Closed Compalint in the Year : </td>
+                                                            <td>
+                                                                <label id="TotalClosedCompalintYear"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Pending Compalint in the Year : </td>
+                                                            <td>
+                                                                <label id="TotalPendingCompalintYear"></label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <br />
+                                                <br />
+                                                <br />
+
+                                                <table id="NetLossQuantityStateWise" class="table tablecss">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="37" style="text-align: left !important;">Monthwise Breakage and Netloss Report</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th rowspan="2" style="vertical-align: middle; text-align: center">State Name</th>
+
+                                                            <th colspan="2">January</th>
+                                                            <th colspan="2">February</th>
+                                                            <th colspan="2">March</th>
+
+                                                            <th colspan="2">April</th>
+                                                            <th colspan="2">May</th>
+                                                            <th colspan="2">June</th>
+
+                                                            <th colspan="2">July</th>
+                                                            <th colspan="2">August</th>
+                                                            <th colspan="2">September</th>
+
+                                                            <th colspan="2">October</th>
+                                                            <th colspan="2">November</th>
+                                                            <th colspan="2">December</th>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
+                                                </table>
+
+                                                <br />
+
+                                                <table id="NetLossQuantityStateWiseTotals" class="table tablecss" style="width: 30%; float: left;">
+                                                    <thead style="display: none;">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Total Breakage Quanity : </td>
+                                                            <td>
+                                                                <label id="TotalBreakageQuanity"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Net Loss Quantity : </td>
+                                                            <td>
+                                                                <label id="TotalNetLossQuantity"></label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <br />
+                                                <br />
+                                                <br />
+
+                                                <table id="NetLossQuantityPlantWise" class="table tablecss">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="37" style="text-align: left !important;">Plantwise Breakage and Netloss Report</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th rowspan="2" style="vertical-align: middle; text-align: center">Plant Name</th>
+
+                                                            <th colspan="2">January</th>
+                                                            <th colspan="2">February</th>
+                                                            <th colspan="2">March</th>
+
+                                                            <th colspan="2">April</th>
+                                                            <th colspan="2">May</th>
+                                                            <th colspan="2">June</th>
+
+                                                            <th colspan="2">July</th>
+                                                            <th colspan="2">August</th>
+                                                            <th colspan="2">September</th>
+
+                                                            <th colspan="2">October</th>
+                                                            <th colspan="2">November</th>
+                                                            <th colspan="2">December</th>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                            <th>
+                                                                Breakage
+                                                                <br />
+                                                                Quanity
+                                                            </th>
+                                                            <th>
+                                                                Net Loss
+                                                                <br />
+                                                                Quantity
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
+                                                </table>
+
+                                                <br />
+
+                                                <table id="NetLossQuantityPlantWiseTotals" class="table tablecss" style="width: 30%; float: left;">
+                                                    <thead style="display: none;">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Total Breakage Quanity : </td>
+                                                            <td>
+                                                                <label id="Plant_TotalBreakageQuanity"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Net Loss Quantity : </td>
+                                                            <td>
+                                                                <label id="Plant_TotalNetLossQuantity"></label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        @* svprasadk 21-12-2020 SBU3 Requirement CMS Dashboard based on state, from date, to date and BU start *@
+                        <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal" id="cmsDashboardFormBU3">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+
+                                                <table id="ComplaintCountStatusWiseBU3" class="table tablecss" style="width: 60%; float: left;">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="2" style="text-align: left !important;">Complaints Summary Status</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Status</th>
+                                                            <th>Count</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+
+
+                                                <br />
+                                                <br />
+                                                <br />
+
+
+
+                                                <table id="ComplaintCountStateWiseBU3" class="table tablecss">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="37" style="text-align: left !important;">Monthwise Status Report</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th rowspan="2" style="vertical-align: middle; text-align: center">State Name</th>
+
+                                                            <th colspan="3">January</th>
+                                                            <th colspan="3">February</th>
+                                                            <th colspan="3">March</th>
+
+                                                            <th colspan="3">April</th>
+                                                            <th colspan="3">May</th>
+                                                            <th colspan="3">June</th>
+
+                                                            <th colspan="3">July</th>
+                                                            <th colspan="3">August</th>
+                                                            <th colspan="3">September</th>
+
+                                                            <th colspan="3">October</th>
+                                                            <th colspan="3">November</th>
+                                                            <th colspan="3">December</th>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                            <th>
+                                                                Registered
+                                                            </th>
+                                                            <th>
+                                                                Closed
+                                                            </th>
+                                                            <th>
+                                                                Pending
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
+                                                </table>
+
+                                                <br />
+
+                                                <table id="ComplaintCountStateWiseTotalsBU3" class="table tablecss" style="width: 30%; float: left;">
+                                                    <thead style="display: none;">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Total Registered Complaints in the Year : </td>
+                                                            <td>
+                                                                <label id="TotalRegisteredCompalintYearBU3"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Closed Complaints in the Year : </td>
+                                                            <td>
+                                                                <label id="TotalClosedCompalintYearBU3"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Pending Complaints in the Year : </td>
+                                                            <td>
+                                                                <label id="TotalPendingCompalintYearBU3"></label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <br />
+                                                <br />
+                                                <br />
+
+                                                <table id="ComplaintCountMonthWiseBU3" class="table tablecss">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="25" style="text-align: left !important;">Month Wise No of Complaint Report</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th rowspan="2" style="vertical-align: middle; text-align: center">State Name</th>
+
+                                                            <th>January</th>
+                                                            <th>February</th>
+                                                            <th>March</th>
+
+                                                            <th>April</th>
+                                                            <th>May</th>
+                                                            <th>June</th>
+
+                                                            <th>July</th>
+                                                            <th>August</th>
+                                                            <th>September</th>
+
+                                                            <th>October</th>
+                                                            <th>November</th>
+                                                            <th>December</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
+                                                </table>
+
+                                                <br />
+                                                <br />
+                                                <br />
+
+                                                <table id="ComplaintCountPlantWiseBU3" class="table tablecss">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="25" style="text-align: left !important;">Plant Wise No of Complaint Report</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th rowspan="2" style="vertical-align: middle; text-align: center">Plant Name</th>
+
+                                                            <th>January</th>
+                                                            <th>February</th>
+                                                            <th>March</th>
+
+                                                            <th>April</th>
+                                                            <th>May</th>
+                                                            <th>June</th>
+
+                                                            <th>July</th>
+                                                            <th>August</th>
+                                                            <th>September</th>
+
+                                                            <th>October</th>
+                                                            <th>November</th>
+                                                            <th>December</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
+                                                </table>
+
+                                                <br />
+
+                                                <table id="ComplaintCountCategoryWiseBU3" class="table tablecss">
+                                                    <thead style="vertical-align: middle; text-align: center">
+                                                        <tr>
+                                                            <th colspan="25" style="text-align: left !important;">Category Wise No of Complaint Report</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th rowspan="2" style="vertical-align: middle; text-align: center">Category Name</th>
+
+                                                            <th>January</th>
+                                                            <th>February</th>
+                                                            <th>March</th>
+
+                                                            <th>April</th>
+                                                            <th>May</th>
+                                                            <th>June</th>
+
+                                                            <th>July</th>
+                                                            <th>August</th>
+                                                            <th>September</th>
+
+                                                            <th>October</th>
+                                                            <th>November</th>
+                                                            <th>December</th>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                            <th> Registered </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        @* svprasadk 21-12-2020 SBU3 Requirement CMS Dashboard based on state, from date, to date and BU end *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+
+
+        $("#ComplaintCountStatusWise").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+
+        $("#ComplaintCountStateWise").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#NetLossQuantityStateWise").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#NetLossQuantityPlantWise").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+
+
+        $("#ComplaintCountStateWiseTotals").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#NetLossQuantityStateWiseTotals").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#NetLossQuantityPlantWiseTotals").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        // svprasadk 21-12-2020 SBU3 Requirement CMS Dashboard based on state, year and BU start
+        $("#ComplaintCountStatusWiseBU3").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#ComplaintCountStateWiseBU3").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#ComplaintCountMonthWiseBU3").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#ComplaintCountPlantWiseBU3").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#ComplaintCountCategoryWiseBU3").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+
+        $("#ComplaintCountStateWiseTotalsBU3").DataTable({
+            "ordering": false,
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false
+        });
+        //var ForeignDate = TodayDateTime;
+
+        ////alert(ForeignDate);
+
+        //ForeignDate = ForeignDate.split('/')[1] + "/" + ForeignDate.split('/')[0] + "/" + ForeignDate.split('/')[2];
+        //$("#fromDate").datepicker({
+        //    format: 'dd/mm/yyyy',
+        //    autoclose: true,
+        //    endDate: new Date(ForeignDate)
+        //});
+        //$("#toDate").datepicker({
+        //    format: 'dd/mm/yyyy',
+        //    autoclose: true,
+        //    endDate: new Date(ForeignDate)
+        //});
+        // svprasadk 21-12-2020 SBU3 Requirement CMS Dashboard based on state, year and BU end
+
+        jQuery('.dataTable').wrap('<div class="dataTables_scroll" />');
+
+
+        CheckUserSession();
+        ShowLoader();
+        $.ajax({
+            type: 'POST',
+            url: '../../ComplaintRegistration/FillCMSStateFilter',
+            async: true,
+            success: function (response) {
+
+                $("#StateFilter").empty();
+
+                if (response == "") {
+
+                }
+                else {
+                    response = JSON.parse(response);
+
+                    var option = $('<option></option>').attr("value", "ALL").text("ALL");
+
+                    var RoleCode = $("#RoleCode").val();
+                    if (RoleCode == "QH" || RoleCode == "CSM" || RoleCode == "CSM_BU2" || RoleCode == "CSM_BU3" || RoleCode == "CSO" || RoleCode == "COO" || RoleCode == "CFO" || RoleCode == "NSH" || RoleCode == "ADMIN" || RoleCode == "RSH_BU3" || RoleCode == "NSH_BU3") {
+                        $("#StateFilter").append(option);
+                    }
+
+                    for (var i = 0; i < response.length; i++) {
+                        option = $('<option></option>').attr("value", response[i]["STATE_CODE"]).text(response[i]["STATE_DESC"]);
+                        $("#StateFilter").append(option);
+                    }
+
+                    var CMSState = $("#CMSState").val();
+                    if (CMSState == "") {
+                        $("#StateFilter").val(response[0]["STATE_CODE"]);
+                        $("#CMSState").val(response[0]["STATE_CODE"]);
+                    }
+                    else {
+                        $("#StateFilter").val(CMSState);
+                    }
+
+                    var UserCode = $("#UserCode").val();
+                    if (UserCode == "50000822" || UserCode == "50002304" || UserCode == "KAM") {
+                        $("#BusinessUnitFilter").val("SBU2");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }//Vikas G Hardcoded SBU# code to Dynamic Code 50002736 as SBU3_Code.
+                    else if (UserCode == "50001234" || UserCode == SBU3_Code || UserCode == "50004069" || UserCode == "50004069" || RoleCode == "RSH_BU3" || RoleCode == "NSH_BU3") {
+                        $("#BusinessUnitFilter").val("SBU3");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }
+                    else if (UserCode == "50000985") {
+                        $("#BusinessUnitFilter").val("SBU1");
+                    }
+                    else {
+                        $("#BusinessUnitFilter").val("SBU1");
+                        $("#BusinessUnitFilter").attr('disabled', 'disabled');
+                    }
+
+                }
+
+                var NowYear = $("#NowYear").val();
+                $("#YearFilter").empty();
+
+                for (var Yearing = parseInt(NowYear) - 10; Yearing <= NowYear; Yearing++) {
+                    var option = $('<option></option>').attr("value", Yearing).text(Yearing);
+                    $("#YearFilter").append(option);
+                }
+
+                $("#YearFilter").val(NowYear);
+
+                HideLoader();
+
+                LoadCMSDashBoard();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr, ajaxOptions, thrownError);
+                HideLoader();
+            }
+        });
+    });
+
+
+
+    function LoadCMSDashBoard() {
+        if ($("#BusinessUnitFilter").val() == "SBU3") {
+            $("#cmsDashboardFormBU3").show();
+            $("#cmsDashboardForm").hide();
+        } else {
+            $("#cmsDashboardFormBU3").hide();
+            $("#cmsDashboardForm").show();
+        }
+        try {
+
+            var StateFilter = $("#StateFilter").val();
+            var YearFilter = $("#YearFilter").val();
+            var BusinessUnit = $("#BusinessUnitFilter").val();
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            // svprasadk 23-12-2020 SBU3 Requirement CMS Dashboard based on state, year and BU start
+            if (BusinessUnit == "SBU3") {
+                if (StateFilter == "" || BusinessUnit == "" || YearFilter == "") {
+                    alert("Please provide state or busines unit or Year");
+                    return;
+                }
+                //else if ((fromDate != "" && toDate == "") || (fromDate == "" && toDate != "")) {
+                //    alert("Please provide both from date and to date");
+                //    return;
+                //}
+                else {
+                    //if (typeof fromDate == "undefined") {
+                    //    fromDate = "";
+                    //}
+                    //if (typeof toDate == "undefined") {
+                    //    toDate = "";
+                    //}
+                    ShowLoader();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '../../ComplaintReports/LoadCMSDashboardBU3',
+                        async: true,
+                        data: { State: StateFilter, Year: YearFilter, BusinessUnit: BusinessUnit },
+                        success: function (Resp) {
+                            if (Resp == "") {
+                                alert("No Data Found");
+                            } else {
+                                Resp = JSON.parse(Resp);
+                                var i = 0;
+                                var TRCode = "";
+                                var Temp = "";
+                                Temp = Resp["ComplaintCountStatusWiseBU3"];
+                                $("#ComplaintCountStatusWiseBU3 tbody").empty();
+                                $("#ComplaintCountStatusWiseBU3 tfoot").remove();
+
+                                if (Temp.length > 0) {
+
+                                    var TotalCount = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+                                        //TRCode = TRCode + "<td>" + (i + 1) + "</td>";
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Status"]) + "</td>";
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Count"]) + "</td>";
+
+                                        if ((Temp[i]["Count"]) == "" || (Temp[i]["Count"]) == null || (isNaN((Temp[i]["Count"])))) {
+                                        }
+                                        else {
+                                            TotalCount = TotalCount + parseInt(Temp[i]["Count"]);
+                                        }
+
+                                        TRCode = TRCode + "</tr>";
+                                    }
+
+                                    $("#ComplaintCountStatusWiseBU3 tbody").append(TRCode);
+
+                                    $("#ComplaintCountStatusWiseBU3").append("<tfoot><tr><th>Total</th><th>" + TotalCount + "</th></tr></tfoot>");
+                                }
+
+                                Temp = Resp["ComplaintCountStateWiseBU3"];
+                                $("#ComplaintCountStateWiseBU3 tbody").empty();
+                                $("#TotalRegisteredCompalintYearBU3").text("");
+                                $("#TotalClosedCompalintYearBU3").text("");
+                                $("#TotalPendingCompalintYearBU3").text("");
+                                TRCode = "";
+
+                                //Month wise no of complaints
+                                var TRCode1 = "";
+                                $("#ComplaintCountMonthWiseBU3 tbody").empty();
+                                var TotalRegisteredCompalintYearBU31 = 0;
+
+                                if (Temp.length > 0) {
+
+                                    var TotalRegisteredCompalintYearBU3 = 0;
+                                    var TotalClosedCompalintYearBU3 = 0;
+                                    var TotalPendingCompalintYearBU3 = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["STATE_DESC"]) + "</td>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Jan_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Jan_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Jan_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Feb_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Feb_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Feb_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Mar_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Mar_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Mar_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Apr_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Apr_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Apr_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["May_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["May_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["May_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["June_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["June_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["June_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["July_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["July_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["July_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Aug_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Aug_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Aug_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Sep_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Sep_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Sep_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Oct_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Oct_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Oct_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Nov_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Nov_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Nov_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Dec_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Dec_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Dec_PendingCount"]);
+
+                                        TRCode = TRCode + "</tr>";
+
+                                        //Month wise no of complaints
+                                        TRCode1 = TRCode1 + "<tr>";
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["STATE_DESC"]) + "</td>";
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Jan_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Jan_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Feb_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Feb_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Mar_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Mar_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Apr_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Apr_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["May_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["May_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["June_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["June_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["July_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["July_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Aug_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Aug_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Sep_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Sep_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Oct_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Oct_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Nov_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Nov_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Dec_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Dec_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "</tr>";
+
+                                    }
+                                    $("#ComplaintCountStateWiseBU3 tbody").append(TRCode);
+
+                                    $("#TotalRegisteredCompalintYearBU3").text(TotalRegisteredCompalintYearBU3);
+                                    $("#TotalClosedCompalintYearBU3").text(TotalClosedCompalintYearBU3);
+                                    $("#TotalPendingCompalintYearBU3").text(TotalPendingCompalintYearBU3);
+
+                                    //Month wise no of complaints
+                                    $("#ComplaintCountMonthWiseBU3 tbody").append(TRCode1);
+
+                                    var TempReg = Resp["AllStatesTotalComplaintsRegisteredMonthWiseBU3"];
+                                    var TempClosed = Resp["AllStatesTotalComplaintsClosedMonthWiseBU3"];
+                                    var TempPending = Resp["AllStatesTotalComplaintsPendingMonthWiseBU3"];
+
+                                    TRCode = "<tr>";
+                                    TRCode = TRCode + "<th>Total</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["Jan_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Jan_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Jan_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Feb_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Feb_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Feb_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Mar_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Mar_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Mar_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Apr_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Apr_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Apr_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["May_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["May_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["May_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["June_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["June_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["June_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["July_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["July_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["July_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Aug_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Aug_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Aug_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["Sep_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Sep_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Sep_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Oct_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Oct_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Oct_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Nov_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Nov_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Nov_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Dec_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Dec_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Dec_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "</tr>";
+
+                                    //Month wise no of complaints
+                                    TRCode1 = "<tr>";
+                                    TRCode1 = TRCode1 + "<th>Total</th>";
+
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Jan_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Feb_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Mar_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Apr_Tot_CountReg"] + "</th>";
+
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["May_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["June_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["July_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Aug_Tot_CountReg"] + "</th>";
+
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Sep_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Oct_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Nov_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Dec_Tot_CountReg"] + "</th>";
+
+                                    TRCode1 = TRCode1 + "</tr>";
+
+                                    $("#ComplaintCountStateWiseBU3 tfoot").empty();
+                                    $("#ComplaintCountStateWiseBU3 tfoot").append(TRCode);
+
+                                    $("#ComplaintCountMonthWiseBU3 tfoot").empty();
+                                    $("#ComplaintCountMonthWiseBU3 tfoot").append(TRCode1);
+
+                                }
+
+                                Temp = Resp["ComplaintCountStateWiseBU3"];
+                                $("#ComplaintCountStateWiseBU3 tbody").empty();
+                                $("#TotalRegisteredCompalintYearBU3").text("");
+                                $("#TotalClosedCompalintYearBU3").text("");
+                                $("#TotalPendingCompalintYearBU3").text("");
+                                TRCode = "";
+
+                                //Month wise no of complaints
+                                var TRCode1 = "";
+                                $("#ComplaintCountMonthWiseBU3 tbody").empty();
+                                var TotalRegisteredCompalintYearBU31 = 0;
+
+                                if (Temp.length > 0) {
+
+                                    var TotalRegisteredCompalintYearBU3 = 0;
+                                    var TotalClosedCompalintYearBU3 = 0;
+                                    var TotalPendingCompalintYearBU3 = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["STATE_DESC"]) + "</td>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Jan_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Jan_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Jan_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Feb_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Feb_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Feb_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Mar_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Mar_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Mar_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Apr_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Apr_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Apr_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["May_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["May_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["May_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["June_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["June_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["June_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["July_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["July_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["July_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Aug_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Aug_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Aug_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Sep_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Sep_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Sep_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Oct_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Oct_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Oct_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Nov_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Nov_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Nov_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["Dec_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYearBU3 = parseInt(TotalClosedCompalintYearBU3) + parseInt(Temp[i]["Dec_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYearBU3 = parseInt(TotalPendingCompalintYearBU3) + parseInt(Temp[i]["Dec_PendingCount"]);
+
+                                        TRCode = TRCode + "</tr>";
+
+                                        //Month wise no of complaints
+                                        TRCode1 = TRCode1 + "<tr>";
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["STATE_DESC"]) + "</td>";
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Jan_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Jan_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Feb_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Feb_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Mar_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Mar_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Apr_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Apr_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["May_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["May_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["June_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["June_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["July_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["July_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Aug_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Aug_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Sep_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Sep_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Oct_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Oct_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Nov_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Nov_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "<td>" + (Temp[i]["Dec_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU31 = parseInt(TotalRegisteredCompalintYearBU31) + parseInt(Temp[i]["Dec_RegisteredCount"]);
+
+                                        TRCode1 = TRCode1 + "</tr>";
+
+                                    }
+                                    $("#ComplaintCountStateWiseBU3 tbody").append(TRCode);
+
+                                    $("#TotalRegisteredCompalintYearBU3").text(TotalRegisteredCompalintYearBU3);
+                                    $("#TotalClosedCompalintYearBU3").text(TotalClosedCompalintYearBU3);
+                                    $("#TotalPendingCompalintYearBU3").text(TotalPendingCompalintYearBU3);
+
+                                    //Month wise no of complaints
+                                    $("#ComplaintCountMonthWiseBU3 tbody").append(TRCode1);
+
+                                    var TempReg = Resp["AllStatesTotalComplaintsRegisteredMonthWiseBU3"];
+                                    var TempClosed = Resp["AllStatesTotalComplaintsClosedMonthWiseBU3"];
+                                    var TempPending = Resp["AllStatesTotalComplaintsPendingMonthWiseBU3"];
+
+                                    TRCode = "<tr>";
+                                    TRCode = TRCode + "<th>Total</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["Jan_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Jan_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Jan_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Feb_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Feb_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Feb_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Mar_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Mar_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Mar_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Apr_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Apr_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Apr_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["May_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["May_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["May_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["June_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["June_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["June_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["July_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["July_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["July_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Aug_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Aug_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Aug_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["Sep_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Sep_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Sep_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Oct_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Oct_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Oct_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Nov_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Nov_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Nov_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Dec_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Dec_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Dec_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "</tr>";
+
+                                    //Month wise no of complaints
+                                    TRCode1 = "<tr>";
+                                    TRCode1 = TRCode1 + "<th>Total</th>";
+
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Jan_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Feb_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Mar_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Apr_Tot_CountReg"] + "</th>";
+
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["May_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["June_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["July_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Aug_Tot_CountReg"] + "</th>";
+
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Sep_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Oct_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Nov_Tot_CountReg"] + "</th>";
+                                    TRCode1 = TRCode1 + "<th>" + TempReg["Dec_Tot_CountReg"] + "</th>";
+
+                                    TRCode1 = TRCode1 + "</tr>";
+
+                                    $("#ComplaintCountStateWiseBU3 tfoot").empty();
+                                    $("#ComplaintCountStateWiseBU3 tfoot").append(TRCode);
+
+                                    $("#ComplaintCountMonthWiseBU3 tfoot").empty();
+                                    $("#ComplaintCountMonthWiseBU3 tfoot").append(TRCode1);
+
+                                }
+                                //plant wise
+                                Temp = Resp["ComplaintCountPlantWiseBU3"];
+                                $("#ComplaintCountPlantWiseBU3 tbody").empty();
+                                TRCode = "";
+
+                                //Month wise no of complaints
+                                var TRCode1 = "";
+                                var TotalRegisteredCompalintYearBU31 = 0;
+
+                                if (Temp.length > 0) {
+
+                                    var TotalRegisteredCompalintYearBU3 = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["PLANT_NAME"]) + "</td>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["JAN_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["JAN_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["FEB_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["FEB_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["MAR_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["MAR_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["APR_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["APR_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["MAY_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["MAY_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["JUN_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["JUN_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["JUL_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["JUL_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["AUG_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["AUG_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["SEP_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["SEP_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["OCT_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["OCT_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["NOV_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["NOV_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["DEC_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["DEC_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "</tr>";
+
+                                    }
+                                    $("#ComplaintCountPlantWiseBU3 tbody").append(TRCode);
+
+                                    var TempReg = Resp["AllPlantsTotalRegisteredCountMonthWiseBU3"];
+
+                                    TRCode = "<tr>";
+                                    TRCode = TRCode + "<th>Total</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["JAN_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["FEB_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["MAR_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["APR_REGISTERED_COUNT"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["MAY_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["JUN_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["JUL_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["AUG_REGISTERED_COUNT"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["SEP_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["OCT_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["NOV_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["DEC_REGISTERED_COUNT"] + "</th>";
+
+                                    TRCode = TRCode + "</tr>";
+
+                                    $("#ComplaintCountPlantWiseBU3 tfoot").empty();
+                                    $("#ComplaintCountPlantWiseBU3 tfoot").append(TRCode);
+
+                                }
+
+                                //category wise
+                                Temp = Resp["ComplaintCountCategoryWiseBU3"];
+                                $("#ComplaintCountCategoryWiseBU3 tbody").empty();
+                                TRCode = "";
+
+                                //Month wise no of complaints
+                                var TRCode1 = "";
+                                var TotalRegisteredCompalintYearBU31 = 0;
+
+                                if (Temp.length > 0) {
+
+                                    var TotalRegisteredCompalintYearBU3 = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["COMPLAINT_CATEGORY_NAME"]) + "</td>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["JAN_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["JAN_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["FEB_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["FEB_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["MAR_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["MAR_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["APR_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["APR_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["MAY_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["MAY_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["JUN_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["JUN_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["JUL_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["JUL_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["AUG_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["AUG_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["SEP_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["SEP_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["OCT_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["OCT_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["NOV_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["NOV_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["DEC_REGISTERED_COUNT"]) + "</td>";
+                                        TotalRegisteredCompalintYearBU3 = parseInt(TotalRegisteredCompalintYearBU3) + parseInt(Temp[i]["DEC_REGISTERED_COUNT"]);
+
+                                        TRCode = TRCode + "</tr>";
+
+                                    }
+                                    $("#ComplaintCountCategoryWiseBU3 tbody").append(TRCode);
+
+                                    var TempReg = Resp["AllCategoriesTotalRegisteredCountMonthWiseBU3"];
+
+                                    TRCode = "<tr>";
+                                    TRCode = TRCode + "<th>Total</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["JAN_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["FEB_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["MAR_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["APR_REGISTERED_COUNT"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["MAY_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["JUN_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["JUL_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["AUG_REGISTERED_COUNT"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["SEP_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["OCT_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["NOV_REGISTERED_COUNT"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["DEC_REGISTERED_COUNT"] + "</th>";
+
+                                    TRCode = TRCode + "</tr>";
+
+                                    $("#ComplaintCountCategoryWiseBU3 tfoot").empty();
+                                    $("#ComplaintCountCategoryWiseBU3 tfoot").append(TRCode);
+
+                                }
+                            }
+                            HideLoader();
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert("Error : LoadCMSDashBoard : " + xhr, ajaxOptions, thrownError);
+                            HideLoader();
+
+                        }
+                    });
+                }
+            }// svprasadk 23-12-2020 SBU3 Requirement CMS Dashboard based on state, year and BU end
+            else {
+                if (StateFilter == "" || YearFilter == "" || BusinessUnit == "") {
+                    return;
+                }
+                else {
+                    ShowLoader();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '../../ComplaintReports/LoadCMSDashBoard',
+                        async: true,
+                        data: { State: StateFilter, Year: YearFilter, BusinessUnit: BusinessUnit },
+                        success: function (Resp) {
+
+                            if (Resp == "") {
+                                alert("No Data Found");
+                            }
+                            else {
+                                Resp = JSON.parse(Resp);
+
+                                var i = 0;
+                                var TRCode = "";
+
+                                var Temp = Resp["ComplaintCountStatusWise"];
+                                $("#ComplaintCountStatusWise tbody").empty();
+                                $("#ComplaintCountStatusWise tfoot").remove();
+
+                                if (Temp.length > 0) {
+
+                                    var TotalCount = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+                                        //TRCode = TRCode + "<td>" + (i + 1) + "</td>";
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Status"]) + "</td>";
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Count"]) + "</td>";
+
+                                        if ((Temp[i]["Count"]) == "" || (Temp[i]["Count"]) == null || (isNaN((Temp[i]["Count"])))) {
+                                        }
+                                        else {
+                                            TotalCount = TotalCount + parseInt(Temp[i]["Count"]);
+                                        }
+
+                                        TRCode = TRCode + "</tr>";
+                                    }
+
+                                    $("#ComplaintCountStatusWise tbody").append(TRCode);
+
+                                    $("#ComplaintCountStatusWise").append("<tfoot><tr><th>Total</th><th>" + TotalCount + "</th></tr></tfoot>");
+                                }
+
+                                Temp = Resp["ComplaintCountStateWiseBU3"];
+                                $("#ComplaintCountStateWiseBU3 tbody").empty();
+                                $("#TotalRegisteredCompalintYear").text("");
+                                $("#TotalClosedCompalintYear").text("");
+                                $("#TotalPendingCompalintYear").text("");
+                                TRCode = "";
+
+
+                                if (Temp.length > 0) {
+
+                                    var TotalRegisteredCompalintYear = 0;
+                                    var TotalClosedCompalintYear = 0;
+                                    var TotalPendingCompalintYear = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["STATE_DESC"]) + "</td>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Jan_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Jan_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Jan_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Feb_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Feb_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Feb_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Mar_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Mar_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Mar_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Apr_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Apr_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Apr_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["May_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["May_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["May_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["June_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["June_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["June_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["July_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["July_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["July_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Aug_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Aug_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Aug_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Sep_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Sep_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Sep_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Oct_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Oct_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Oct_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Nov_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Nov_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Nov_PendingCount"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_RegisteredCount"]) + "</td>";
+                                        TotalRegisteredCompalintYear = parseInt(TotalRegisteredCompalintYear) + parseInt(Temp[i]["Dec_RegisteredCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_ClosedCount"]) + "</td>";
+                                        TotalClosedCompalintYear = parseInt(TotalClosedCompalintYear) + parseInt(Temp[i]["Dec_ClosedCount"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_PendingCount"]) + "</td>";
+                                        TotalPendingCompalintYear = parseInt(TotalPendingCompalintYear) + parseInt(Temp[i]["Dec_PendingCount"]);
+
+                                        TRCode = TRCode + "</tr>";
+                                    }
+                                    $("#ComplaintCountStateWiseBU3 tbody").append(TRCode);
+
+                                    $("#TotalRegisteredCompalintYear").text(TotalRegisteredCompalintYear);
+                                    $("#TotalClosedCompalintYear").text(TotalClosedCompalintYear);
+                                    $("#TotalPendingCompalintYear").text(TotalPendingCompalintYear);
+
+
+                                    var TempReg = Resp["AllStatesTotalComplaintsRegisteredMonthWise"];
+                                    var TempClosed = Resp["AllStatesTotalComplaintsClosedMonthWise"];
+                                    var TempPending = Resp["AllStatesTotalComplaintsPendingMonthWise"];
+
+                                    TRCode = "<tr>";
+                                    TRCode = TRCode + "<th>Total</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["Jan_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Jan_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Jan_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Feb_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Feb_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Feb_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Mar_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Mar_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Mar_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Apr_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Apr_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Apr_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["May_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["May_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["May_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["June_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["June_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["June_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["July_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["July_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["July_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Aug_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Aug_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Aug_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempReg["Sep_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Sep_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Sep_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Oct_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Oct_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Oct_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Nov_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Nov_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Nov_Tot_CountPending"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempReg["Dec_Tot_CountReg"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempClosed["Dec_Tot_CountClosed"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempPending["Dec_Tot_CountPending"] + "</th>";
+
+                                    TRCode = TRCode + "</tr>";
+
+                                    $("#ComplaintCountStateWiseBU3 tfoot").empty();
+                                    $("#ComplaintCountStateWiseBU3 tfoot").append(TRCode);
+
+                                }
+
+
+
+                                Temp = Resp["StateWiseNetLoss"];
+                                $("#NetLossQuantityStateWise tbody").empty();
+
+                                $("#TotalBreakageQuanity").text("");
+                                $("#TotalNetLossQuantity").text("");
+
+                                TRCode = "";
+
+                                if (Temp.length > 0) {
+
+                                    var TotalBreakageQuanity = 0;
+                                    var TotalNetLossQuantity = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["STATE_DESC"]) + "</td>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Jan_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Jan_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Feb_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Feb_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Mar_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Mar_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Apr_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Apr_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["May_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["May_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["June_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["June_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["July_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["July_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Aug_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Aug_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Sep_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Sep_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Oct_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Oct_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Nov_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Nov_NetLoss"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_Breakage"]) + "</td>";
+                                        TotalBreakageQuanity = parseInt(TotalBreakageQuanity) + parseInt(Temp[i]["Dec_Breakage"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_NetLoss"]) + "</td>";
+                                        TotalNetLossQuantity = parseInt(TotalNetLossQuantity) + parseInt(Temp[i]["Dec_NetLoss"]);
+
+                                        TRCode = TRCode + "</tr>";
+                                    }
+                                    $("#NetLossQuantityStateWise tbody").append(TRCode);
+
+                                    $("#TotalBreakageQuanity").text(TotalBreakageQuanity);
+                                    $("#TotalNetLossQuantity").text(TotalNetLossQuantity);
+
+
+                                    var TempBrkgQty = Resp["AllStatesTotalBreakageQuantityMonthWise"];
+                                    var TempNtLsQty = Resp["AllStatesTotalNetLossQuantityMonthWise"];
+
+                                    TRCode = "<tr>";
+                                    TRCode = TRCode + "<th>Total</th>";
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Jan_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Jan_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Feb_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Feb_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Mar_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Mar_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Apr_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Apr_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["May_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["May_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["June_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["June_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["July_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["July_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Aug_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Aug_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Sep_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Sep_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Oct_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Oct_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Nov_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Nov_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Dec_Tot_Breakage"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Dec_Tot_NetLoss"] + "</th>";
+
+                                    TRCode = TRCode + "</tr>";
+
+                                    $("#NetLossQuantityStateWise tfoot").empty();
+                                    $("#NetLossQuantityStateWise tfoot").append(TRCode);
+
+
+
+                                }
+
+
+
+                                Temp = Resp["PlantWiseNetLoss"];
+                                $("#NetLossQuantityPlantWise tbody").empty();
+                                $("#Plant_TotalBreakageQuanity").text("");
+                                $("#Plant_TotalNetLossQuantity").text("");
+                                TRCode = "";
+
+                                if (Temp.length > 0) {
+
+                                    var Plant_TotalBreakageQuanity = 0;
+                                    var Plant_TotalNetLossQuantity = 0;
+
+                                    for (i = 0; i < Temp.length; i++) {
+                                        TRCode = TRCode + "<tr>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["PLANT_NAME"]) + "</td>";
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Jan_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Jan_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Jan_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Feb_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Feb_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Feb_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Mar_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Mar_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Mar_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Apr_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Apr_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Apr_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["May_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["May_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["May_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["June_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["June_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["June_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["July_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["July_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["July_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Aug_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Aug_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Aug_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Sep_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Sep_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Sep_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Oct_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Oct_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Oct_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Nov_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Nov_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Nov_NetLossQty"]);
+
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_BreakageQty"]) + "</td>";
+                                        Plant_TotalBreakageQuanity = parseFloat(Plant_TotalBreakageQuanity) + parseFloat(Temp[i]["Dec_BreakageQty"]);
+                                        TRCode = TRCode + "<td>" + (Temp[i]["Dec_NetLossQty"]) + "</td>";
+                                        Plant_TotalNetLossQuantity = parseFloat(Plant_TotalNetLossQuantity) + parseFloat(Temp[i]["Dec_NetLossQty"]);
+
+                                        TRCode = TRCode + "</tr>";
+                                    }
+                                    $("#NetLossQuantityPlantWise tbody").append(TRCode);
+
+                                    Plant_TotalBreakageQuanity = Math.round(Plant_TotalBreakageQuanity * 10000) / 10000;
+                                    Plant_TotalNetLossQuantity = Math.round(Plant_TotalNetLossQuantity * 10000) / 10000;
+
+                                    $("#Plant_TotalBreakageQuanity").text(Plant_TotalBreakageQuanity);
+                                    $("#Plant_TotalNetLossQuantity").text(Plant_TotalNetLossQuantity);
+
+
+
+
+                                    var TempBrkgQty = Resp["AllPlantsTotalBreakageQuantityMonthWise"];
+                                    var TempNtLsQty = Resp["AllPlantsTotalNetLossQuantityMonthWise"];
+
+                                    TRCode = "<tr>";
+                                    TRCode = TRCode + "<th>Total</th>";
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Jan_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Jan_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Feb_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Feb_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Mar_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Mar_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Apr_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Apr_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["May_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["May_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["June_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["June_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["July_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["July_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Aug_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Aug_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Sep_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Sep_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Oct_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Oct_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Nov_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Nov_Tot_NetLossQty"] + "</th>";
+
+                                    TRCode = TRCode + "<th>" + TempBrkgQty["Dec_Tot_BreakageQty"] + "</th>";
+                                    TRCode = TRCode + "<th>" + TempNtLsQty["Dec_Tot_NetLossQty"] + "</th>";
+
+
+                                    TRCode = TRCode + "</tr>";
+
+                                    $("#NetLossQuantityPlantWise tfoot").empty();
+                                    $("#NetLossQuantityPlantWise tfoot").append(TRCode);
+
+                                }
+
+                            }
+
+                            HideLoader();
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert("Error : LoadCMSDashBoard : " + xhr, ajaxOptions, thrownError);
+                            HideLoader();
+
+                        }
+                    });
+
+                }
+            }
+        }
+        catch (e) {
+            alert("LoadCMSDashBoard : Error : " + e);
+            HideLoader();
+
+        }
+
+    }
+
+    // svprasadk 21-12-2020 SBU3 Requirement CMS Dashboard based on state, from date, to date and BU start
+    function fromDateChange() {
+        var MyDate = $("#fromDate").val();
+
+        if (MyDate == "" || MyDate == undefined) {
+        }
+        else {
+            $("#toDate").datepicker('setStartDate', MyDate);
+            $("#toDate").val("");
+        }
+    }
+    // svprasadk 21-12-2020 SBU3 Requirement CMS Dashboard based on state, from date, to date and BU end
+
+</script>

@@ -1,0 +1,435 @@
+﻿@* Module              : DIMS Client Application.
+    DocumentName        : Outstanding_Detail.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is used for get Outstanding Details.
+    Developer Name      : Rajanna Bhanothu.
+    Change Log          : NA.*@
+
+
+
+@using LabelName = DIMS.Content.Resource_Files.PlantMaster;
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionUserCode = UP.UserCode;
+    string Role = UP.UserTypeCode;
+    var Rolee = Session["UserRole"].ToString();
+}
+
+<style type="text/css">
+    .modal-content {
+        padding: 10px;
+    }
+
+    .SlectBox {
+        padding: 5px 8px;
+        width: 153px;
+    }
+
+    /*#StockistID ~ .SlectBox {
+        padding: 5px 8px;
+        width: 250px;
+    }*/
+</style>
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>Dealer Credit Balance</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Financial Transactions</li>
+        <li class="active">Outstanding Details</li>
+    </ol>
+
+      @if (@Rolee.Trim() != "STOCKIST")
+    {
+        <nav style="padding: 1px 10px 1px 10px;">
+            <div class="row">
+                <div class="col-sm-11" id="IconsNavBar">
+                    <a href ng-click="DownloadFile('EXCEL')">
+                        <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    }
+    @*<nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="DownloadFile('EXCEL')">
+                    <i class="fa fa-file-excel-o fa-4" title="Download Excel"></i>
+                </a>
+            </div>
+        </div>
+    </nav>*@
+</section>
+
+<div class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row" id="">
+        <div class="col-md-12">
+            <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+                <div class="box-header">
+                    <div class="navbar-header pull-right" style="margin-left: 15px;">
+                        <button type="button" class="btn btn-info navbar-btn" ng-click="GetData()" style="background-color:#d2401a;border:1px solid #d2401a;">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-info navbar-btn" onclick="ResetFilters()" style="background-color: #d2401a;border:1px solid #d2401a;">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                @*Filters Zone*@
+                <form class="form-horizontal" role="form" style="font-size: small" action="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            Date <span class="Mandatory">*</span>
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderFromDate" placeholder="As On Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                        </div>
+                        <label class="col-sm-1 control-label" for="SalesEmapName">
+                            Zone
+                        </label>
+                        <div class="col-sm-1">
+                            <select id="Zone" multiple="multiple" class="form-control"></select>
+                        </div>
+                        <label class="col-sm-2 control-label" for="SalesEmapName">
+                            State
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="State" multiple="multiple" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label" for="TerriotryArea">
+                            Territory/Area
+                        </label>
+                        <div class="col-sm-2">
+                            <select id="TerriotryArea" multiple="multiple" class="form-control"></select>
+                        </div>
+                        @*VIKAS G, 14-07-2022*@
+                        <label class="col-sm-1 control-label" id="lblSheets">
+                            Division
+                        </label>
+                        <div class="col-sm-2" id="divSheets">
+                            <select class="form-control" id="DivisionFilter" multiple="multiple" ></select>
+                        </div>                       
+                        <label class="col-sm-1 control-label" for="StockistID">
+                            Customer Code/Name
+                        </label>
+                        <div class="col-sm-3">
+                            <input id="CustomerCode" class="form-control" />
+                        </div>
+
+                    </div>
+                    
+                </form>
+                <div style="padding:10px;"></div>
+                @*<div class="form-group">
+                        <div class="col-sm-offset-7">
+                            <label>Total Amount</label>
+                            <input type="text" id="txtAmountTotal" />
+                        </div>
+                    </div>*@
+                <div class="table-responsive" id="OutstandingDiv">
+                    <input type="text" id="UserCode" value="@SessionUserCode" style="display: none;" />
+                    <table id="tbl_Outstanding_Details" class="table ListTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        @*<tfoot>
+                                <tr>
+                                    <th colspan="11" style="text-align: right">Total:</th>
+                                    <th id="AmountTotal" style="text-align: right"></th>
+                                </tr>
+                            </tfoot>*@
+                    </table>
+
+                    @*<div class="table-responsive">
+                        <table id="tbl_Outstanding_Details" class="table">
+                            <thead>
+                                <tr style="background-color: #d2401a; color: white;">
+                                    <th>S.No</th>
+                                    <th>Customer Code</th>
+                                    <th>Customer Name</th>
+                                    @if ((Session["UserRole"].ToString().Trim() == "ADMIN") || (Session["UserRole"].ToString().Trim() == "NCC"))
+                                    {
+                                        <th>Zone</th>
+                                        <th>State</th>
+                                        <th>Sales Employee</th>
+                                        <th>Sales Group</th>
+                                    }
+                                    else if ((Session["UserRole"].ToString().Trim() == "ZH") || (Session["UserRole"].ToString().Trim() == "RCC"))
+                                    {
+                                        <th>State</th>
+                                        <th>Sales Employee</th>
+                                        <th>Sales Group</th>
+                                    }
+                                    else if (Session["UserRole"].ToString().Trim() == "SH")
+                                    {
+                                        <th>Sales Employee</th>
+                                        <th>Sales Group</th>
+                                    }
+                                    else if ((Session["UserRole"].ToString().Trim() == "FSO") || (Session["UserRole"].ToString().Trim() == "STOCKIST"))
+                                    {
+                                        <th>Sales Employee</th>
+                                    }
+                                    <th>15 days</th>
+                                    <th>30 days</th>
+                                    <th>45 days</th>
+                                    <th>60 days</th>
+                                    <th>75 days</th>
+                                    <th>90 days</th>
+                                    <th>120 days</th>
+                                    <th>150 days</th>
+                                    <th>179 days</th>
+                                    <th>180 days</th>
+                                    <th>180 days</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>*@
+                    <br />
+                    @*<form>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="txtOrderNo">
+                                Date <span class="Mandatory">*</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="OrderFromDate12" placeholder="As On Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                            </div>
+                            <label class="col-sm-1 control-label" for="SalesEmapName">
+                                Zone
+                            </label>
+                            <div class="col-sm-1">
+                                <select id="Zone12" multiple="multiple" class="form-control"></select>
+                            </div>
+                            <label class="col-sm-2 control-label" for="SalesEmapName">
+                                State
+                            </label>
+                            <div class="col-sm-2">
+                                <select id="State12" multiple="multiple" class="form-control"></select>
+                            </div>
+
+                        </div>
+                    </form>*@
+                    <b>TOTAL Amount (INR in Lakhs)</b><br /></b><br />
+                    &nbsp;&nbsp;<label>0-15 days </label>
+                    <input type="text" id="txt015" style="width:10%;" placeholder="0-15 days" readonly />
+                    &nbsp;&nbsp;&nbsp;<label>16-30 days </label>
+                    <input type="text" id="txt1630" style="width:10%;" placeholder="16-30 days" readonly />
+                    &nbsp;&nbsp;&nbsp;<label>31-45 days </label>
+                    <input type="text" id="txt3145" style="width:10%;" placeholder="31-45 days" readonly />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>46-60 days </label>
+                    <input type="text" id="txt4660" style="width:10%;" placeholder="46-60 days" readonly />
+                    <label>61-75 days </label>
+                    <input type="text" id="txt6175" style="width:10%;" placeholder="61-75 days" readonly />
+                    <br /><br />
+                    <label>76-90 days </label>
+                    <input type="text" id="txt7690" style="width:10%;" placeholder="76-90 days" readonly />
+                    <label>91-120 days </label>
+                    <input type="text" id="txt91120" style="width:10%;" placeholder="91-120 days" readonly />
+                    <label>121-150 days </label>
+                    <input type="text" id="txt121150" style="width:10%;" placeholder="121-150 days" readonly />
+                    <label>151-179 days </label>
+                    <input type="text" id="txt151179" style="width:10%;" placeholder="151-179 days" readonly />
+                    &nbsp;&nbsp;&nbsp;<label>180 days </label>
+                    <input type="text" id="txt180" style="width:10%;" placeholder="180 days" readonly />
+                    <br /><br />
+                    &nbsp;<label>>180 days </label>
+                    <input type="text" id="txt180ab" style="width:10%;" placeholder=">180 days" readonly />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>TOTAL </label>
+                    <input type="text" id="txtTotal" style="width:10%;" placeholder="Total" readonly />
+                    @*<div class="col-sm-2">
+                        <input type="text" id="OrderFromDate123" placeholder="As On Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                    </div>*@
+                    @*<div class="form-group">
+                        <label class="col-sm-2 control-label" for="txtOrderNo12">
+                            0-15 days:
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderFromDate123" placeholder="As On Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtOrderNo123">
+                            16-30 days:
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderFromDate1233" placeholder="As On Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtOrderNo123">
+                            31-45 days:
+                        </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="OrderFromDate1233" placeholder="As On Date" readonly onchange="DateValidation('OrderFromDate', 'OrderToDate');" />
+                        </div>
+                        <label class="col-sm-2 control-label" for="txtOrderNo">
+                            Total Outstanding Amount (INR in Lakhs)
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control gray" id="TotalOutStandingAmnt" placeholder="Total Outstanding Amount" disabled="disabled" />
+                        </div>
+                    </div>*@
+                    <br />
+                </div>
+          </div>  
+          </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<script>
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+
+    $(document).ready(function () {
+        $('#DivisionFilter').SumoSelect({ selectAll: true });
+        ShowLoader();
+        $('#StockistName').SumoSelect({ placeholder: 'Customer Name' });
+        $('#StockistID').SumoSelect({ placeholder: 'Customer Code' });
+        $('#Zone').SumoSelect({ placeholder: 'Zone' });
+        $('#Zone12').SumoSelect({ placeholder: 'Zone' });
+        $('#State').SumoSelect({ placeholder: 'State' });
+        $('#State12').SumoSelect({ placeholder: 'State' });
+        $('#TerriotryArea').SumoSelect({ placeholder: 'Territory' });
+        $('#DivisionFilter').SumoSelect({ placeholder: 'Division' });
+        $('#Business').SumoSelect({ placeholder: 'Business' });
+        $('#SalesEmployee').SumoSelect({ placeholder: 'Sales Employee' });
+
+        $('#OrderFromDate').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            maxDate: new Date()
+            // endDate: '05/04/2016',
+        });
+        $('#OrderFromDate').bind('keypress', function (e) {
+            return false;
+        });
+        HideLoader();
+    });
+    var table = $('#tbl_Outstanding_Details').dataTable();
+    function ResetFilters() {
+
+        var StockistName = $('#StockistName option').length;
+        var StockistID = $('#StockistID option').length;
+        var Zone = $('#Zone option').length;
+        var State = $('#State option').length;
+        var TerriotryArea = $('#TerriotryArea option').length;
+        var DivisionFilter = $('#DivisionFilter option').length;
+        var Business = $('#Business option').length;
+
+        var SalesEmployee = $('#SalesEmployee option').length;
+
+        for (var i = 0; i < StockistID; i++) {
+            $('#StockistID')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < StockistName; i++) {
+            $('#StockistName')[0].sumo.unSelectItem(i);
+        }
+
+        for (var i = 0; i < Zone; i++) {
+            $('#Zone')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < State; i++) {
+            $('#State')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < TerriotryArea; i++) {
+            $('#TerriotryArea')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < DivisionFilter; i++) {
+            $('#DivisionFilter')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < Business; i++) {
+            $('#Business')[0].sumo.unSelectItem(i);
+        }
+        for (var i = 0; i < SalesEmployee; i++) {
+            $('#SalesEmployee')[0].sumo.unSelectItem(i);
+        }
+        $("#OrderFromDate").val("");
+        table.fnDraw();
+        fnResetAllFilters(table);
+    }
+
+
+    $('#StockistID').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_Outstanding_Details").dataTable().fnFilter(choosedFname, 1, true, false);
+        }
+        else {
+            $("#tbl_Outstanding_Details").dataTable().fnFilter("", 1, true, false);
+        }
+    });
+
+
+    $('#StockistName').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_Outstanding_Details").dataTable().fnFilter(choosedFname, 2, true, false);
+        }
+        else {
+            $("#tbl_Outstanding_Details").dataTable().fnFilter("", 2, true, false);
+        }
+    });
+
+    $('#Zone').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_Outstanding_Details").dataTable().fnFilter(choosedFname, 4, true, false);
+        }
+        else {
+            $("#tbl_Outstanding_Details").dataTable().fnFilter("", 4, true, false);
+        }
+    });
+
+    $('#State').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_Outstanding_Details").dataTable().fnFilter(choosedFname, 5, true, false);
+        }
+        else {
+            $("#tbl_Outstanding_Details").dataTable().fnFilter("", 5, true, false);
+        }
+    });
+
+    $('#Business').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_Outstanding_Details").dataTable().fnFilter(choosedFname, 3, true, false);
+        }
+        else {
+            $("#tbl_Outstanding_Details").dataTable().fnFilter("", 3, true, false);
+        }
+    });
+
+    $('#SalesEmployee').on('keyup change', function () {
+        var selectedFName = $(this).val();
+        if (selectedFName != null) {
+            var choosedFname = selectedFName.join("|");
+            $("#tbl_Outstanding_Details").dataTable().fnFilter(choosedFname, 6, true, false);
+        }
+        else {
+            $("#tbl_Outstanding_Details").dataTable().fnFilter("", 6, true, false);
+        }
+    });
+
+</script>

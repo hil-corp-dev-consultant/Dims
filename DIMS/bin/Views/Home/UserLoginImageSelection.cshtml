@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+
+    string USRCode = UP.UserCode;
+    string UserToken = UP.Token;
+    
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2>User Login Image selection</h2>
+    @*<ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Administration</li>
+        <li>Setup</li>
+        <li class="active">ChangePassword</li>
+    </ol>*@
+</section>
+
+<section class="content" style="max-height: 478px; overflow-y: scroll;">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 4px;">
+            <div class="box-header">
+                <form class="form-horizontal ng-pristine ng-valid" role="form" method="get" action="#" style="font-size: 12px; font-weight: normal">
+                    <div class="col-sm-12">
+                        <div class="row col-sm-12" id="UserImageSelectionDiv">
+                            <div class="form-group col-sm-12">
+                                <label class="col-sm-2 control-label">
+                                    Selection Image</label>
+                                <select id="ImagePickerSelect" class="image-picker show-html">
+                                    <option></option>
+                                    <option data-img-src="../../UserLoginImages/Home.png" style="width: 50px; height: 50px;" value="1">Home.png</option>
+                                    <option data-img-src="../../UserLoginImages/BusinessMan.png" style="width: 50px; height: 50px;" value="2">BusinessMan.png</option>
+                                    <option data-img-src="../../UserLoginImages/Success.png" style="width: 50px; height: 50px;" value="3">Success.png</option>
+                                    <option data-img-src="../../UserLoginImages/Logistics.png" style="width: 50px; height: 50px;" value="4">Logistics.png</option>
+                                    <option data-img-src="../../UserLoginImages/Solutions.png" style="width: 50px; height: 50px;" value="5">Solutions.png</option>
+                                    <option data-img-src="../../UserLoginImages/Diamond.png" style="width: 50px; height: 50px;" value="6">Diamond.png</option>
+                                    @*<option data-img-src="../../UserLoginImages/CoreComp.png" style="width: 50px; height: 50px;" value="7">CoreComp.png</option>
+                                    <option data-img-src="../../UserLoginImages/Globe.png" style="width: 50px; height: 50px;" value="8">Globe.png</option>*@
+                                    @*<option data-img-src="../../UserLoginImages/hil-logo.jpg"
+                                        value="1" style="width: auto; height: auto;">hil-logo.jpg</option>
+                                    <option data-img-src="../../UserLoginImages/HIL_MIN.png" value="2" style="width: auto; height: auto;">HIL_MIN.png</option>*@
+
+                                </select>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" style="background: #d2401a;" onclick="SaveUserSelectedImage()">Save changes</button>
+
+                                <input type="text" id="CPUserCode" value="@USRCode" style="display:none;" />
+                                <input type="text" id="UserToken" value="@UserToken" style="display:none;" />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".sidebar-menu").remove();
+        $("#ImagePickerSelect").imagepicker();
+    });
+
+    // Save User selected Login Image
+    function SaveUserSelectedImage() {
+
+        var CPUserCode = $("#CPUserCode").val();
+        var imagename = $("#ImagePickerSelect option:selected").text();
+        var Data = JSON.stringify({
+            ImageName: imagename,
+            UserCode: CPUserCode
+        });
+
+        $.ajax({
+            type: 'POST',
+            async: false,
+            datatype: 'json',
+            data: { Name: Data },
+            url: '../../LogOn/SaveUserLoginImage',
+            success: function (response) {
+                if (response == "true") {
+                    window.location.href = "../../LogOn/LogOut";
+                   // window.location.href = "../../Home/Homepage";
+                } else if (response == "false") {
+
+                }
+
+            }
+        });
+
+    }
+</script>

@@ -1,0 +1,295 @@
+﻿@*
+
+    Module              : SFDC - DIMS Solution.
+    DocumentName        : AddOrder.cshtml
+    Project Name        : Dealer Information Management System (DIMS).
+    Client Name         : HIL :: CK BIRLA GROUP.
+    Dev. Organisation   : Envision Enterprise Solutions Pvt. Ltd.
+    Team                : ASD.
+    Description         : This Doc is for used for Add Partner Issue.
+    Developer Name      : Harish Kothuri.
+    Change Log          : NA.
+
+*@
+
+<style>
+    .content {
+        min-height: 441px;
+    }
+</style>
+
+@{
+    Layout = null;
+    DIMS.Models.UserProperties UP = (DIMS.Models.UserProperties)Session["UP"];
+    string SessionSITEDETAIL_CODE = UP.SITEDETAIL_CODE;
+    string SessionUserCode = UP.UserCode;
+    string SessionUserName = UP.UserName;
+    string SessionCOMPANYDETAIL_CODE = UP.COMPANYDETAIL_CODE;
+    string SessionUserType = UP.UserTypeCode;
+    string SessionUserTypeID = UP.UserType;
+}
+
+<section class="content-header" style="padding: 1px 15px 0;">
+    <h2 id="UpdatePartnerIssue">Add Partner Issue</h2>
+    <ol class="breadcrumb">
+        <li><a href ng-click="go('home')"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li>Sales Process Management</li>
+        <li class="active">Add Partner Issues</li>
+    </ol>
+    <nav style="padding: 1px 10px 1px 10px;">
+        <div class="row">
+            <div class="col-sm-11" id="IconsNavBar">
+                <a href ng-click="go('PartnerIssues')">
+                    <i class="fa fa-list fa-4" title="List"></i>
+                </a>
+                <a href ng-click="SavePartnerIssues()"  id="Save_Partner">
+                    <i class="fa fa-floppy-o fa-4" title="Save"></i>
+                </a>
+                @*                <a href ng-click="go('AddPartnerIssues')" id="AddPartnerHide">
+                    <i class="fa fa-file-o fa-4" title="Add New"></i>
+                </a>*@
+                @*<a>
+                        <i class="fa fa-paperclip fa-4" title="Attachements"></i>
+                    </a>
+                    <a href ng-click="SendForApproval()">
+                        <i class=" fa fa-thumbs-o-up" title="Send for Reviews"></i>
+                    </a>
+                    <a href ng-click="go('AddPartnerIssues')">
+                        <i class="fa fa-refresh fa-4" title="Refresh"></i>
+                    </a>*@
+            </div>
+        </div>
+    </nav>
+</section>
+
+<div  class="CustomHeight_Section" style="overflow: auto;">
+<section style="padding:0 15px 90px;">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary" style="background: white none repeat scroll 0 0; padding: 9px;">
+            <div class="box-body">
+            <form class="form-horizontal  ng-pristine ng-valid" role="form" style="font-size: small; margin-top: 36px;" action="">
+
+                    <input type="text" id="USERNAME_PartnerIssues" style="display: none;" value="@SessionUserName" />
+                    <input type="text" id="USERCODE_PartnerIssues" style="display: none;" value="@SessionUserCode" />
+                    <input type="text" id="USERTYPE_PartnerIssues" style="display: none;" value="@SessionUserType" />
+                  
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="Stockist">
+                        Partner Issue Number
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="hidden" class="form-control gray" id="EditIdForPartnerIssue" data-ng-model="EditIdForPartnerIssue" />
+                        <input type="text" class="form-control gray" id="PartnerIssue" data-ng-model="PartnerIssue" disabled="disabled" />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="Stockist">
+                        Created By
+                    </label>
+                    <div class="col-sm-3">
+                        <label class="hidden" id="Created">@SessionUserName</label>
+                        <input type="text" class="form-control gray" id="CreatedBy" data-ng-model="CreatedBy" disabled="disabled" />
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Created Date</label>
+                    <div class="col-sm-3">
+                        <input class="form-control gray" id="CreatedDate" type="text" disabled="disabled" data-ng-model="CreatedDate">
+                    </div>
+
+                </div>
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">Customer Code &nbsp; <span style="color:red">*</span></label>
+                    <div class="col-sm-3">
+                        <div class="input-group add-on">
+                            <input class="form-control" id="CustomerCode" type="text" disabled="disabled" data-ng-model="CustomerCode">
+                            <div class="input-group-btn" id="CustomerCode_LookUpDiv">
+                                <span class="btn btn-default" ng-click="Getdata('GetCustomerCodeName','GetCustomerName','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-sm-3 control-label">Status &nbsp; <span style="color:red">*</span></label>
+                    <div class="col-sm-3" tabindex="2">
+                        <select class="form-control" id="Status">
+                            <option value="Open">Open</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">Customer Name&nbsp; <span style="color:red">*</span></label>
+                    <div class="col-sm-3">
+                        <div class="input-group add-on">
+                            <input class="form-control" id="CustomerName" type="text" disabled="disabled" data-ng-model="CustomerName">
+                            <div class="input-group-btn" id="CustomerName_LookUpDiv">
+                                <span class="btn btn-default" ng-click="Getdata('GetCustomerCodeName','GetCustomerName','Customer List')"><i class="glyphicon glyphicon-new-window"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-sm-3 control-label">Verified</label>
+                    <div class="col-sm-3" tabindex="2">
+                        <select class="form-control" id="Verified">
+                            <option value="select">Select Verified</option>
+                            <option value="Yes I have Verified and it is closed">Yes,I have verified the issue & it is closed</option>
+                            <option value="No the issue is not closed">No, the issue is not closed to my verification</option>
+                            <option value="Pending Verification">Pending Verification</option>
+
+                        </select>
+                    </div>
+
+
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Issue Description &nbsp; <span style="color:red">*</span></label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="IssueDesc">
+                            <option value="select">Select Issue</option>
+                            <option value="Credit note not issued">Credit note not issued</option>
+                            <option value="Account statement not issued">Account statement not issued</option>
+                            <option value="Breakage issue overdue for resolution">Breakage issue overdue for resolution</option>
+                            <option value="Loyalty program benefits not disbursed">Loyalty program benefits not disbursed</option>
+                            @*<option value="Scheme benefit not disbursed">Scheme benefit not disbursed</option>*@
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-3 control-label">Committed Closure Date &nbsp;<span style="color:red">*</span></label>
+                    <div class="col-sm-3">
+                        <input type="text" id="CommitClosedData" class="form-control" readonly="readonly" ng-model="CommitClosedData" />
+                    </div>
+
+                </div>
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">First Person Responsible &nbsp; <span style="color:red">*</span></label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control gray" id="FirstPersonRes" data-ng-model="FirstPersonRes" disabled="disabled" />
+                    </div>
+
+                    <label class="col-sm-3 control-label">Actual Closed Date</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="ActualClosedData" class="form-control gray" disabled="disabled" ng-model="ActualClosedData" />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Remark</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" rows="4" id="OtherIssues" data-ng-model="OtherIssues" maxlength="300"></textarea>
+                    </div>
+
+                     <label class="col-sm-3 control-label hidden">Zone</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="Zone_Name" class="form-control gray hidden" readonly="readonly" ng-model="Zone_Name" disabled="disabled" />
+                    </div>
+                </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label hidden">State</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="State_Name" class="form-control gray hidden" readonly="readonly" ng-model="State_Name" disabled="disabled"/>                        
+                    </div>
+                    <label class="col-sm-3 control-label hidden">Territory/Area</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="Territory" class="form-control gray hidden" readonly="readonly" ng-model="Territory" disabled="disabled" />
+                    </div>
+                </div>
+
+@*                  <div class="form-group">
+                  
+                    <div class="col-sm-3">
+                        <input type="text" id="State_Code" class="form-control hidden" readonly="readonly" ng-model="State_Name" />                        
+                    </div>
+                  
+                    <div class="col-sm-3">
+                        <input type="text" id="Zone_Code" class="form-control hidden" readonly="readonly" ng-model="Zone_Code" />
+                    </div>
+                </div>*@
+
+              @*  <div class="form-group">
+                    <label class="col-sm-2 control-label">Other Issue</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" rows="4" id="OtherIssues" data-ng-model="OtherIssues"></textarea>
+                    </div>
+                </div>*@
+
+
+            </form>
+            <table class="table tablecss hidden" id="PartnerIssuesHistory">
+                <thead>
+                    <tr style="background-color: #d2401a; color: white">
+                        <th>Date and Time</th>
+                        @*changes*@
+                        <th>Employee Code</th>
+                        <th>Action</th>
+                        <th>Comment</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @*<tr>
+                                <td>201512-114</td>
+                                <td>A. PERIYATHAMBI CHETTIAR</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Open</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                 <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Closed</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>    *@
+                </tbody>
+
+
+            </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        $('.CustomHeight_Section').height($(window).height() - 170);
+    });
+    $('.CustomHeight_Section').height($(window).trigger('resize'));
+
+    $(document).ready(function () {
+        $("#CommitClosedData").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+        $("#ActualClosedData").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: 'true'
+        });
+    });
+</script>
+
